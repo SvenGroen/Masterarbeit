@@ -1,0 +1,69 @@
+\documentclass[11pt,DIV=15,BCOR=20mm,bibliography=totoc]{scrbook}
+
+% Import von Paketen und Optionen die das gesamte Dokument betreffen
+% sind in myPreamble.sty ausgelagert.
+\usepackage{myPreamble}
+
+\makeglossaries
+
+\begin{document}
+% --- TITELSEITE ---
+\include{00-titlepage}
+
+% VERZEICHNISSE (Inhaltsverzeichnis, Abkürzungen)
+% Vorspann einleiten --> Seitennummerierung römisch
+\frontmatter
+
+% --- Inhaltsverzeichnis --- 
+\tableofcontents
+\cleardoublepage
+
+\include{00-Glossary}
+%\printglossaries[type=\acronymtype, title=Abkurzungsverzeichnis]
+%\abbreviationsname[Abkürzungsverzeichnis]
+\printglossary[type=main, title={Glossar}]
+\printglossary[type=acronym, title={Abkürzungsverzeichnis}]
+
+%\printglossaries
+
+%\let\cleardoublepage\clearpage % löscht die leere seite
+\cleardoublepage
+% \phantomsection
+% --- Figurenverzeichnis und Tabellenverzeichnis ---
+\addcontentsline{toc}{chapter}{\listfigurename} % damit es in Inhaltsverzeichnis kommt
+\listoffigures
+%\let\cleardoublepage\clearpage % löscht die leere seite
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\listtablename}% damit es in Inhaltsverzeichnis kommt
+\listoftables
+\cleardoublepage
+%\let\cleardoublepage\clearpage
+
+% Hauptteil einleiten --> Seitennummerierung wieder arabisch
+\mainmatter
+
+% --- Hauptteil ---
+\include{kapitel1}
+%\include{kapitel2}
+%\include{kapitel3}
+%\include{kapitel4}
+%\include{kapitel5}
+%\include{kapitel6}
+%\include{kapitel7}
+
+% --- Anhang ---
+\backmatter
+\include{99-Appendix}
+\cleardoublepage
+
+% VERZEICHNISSE (Abbildungen, Tabellen)
+% Literatur 
+\nocite{wiki:wissarbeit}
+\bibliographystyle{alphadin}
+\bibliography{Masterarbeit}
+\cleardoublepage
+
+% ERKLÄRUNG
+\input{_eidversicherung}
+    
+\end{document}
