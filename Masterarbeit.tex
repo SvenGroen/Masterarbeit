@@ -15,14 +15,18 @@
 \frontmatter
 
 % --- Inhaltsverzeichnis --- 
+
+\renewcommand{\contentsname}%
+  {Table of Contents}%
+
 \tableofcontents
 \cleardoublepage
 
 \include{00-Glossary}
 %\printglossaries[type=\acronymtype, title=Abkurzungsverzeichnis]
 %\abbreviationsname[Abkürzungsverzeichnis]
-\printglossary[type=main, title={Glossar}]
-\printglossary[type=acronym, title={Abkürzungsverzeichnis}]
+\printglossary[type=main, title={Glossary}]
+\printglossary[type=acronym, title={List of Abbreviations}]
 
 %\printglossaries
 
@@ -43,7 +47,14 @@
 \mainmatter
 
 % --- Hauptteil ---
-\include{kapitel1}
+\include{01-Abstract.tex}
+\include{02-Introduction.tex}
+\include{03-Preliminaries.tex}
+\include{04-Related-Work.tex}
+\include{05-Methods.tex}
+\include{06-Results.tex}
+\include{07-Conclusion.tex}
+
 %\include{kapitel2}
 %\include{kapitel3}
 %\include{kapitel4}
