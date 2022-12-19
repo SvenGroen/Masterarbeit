@@ -1,0 +1,79 @@
+\chapter{Introduction}
+\label{ch:introduction}
+
+\section{Problem Statement and Motivation} 
+\label{ch:intro-problemStatement}
+
+% For what do we need data? --> data is used everywhere
+% Problems of real data (scarcity, privacy, etc.)
+% What is synthetic data in 1 sentence
+% What is special about tabular data
+% use cases of synthetic data (privacy, scalability, availability, etc.)
+% Why to use diffusion for synthetic data generation
+
+
+% Motivation: Diffusion Probabilistic Models
+% GAN's very successful for tabular data synthesis (plateau reached?)
+% Diffusion beat GAN's in image synthesis (why not for tabular data?)
+% first research shows that diffusion is better than GAN's for tabular data
+% several improvements had been done to GAN's but not yet for Diffusion models
+% Question arises: Can improvements from GAN's be transferred to Diffusion models?
+
+\section{Goals and Research Questions}
+\label{ch:intro-goals}
+
+% Goals: extend the existing code base for special data preprocessing, statistical similarity (and maybe U-Net architecture)
+% Goals: analysis on how to improve a Diffusion model for tabular data synthesis
+
+% Research Questions:
+% 1. does preprocessing the data into a specific format improve the results?
+% 2. how good is diffusion for tabular data synthesis in terms of statistical similarity?
+% 3. does a special tabular data synthesis metric improve the results when used for hyperparameter optimization?
+
+% (Wenn Zeit übrig ist):
+% 3. does using a U-Net architecture improve the results? (maybe)
+% 4. Can the similarity score be incorporated into the loss function? (maybe)
+
+
+\section{Proceeeding}
+\label{ch:intro-proceeeding}
+
+% Proceeeding:
+% Literature research on Diffusion models and GAN's
+% --> What has been done, what has worked, what has not worked, what can be used for diffusion models
+% --> decide which improvements are most promising and will be implemented
+% Use existing code base for Diffusion models
+% --> implement improvements proposed for GAN's and apply to them Diffusion
+% --> train different Diffusion versions
+% --> Evaluate the results with additional meassures (statistical meassures)
+% Compare the results with the current state of the art
+% Analyze the results and draw conclusions (what works, what doesn't work, what can be improved)
+
+
+\section{Contributions}
+\label{ch:intro-contributions}
+
+\subsection{Data Preprocessing}
+\label{ch:intro-contributions-dataPreprocessing}
+
+% Data preprocessing is a crucial step in data synthesis
+% Use special preprocessing for tabular data
+% flexible and extendable preprocessing module inside the current implementation
+
+\subsection{Model Architecture} % maybe 
+\label{ch:intro-contributions-modelArchitecture}
+
+% Current Diffusion models are based on simple MLP's
+% U-Net architecture is used for image synthesis
+% Use U-Net architecture for tabular data synthesis?
+
+\subsection{Extended Evaluation}
+\label{ch:intro-contributions-extendedEvaluation}
+
+% Current work focuses on Machine learning efficiency
+% Add additional evaluation metrics
+% "Similarity Score" used from Master thesis paper that aggregates several metrics
+
+
+\section{Outline}
+\label{ch:intro-outline}

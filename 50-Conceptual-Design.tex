@@ -1,0 +1,75 @@
+\chapter{Conceptual Design}
+\label{ch:conceptualDesign}
+
+\section{Requirements}
+\label{ch:conceptualDesign-requirements}
+
+% Ähnlich wie bei Masterarbeit "Generierung einer synthetischen Datenhistorie aus einem Datenbank Snapshot"
+% Basierent auf ISO 2510 
+% Nicht Funktional: Functional Suitability, Maintainability, (Compatibility (reproducability))
+
+% Funktional (ergeben sich aus den Research Questions):
+% - Comparability & reproducability (codebase must be able to reproduce existing results)
+% - "Special Processing": must be able to handle tabular data as explained in chapter xy
+% - "Special Processing": can have multiple versions (bayesian, embedding, etc.) 
+% - "Special Processing": different versions should be switchable easily
+% - "Special Processing": Provide general framework for possible future special processing types
+% - Evaluation: must be able to evaluate the results with statistical similarity measures
+
+
+\section{Existing Code Base}
+\label{ch:conceptualDesign-existingCodeBase}
+
+\subsection{Current Implementation}
+\label{ch:conceptualDesign-existingCodeBase-currentImplementation}
+% Why did I choose to use the existing code base?
+% What are the advantages and disadvantages of the existing code base?
+% Diagram explaining the current Software architecture
+
+\subsection{Experiment Run}
+\label{ch:conceptualDesign-existingCodeBase-experimentRun}
+% What is an experiment run? (train, sample, evaluate, hyperparameter tuning, ...)
+% Diagrams explaining the current implementation 
+% Hyperparameters
+
+\subsection{Reproduction of existing Results}
+\label{ch:conceptualDesign-existingCodeBase-reproductionOfExistingResults}
+% Reproduce the results of the paper "Diffusion Probabilistic Models for Tabular Data Synthesis"
+
+\section{Proposed Code Extensions}
+\label{ch:conceptualDesign-codeExtensions}
+
+\subsection{"Special Processing"}
+\label{ch:conceptualDesign-codeExtensions-dataPreprocessing}
+
+% what is meant with "special processing"? --> transforming the data into a different format
+% what is necessary to consider when transforming the data? --> Only fit on train data not on test data, etc. 
+% why is it necessary? --> to improve the results
+% how is it implemented? --> Processing abstract class with different implementations
+
+% Details for each processing type? or later?
+
+\subsection{Evaluation}
+\label{ch:conceptualDesign-codeExtensions-evaluation}
+
+% How and where is the statistical similarity measured? 
+
+\subsection{Experiment Run}
+\label{ch:conceptualDesign-codeExtensions-experimentRun}
+
+% How did the Experiment Run change with the code extensions?
+% Hyperparameters
+
+\section{Experiments}
+
+% What experiments with which changes are planned?
+% Baseline 1: no preprocessing + statistical similarity
+% Baseline 2: Other Data Generation algorithms (GAN, ...) + statistical similarity 
+% Experiment 1.1: preprocessing Bayesian gaussian mixture + statistical similarity
+% Experiment 2.1: preprocessing embeddings + statistical similarity
+% ...
+% Experiment N: Baseline 1 + hyperparameter optimization based on statistical similarity
+% if Experiment N > Baseline 1:
+%   Experiment 1.2: preprocessing Bayesian gaussian mixture + hyperparameter optimization based on statistical similarity
+%   Experiment 2.2: preprocessing embeddings + hyperparameter optimization based on statistical similarity
+%   ...
