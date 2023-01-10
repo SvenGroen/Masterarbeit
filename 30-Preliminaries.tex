@@ -10,15 +10,116 @@
 
 % Definition of synthetic data
 % Types of synthetic data (Audio, Image, Text, Tabular)
+% usage of synthetic data
+- synthetic data can be use for testing and validation of applications \cite{gilad2021SynthesizingLinkedData} and machine learning models \cite{dahmen2019SynSysSyntheticData}
+- allows data sharing \cite{hernandez2022SyntheticDataGeneration} while fulfilling regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular} (complies with GDPR \cite{zhao2022CTABGANEnhancingTabular})
+- rebalance datasets with synthetic data if dataset is skewed \cite{zhao2022CTABGANEnhancingTabular}
+- access to data still major bottleneck for researches of ml/dl-models \cite{fan2020RelationalDataSynthesisa}
+- access is often restricted due to sensitivity of data (medical records) \cite{esteban2017RealvaluedMedicalTimea}
+- can be used as additional training data \cite{kim2021OCTGANNeuralODEbased}
+
+- can be used to create test data for software applications because developers might:\cite{whiting2008CreatingRealisticScenariobased}
+    - real data may not be available or not visible for certain developers for security reasons \cite{whiting2008CreatingRealisticScenariobased}
+    - test data needs to fulfil certain requirements depending on the testing scenario and obtaining the needed characteristics from real data is time-consuming \cite{whiting2008CreatingRealisticScenariobased}
+
+
 % differences between real and synthetic data
+- synthetic data is cheap to generate \cite{leminh2021AirGenGANbasedSynthetica}
+- and can be combined with real data for training purposes \cite{leminh2021AirGenGANbasedSynthetica}
+
 % Challenges of synthetic data (privacy, scalability, availability, etc.)
+
+- two competing objectives in generating synthetic data: \cite{little2021GenerativeAdversarialNetworksa}
+    1. high data utility \cite{little2021GenerativeAdversarialNetworksa}
+    2. low disclosure risk \cite{little2021GenerativeAdversarialNetworksa}
+
 
 \subsection{Tabular Data}
 \label{ch:preliminaries-dataSynthesis-tabularData}
 
+tabular data is one of the most common ways to maintain massive databases \cite{esmaeilpour2022BidiscriminatorGANTabular}.
+tabular data is most common form of structured data \cite{hernandez2022SyntheticDataGeneration}
+
 % Definition of tabular data
+underlying properties of tabular data: \cite{zhao2022CTABGANEnhancingTabular}
+- Single Gaussian variables:
+    Single mode Gaussian distributions are very common.
+    The distribution of real data is close to a single mode Gaussian distribution
+
+Mixed data type variables:\cite{zhao2022CTABGANEnhancingTabular}
+    a variable can be a mix of these two types + missing values. The Mortgage variable from the Loan dataset is a good example of mixed variable
+    According to the data description, a loan holder can either have no mortgage (0 value) or a mortgage (any positive value). 
+    In appearance, this variable is not a categorical type due to the numeric nature of the data. 
+    So all 4 SOTA algorithms treat this variable as continuous type without capturing the special meaning of the value zero. 
+    Hence, all 4 algorithms generate a value around 0 instead of exact 0. And the negative values for Mortgage have no/wrong meaning in the real world
+
+Long tail distributions:\cite{zhao2022CTABGANEnhancingTabular}
+    real world data can have long tail distributions where most of the occurrences happen near the initial value of the distribution, and rare cases towards the end
+    Real data clearly has 99\% of occurrences happening at the start of the range, 
+    but the distribution extends until around 25000. 
+    In comparison none of the synthetic data generators is able to learn and imitate this behavior.
+
+Skewed multi-mode continuous variables:\cite{zhao2022CTABGANEnhancingTabular}
+    The term multimode is extended from Variational Gaussian Mixtures (VGM)
+    This is not a typical Gaussian distribution. There is an obvious peak
+    with several other lower peaks
+    This behavior is difficult to capture for the SOTA data generator
+
+
+
+
 % Types of tabular data (Numerical, Categorical, etc.)
+
+- Continuous \cite{lederrey2022DATGANIntegratingExperta
+}
+
+- Categorical 
+    - Binary
+    - Nominal (no order)
+    - Ordinal (order exists)
+\cite{lederrey2022DATGANIntegratingExperta
+}
+
+- Dates/Timestamps \cite{hernandez2022SyntheticDataGeneration}
+
+- tabular data can be static (independent rows in a table) or dynamic (time series/multivariate time series) \cite{padhi2021TabularTransformersModeling}
+
+
 % Challenges of tabular data (mixed data types, missing values, class imbalance, etc.)
+
+Mix of categorical and continouse data types \cite{li2021ImprovingGANInverse}
+Unbalanced columns \cite{li2021ImprovingGANInverse}
+Continouse columns usually follow complex distributions \cite{li2021ImprovingGANInverse}
+values in a dataset can be dependent on other variables \cite{lederrey2022DATGANIntegratingExperta} (also across multiple entries --> find example)
+
+% Preprocessing
+different Datatypes require different preprocessing \cite{fan2020RelationalDataSynthesisa} meaningfully \cite{lederrey2022DATGANIntegratingExperta}
+categorical:
+- ordinal encoding -> assign int to each category
+- one-hot -> binary vector for each category
+
+numerical:
+- min-max normalization
+- GMM-based normalization
+
+
+
+\subsection{Synthetic Tabular Data Generation}
+
+- Process or data driven methods \cite{goncalves2020GenerationEvaluationSynthetic}
+    - Process driven
+        - Simulation models \cite{kowalczyk2022TaxonomyUseSynthetic}
+    - Data driven
+        - Data Augmentation \cite{kowalczyk2022TaxonomyUseSynthetic}
+        - statistical distributions \cite{kowalczyk2022TaxonomyUseSynthetic}
+        - ML/DL- based Approaches \cite{kowalczyk2022TaxonomyUseSynthetic}
+
+%challanges
+interdependencies between variables must be captures \cite{lederrey2022DATGANIntegratingExperta}
+danger of overfitting and generelize relationships between columns which only are present in training data but not in unseen data \cite{lederrey2022DATGANIntegratingExperta}
+
+
+
 %-------------------------------------------------------------------------
 \section{Deep Learning Architectures}
 \label{ch:preliminaries-deepLearningArchitectures}
@@ -39,8 +140,16 @@
 \subsection{Autoencoders}
 \label{ch:preliminaries-generativeAlgorithms-variationalAutoencoders}
 
+from \cite{kingma2013AutoEncodingVariationalBayes}
+
+Figure 1 from \cite{razghandi2022VariationalAutoencoderGenerativea}
+
 % what are autoencoders
+encoder transforms input into latent space which is reconstructed by decoder \cite{razghandi2022VariationalAutoencoderGenerativea}
+--> suffer from "lack of regularity in latent space \cite{razghandi2022VariationalAutoencoderGenerativea}
+
 % what are variational autoencoders
+use the KL divergence and encode a gaussian distribution in latent space \cite{razghandi2022VariationalAutoencoderGenerativea}
 % how do they work
 % mathematical formulation
 % Advantages / Problems / Challenges
@@ -50,14 +159,44 @@
 \label{ch:preliminaries-generativeAlgorithms-generativeAdversarialNetworks}
 
 % what are GAN's
+\cite{goodfellow2020GenerativeAdversarialNetworks}
+- have been used very sucessfully in many different domains \cite{li2022TTSGANTransformerbasedTimeSeries}
+ 
+
+
+
 % how do they work
+\cite{zhao2022CTABGANEnhancingTabular}:
+- trained via a zero-sum min-max game 
+- the discriminator tries to maximize the objective, while the generator tries to minimize it.
+- mentor (D) providing feedback to a student (G) on the quality of his work
+
+
+\cite{li2022TTSGANTransformerbasedTimeSeries}
+- 2 NN (gen and dis)
+- gen inp: rand vec of specified dimension; gen out: same dimension, as similar to real training data
+- dis: binary classifier, distiguish real and generated data
+--> play zero sum game against each other
+--> trz to each nash equilibrium
+
 % what improvements have been done to GAN's
+- gans struggled with generating discrete variables \cite{torfi2020CorGANCorrelationCapturingConvolutionala}
+- State of the art Gan approaches only focused on continouse and categorical types, overlooking mixed data types \cite{zhao2022CTABGANEnhancingTabular}
+
+- conditional GAN \cite{mirza2014ConditionalGenerativeAdversarial}
+
+
 % mathematical formulation
 % Advantages / Problems / Challenges (Mode Collapse, etc.)
+- remarkable performance generating syntehtic images and time series data \cite{mckeever2020SynthesisingTabularDatasets}
+- struggle with mode collapse --> generate same sample \cite{torfi2020CorGANCorrelationCapturingConvolutionala}
+- wasserstein loss helps against mode collapse \cite{frogner2015LearningWassersteinLoss} \cite{arjovsky2017WassersteinGenerativeAdversarial} and has been implemented in many gans (e.g. \cite{zhao2022CTABGANEnhancingTabular})
+- gradient penalty \cite{gulrajani2017ImprovedTrainingWasserstein}
 
 
 \subsection{Transformers}
 \label{ch:preliminaries-generativeAlgorithms-transformers}
+relies on multiple self-attention layers, surpasses other network architectures and shows properties of universal computation engine \cite{li2022TTSGANTransformerbasedTimeSeries}
 
 % What are transformers
 % How do they work
@@ -69,10 +208,27 @@
 \label{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModels}
 
 % What are diffusion probabilistic models
+first paper \cite{sohl-dickstein2015DeepUnsupervisedLearning}
+first famouse paper \cite{ho2020DenoisingDiffusionProbabilistic}
+improvements> \cite{nichol2021ImprovedDenoisingDiffusion}
+follow up: \cite{dhariwal2021DiffusionModelsBeat}
+
+\cite{ho2022ClassifierFreeDiffusionGuidance}
+
+\cite{rombach2022HighResolutionImageSynthesis}
+
 % mathematical formulation
 % How do they work
 % In what context are they used (usually image synthesis)
 % Advantages / Problems / Challenges
+
+
+% for tabular data
+\cite{zheng2022DiffusionModelsMissing} for missing data
+
+\cite{kotelnikov2022TabDDPMModellingTabular} tabddpm
+\cite{hoogeboom2021ArgmaxFlowsMultinomial} multinomial diffusion
+
 
 \subsection{Diffusion Probabilistic Models for Tabular Data}
 \label{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModelsTabularData}
@@ -85,6 +241,9 @@
 \section{Evaluation of Synthetic Tabular Data}
 \label{ch:preliminaries-evaluationOfSyntheticTabularData}
 
+- there is no universal metric for data synthesis \cite{hernandez2022SyntheticDataGeneration}
+- utility and information disclosure metric dimensions \cite{goncalves2020GenerationEvaluationSynthetic}
+- structural similarity \cite{elemam2020SevenWaysEvaluate}
 
 \subsection{Statistical Evaluation}
 \label{ch:preliminaries-evaluationOfSyntheticTabularData-statisticalEvaluation}

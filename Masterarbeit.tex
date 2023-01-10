@@ -1,4 +1,4 @@
-\documentclass[11pt,DIV=15,BCOR=20mm,bibliography=totoc]{scrbook}
+\documentclass[11pt,DIV=15,BCOR=20mm]{scrbook}
 
 % Import von Paketen und Optionen die das gesamte Dokument betreffen
 % sind in myPreamble.sty ausgelagert.
@@ -58,6 +58,8 @@
 \include{70-Results.tex}
 \include{80-Conclusion.tex}
 
+\printbibliography{}
+
 %\include{kapitel2}
 %\include{kapitel3}
 %\include{kapitel4}
@@ -72,9 +74,9 @@
 
 % VERZEICHNISSE (Abbildungen, Tabellen)
 % Literatur 
-\nocite{wiki:wissarbeit}
-\bibliographystyle{alphadin}
-\bibliography{Masterarbeit}
+
+
+
 \cleardoublepage
 
 % ERKLÄRUNG
