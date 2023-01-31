@@ -37,8 +37,20 @@
 \subsection{Tabular Data}
 \label{ch:preliminaries-dataSynthesis-tabularData}
 
-tabular data is one of the most common ways to maintain massive databases \cite{esmaeilpour2022BidiscriminatorGANTabular}.
+
+%-------------------------
+tabular data is one of the most common ways to maintain massive databases \cite{esmaeilpour2022BidiscriminatorGANTabular} \cite{yoon2020VIMEExtendingSuccess}
 tabular data is most common form of structured data \cite{hernandez2022SyntheticDataGeneration}
+tabular data format is used to store information such as demoraphic information in medical and finance datasets \cite{yoon2020VIMEExtendingSuccess}
+
+heterogeneous tabular data are the most commobly used form of data and is essential for numerous applications \cite{borisov2022DeepNeuralNetworks}
+
+
+- tabular data is not homogeneous which makes it challenging to work with for NNs \cite{borisov2022DeepNeuralNetworks}
+- correlations among features are weaker compared to homogeneous data (they have a spatial or semantic relationship) \cite{borisov2022DeepNeuralNetworks} \cite{yoon2020VIMEExtendingSuccess} % semantic relationship --> use embeddings to introduce relationship 
+
+- tabular data is structured and usually presented a table with data points as rows and features as columns \cite{borisov2022DeepNeuralNetworks} \cite{yoon2020VIMEExtendingSuccess}
+--> eacg data point as "row in table", or "sample from unknown joint distribution"
 
 % Definition of tabular data
 underlying properties of tabular data: \cite{zhao2022CTABGANEnhancingTabular}
@@ -65,20 +77,20 @@ Skewed multi-mode continuous variables:\cite{zhao2022CTABGANEnhancingTabular}
     with several other lower peaks
     This behavior is difficult to capture for the SOTA data generator
 
-
-
-
 % Types of tabular data (Numerical, Categorical, etc.)
 
-- Continuous \cite{lederrey2022DATGANIntegratingExperta
-}
+tabular data is heterogeneous and contains a variety of attribute types (cont. and cat.) \cite{borisov2022DeepNeuralNetworks}
+and is very different to other data modalities like images, audio where only 1 feature is present \cite{borisov2022DeepNeuralNetworks}
 
+- Continuous \cite{lederrey2022DATGANIntegratingExperta}
 - Categorical 
     - Binary
     - Nominal (no order)
     - Ordinal (order exists)
-\cite{lederrey2022DATGANIntegratingExperta
-}
+\cite{lederrey2022DATGANIntegratingExperta}
+
+--> categorical are qualitative values not implying any numerical ordering and can take one out of limited set of values \cite{lane2003IntroductionStatistics}
+--> continuous are quantitative and "meassured in terms of numbers"
 
 - Dates/Timestamps \cite{hernandez2022SyntheticDataGeneration}
 
@@ -87,12 +99,48 @@ Skewed multi-mode continuous variables:\cite{zhao2022CTABGANEnhancingTabular}
 
 % Challenges of tabular data (mixed data types, missing values, class imbalance, etc.)
 
+data related pitfalls (noise, impreciseness, different attribute types and value ranges, missing values, privacy issues) \cite{borisov2022DeepNeuralNetworks}
 Mix of categorical and continouse data types \cite{li2021ImprovingGANInverse}
 Unbalanced columns \cite{li2021ImprovingGANInverse}
 Continouse columns usually follow complex distributions \cite{li2021ImprovingGANInverse}
 values in a dataset can be dependent on other variables \cite{lederrey2022DATGANIntegratingExperta} (also across multiple entries --> find example)
+high cardinality can lead to very sparse high-dimensional feature vectors and nonrobust models \cite{borisov2022DeepNeuralNetworks}
 
-% Preprocessing
+
+biggest challenges when working with tabular data are: \cite{borisov2022DeepNeuralNetworks}
+    1. low-quality training data
+        - missing values
+        - outliers
+        - data errors/inconsistency
+        - expensive to collect
+        - class imbalanced
+    2. missing or complex irregular spatial dependencies
+        - no spatial correlation between variables
+        - dependencies between features are rather complex and irregular
+        - inductive bias not present --> cnns unsuited? %LOOKUP MEANING IN SOURCE
+    3. dependency on preprocessing
+        - performance depends strongly on preprocessing strategy \cite{gorishniy2022EmbeddingsNumericalFeatures}
+        - categorical preprocess especially challenge --> sparse feature matrix (one-hot) or synthetic ordering of unordered values (label enc)
+        - information loss during (//due to the conversions?) \cite{fitkov-norris2012EvaluatingImpactCategorical}
+    4. Importance of single feature
+        - images class change only if several pixel change, tabular data 1 cell entity is sufficient for prediciton flip
+
+
+
+\subsubsection{Preprocessing}
+\label{sec:preprocessing}
+
+- proper encoding of inputs (categorical in this paper) ahs a significant influence on models performance \cite{norris2012EvaluatingImpactCategorical}
+
+\cite{borisov2022DeepNeuralNetworks} provides a taxonomy for data learning for tabular data with "data transformation methods" into "single dim encodings" and "multi dim encodings" 
+two dimensions:\cite{borisov2022DeepNeuralNetworks}
+    1. single dimensional encoding
+        - categorical encoding (ordinal, label, one-hot, binary encoding, leave-one-out-encoding, hash bashed) %Explanation for each in the paper
+    2. multi-dimensional encoding 
+        - vime trains encoder learns a representations of cat and num features into homogeneous representation
+        - Supertml transforms tabular data into image format
+
+
 different Datatypes require different preprocessing \cite{fan2020RelationalDataSynthesisa} meaningfully \cite{lederrey2022DATGANIntegratingExperta}
 categorical:
 - ordinal encoding -> assign int to each category
@@ -102,7 +150,8 @@ numerical:
 - min-max normalization
 - GMM-based normalization
 
-
+\cite{gorishniy2022EmbeddingsNumericalFeatures} shows that special encodings of numerical data influences the results of classification %vllt motivation? 
+"the embedding step has a substantial impact on the model effectiveness, and its proper design can be a game-changer in tabular DL"
 
 \subsection{Synthetic Tabular Data Generation}
 
@@ -117,7 +166,7 @@ numerical:
 %challanges
 interdependencies between variables must be captures \cite{lederrey2022DATGANIntegratingExperta}
 danger of overfitting and generelize relationships between columns which only are present in training data but not in unseen data \cite{lederrey2022DATGANIntegratingExperta}
-
+syn data generation can help imbalance problem \cite{borisov2022DeepNeuralNetworks}
 
 
 %-------------------------------------------------------------------------
@@ -127,6 +176,8 @@ danger of overfitting and generelize relationships between columns which only ar
 \subsection{Neural Networks}
 \label{ch:preliminaries-deepLearningArchitectures-neuralNetworks}
 
+- success of NN \& use of special architectures (rnn, cnn, etc.) in variety of domains \cite{borisov2022DeepNeuralNetworks}
+- DL works well for homogeneous data \cite{borisov2022DeepNeuralNetworks}
 % brief overview of neural networks (perceptron, multilayer perceptron)
 % special neural networks 
 % --> convolutional neural networks
@@ -163,8 +214,6 @@ use the KL divergence and encode a gaussian distribution in latent space \cite{r
 - have been used very sucessfully in many different domains \cite{li2022TTSGANTransformerbasedTimeSeries}
  
 
-
-
 % how do they work
 \cite{zhao2022CTABGANEnhancingTabular}:
 - trained via a zero-sum min-max game 
@@ -198,11 +247,17 @@ use the KL divergence and encode a gaussian distribution in latent space \cite{r
 \label{ch:preliminaries-generativeAlgorithms-transformers}
 relies on multiple self-attention layers, surpasses other network architectures and shows properties of universal computation engine \cite{li2022TTSGANTransformerbasedTimeSeries}
 
+have been very successfull on textual and visual data (//siehe quellen im paper) \cite{borisov2022DeepNeuralNetworks} and also been applied to tabular data \cite{padhi2021TabularTransformersModeling} \cite{gorishniy2022EmbeddingsNumericalFeatures}
+
+
+
 % What are transformers
 % How do they work
 % In what context are they used (usually not for data synthesis)
 % Advantages / Problems / Challenges
 
+- TabNet is one of the first transformer-based models for tabular data \cite{borisov2022DeepNeuralNetworks}
+- padhi2021TabularTransformersModeling
 
 \subsection{Diffusion Probabilistic Models}
 \label{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModels}

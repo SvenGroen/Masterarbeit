@@ -32,12 +32,13 @@
 
 %\let\cleardoublepage\clearpage % löscht die leere seite
 \cleardoublepage
-% \phantomsection
+\phantomsection
 % --- Figurenverzeichnis und Tabellenverzeichnis ---
 \addcontentsline{toc}{chapter}{\listfigurename} % damit es in Inhaltsverzeichnis kommt
 \listoffigures
 %\let\cleardoublepage\clearpage % löscht die leere seite
 \cleardoublepage
+\phantomsection
 \addcontentsline{toc}{chapter}{\listtablename}% damit es in Inhaltsverzeichnis kommt
 \listoftables
 \cleardoublepage
@@ -58,7 +59,15 @@
 \include{70-Results.tex}
 \include{80-Conclusion.tex}
 
-\printbibliography{}
+
+
+\cleardoublepage
+
+\phantomsection
+
+\addcontentsline{toc}{chapter}{References}
+
+\printbibliography[heading=bibintoc, title={References}]
 
 %\include{kapitel2}
 %\include{kapitel3}
@@ -69,6 +78,10 @@
 
 % --- Anhang ---
 \backmatter
+\cleardoublepage
+
+\blindtext[8]
+\cleardoublepage
 \include{99-Appendix}
 \cleardoublepage
 
