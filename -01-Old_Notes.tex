@@ -1,0 +1,56 @@
+\subsection{Tabular Data}
+\label{ch:preliminaries-dataSynthesis-tabularData}
+
+%intro
+%tabular data is one of the most common ways to maintain massive databases \cite{esmaeilpour2022BidiscriminatorGANTabular} \cite{yoon2020VIMEExtendingSuccess}
+%tabular data is most common form of structured data \cite{hernandez2022SyntheticDataGeneration}
+%tabular data format is used to store information such as demoraphic information in medical and finance datasets \cite{yoon2020VIMEExtendingSuccess}
+%heterogeneous tabular data are the most commobly used form of data and is essential for numerous applications \cite{borisov2022DeepNeuralNetworks}
+%- tabular data is structured and usually presented a table with data points as rows and features as columns \cite{borisov2022DeepNeuralNetworks} \cite{yoon2020VIMEExtendingSuccess}
+
+
+% Types of tabular data (Numerical, Categorical, etc.)
+%tabular data is heterogeneous and contains a variety of attribute types (cont. and cat.) \cite{borisov2022DeepNeuralNetworks}
+%and is very different to other data modalities like images, audio where only 1 feature is present \cite{borisov2022DeepNeuralNetworks}
+%- Continuous \cite{lederrey2022DATGANIntegratingExperta}
+%- Categorical 
+%    - Binary
+%    - Nominal (no order)
+%    - Ordinal (order exists)
+%\cite{lederrey2022DATGANIntegratingExperta}
+%--> categorical are qualitative values not implying any numerical ordering and can take one out of limited set of values \cite{lane2003IntroductionStatistics}
+%--> continuous are quantitative and "meassured in terms of numbers"
+%- Dates/Timestamps \cite{hernandez2022SyntheticDataGeneration}
+%- tabular data can be static (independent rows in a table) or dynamic (time series/multivariate time series) \cite{padhi2021TabularTransformersModeling}
+
+
+
+% Challenges
+% '- tabular data is not homogeneous which makes it challenging to work with for NNs \cite{borisov2022DeepNeuralNetworks}
+% - correlations among features are weaker compared to homogeneous data (they have a spatial or semantic relationship) \cite{borisov2022DeepNeuralNetworks} \cite{yoon2020VIMEExtendingSuccess} % semantic relationship --> use embeddings to introduce relationship 
+
+% data related pitfalls (noise, impreciseness, different attribute types and value ranges, missing values, privacy issues) \cite{borisov2022DeepNeuralNetworks}
+% Mix of categorical and continouse data types \cite{li2021ImprovingGANInverse}
+
+%Continouse columns usually follow complex distributions \cite{li2021ImprovingGANInverse}
+%values in a dataset can be dependent on other variables \cite{lederrey2022DATGANIntegratingExperta} (also across multiple entries --> find example)
+%high cardinality can lead to very sparse high-dimensional feature vectors and nonrobust models 
+
+% biggest challenges when working with tabular data are: \cite{borisov2022DeepNeuralNetworks}
+%     1. low-quality training data
+%         - missing values
+%         - outliers
+%         - data errors/inconsistency
+%         - expensive to collect
+%         - class imbalanced \cite{li2021ImprovingGANInverse}
+%     2. missing or complex irregular spatial dependencies
+%         - no spatial correlation between variables
+%         - dependencies between features are rather complex and irregular
+%         - inductive bias not present --> cnns unsuited? %LOOKUP MEANING IN SOURCE
+%     3. dependency on preprocessing
+%         - performance depends strongly on preprocessing strategy \cite{gorishniy2022EmbeddingsNumericalFeatures}
+%         - categorical preprocess especially challenge --> sparse feature matrix (one-hot) or synthetic ordering of unordered values (label enc) \cite{borisov2022DeepNeuralNetworks}
+%         - information loss during (//due to the conversions?) \cite{fitkov-norris2012EvaluatingImpactCategorical}
+%     4. Importance of single feature
+%         - images class change only if several pixel change, tabular data 1 cell entity is sufficient for prediciton flip
+
