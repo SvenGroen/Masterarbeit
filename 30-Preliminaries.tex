@@ -37,7 +37,7 @@
 \subsection{Tabular Data}
 \label{ch:preliminaries-dataSynthesis-tabularData}
 
-Tabular data is the most one of the most common forms of structured structured data \cite{hernandez2022SyntheticDataGeneration}.
+Tabular data is the most one of the most common forms of structured structured data \cite{hernandez2022SyntheticDataGeneration} used to store, classify and share information \cite{pilaluisa2022ContextualWordEmbeddings}.
 A table is made up of individual cell entries stored in rows and columns where rows can be seen as individual data points and columns are the different features \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}
 This format is the most common way to maintain massive databases \cite{esmaeilpour2022BidiscriminatorGANTabular, yoon2020VIMEExtendingSuccess} 
 and is crucial for applications that store heterogeneous information such as demographics, medical or financial information \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}.
@@ -138,7 +138,7 @@ Switching an individuals "education" value from "Preschool" to "Doctorate" would
 Different data types can and should be processed into a meaningful format to be useful for deep learning models in different ways \cite{fan2020RelationalDataSynthesisa, lederrey2022DATGANIntegratingExperta}.
 Data preprocessing itself consists of multiple different tasks: Data cleaning, data normalization, data transformation, data integration, missing value imputation and noise identification \cite{tritscher2020EvaluationPosthocXAIa}
 While each of the preprocessing tasks is in itself important, 
-\cite{norris2012EvaluatingImpactCategorical} and \cite{gorishniy2022EmbeddingsNumericalFeatures} showed that a proper transformation of categorical and numerical entries respectively can have a significant influence on a deep learning models performance.
+\cite{fitkov-norris2012EvaluatingImpactCategorical} and \cite{gorishniy2022EmbeddingsNumericalFeatures} showed that a proper transformation of categorical and numerical entries respectively can have a significant influence on a deep learning models performance.
 \cite{xu2019ModelingTabularData} showed the importance of normalization for synthetic tabular data generation.
 Since the focus of the work is on tabular data and its synthesis, the following section will highlight the most important tabular data transformation and normalization approaches.
 
@@ -163,7 +163,6 @@ Lastly, a hash-based approach is worth mentioning, where a deterministic hash fu
 
 Numerical data, such as integers or floating point numbers, can often be used directly in deep learning models without undergoing a special encoding process. 
 This is because deep learning algorithms are designed to handle numerical data and can learn patterns and relationships within the data without the need for additional encoding.
-
 However, \cite{gorishniy2022EmbeddingsNumericalFeatures} has shown that in some cases, encoding numerical data can improve the performance of deep learning models. 
 Encoding numerical data can be achieved through various methods such as normalization (see \autoref{sec:dataNormalization}), discretization, or using embeddings.
 
@@ -172,11 +171,18 @@ Discretization techniques transform numerical features to categorical features.
 A modern approach by researchers from NVIDIA \cite{dong2022GeneratingSyntheticData} invented a tokenizer specifically for tabular data with float numbers. 
 This tokenizer converts float numbers into a sequence of token IDs \cite{dong2022GeneratingSyntheticData}.
 
-%Hier definition von embedding, bzw. den teil unten durch quellen bestätigen-----
-In a study by \cite{gorishniy2022EmbeddingsNumericalFeatures}, the authors found that encoding numerical features through embeddings can significantly improve the performance of deep learning models. 
-Embeddings allow the model to learn a continuous representation of the numerical data, which can capture non-linear relationships and interactions between features. 
-This results in a more robust and effective deep learning model that can better handle numerical data.
-%-----
+In Embedding techniques values that should be encoded (\eg words) are mapped to a vector representation. 
+This vector of real numbers tries to capture "semantic regularities in vector spaces" \cite[p. 2]{pilaluisa2022ContextualWordEmbeddings}.
+The goal of embeddings is to create a vector space, in which semantically similar values are also numerically similar \cite{pilaluisa2022ContextualWordEmbeddings}.
+It can be differentiated between static embeddings and contextualized embeddings. 
+While the former embedding technique always provides the same numerical representation for an input value, the latter embedding technique changes the vector representation of value based on its surrounding context \cite{pilaluisa2022ContextualWordEmbeddings}.
+This is especially important in the natural language processing domain, where contextual embeddings has led to state-of-the-art improvements \cite{pilaluisa2022ContextualWordEmbeddings}.
+Homonyms or polysemic words like "bat" or "second" are words that carry multiple different meanings and their semantic meaning therefore changes with the context they are used in. [TODO: QUELLE]
+Hence, the contextualized embedding vector of the word "second" in the context of time (\eg "it took me 3 seconds") should be different to the one where "second" is used in the context of a competition (\eg "he achieved the second place").
+Contextualized embeddings have to be learned during some form of (pre-) training \cite{devlin2019BERTPretrainingDeep, iida2021TABBIEPretrainedRepresentations, deng2021TURLTableUnderstanding}. 
+Static embeddings, such as Word2Vec \cite{mikolov2013DistributedRepresentationsWords} are learned as well. 
+It is also possible to use the embedding layers to get a vector representation without learning, which can be seen as a "feature tokenization" \cite{zheng2022DiffusionModelsMissing, gorishniy2021RevisitingDeepLearning}.
+However, semantic similarity in a vector space cannot be achieved without any learning, so this embedding technique is more similar to a discretization/tokenization technique.
 
 
 %HIER WEITERMACHEN
