@@ -54,3 +54,44 @@
 %     4. Importance of single feature
 %         - images class change only if several pixel change, tabular data 1 cell entity is sufficient for prediciton flip
 
+%HIER WEITERMACHEN
+% \cite{borisov2022DeepNeuralNetworks} provides a taxonomy for data learning for tabular data with "data transformation methods" into "single dim encodings" and "multi dim encodings" 
+% two dimensions:\cite{borisov2022DeepNeuralNetworks}
+%     1. single dimensional encoding
+%         - categorical encoding (ordinal, label, one-hot, binary encoding, leave-one-out-encoding, hash bashed) %Explanation for each in the paper
+%     2. multi-dimensional encoding 
+%         - vime trains encoder learns a representations of cat and num features into homogeneous representation
+%         - Supertml transforms tabular data into image format
+
+
+%- proper encoding of inputs (categorical in this paper) ahs a significant influence on models performance \cite{norris2012EvaluatingImpactCategorical}
+%different Datatypes require different preprocessing \cite{fan2020RelationalDataSynthesisa} meaningfully \cite{lederrey2022DATGANIntegratingExperta}
+% %\cite{gorishniy2022EmbeddingsNumericalFeatures} shows that special encodings of numerical data influences the results of classification %vllt motivation? 
+% "the embedding step has a substantial impact on the model effectiveness, and its proper design can be a game-changer in tabular DL"
+% categorical:
+% - ordinal encoding -> assign int to each category
+% - one-hot -> binary vector for each category
+
+
+
+
+% Definition of synthetic data
+% Types of synthetic data (Audio, Image, Text, Tabular)
+% % usage of synthetic data
+% - synthetic data can be use for testing and validation of applications \cite{gilad2021SynthesizingLinkedData} and machine learning models \cite{dahmen2019SynSysSyntheticData}
+% - allows data sharing \cite{hernandez2022SyntheticDataGeneration} %while fulfilling regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular} (complies with GDPR \cite{zhao2022CTABGANEnhancingTabular})
+% % - rebalance datasets with synthetic data if dataset is skewed \cite{zhao2022CTABGANEnhancingTabular}
+% %- access to data still major bottleneck for researches of ml/dl-models \cite{fan2020RelationalDataSynthesisa}
+% %- access is often restricted due to sensitivity of data (medical records) \cite{esteban2017RealvaluedMedicalTimea}
+% % - can be used as additional training data \cite{kim2021OCTGANNeuralODEbased}
+
+% - can be used to create test data for software applications because developers might:\cite{whiting2008CreatingRealisticScenariobased}
+%     - real data may not be available or not visible for certain developers for security reasons \cite{whiting2008CreatingRealisticScenariobased}
+%     - test data needs to fulfil certain requirements depending on the testing scenario and obtaining the needed characteristics from real data is time-consuming \cite{whiting2008CreatingRealisticScenariobased}
+
+
+% % differences between real and synthetic data
+% %- synthetic data is cheap to generate \cite{leminh2021AirGenGANbasedSynthetica}
+% % - and can be combined with real data for training purposes \cite{leminh2021AirGenGANbasedSynthetica}
+
+% % Challenges of synthetic data (privacy, scalability, availability, etc.)

@@ -824,6 +824,21 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\H7AVCI5Z\\Esteban et al_2017_Real-valued (Medical) Time Series Generation with Recurrent Conditional GANs.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\WAY9M4MK\\1706.html}
 }
 
+@misc{european_commission_regulation_2016,
+  title = {Regulation ({{EU}}) 2016/679 of the {{European Parliament}} and of the {{Council}} of 27 {{April}} 2016 on the Protection of Natural Persons with Regard to the Processing of Personal Data and on the Free Movement of Such Data, and Repealing {{Directive}} 95/46/{{EC}} ({{General Data Protection Regulation}}) ({{Text}} with {{EEA}} Relevance)},
+  author = {{European Commission}},
+  date = {2016},
+  publisher = {{European Commission}},
+  url = {https://eur-lex.europa.eu/eli/reg/2016/679/oj},
+  abstract = {EU Datenschutzgrundverordnung (kurz: DS-GVO / auch: DSGVO) im Orginal mit allen Sprachversionen},
+  added-at = {2020-08-20T11:33:21.000+0200},
+  biburl = {https://www.bibsonomy.org/bibtex/243a2175512dc8b9d8855fa7a763cdc3e/zotero},
+  interhash = {c7b667cac6031282160a9e94d5a118f8},
+  intrahash = {43a2175512dc8b9d8855fa7a763cdc3e},
+  keywords = {ddm en m1.3 openₐccess},
+  timestamp = {2020-08-20T11:33:21.000+0200}
+}
+
 @misc{fan2020RelationalDataSynthesisa,
   title = {Relational {{Data Synthesis}} Using {{Generative Adversarial Networks}}: {{A Design Space Exploration}}},
   shorttitle = {Relational {{Data Synthesis}} Using {{Generative Adversarial Networks}}},
@@ -1005,6 +1020,24 @@
   abstract = {Organizations are increasingly relying on data to support decisions. When data contains private and sensitive information, the data owner often desires to publish a synthetic database instance that is similarly useful as the true data, while ensuring the privacy of individual data records. Existing differentially private data synthesis methods aim to generate useful data based on applications, but they fail in keeping one of the most fundamental data properties of the structured data — the underlying correlations and dependencies among tuples and attributes (i.e., the structure of the data). This structure is often expressed as integrity and schema constraints, or with a probabilistic generative process. As a result, the synthesized data is not useful for any downstream tasks that require this structure to be preserved. This work presents Kamino, a data synthesis system to ensure differential privacy and to preserve the structure and correlations present in the original dataset. Kamino takes as input of a database instance, along with its schema (including integrity constraints), and produces a synthetic database instance with differential privacy and structure preservation guarantees. We empirically show that while preserving the structure of the data, Kamino achieves comparable and even better usefulness in applications of training classification models and answering marginal queries than the state-of-the-art methods of differentially private data synthesis.},
   langid = {english},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\YJXRVBVX\\Ge et al_2021_Kamino.pdf}
+}
+
+@article{gelman1992InferenceIterativeSimulation,
+  title = {Inference from {{Iterative Simulation Using Multiple Sequences}}},
+  author = {Gelman, Andrew and Rubin, Donald B.},
+  date = {1992-11},
+  journaltitle = {Statistical Science},
+  volume = {7},
+  number = {4},
+  pages = {457--472},
+  publisher = {{Institute of Mathematical Statistics}},
+  issn = {0883-4237, 2168-8745},
+  doi = {10.1214/ss/1177011136},
+  url = {https://projecteuclid.org/journals/statistical-science/volume-7/issue-4/Inference-from-Iterative-Simulation-Using-Multiple-Sequences/10.1214/ss/1177011136.full},
+  urldate = {2023-02-10},
+  abstract = {The Gibbs sampler, the algorithm of Metropolis and similar iterative simulation methods are potentially very helpful for summarizing multivariate distributions. Used naively, however, iterative simulation can give misleading answers. Our methods are simple and generally applicable to the output of any iterative simulation; they are designed for researchers primarily interested in the science underlying the data and models they are analyzing, rather than for researchers interested in the probability theory underlying the iterative simulations themselves. Our recommended strategy is to use several independent sequences, with starting points sampled from an overdispersed distribution. At each step of the iterative simulation, we obtain, for each univariate estimand of interest, a distributional estimate and an estimate of how much sharper the distributional estimate might become if the simulations were continued indefinitely. Because our focus is on applied inference for Bayesian posterior distributions in real problems, which often tend toward normality after transformations and marginalization, we derive our results as normal-theory approximations to exact Bayesian inference, conditional on the observed simulations. The methods are illustrated on a random-effects mixture model applied to experimental measurements of reaction times of normal and schizophrenic patients.},
+  keywords = {Bayesian inference,Convergence of stochastic processes,ECM,EM,Gibbs sampler,importance sampling,Metropolis algorithm,multiple imputation,random-effects model,SIR},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\HTD2K28B\\Gelman_Rubin_1992_Inference from Iterative Simulation Using Multiple Sequences.pdf}
 }
 
 @report{georges-filteau2020SyntheticObservationalHealth,
@@ -1316,6 +1349,26 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\JPD62LHS\\Iida et al_2021_TABBIE.pdf}
 }
 
+@article{izonin2022TwoStepDataNormalization,
+  title = {A {{Two-Step Data Normalization Approach}} for {{Improving Classification Accuracy}} in the {{Medical Diagnosis Domain}}},
+  author = {Izonin, Ivan and Tkachenko, Roman and Shakhovska, Nataliya and Ilchyshyn, Bohdan and Singh, Krishna Kant},
+  date = {2022-01},
+  journaltitle = {Mathematics},
+  volume = {10},
+  number = {11},
+  pages = {1942},
+  publisher = {{Multidisciplinary Digital Publishing Institute}},
+  issn = {2227-7390},
+  doi = {10.3390/math10111942},
+  url = {https://www.mdpi.com/2227-7390/10/11/1942},
+  urldate = {2023-02-11},
+  abstract = {Data normalization is a data preprocessing task and one of the first to be performed during intellectual analysis, particularly in the case of tabular data. The importance of its implementation is determined by the need to reduce the sensitivity of the artificial intelligence model to the values of the features in the dataset to increase the studied model’s adequacy. This paper focuses on the problem of effectively preprocessing data to improve the accuracy of intellectual analysis in the case of performing medical diagnostic tasks. We developed a new two-step method for data normalization of numerical medical datasets. It is based on the possibility of considering both the interdependencies between the features of each observation from the dataset and their absolute values to improve the accuracy when performing medical data mining tasks. We describe and substantiate each step of the algorithmic implementation of the method. We also visualize the results of the proposed method. The proposed method was modeled using six different machine learning methods based on decision trees when performing binary and multiclass classification tasks. We used six real-world, freely available medical datasets with different numbers of vectors, attributes, and classes to conduct experiments. A comparison between the effectiveness of the developed method and that of five existing data normalization methods was carried out. It was experimentally established that the developed method increases the accuracy of the Decision Tree and Extra Trees Classifier by 1–5\% in the case of performing the binary classification task and the accuracy of the Bagging, Decision Tree, and Extra Trees Classifier by 1–6\% in the case of performing the multiclass classification task. Increasing the accuracy of these classifiers only by using the new data normalization method satisfies all the prerequisites for its application in practice when performing various medical data mining tasks.},
+  issue = {11},
+  langid = {english},
+  keywords = {binary classification,classification accuracy,data normalization,decision trees,machine learning,medical diagnostics,multiclass classification,precision model,preprocessing,scalers,small data},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\IIBVPIX5\\Izonin et al_2022_A Two-Step Data Normalization Approach for Improving Classification Accuracy in.pdf}
+}
+
 @misc{jain2018ImaginingEngineerGANBaseda,
   title = {Imagining an {{Engineer}}: {{On GAN-Based Data Augmentation Perpetuating Biases}}},
   shorttitle = {Imagining an {{Engineer}}},
@@ -1333,6 +1386,24 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Statistics - Machine Learning},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\8IKQ4TIM\\Jain et al_2018_Imagining an Engineer.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\K2MPTXQT\\1811.html}
+}
+
+@article{kaloskampis2020SyntheticDataCivil,
+  title = {Synthetic Data in the Civil Service},
+  author = {Kaloskampis, Ioannis and Joshi, Chaitanya and Cheung, Catrin and Pugh, David and Nolan, Louisa},
+  date = {2020},
+  journaltitle = {Significance},
+  volume = {17},
+  number = {6},
+  pages = {18--23},
+  issn = {1740-9713},
+  doi = {10.1111/1740-9713.01466},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/1740-9713.01466},
+  urldate = {2023-02-10},
+  abstract = {In a data-driven economy, access to data is vital. So, what happens when data are not available due to disclosure issues or other restrictions? As Ioannis Kaloskampis, Chaitanya Joshi, Catrin Cheung, David Pugh and Louisa Nolan explain, in such situations it may still be possible to draw useful conclusions based on carefully manufactured data},
+  langid = {english},
+  annotation = {\_eprint: https://onlinelibrary.wiley.com/doi/pdf/10.1111/1740-9713.01466},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\AW52Z3XP\\Kaloskampis et al_2020_Synthetic data in the civil service.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\KNGWRMX5\\1740-9713.html}
 }
 
 @article{karaali2013MetallicityDependentTransformationsRed,
@@ -2087,16 +2158,6 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\RH6GC4FM\\Padhi et al_2021_Tabular transformers for modeling multivariate time series.pdf}
 }
 
-@online{PapersCodeTABBIE,
-  title = {Papers with {{Code}} - {{TABBIE}}: {{Pretrained Representations}} of {{Tabular Data}}},
-  shorttitle = {Papers with {{Code}} - {{TABBIE}}},
-  url = {https://paperswithcode.com/paper/tabbie-pretrained-representations-of-tabular},
-  urldate = {2023-01-25},
-  abstract = {🏆 SOTA for Column Type Annotation on VizNet-Sato-Full (Weighted-F1 metric)},
-  langid = {english},
-  file = {C\:\\Users\\SvenG\\Zotero\\storage\\DZZKUPTZ\\tabbie-pretrained-representations-of-tabular.html}
-}
-
 @article{park2018DataSynthesisBased,
   title = {Data Synthesis Based on Generative Adversarial Networks},
   author = {Park, Noseong and Mohammadi, Mahmoud and Gorde, Kshitij and Jajodia, Sushil and Park, Hongkyu and Kim, Youngmin},
@@ -2156,6 +2217,23 @@
   urldate = {2022-07-10},
   langid = {english},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\GGPTXP9R\\Pérez et al_2022_Data augmentation through multivariate scenario forecasting in Data Centers.pdf}
+}
+
+@inproceedings{peters2018DissectingContextualWord,
+  title = {Dissecting {{Contextual Word Embeddings}}: {{Architecture}} and {{Representation}}},
+  shorttitle = {Dissecting {{Contextual Word Embeddings}}},
+  booktitle = {Proceedings of the 2018 {{Conference}} on {{Empirical Methods}} in {{Natural Language Processing}}},
+  author = {Peters, Matthew E. and Neumann, Mark and Zettlemoyer, Luke and Yih, Wen-tau},
+  date = {2018-10},
+  pages = {1499--1509},
+  publisher = {{Association for Computational Linguistics}},
+  location = {{Brussels, Belgium}},
+  doi = {10.18653/v1/D18-1179},
+  url = {https://aclanthology.org/D18-1179},
+  urldate = {2023-02-09},
+  abstract = {Contextual word representations derived from pre-trained bidirectional language models (biLMs) have recently been shown to provide significant improvements to the state of the art for a wide range of NLP tasks. However, many questions remain as to how and why these models are so effective. In this paper, we present a detailed empirical study of how the choice of neural architecture (e.g. LSTM, CNN, or self attention) influences both end task accuracy and qualitative properties of the representations that are learned. We show there is a tradeoff between speed and accuracy, but all architectures learn high quality contextual representations that outperform word embeddings for four challenging NLP tasks. Additionally, all architectures learn representations that vary with network depth, from exclusively morphological based at the word embedding layer through local syntax based in the lower contextual layers to longer range semantics such coreference at the upper layers. Together, these results suggest that unsupervised biLMs, independent of architecture, are learning much more about the structure of language than previously appreciated.},
+  eventtitle = {{{EMNLP}} 2018},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\E86GY2MC\\Peters et al_2018_Dissecting Contextual Word Embeddings.pdf}
 }
 
 @article{pilaluisa2022ContextualWordEmbeddings,
@@ -2577,6 +2655,37 @@
   archiveprefix = {arXiv},
   keywords = {Computer Science - Machine Learning},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\S5Z86G9Q\\Srinivasan_Knottenbelt_2022_Time-series Transformer Generative Adversarial Networks.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\PLNH2XHJ\\2205.html}
+}
+
+@inproceedings{sun2019supertml,
+  title = {Supertml: {{Two-dimensional}} Word Embedding for the Precognition on Structured Tabular Data},
+  booktitle = {Proceedings of the {{IEEE}}/{{CVF}} Conference on Computer Vision and Pattern Recognition Workshops},
+  author = {Sun, Baohua and Yang, Lin and Zhang, Wenhan and Lin, Michael and Dong, Patrick and Young, Charles and Dong, Jason},
+  date = {2019},
+  pages = {0--0},
+  added-at = {2021-04-25T01:24:46.000+0200},
+  biburl = {https://www.bibsonomy.org/bibtex/29a03c0ecaacef712ea9d439084c2db40/becker},
+  interhash = {58f776475c9d7d2c174aa0efb9943ec4},
+  intrahash = {9a03c0ecaacef712ea9d439084c2db40},
+  keywords = {citedby:scholar:count:6 citedby:scholar:timestamp:2021-4-24 cnn data network neural nn tabular},
+  timestamp = {2021-05-07T05:03:32.000+0200}
+}
+
+@article{sun2020NewInterpretationsNormalization,
+  title = {New {{Interpretations}} of {{Normalization Methods}} in {{Deep Learning}}},
+  author = {Sun, Jiacheng and Cao, Xiangyong and Liang, Hanwen and Huang, Weiran and Chen, Zewei and Li, Zhenguo},
+  date = {2020-04-03},
+  journaltitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  shortjournal = {AAAI},
+  volume = {34},
+  number = {04},
+  pages = {5875--5882},
+  issn = {2374-3468, 2159-5399},
+  doi = {10.1609/aaai.v34i04.6046},
+  url = {https://ojs.aaai.org/index.php/AAAI/article/view/6046},
+  urldate = {2023-02-11},
+  abstract = {In recent years, a variety of normalization methods have been proposed to help training neural networks, such as batch normalization (BN), layer normalization (LN), weight normalization (WN), group normalization (GN), etc. However, some necessary tools to analyze all these normalization methods are lacking. In this paper, we first propose a lemma to define some necessary tools. Then, we use these tools to make a deep analysis on popular normalization methods and obtain the following conclusions: 1) Most of the normalization methods can be interpreted in a unified framework, namely normalizing pre-activations or weights onto a sphere; 2) Since most of the existing normalization methods are scaling invariant, we can conduct optimization on a sphere with scaling symmetry removed, which can help to stabilize the training of network; 3) We prove that training with these normalization methods can make the norm of weights increase, which could cause adversarial vulnerability as it amplifies the attack. Finally, a series of experiments are conducted to verify these claims.},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\5PGN788K\\Sun et al_2020_New Interpretations of Normalization Methods in Deep Learning.pdf}
 }
 
 @misc{sun2022ImprovingCorrelationCapturea,
@@ -3320,4 +3429,21 @@
   url = {https://linkinghub.elsevier.com/retrieve/pii/S0959152422001214},
   urldate = {2022-08-30},
   langid = {english}
+}
+
+@article{zhu2021ConvertingTabularData,
+  title = {Converting Tabular Data into Images for Deep Learning with Convolutional Neural Networks},
+  author = {Zhu, Yitan and Brettin, Thomas and Xia, Fangfang and Partin, Alexander and Shukla, Maulik and Yoo, Hyunseung and Evrard, Yvonne A. and Doroshow, James H. and Stevens, Rick L.},
+  date = {2021-05-31},
+  journaltitle = {Scientific Reports},
+  volume = {11},
+  number = {1},
+  publisher = {{Nature Publishing Group}},
+  issn = {2045-2322},
+  doi = {10.1038/s41598-021-90923-y},
+  url = {https://www.osti.gov/pages/biblio/1785302},
+  urldate = {2023-02-09},
+  abstract = {AbstractConvolutional neural networks (CNNs) have been successfully used in many applications where important information about data is embedded in the order of features, such as speech and imaging. However, most tabular data do not assume a spatial relationship between features, and thus are unsuitable for modeling using CNNs. To meet this challenge, we develop a novel algorithm, image generator for tabular data (IGTD), to transform tabular data into images by assigning features to pixel positions so that similar features are close to each other in the image. The algorithm searches for an optimized assignment by minimizing the difference between the ranking of distances between features and the ranking of distances between their assigned pixels in the image. We apply IGTD to transform gene expression profiles of cancer cell lines (CCLs) and molecular descriptors of drugs into their respective image representations. Compared with existing transformation methods, IGTD generates compact image representations with better preservation of feature neighborhood structure. Evaluated on benchmark drug screening datasets, CNNs trained on IGTD image representations of CCLs and drugs exhibit a better performance of predicting anti-cancer drug response than both CNNs trained on alternative image representations and prediction models trained on the original tabular data.},
+  langid = {english},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\JD6VZHL2\\Zhu et al_2021_Converting tabular data into images for deep learning with convolutional neural.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\8C97F66I\\1785302.html}
 }

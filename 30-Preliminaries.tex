@@ -7,31 +7,32 @@
 
 \subsection{Synthetic Data}
 \label{ch:preliminaries-dataSynthesis-syntheticData}
+Synthetic data can be defined as "(...) artificially generated data, that are modelled on real data, with the same structure and properties as the original data (...)" \cite[p. 2]{kaloskampis2020SyntheticDataCivil} 
+but without containing any actual specific information or entries of the actual real data. 
+While first synthetic data approaches \cite{gelman1992InferenceIterativeSimulationa} focused on imputation techniques to generate synthetic data, the advent of deep learning has led to the topic gaining importance \cite{kowalczyk2022TaxonomyUseSynthetic, kaloskampis2020SyntheticDataCivil}
+The importance of data is growing rapidly [TODO: QUELLE FINDEN] but accessing and collecting real data is usually expensive [TODO: QUELLE FINDEN] or simply not possible due to the sensitivity of the data (\eg medical records) \cite{esteban2017RealvaluedMedicalTimea} or due to regulatory restrictions, such as the \gls{gdpr} \cite{european_commission_regulation_2016}.
+Synthetic data on the other hand is, compared to the collection of real data, cheap to generate \cite{leminh2021AirGenGANbasedSynthetica} and fulfils regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular}.
 
-% Definition of synthetic data
-% Types of synthetic data (Audio, Image, Text, Tabular)
-% usage of synthetic data
-- synthetic data can be use for testing and validation of applications \cite{gilad2021SynthesizingLinkedData} and machine learning models \cite{dahmen2019SynSysSyntheticData}
-- allows data sharing \cite{hernandez2022SyntheticDataGeneration} while fulfilling regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular} (complies with GDPR \cite{zhao2022CTABGANEnhancingTabular})
-- rebalance datasets with synthetic data if dataset is skewed \cite{zhao2022CTABGANEnhancingTabular}
-- access to data still major bottleneck for researches of ml/dl-models \cite{fan2020RelationalDataSynthesisa}
-- access is often restricted due to sensitivity of data (medical records) \cite{esteban2017RealvaluedMedicalTimea}
-- can be used as additional training data \cite{kim2021OCTGANNeuralODEbased}
-
-- can be used to create test data for software applications because developers might:\cite{whiting2008CreatingRealisticScenariobased}
-    - real data may not be available or not visible for certain developers for security reasons \cite{whiting2008CreatingRealisticScenariobased}
-    - test data needs to fulfil certain requirements depending on the testing scenario and obtaining the needed characteristics from real data is time-consuming \cite{whiting2008CreatingRealisticScenariobased}
+Hence, synthetic data could be used as an alternative to real data in various use-cases,
+including but not limited to machine learning, software development or data sharing scenarios.
+Access to data is still one of the biggest bottlenecks when developing machine learning or deep learning \glspl{model} \cite{fan2020RelationalDataSynthesisa}.
+Synthetic data could be used to increase the data quality, by rebalancing skewed dataset \cite{zhao2022CTABGANEnhancingTabular} 
+or increasing the dataset size as additional training data or in combination with the real data \cite{leminh2021AirGenGANbasedSynthetica, kim2021OCTGANNeuralODEbased}.
+Synthetic data can also be used in situations where working with the real data is not possible, due to privacy or availability reasons [TODO: bessere quelle raussuchen]\cite{zhao2022CTABGANEnhancingTabular}.
+In software development, high quality test data is crucial for development but challenging and time consuming to generate \cite{whiting2008CreatingRealisticScenariobased}.
+Developers time to create such datasets is usually scarce and it might be the case that developers do not even have the permission to see the data, due to its sensitivity \cite{whiting2008CreatingRealisticScenariobased}.
+A synthetic data generation \gls{model} would possibly allow developers to generate test data with predefined characteristics and without it being restricted in any form.
+ 
 
 
-% differences between real and synthetic data
-- synthetic data is cheap to generate \cite{leminh2021AirGenGANbasedSynthetica}
-- and can be combined with real data for training purposes \cite{leminh2021AirGenGANbasedSynthetica}
 
-% Challenges of synthetic data (privacy, scalability, availability, etc.)
 
-- two competing objectives in generating synthetic data: \cite{little2021GenerativeAdversarialNetworksa}
-    1. high data utility \cite{little2021GenerativeAdversarialNetworksa}
-    2. low disclosure risk \cite{little2021GenerativeAdversarialNetworksa}
+Upcoming new deep learning architectures have shown remarkable performance in the last decade %Gan transformer zititeren
+they are able to generate synthetic data of many different data formats, such as images, video, music, ... %titieren
+
+
+
+
 
 
 \subsection{Tabular Data}
@@ -65,80 +66,25 @@ meaning that they consists of only 1 feature type \cite{borisov2022DeepNeuralNet
 Since tabular data consists of multiple features, made up of a mixture of categorical and numerical values, it is a heterogeneous data format with data points as rows and features as columns \cite{borisov2022DeepNeuralNetworks}.
 This makes is especially challenging for neural networks to work with since the correlations between the features is weaker because they often do not have any form of spatial or semantic relationship like image or text data has \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}.
 The third challenge is about the dependency on preprocessing. \cite{borisov2022DeepNeuralNetworks} highlights the importance of a preprocessing and explicit feature construction step that is necessary when working with tabular data in a deep learning context.
-This preprocessing step is crucial since it does not only strongly influences the performance of deep learning models \cite{gorishniy2022EmbeddingsNumericalFeatures} 
+This preprocessing step is crucial since it does not only strongly influences the performance of deep learning \glspl{model} \cite{gorishniy2022EmbeddingsNumericalFeatures} 
 it also introducing new challenges. Depending on the preprocessing strategy (\autoref{sec:preprocessing}) it is possible to create a very sparse feature matrix, create a synthetic ordinal ordering of a nominal variable or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
 The last and fourth challenge concerns the importance of a single feature. In homogeneous data multiple features need to change in order to change the class of the data. 
 For heterogeneous tabular data a small change in one feature variable can already alter the class of the row. 
 \cite{borisov2022DeepNeuralNetworks} illustrates this with the example of an image, where multiple pixels (\ie features) need to change in a coordinated manner in order to change the content (\ie class) of the image.
-For tabular data a single change in a cell can change the prediction of a predictive model \cite{borisov2022DeepNeuralNetworks}. 
-Consider a model that has to predict whether an individuals income is higher or lower than US\$ 50.000 per year \cite{Dua:2019} based on demographic information of that individual.
+For tabular data a single change in a cell can change the prediction of a predictive \gls{model} \cite{borisov2022DeepNeuralNetworks}. 
+Consider a \gls{model} that has to predict whether an individuals income is higher or lower than US\$ 50.000 per year \cite{Dua:2019} based on demographic information of that individual.
 Switching an individuals "education" value from "Preschool" to "Doctorate" would likely cause the prediction to change from "<=50K" to ">50K".
-
-
-
-
-%intro
-%tabular data is one of the most common ways to maintain massive databases \cite{esmaeilpour2022BidiscriminatorGANTabular} \cite{yoon2020VIMEExtendingSuccess}
-%tabular data is most common form of structured data \cite{hernandez2022SyntheticDataGeneration}
-%tabular data format is used to store information such as demoraphic information in medical and finance datasets \cite{yoon2020VIMEExtendingSuccess}
-%heterogeneous tabular data are the most commobly used form of data and is essential for numerous applications \cite{borisov2022DeepNeuralNetworks}
-%- tabular data is structured and usually presented a table with data points as rows and features as columns \cite{borisov2022DeepNeuralNetworks} \cite{yoon2020VIMEExtendingSuccess}
-
-
-% Types of tabular data (Numerical, Categorical, etc.)
-%tabular data is heterogeneous and contains a variety of attribute types (cont. and cat.) \cite{borisov2022DeepNeuralNetworks}
-%and is very different to other data modalities like images, audio where only 1 feature is present \cite{borisov2022DeepNeuralNetworks}
-%- Continuous \cite{lederrey2022DATGANIntegratingExperta}
-%- Categorical 
-%    - Binary
-%    - Nominal (no order)
-%    - Ordinal (order exists)
-%\cite{lederrey2022DATGANIntegratingExperta}
-%--> categorical are qualitative values not implying any numerical ordering and can take one out of limited set of values \cite{lane2003IntroductionStatistics}
-%--> continuous are quantitative and "meassured in terms of numbers"
-%- Dates/Timestamps \cite{hernandez2022SyntheticDataGeneration}
-%- tabular data can be static (independent rows in a table) or dynamic (time series/multivariate time series) \cite{padhi2021TabularTransformersModeling}
-
-
-
-% Challenges
-% '- tabular data is not homogeneous which makes it challenging to work with for NNs \cite{borisov2022DeepNeuralNetworks}
-% - correlations among features are weaker compared to homogeneous data (they have a spatial or semantic relationship) \cite{borisov2022DeepNeuralNetworks} \cite{yoon2020VIMEExtendingSuccess} % semantic relationship --> use embeddings to introduce relationship 
-
-% data related pitfalls (noise, impreciseness, different attribute types and value ranges, missing values, privacy issues) \cite{borisov2022DeepNeuralNetworks}
-% Mix of categorical and continouse data types \cite{li2021ImprovingGANInverse}
-
-%Continouse columns usually follow complex distributions \cite{li2021ImprovingGANInverse}
-%values in a dataset can be dependent on other variables \cite{lederrey2022DATGANIntegratingExperta} (also across multiple entries --> find example)
-%high cardinality can lead to very sparse high-dimensional feature vectors and nonrobust models 
-
-% biggest challenges when working with tabular data are: \cite{borisov2022DeepNeuralNetworks}
-%     1. low-quality training data
-%         - missing values
-%         - outliers
-%         - data errors/inconsistency
-%         - expensive to collect
-%         - class imbalanced \cite{li2021ImprovingGANInverse}
-%     2. missing or complex irregular spatial dependencies
-%         - no spatial correlation between variables
-%         - dependencies between features are rather complex and irregular
-%         - inductive bias not present --> cnns unsuited? %LOOKUP MEANING IN SOURCE
-%     3. dependency on preprocessing
-%         - performance depends strongly on preprocessing strategy \cite{gorishniy2022EmbeddingsNumericalFeatures}
-%         - categorical preprocess especially challenge --> sparse feature matrix (one-hot) or synthetic ordering of unordered values (label enc) \cite{borisov2022DeepNeuralNetworks}
-%         - information loss during (//due to the conversions?) \cite{fitkov-norris2012EvaluatingImpactCategorical}
-%     4. Importance of single feature
-%         - images class change only if several pixel change, tabular data 1 cell entity is sufficient for prediciton flip
 
 
 
 \subsubsection{Tabular Data Preprocessing}
 \label{sec:preprocessing}
 
-Different data types can and should be processed into a meaningful format to be useful for deep learning models in different ways \cite{fan2020RelationalDataSynthesisa, lederrey2022DATGANIntegratingExperta}.
-Data preprocessing itself consists of multiple different tasks: Data cleaning, data normalization, data transformation, data integration, missing value imputation and noise identification \cite{tritscher2020EvaluationPosthocXAIa}
+Different data types can and should be processed into a meaningful format to be useful for deep learning \glspl{model} in different ways \cite{fan2020RelationalDataSynthesisa, lederrey2022DATGANIntegratingExperta}.
+It is usually the first step before working with the data on any task \cite{izonin2022TwoStepDataNormalization}.
+Data preprocessing itself consists of multiple different tasks: Data cleaning, data normalization, data transformation, data integration, missing value imputation and noise identification \cite{garcia2016BigDataPreprocessing}
 While each of the preprocessing tasks is in itself important, 
-\cite{fitkov-norris2012EvaluatingImpactCategorical} and \cite{gorishniy2022EmbeddingsNumericalFeatures} showed that a proper transformation of categorical and numerical entries respectively can have a significant influence on a deep learning models performance.
+\cite{fitkov-norris2012EvaluatingImpactCategorical} and \cite{gorishniy2022EmbeddingsNumericalFeatures} showed that a proper transformation of categorical and numerical entries respectively can have a significant influence on a deep learning \glspl{model} performance.
 \cite{xu2019ModelingTabularData} showed the importance of normalization for synthetic tabular data generation.
 Since the focus of the work is on tabular data and its synthesis, the following section will highlight the most important tabular data transformation and normalization approaches.
 
@@ -146,7 +92,7 @@ Since the focus of the work is on tabular data and its synthesis, the following 
 \label{sec:dataTransformation}
 
 \cite{borisov2022DeepNeuralNetworks} introduces a taxonomy for data transformation methods and subdivides the existing approaches into "Single-Dimensional Encodings" and "Multi-Dimensional Encodings".
-The goal is to transform the different values column can take and transform them into a different (numeric) representation, such that it can be processed by a deep learning model.
+The goal is to transform the different values column can take and transform them into a different (numeric) representation, such that it can be processed by a deep learning \gls{model}.
 
 \textbf{Single-Dimensional Encodings:}
 Single-Dimensional encoding techniques encode each cell independently \cite{borisov2022DeepNeuralNetworks}.
@@ -161,17 +107,18 @@ The leave-one-out encoding technique is an approach to encode a categorical colu
 A categorical entry is replaced by the mean of the target variable of all rows where the same category is present, excluding the target value of the to be encoded value.
 Lastly, a hash-based approach is worth mentioning, where a deterministic hash function transforms each category into a numerical form \cite{borisov2022DeepNeuralNetworks}.
 
-Numerical data, such as integers or floating point numbers, can often be used directly in deep learning models without undergoing a special encoding process. 
+Numerical data, such as integers or floating point numbers, can often be used directly in deep learning \glspl{model} without undergoing a special encoding process. 
 This is because deep learning algorithms are designed to handle numerical data and can learn patterns and relationships within the data without the need for additional encoding.
-However, \cite{gorishniy2022EmbeddingsNumericalFeatures} has shown that in some cases, encoding numerical data can improve the performance of deep learning models. 
+However, \cite{gorishniy2022EmbeddingsNumericalFeatures} has shown that in some cases, encoding numerical data can improve the performance of deep learning \glspl{model}. 
 Encoding numerical data can be achieved through various methods such as normalization (see \autoref{sec:dataNormalization}), discretization, or using embeddings.
 
-Discretization techniques transform numerical features to categorical features. 
+%Die beiden abschnitte auslagern in eigenen abschnitt? (GGF nur embeddings auslagern?)
+Discretization techniques transform numerical features to categorical features, hence, quantitative data into qualitative data \cite{garcia2016BigDataPreprocessing}. 
 \cite{dougherty1995SupervisedUnsupervisedDiscretization} gives an overview on classical discretization techniques, such has equal interval width binning, where the continues values are divided and assign to certain amount of bins.
 A modern approach by researchers from NVIDIA \cite{dong2022GeneratingSyntheticData} invented a tokenizer specifically for tabular data with float numbers. 
 This tokenizer converts float numbers into a sequence of token IDs \cite{dong2022GeneratingSyntheticData}.
 
-In Embedding techniques values that should be encoded (\eg words) are mapped to a vector representation. 
+In Embedding techniques values that should be encoded (\eg words or tabular cell entries) are mapped to a vector representation. 
 This vector of real numbers tries to capture "semantic regularities in vector spaces" \cite[p. 2]{pilaluisa2022ContextualWordEmbeddings}.
 The goal of embeddings is to create a vector space, in which semantically similar values are also numerically similar \cite{pilaluisa2022ContextualWordEmbeddings}.
 It can be differentiated between static embeddings and contextualized embeddings. 
@@ -184,35 +131,73 @@ Static embeddings, such as Word2Vec \cite{mikolov2013DistributedRepresentationsW
 It is also possible to use the embedding layers to get a vector representation without learning, which can be seen as a "feature tokenization" \cite{zheng2022DiffusionModelsMissing, gorishniy2021RevisitingDeepLearning}.
 However, semantic similarity in a vector space cannot be achieved without any learning, so this embedding technique is more similar to a discretization/tokenization technique.
 
-
-%HIER WEITERMACHEN
-\cite{borisov2022DeepNeuralNetworks} provides a taxonomy for data learning for tabular data with "data transformation methods" into "single dim encodings" and "multi dim encodings" 
-two dimensions:\cite{borisov2022DeepNeuralNetworks}
-    1. single dimensional encoding
-        - categorical encoding (ordinal, label, one-hot, binary encoding, leave-one-out-encoding, hash bashed) %Explanation for each in the paper
-    2. multi-dimensional encoding 
-        - vime trains encoder learns a representations of cat and num features into homogeneous representation
-        - Supertml transforms tabular data into image format
+[TODO: Insert example for single-dim encoding in tabular data]
 
 \textbf{Multi-Dimensional Encodings:}
 Multi-Dimensional encoding techniques focuses on encoding an entire record (or table-row) into another representation \cite{borisov2022DeepNeuralNetworks}.
+The VIME framework \cite{yoon2020VIMEExtendingSuccess} uses a multilayer perceptron as an encoder that encodes a tabular input row into a latent representation, 
+similar to the encoder of famous (variational-) auto-encoders \cite{kingma2013AutoEncodingVariationalBayes} architectures.
+This latent representation is, like in embeddings, a learned representation learned through self-supervised learning tasks, feature vector estimation and mask vector estimation \cite{yoon2020VIMEExtendingSuccess}.
+\cite{borisov2022DeepNeuralNetworks} also lists other multi-dimensional encoding techniques, such as the works of \cite{zhu2021ConvertingTabularData} and \cite{sun2019supertml}.
+Both architectures transform tabular data into an image like format in order to make use of \glspl{cnn}.
 
+
+%     2. multi-dimensional encoding 
+%         - vime trains encoder learns a representations of cat and num features into homogeneous representation
+%         - Supertml transforms tabular data into image format
 
 \subsubsubsection{Data Normalization}
 \label{sec:dataNormalization} 
+
+Normalization techniques are applied to numerical columns and scales the values so that their distribution is adjusted \cite{garcia2016BigDataPreprocessing}.
+This is especially important in tabular data, where numerical features are likely having a different scale, \eg a column "age" could have a range of 1 to 100 and a column income could have a range from 0 to 1 million [TODO: Quelle finden].
+Normalization allows to scale each column to the same range (usually 0 to 1) while maintaining the overall distribution of each column \cite{izonin2022TwoStepDataNormalization}.
+With this, the sensitivity of \gls{model} to large values is reduced and the generalizability is increased.
+The most common normalization approaches are probably the StandardScaler and the MinMaxScaler.
+The StandardScaler normalizes a feature value $x_i$ according to the mean and standard distribution of the feature column, so it follows a normal distribution \cite{garcia2016BigDataPreprocessing, izonin2022TwoStepDataNormalization}.
+It can be defined as $x' = \frac{x_i-mean(x)}{std(x)}$, with $x'$ as the normalized $x_i$ value \cite{izonin2022TwoStepDataNormalization}.
+The MinMaxScaler on the other hand makes use of the maximum and minimum of each feature column and scales the values accordingly.
+It is defined as $x' = \frac{x_i - min(x)}{max(x) - min(x)}$ \cite{izonin2022TwoStepDataNormalization}.
+While the StandardScaler is usually used for data that follows a gaussian normal distribution, MinMaxScaler is better suited for arbitrary distributions [TODO: QUELLE finden].
+A more complex normalization technique addresses the problem, that numeric values in tabular data can follow distributions more complex than just a simple gaussian normal distribution \cite{zhao2022CTABGANEnhancingTabular, xu2019ModelingTabularData}.
+\cite{xu2019ModelingTabularData} introduces mode-specific normalization which models complex distributions with multiple simple gaussian distributions.
+\cite[p. 3-4]{xu2019ModelingTabularData} defines the mode-specific normalization technique in following way:
+
+\begin{enumerate}
+    \item For each continuos column $C_i$, estimate the number of modes $m_i$ by using a \gls{vgm} \cite{bishop2006PatternRecognitionMachine}. 
+    For example, in \autoref{fig:mode-specific-normalization} the \gls{vgm} estimates $m_i=3$, $\eta_1$, $\eta_2$ and $\eta_3$. 
+    The learned gaussian mixture is  
+    $\mathbb{P}_{C_i}(c_{i,j})=\sum_{k=1}^{3}\mu_k\mathcal{N}(c_{i,j};\eta_k, \sigma_k)$
+    with $\mu_k$ and $\sigma_k$ as weight and standard deviation of a mode respectively.
+    \item For each $c_{i,j}$ the probability is calculated of $c_{i,j}$ coming from each mode. 
+    In \autoref{fig:mode-specific-normalization}, $p_1$, $p_2$ and $p_3$ denote the probability densities, calculated as $p_k=\mu_k\mathcal{N}(c_{i,j};\eta_k;\sigma_k)$.
+    \item Given $p_1$, $p_2$ and $p_3$ for $c_{i,j}$ sample one mode and use it to normalize the value. 
+    In the example of \autoref{fig:mode-specific-normalization}, $p_3$ is most likely and is sampled.
+    The mode selection for $c_{i,j}$ is represented as a one-hot vector $\beta_{i,j}=[0,0,1]$ indicating that the third mode has been sampled.
+    The actual value $c_{i,j}$ is normalized as $\alpha_{i,j}=\frac{c_{i,j}-\eta_3}{4\sigma_3}$. 
+\end{enumerate}
+
+The normalized representation $r$ of $c_{i,j}$ will be the concatenation of $\alpha_{i,j}$ and $\beta_{i,j}$: 
+
+$r=\alpha_{i,j}\oplus\beta_{i,j}$
+
+
+
+% include image from paper
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/mode-normalization.png}
+    \caption{An example of mode-specific normalization [TODO: COPYRIGHT?] \cite[Figure 1, p. 4]{xu2019ModelingTabularData}}
+    \label{fig:mode-specific-normalization}
+  \end{figure}
+
 
 numerical:
 - min-max normalization
 - GMM-based normalization
 
 
-%- proper encoding of inputs (categorical in this paper) ahs a significant influence on models performance \cite{norris2012EvaluatingImpactCategorical}
-%different Datatypes require different preprocessing \cite{fan2020RelationalDataSynthesisa} meaningfully \cite{lederrey2022DATGANIntegratingExperta}
-%\cite{gorishniy2022EmbeddingsNumericalFeatures} shows that special encodings of numerical data influences the results of classification %vllt motivation? 
-"the embedding step has a substantial impact on the model effectiveness, and its proper design can be a game-changer in tabular DL"
-categorical:
-- ordinal encoding -> assign int to each category
-- one-hot -> binary vector for each category
+
 
 
 
@@ -225,6 +210,10 @@ categorical:
 
 
 \subsection{Synthetic Tabular Data Generation}
+
+- two competing objectives in generating synthetic data: \cite{little2021GenerativeAdversarialNetworksa}
+    1. high data utility \cite{little2021GenerativeAdversarialNetworksa}
+    2. low disclosure risk \cite{little2021GenerativeAdversarialNetworksa}
 
 --> eacg data point as "row in table", or "sample from unknown joint distribution"
 order of rows and columns does not carry any meaning \cite{somepalli2021SAINTImprovedNeural}
