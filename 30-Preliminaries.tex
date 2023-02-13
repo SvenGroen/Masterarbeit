@@ -9,7 +9,7 @@
 \label{ch:preliminaries-dataSynthesis-syntheticData}
 Synthetic data can be defined as "(...) artificially generated data, that are modelled on real data, with the same structure and properties as the original data (...)" \cite[p. 2]{kaloskampis2020SyntheticDataCivil} 
 but without containing any actual specific information or entries of the actual real data. 
-While first synthetic data approaches \cite{gelman1992InferenceIterativeSimulationa} focused on imputation techniques to generate synthetic data, the advent of deep learning has led to the topic gaining importance \cite{kowalczyk2022TaxonomyUseSynthetic, kaloskampis2020SyntheticDataCivil}
+While first synthetic data approaches \cite{gelman1992InferenceIterativeSimulation} focused on imputation techniques to generate synthetic data, the advent of deep learning has led to the topic gaining importance \cite{kowalczyk2022TaxonomyUseSynthetic, kaloskampis2020SyntheticDataCivil}
 The importance of data is growing rapidly [TODO: QUELLE FINDEN] but accessing and collecting real data is usually expensive [TODO: QUELLE FINDEN] or simply not possible due to the sensitivity of the data (\eg medical records) \cite{esteban2017RealvaluedMedicalTimea} or due to regulatory restrictions, such as the \gls{gdpr} \cite{european_commission_regulation_2016}.
 Synthetic data on the other hand is, compared to the collection of real data, cheap to generate \cite{leminh2021AirGenGANbasedSynthetica} and fulfils regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular}.
 
@@ -22,25 +22,14 @@ Synthetic data can also be used in situations where working with the real data i
 In software development, high quality test data is crucial for development but challenging and time consuming to generate \cite{whiting2008CreatingRealisticScenariobased}.
 Developers time to create such datasets is usually scarce and it might be the case that developers do not even have the permission to see the data, due to its sensitivity \cite{whiting2008CreatingRealisticScenariobased}.
 A synthetic data generation \gls{model} would possibly allow developers to generate test data with predefined characteristics and without it being restricted in any form.
- 
-
-
-
-
-Upcoming new deep learning architectures have shown remarkable performance in the last decade %Gan transformer zititeren
-they are able to generate synthetic data of many different data formats, such as images, video, music, ... %titieren
-
-
-
-
 
 
 \subsection{Tabular Data}
 \label{ch:preliminaries-dataSynthesis-tabularData}
 
-Tabular data is the most one of the most common forms of structured structured data \cite{hernandez2022SyntheticDataGeneration} used to store, classify and share information \cite{pilaluisa2022ContextualWordEmbeddings}.
+Tabular data is the most one of the most common forms of structured data \cite{hernandez2022SyntheticDataGeneration} used to store, classify and share information \cite{pilaluisa2022ContextualWordEmbeddings}.
 A table is made up of individual cell entries stored in rows and columns where rows can be seen as individual data points and columns are the different features \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}
-This format is the most common way to maintain massive databases \cite{esmaeilpour2022BidiscriminatorGANTabular, yoon2020VIMEExtendingSuccess} 
+This format is the most common way to maintain massive databases \cite{esmaeilpour2022BidiscriminatorGANTabular, yoon2020VIMEExtendingSuccess}.
 and is crucial for applications that store heterogeneous information such as demographics, medical or financial information \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}.
 Tabular data consists of multiple attribute types, such as categorical or continuous data types\cite{borisov2022DeepNeuralNetworks}.
 While continuous values are of quantitative nature and stored in a numerical format, categorical values are made up by one value out of a limited set of values \cite{lederrey2022DATGANIntegratingExperta, lane2003IntroductionStatistics}.
@@ -67,7 +56,8 @@ Since tabular data consists of multiple features, made up of a mixture of catego
 This makes is especially challenging for neural networks to work with since the correlations between the features is weaker because they often do not have any form of spatial or semantic relationship like image or text data has \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}.
 The third challenge is about the dependency on preprocessing. \cite{borisov2022DeepNeuralNetworks} highlights the importance of a preprocessing and explicit feature construction step that is necessary when working with tabular data in a deep learning context.
 This preprocessing step is crucial since it does not only strongly influences the performance of deep learning \glspl{model} \cite{gorishniy2022EmbeddingsNumericalFeatures} 
-it also introducing new challenges. Depending on the preprocessing strategy (\autoref{sec:preprocessing}) it is possible to create a very sparse feature matrix, create a synthetic ordinal ordering of a nominal variable or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
+it also introducing new challenges. 
+Depending on the preprocessing strategy (\autoref{sec:preprocessing}) it is possible to create a very sparse feature matrix, create a synthetic ordinal ordering of a nominal variable or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
 The last and fourth challenge concerns the importance of a single feature. In homogeneous data multiple features need to change in order to change the class of the data. 
 For heterogeneous tabular data a small change in one feature variable can already alter the class of the row. 
 \cite{borisov2022DeepNeuralNetworks} illustrates this with the example of an image, where multiple pixels (\ie features) need to change in a coordinated manner in order to change the content (\ie class) of the image.
@@ -142,20 +132,19 @@ This latent representation is, like in embeddings, a learned representation lear
 Both architectures transform tabular data into an image like format in order to make use of \glspl{cnn}.
 
 
-%     2. multi-dimensional encoding 
-%         - vime trains encoder learns a representations of cat and num features into homogeneous representation
-%         - Supertml transforms tabular data into image format
-
-\subsubsubsection{Data Normalization}
+\subsubsubsection{Data Normalization and Standardization}
 \label{sec:dataNormalization} 
 
-Normalization techniques are applied to numerical columns and scales the values so that their distribution is adjusted \cite{garcia2016BigDataPreprocessing}.
+Normalization and standardization techniques are applied to numerical columns and scales the values so that their distribution is adjusted \cite{garcia2016BigDataPreprocessing}.
 This is especially important in tabular data, where numerical features are likely having a different scale, \eg a column "age" could have a range of 1 to 100 and a column income could have a range from 0 to 1 million [TODO: Quelle finden].
-Normalization allows to scale each column to the same range (usually 0 to 1) while maintaining the overall distribution of each column \cite{izonin2022TwoStepDataNormalization}.
-With this, the sensitivity of \gls{model} to large values is reduced and the generalizability is increased.
-The most common normalization approaches are probably the StandardScaler and the MinMaxScaler.
-The StandardScaler normalizes a feature value $x_i$ according to the mean and standard distribution of the feature column, so it follows a normal distribution \cite{garcia2016BigDataPreprocessing, izonin2022TwoStepDataNormalization}.
-It can be defined as $x' = \frac{x_i-mean(x)}{std(x)}$, with $x'$ as the normalized $x_i$ value \cite{izonin2022TwoStepDataNormalization}.
+Normalization allows to scale each column a similar range (usually 0 to 1, or -1 to 1) while maintaining the overall distribution of each column \cite{izonin2022TwoStepDataNormalization}.
+Standardization on the hand rescales the data so it follow a normal distribution with mean 0 and standard deviation 1 \cite{scikit-learnPreprocessingData}.
+Standardization and Normalization of values is especially important if the data will be used in a machine learning context, where machine learning models might behave unexpectedly if 
+the features do not look similar to a gaussian distribution with zero mean and unit variance or are ranged between 0 and 1 \cite{scikit-learn, scikit-learnPreprocessingData}.
+Through this data rescaling, the sensitivity of \gls{model} to large values is reduced and the generalizability is increased \cite{izonin2022TwoStepDataNormalization}.
+The most common standardization and normalization approaches are probably the StandardScaler and the MinMaxScaler, respectively.
+The StandardScaler standardizes a feature value $x_i$ according to the mean and standard distribution of the feature column, so it follows a normal distribution \cite{garcia2016BigDataPreprocessing, izonin2022TwoStepDataNormalization}.
+It can be defined as $x' = \frac{x_i-mean(x)}{std(x)}$, with $x'$ as the standardized $x_i$ value \cite{izonin2022TwoStepDataNormalization}.
 The MinMaxScaler on the other hand makes use of the maximum and minimum of each feature column and scales the values accordingly.
 It is defined as $x' = \frac{x_i - min(x)}{max(x) - min(x)}$ \cite{izonin2022TwoStepDataNormalization}.
 While the StandardScaler is usually used for data that follows a gaussian normal distribution, MinMaxScaler is better suited for arbitrary distributions [TODO: QUELLE finden].
@@ -181,8 +170,6 @@ The normalized representation $r$ of $c_{i,j}$ will be the concatenation of $\al
 
 $r=\alpha_{i,j}\oplus\beta_{i,j}$
 
-
-
 % include image from paper
 \begin{figure}[h]
     \centering
@@ -192,72 +179,60 @@ $r=\alpha_{i,j}\oplus\beta_{i,j}$
   \end{figure}
 
 
-numerical:
-- min-max normalization
-- GMM-based normalization
-
-
-
-
-
-
-
-
-
-
-
-
-
+Another approach to standardize the range of a column between 0 and 1 is a Quantile-Transformation, a non-linear transformation \cite{scikit-learnPreprocessingData, kotelnikov2022TabDDPMModellingTabular}.
+The Quantile-transformation allows to map all values of a random variable into an desired output distribution, such as the uniform or normal distribution, 
+using the quantile function on the inverse cumulative distribution of the random variable. This transformation preserves the rank order of the values but distorts correlations and distances within and across features \cite{scikit-learnPreprocessingData}.
 
 \subsection{Synthetic Tabular Data Generation}
 
-- two competing objectives in generating synthetic data: \cite{little2021GenerativeAdversarialNetworksa}
-    1. high data utility \cite{little2021GenerativeAdversarialNetworksa}
-    2. low disclosure risk \cite{little2021GenerativeAdversarialNetworksa}
+Generative models have recently received a lot of attention, thanks to their impressive results generating a variety of data formats, 
+such as images \cite{ho2020DenoisingDiffusionProbabilistic, dhariwal2021DiffusionModelsBeat, rombach2022HighResolutionImageSynthesis}, videos \cite{ho2022VideoDiffusionModels, Gen1Runway}, text \cite{radfordImprovingLanguageUnderstanding, 2022ChatGPTOptimizingLanguage} or music \cite{agostinelli2023MusicLMGeneratingMusic, martirosRiffusion}.
 
---> eacg data point as "row in table", or "sample from unknown joint distribution"
-order of rows and columns does not carry any meaning \cite{somepalli2021SAINTImprovedNeural}
+While synthetic data generation can be applied to various types of data, generating synthetic tabular data is a challenging task due to the complexity of the underlying joint distributions between variables.
+This work adapts the formal definition of the tabular data generation adapted from \cite[p. 2]{xu2019ModelingTabularData}:
 
+\begin{displayquote}
+    A data synthesizer $G$ is trained on a table $T$ and then used to generate a synthetic table $T_{syn}$. % Vllt die definition einer tabelle nach oben packen und von oben übernehmen?
+    $T$ consists of $N_c$ continuos columns ${C_1, ..., C_{N_c}}$ and $N_d$ categorical columns (or a discrete representation of it) ${D_1, ..., D_{N_d}}$
+    Each column is considered to be a random variable and follows an unknown joint distribution $\mathbb{P}(C_{1:N_c},D_{1:N_d})$.
+    One row $r_j=\{c_{1,j}, ...,c_{N_c,j}, d_{1,j}, ...,d_{N_d,j}\}$, $j \in\{1, ..., n\}$, is one observation from the joint distribution.
+    $T$ is partitioned into a training set $T_{train}$ and test set $T_{test}$. 
+    The synthesizer $G$ is trained on $T_{train}$ and afterwards used to sample independently individual rows to create $T_{syn}$.
+\end{displayquote}
 
-- Process or data driven methods \cite{goncalves2020GenerationEvaluationSynthetic}
-    - Process driven
-        - Simulation models \cite{kowalczyk2022TaxonomyUseSynthetic}
-    - Data driven
-        - Data Augmentation \cite{kowalczyk2022TaxonomyUseSynthetic}
-        - statistical distributions \cite{kowalczyk2022TaxonomyUseSynthetic}
-        - ML/DL- based Approaches \cite{kowalczyk2022TaxonomyUseSynthetic}
+During the generation of synthetic tabular data there are two competing objectives, high data utility and low disclosure risk.
+Data utility is concerned with how well the synthetic data accurately reflects the real data in terms of its underlying patterns and relationships.
+Low disclosure risk on the other hand is concerned with the preservation of privacy and confidentiality of the information in the real training dataset $T_{train}$ \cite{little2021GenerativeAdversarialNetworksa}. 
+
+Tabular data synthesis approaches can be summarized into Process and data driven methods \cite{goncalves2020GenerationEvaluationSynthetic}.
+Process driven models focus on simulating real world processes and gather data during that simulation to create the synthetic dataset \cite{kowalczyk2022TaxonomyUseSynthetic}.
+On the other hand, data driven approaches aim to generate synthetic data based on already existing real-world dataset \cite{kowalczyk2022TaxonomyUseSynthetic}.
+This can be achieved by augmenting the existing dataset, \ie applying transformations to the existing datapoints to generate new datapoints \cite{kowalczyk2022TaxonomyUseSynthetic}s.
+Another technique to generate synthetic data is to simply sample from the individual feature distributions of a dataset to generate new synthetic data \cite{kowalczyk2022TaxonomyUseSynthetic}.
+Lastly, machine learning and deep learning algorithms can be used to learn the underlying joint distributions of the real data to generate new synthetic data \cite{kowalczyk2022TaxonomyUseSynthetic}. 
 
 %challanges
-interdependencies between variables must be captures \cite{lederrey2022DATGANIntegratingExperta}
-danger of overfitting and generelize relationships between columns which only are present in training data but not in unseen data \cite{lederrey2022DATGANIntegratingExperta}
-syn data generation can help imbalance problem \cite{borisov2022DeepNeuralNetworks}
+The synthesis of tabular data is, compared to other data types, especially challenging due to its heterogeneity, potential weak correlations among feature and dependency on preprocessing \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess, gorishniy2022EmbeddingsNumericalFeatures}.
+To create a realistic synthetic dataset interdependencies that may exists between variables must be captured and 
+it is possible that the \gls{model} overfits on the training data and generalizes relationships between features that are only present in training but not test data \cite{lederrey2022DATGANIntegratingExperta}
+In addition to that, tabular data columns can follow complex distributions, that make the synthesization challenging.
+\cite{zhao2022CTABGANEnhancingTabular} identifies the following four properties of tabular data:
 
+\begin{enumerate}
+    \item Single Gaussian variables: Data where its distribution follows a gaussian distribution \cite{zhao2022CTABGANEnhancingTabular}.
+    \item Mixed data type variables: A single column can contain a mix of continuos and categorical values. 
+    For instance, a "loan" column could hold information about the size of an individuals loan.
+    The values in this column are mostly positive float values but can also take the value "-1" which indicates, that this person did not get approach for a loan.
+    Such a special categorical value in an otherwise numerical column need to be considered when working with this column \cite{zhao2022CTABGANEnhancingTabular}.
+    \item Long tail distributions: In real world data (especially sales data), it can occur that most occur "near the initial value of a distribution and rare cases towards the end" \cite[p. 3]{zhao2022CTABGANEnhancingTabular}.
+    This results in a tail-like distribution.
+    \item Skewed multi-mode continuous variables: Complex numerical distributions do not necessarily follow a single gaussian distributions.
+    It is possible for their distribution to consist of multiple unknown distributions that are potential skewed as well. 
+    Their conjunction as a whole makes up the complex distribution \cite{zhao2022CTABGANEnhancingTabular}.
+\end{enumerate}
 
+A successful tabular data generator should be able to recreate such properties of real data in their synthetic data counterpart.
 
-\cite{zhao2022CTABGANEnhancingTabular} identifies four complex distributions that can occur when working with real world tabular data.
-underlying properties of tabular data: \cite{zhao2022CTABGANEnhancingTabular}
-- Single Gaussian variables:
-    Single mode Gaussian distributions are very common.
-    The distribution of real data is close to a single mode Gaussian distribution
-
-Mixed data type variables:\cite{zhao2022CTABGANEnhancingTabular}
-    a variable can be a mix of these two types + missing values. The Mortgage variable from the Loan dataset is a good example of mixed variable
-    According to the data description, a loan holder can either have no mortgage (0 value) or a mortgage (any positive value). 
-    In appearance, this variable is not a categorical type due to the numeric nature of the data. 
-    So all 4 SOTA algorithms treat this variable as continuous type without capturing the special meaning of the value zero. 
-    Hence, all 4 algorithms generate a value around 0 instead of exact 0. And the negative values for Mortgage have no/wrong meaning in the real world
-
-Long tail distributions:\cite{zhao2022CTABGANEnhancingTabular}
-    real world data can have long tail distributions where most of the occurrences happen near the initial value of the distribution, and rare cases towards the end
-    Real data clearly has 99\% of occurrences happening at the start of the range, 
-    but the distribution extends until around 25000. 
-    In comparison none of the synthetic data generators is able to learn and imitate this behavior.
-
-Skewed multi-mode continuous variables:\cite{zhao2022CTABGANEnhancingTabular}
-    The term multimode is extended from Variational Gaussian Mixtures (VGM)
-    This is not a typical Gaussian distribution. There is an obvious peak
-    with several other lower peaks
-    This behavior is difficult to capture for the SOTA data generator
 
 
 %-------------------------------------------------------------------------

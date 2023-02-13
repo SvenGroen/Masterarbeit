@@ -95,3 +95,51 @@
 % % - and can be combined with real data for training purposes \cite{leminh2021AirGenGANbasedSynthetica}
 
 % % Challenges of synthetic data (privacy, scalability, availability, etc.)
+
+
+
+- two competing objectives in generating synthetic data: \cite{little2021GenerativeAdversarialNetworksa}
+    1. high data utility \cite{little2021GenerativeAdversarialNetworksa}
+    2. low disclosure risk \cite{little2021GenerativeAdversarialNetworksa}
+
+
+
+    - Process or data driven methods \cite{goncalves2020GenerationEvaluationSynthetic}
+    - Process driven
+        - Simulation models \cite{kowalczyk2022TaxonomyUseSynthetic}
+    - Data driven
+        - Data Augmentation \cite{kowalczyk2022TaxonomyUseSynthetic}
+        - statistical distributions \cite{kowalczyk2022TaxonomyUseSynthetic}
+        - ML/DL- based Approaches \cite{kowalczyk2022TaxonomyUseSynthetic}
+
+        interdependencies between variables must be captures \cite{lederrey2022DATGANIntegratingExperta}
+        danger of overfitting and generelize relationships between columns which only are present in training data but not in unseen data \cite{lederrey2022DATGANIntegratingExperta}
+
+
+
+
+        \cite{zhao2022CTABGANEnhancingTabular} identifies four complex distributions that can occur when working with real world tabular data.
+        underlying properties of tabular data: \cite{zhao2022CTABGANEnhancingTabular}
+        - Single Gaussian variables:
+            Single mode Gaussian distributions are very common.
+            The distribution of real data is close to a single mode Gaussian distribution
+        
+        Mixed data type variables:\cite{zhao2022CTABGANEnhancingTabular}
+            a variable can be a mix of these two types + missing values. The Mortgage variable from the Loan dataset is a good example of mixed variable
+            According to the data description, a loan holder can either have no mortgage (0 value) or a mortgage (any positive value). 
+            In appearance, this variable is not a categorical type due to the numeric nature of the data. 
+            So all 4 SOTA algorithms treat this variable as continuous type without capturing the special meaning of the value zero. 
+            Hence, all 4 algorithms generate a value around 0 instead of exact 0. And the negative values for Mortgage have no/wrong meaning in the real world
+        
+        Long tail distributions:\cite{zhao2022CTABGANEnhancingTabular}
+            real world data can have long tail distributions where most of the occurrences happen near the initial value of the distribution, and rare cases towards the end
+            Real data clearly has 99\% of occurrences happening at the start of the range, 
+            but the distribution extends until around 25000. 
+            In comparison none of the synthetic data generators is able to learn and imitate this behavior.
+        
+        Skewed multi-mode continuous variables:\cite{zhao2022CTABGANEnhancingTabular}
+            The term multimode is extended from Variational Gaussian Mixtures (VGM)
+            This is not a typical Gaussian distribution. There is an obvious peak
+            with several other lower peaks
+            This behavior is difficult to capture for the SOTA data generator
+        
