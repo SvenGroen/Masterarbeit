@@ -239,8 +239,63 @@ A successful tabular data generator should be able to recreate such properties o
 \section{Deep Learning Architectures}
 \label{ch:preliminaries-deepLearningArchitectures}
 
+Deep learning has rapidly become a dominant force in artificial intelligence, revolutionizing various fields including computer vision, natural language processing, and data generation. 
+Complex architectures made up of many layers of artificial neural networks are used to build deep learning models.
+These architectures have enabled the creation of highly accurate and efficient models that are capable of processing vast amounts of data. 
+In recent years, the development of new deep learning architectures has been a key area of research, leading to the creation of powerful models.
+This section will start with a high-level introduction into the most important architectural building blocks of a neural network.
+Afterwards the most important deep learning \gls{model} architectures for generating data are presented.
+
 \subsection{Neural Networks}
 \label{ch:preliminaries-deepLearningArchitectures-neuralNetworks}
+
+The most basic neural network is called a perceptron \cite{rosenblatt1958PerceptronProbabilisticModel}.
+It consists of a single input layer that is connected to an output node.
+Each input node is connected with the output node via weight edges.
+For all inputs, the input value is multiplied with each respective weight.
+The sum of all input-weight multiplication serves as the input to an activation function, which is different depending of the task at hand.
+The output is the prediction of the perceptron which is compared to the actual result, the label, and an error is calculated.
+This error is used later on to update the weights of the individual nodes via backpropagation \cite{aggarwal2018NeuralNetworksDeep}.
+The output of one node can also serve as the input to another node, so multiple layers of nodes are created.
+This is refereed to as a \gls{mlp} or feed-forward neural network, 
+because the information flows forward from input through the multiple layers in the middle (also called hidden layers) to the output \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
+An \gls{mlp} tries to approximate some function $f*$ by defining a mapping $y=f(x;\theta)$ by learning the values of the parameters $\theta$ (\ie the weights) that best approximate $f*$ \cite{Goodfellow-et-al-2016}.
+A simple \gls{mlp} is already able to learn any "reasonable" function, which is why they are also considered to be universal function approximators \cite{aggarwal2018NeuralNetworksDeep, hornik1989MultilayerFeedforwardNetworks}.
+
+Convolutional networks, or \glspl{cnn} \cite{lecun1998GradientbasedLearningApplied}, are a specialized type of neural network.
+As their name indicate, they perform convolutions on the data.
+A convolution can be defined as "a dot-product operation between a grid-structured set of weights and similar grid-structured inputs drawn from
+different spatial localities in the input volume" \cite[p. 316]{aggarwal2018NeuralNetworksDeep}.
+They perform exceptionally well on data with a grid-like topology, with strong spatial dependencies, such as image or time-series data \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
+In a typical convolutional network, a layer starts by performing multiple convolution operations in parallel on the data.
+The linear activations that are produced by the convolutions are send through a nonlinear activation function (usually a \gls{relu}).
+Lastly, a pooling function is applied to the output of the activation function.
+A pooling function reduces the spatial size of the created feature maps while retaining their essential features \cite{Goodfellow-et-al-2016, aggarwal2018NeuralNetworksDeep}.
+It can be described as a type of "summary statistic of the nearby outputs" \cite[p. 335]{Goodfellow-et-al-2016}.
+Pooling allows the features extracted by the \gls{cnn} to be less sensitive to changes in the position of the input data.
+This property is known as translation invariance and is one of the reasons why \glspl{cnn} perform so well with data formats that have local spatial dependencies \cite{Goodfellow-et-al-2016, aggarwal2018NeuralNetworksDeep}.
+
+
+In feed-forward neural networks information flows forward through the network from input to output node, hence, there are no internal connections that allow
+the output of the model to be fed back into the network as inputs \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
+When such connections are added to the network architecture, the resulting models are referred to as \glspl{rnn} \cite{rumelhart1986LearningRepresentationsBackpropagating}.
+\Glspl{rnn} are design to process sequential data, like sentences or time-series data, where the size of the sequence does not have to be fixed.
+In \glspl{cnn} the learned parameters are shared by using the same convolution kernel on each subset of neighbouring input data at each time step. 
+As a result, a succession of output values is produced, each of which is dependent on a few close input values. 
+On the other hand, \glspl{rnn} share parameters differently since each output value depends on the predecessor output of it it. 
+This enables parameter sharing via a deep computational graph by enabling the same update algorithm to be applied to all outputs.
+When processing a sequence, \eg a sentence, an \gls{rnn} receives one datapoint,\eg a word, at each timestep.
+The network itself has a so called hidden-state that is kept throughout all timesteps and changes with each timestep.
+This however means, that the output $y_3$ of the input at $x_{t=3}$ depends on the hidden-states $h_0$ through $h_3$ and input $x_0$ through $x_3$.
+As a result, the computational graph where the backpropagation is performed on increases as well \cite{aggarwal2018NeuralNetworksDeep}.
+A large computation graph introduces new practical issues, such as an increased computation time and during the training useful information might not be propagated from output to the end of the model,
+due to the makes the vanishing and exploding gradient phenomenon \cite{aggarwal2018NeuralNetworksDeep}.
+To address these issue, further improvements to the architecture have been made, such as \glspl{lstm} \cite{hochreiter1997LongShortTermMemory} or \glspl{gru} \cite{cho2014PropertiesNeuralMachine}.
+
+
+
+
+
 
 - success of NN \& use of special architectures (rnn, cnn, etc.) in variety of domains \cite{borisov2022DeepNeuralNetworks}
 - DL works well for homogeneous data \cite{borisov2022DeepNeuralNetworks}
@@ -250,6 +305,7 @@ A successful tabular data generator should be able to recreate such properties o
 % --> recurrent neural networks
 % --> Residual neural networks
 % --> Attention mechanism
+
 
 \section{Generative Algorithms}
 \label{ch:preliminaries-generativeAlgorithms}
