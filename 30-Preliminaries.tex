@@ -275,7 +275,6 @@ It can be described as a type of "summary statistic of the nearby outputs" \cite
 Pooling allows the features extracted by the \gls{cnn} to be less sensitive to changes in the position of the input data.
 This property is known as translation invariance and is one of the reasons why \glspl{cnn} perform so well with data formats that have local spatial dependencies \cite{Goodfellow-et-al-2016, aggarwal2018NeuralNetworksDeep}.
 
-
 In feed-forward neural networks information flows forward through the network from input to output node, hence, there are no internal connections that allow
 the output of the model to be fed back into the network as inputs \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
 When such connections are added to the network architecture, the resulting models are referred to as \glspl{rnn} \cite{rumelhart1986LearningRepresentationsBackpropagating}.
@@ -292,19 +291,21 @@ A large computation graph introduces new practical issues, such as an increased 
 due to the makes the vanishing and exploding gradient phenomenon \cite{aggarwal2018NeuralNetworksDeep}.
 To address these issue, further improvements to the architecture have been made, such as \glspl{lstm} \cite{hochreiter1997LongShortTermMemory} or \glspl{gru} \cite{cho2014PropertiesNeuralMachine}.
 
+Over time, additional architectural design choices have been discovered that have led to further improvements and solved other issues that emerged during the development of neural networks.
+One such design is the ResNet \cite{he2016DeepResidualLearning} which introduced residual connections between layers \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
+The connections, also called skip connections, allowed that information can be copied over layers and allows the backpropagated gradient information to skip certain layers, if necessary \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
+This is achieved by adding the output of one layer directly to the output of a later layer, bypassing one or more intermediate layers.
+During backpropagation of the gradient, a very small gradient can flow this way more easily back through the network,  alleviating the vanishing gradient problem and enabling better learning capabilities \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
+The decision of which layers to skip is learned by the model itself during the training through the backpropagation algorithm \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
 
-
-
-
-
-- success of NN \& use of special architectures (rnn, cnn, etc.) in variety of domains \cite{borisov2022DeepNeuralNetworks}
-- DL works well for homogeneous data \cite{borisov2022DeepNeuralNetworks}
-% brief overview of neural networks (perceptron, multilayer perceptron)
-% special neural networks 
-% --> convolutional neural networks
-% --> recurrent neural networks
-% --> Residual neural networks
-% --> Attention mechanism
+Lastly, inspired by the human cognitive capabilities to focus on specific parts of an input, attention mechanisms have been introduced \cite{niu2021ReviewAttentionMechanism, aggarwal2018NeuralNetworksDeep}.
+The implementation of attention in neural networks tries to address the problem of information overload, and is supposed to enable the network to allocate their resources \cite{niu2021ReviewAttentionMechanism}.
+An attention mechanism has been successfully applied to various tasks in different domains, such as computer vision or natural language processing \cite{niu2021ReviewAttentionMechanism}.
+The architectural realization of attention is realized differently, depending on the task at hand \cite{aggarwal2018NeuralNetworksDeep}.
+The attention mechanism in computer vision involves weighting different regions of the image based on their relevance to the task \cite{aggarwal2018NeuralNetworksDeep}. 
+This can be achieved through techniques such as spatial attention, channel attention or temporal attention \cite{guo2022AttentionMechanismsComputer}.
+In natural language processing attention mechanism try to improve to capture the meaning of a sentence \cite{niu2021ReviewAttentionMechanism}. 
+For instance, this has been achieved through the introduction of a context vector in an \gls{rnn} encoder-decoder \cite{DBLP:journals/corr/BahdanauCB14} or through self-attention \cite{vaswani2017AttentionAllYou} (see \autoref{ch:preliminaries-generativeAlgorithms-transformers} for a detailed explanation on self-attention).
 
 
 \section{Generative Algorithms}
