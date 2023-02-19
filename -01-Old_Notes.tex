@@ -142,4 +142,23 @@
             This is not a typical Gaussian distribution. There is an obvious peak
             with several other lower peaks
             This behavior is difficult to capture for the SOTA data generator
+        #
+
+AUTOENCODERS:
+
+        - autoencoders are generalization of pca, that does not find a low dim hyperplane in which the data lies but learns a non-linear manifold.
+
+
+        from \cite{kingma2013AutoEncodingVariationalBayes}
         
+        Figure 1 from \cite{Bank2020Autoencoders}
+        
+        % what are autoencoders
+        encoder transforms input into latent space which is reconstructed by decoder \cite{razghandi2022VariationalAutoencoderGenerativea}
+        --> suffer from "lack of regularity in latent space \cite{razghandi2022VariationalAutoencoderGenerativea}
+        
+        % what are variational autoencoders
+        use the KL divergence and encode a gaussian distribution in latent space \cite{razghandi2022VariationalAutoencoderGenerativea}
+        % how do they work
+        % mathematical formulation
+        % Advantages / Problems / Challenges

@@ -249,7 +249,7 @@ Afterwards the most important deep learning \gls{model} architectures for genera
 \subsection{Neural Networks}
 \label{ch:preliminaries-deepLearningArchitectures-neuralNetworks}
 
-The most basic neural network is called a perceptron \cite{rosenblatt1958PerceptronProbabilisticModel}.
+The most basic neural network is called a perceptron \autoref{fig:perceptron} \cite{rosenblatt1958PerceptronProbabilisticModel}.
 It consists of a single input layer that is connected to an output node.
 Each input node is connected with the output node via weight edges.
 For all inputs, the input value is multiplied with each respective weight.
@@ -257,13 +257,32 @@ The sum of all input-weight multiplication serves as the input to an activation 
 The output is the prediction of the perceptron which is compared to the actual result, the label, and an error is calculated.
 This error is used later on to update the weights of the individual nodes via backpropagation \cite{aggarwal2018NeuralNetworksDeep}.
 The output of one node can also serve as the input to another node, so multiple layers of nodes are created.
-This is refereed to as a \gls{mlp} or feed-forward neural network, 
+This is refereed to as a \gls{mlp} or feed-forward neural network \autoref{fig:mlp}, 
 because the information flows forward from input through the multiple layers in the middle (also called hidden layers) to the output \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
-An \gls{mlp} tries to approximate some function $f*$ by defining a mapping $y=f(x;\theta)$ by learning the values of the parameters $\theta$ (\ie the weights) that best approximate $f*$ \cite{Goodfellow-et-al-2016}.
+An \gls{mlp} tries to approximate some function $f^*$ by defining a mapping $y=f(x;\theta)$ by learning the values of the parameters $\theta$ (\ie the weights) that best approximate $f^*$ \cite{Goodfellow-et-al-2016}.
 A simple \gls{mlp} is already able to learn any "reasonable" function, which is why they are also considered to be universal function approximators \cite{aggarwal2018NeuralNetworksDeep, hornik1989MultilayerFeedforwardNetworks}.
 
+
+\begin{figure}
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{images/perceptron.png}
+      \caption{Perceptron} \label{fig:perceptron}
+    \end{subfigure}%
+    \hspace*{\fill}   % maximize separation between the subfigures
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{images/mlp.png}
+      \caption{multilayer perceptron} \label{fig:mlp}
+    \end{subfigure}%
+    \hspace*{\fill}   % maximizeseparation between the subfigures
+  \caption{Overview Neural Networks} \label{fig:NN_Overview}
+\end{figure}
+
+
+
+
+
 Convolutional networks, or \glspl{cnn} \cite{lecun1998GradientbasedLearningApplied}, are a specialized type of neural network.
-As their name indicate, they perform convolutions on the data.
+As their name indicate, they perform convolutions on the data \autoref{fig:cnns}.
 A convolution can be defined as "a dot-product operation between a grid-structured set of weights and similar grid-structured inputs drawn from
 different spatial localities in the input volume" \cite[p. 316]{aggarwal2018NeuralNetworksDeep}.
 They perform exceptionally well on data with a grid-like topology, with strong spatial dependencies, such as image or time-series data \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
@@ -276,7 +295,7 @@ Pooling allows the features extracted by the \gls{cnn} to be less sensitive to c
 This property is known as translation invariance and is one of the reasons why \glspl{cnn} perform so well with data formats that have local spatial dependencies \cite{Goodfellow-et-al-2016, aggarwal2018NeuralNetworksDeep}.
 
 In feed-forward neural networks information flows forward through the network from input to output node, hence, there are no internal connections that allow
-the output of the model to be fed back into the network as inputs \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
+the output of the model to be fed back into the network as inputs \autoref{fig:rnns} \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
 When such connections are added to the network architecture, the resulting models are referred to as \glspl{rnn} \cite{rumelhart1986LearningRepresentationsBackpropagating}.
 \Glspl{rnn} are design to process sequential data, like sentences or time-series data, where the size of the sequence does not have to be fixed.
 In \glspl{cnn} the learned parameters are shared by using the same convolution kernel on each subset of neighbouring input data at each time step. 
@@ -292,11 +311,30 @@ due to the makes the vanishing and exploding gradient phenomenon \cite{aggarwal2
 To address these issue, further improvements to the architecture have been made, such as \glspl{lstm} \cite{hochreiter1997LongShortTermMemory} or \glspl{gru} \cite{cho2014PropertiesNeuralMachine}.
 
 Over time, additional architectural design choices have been discovered that have led to further improvements and solved other issues that emerged during the development of neural networks.
-One such design is the ResNet \cite{he2016DeepResidualLearning} which introduced residual connections between layers \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
+One such design is the ResNet \cite{he2016DeepResidualLearning} which introduced residual connections between layers \autoref{fig:resnet} \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
 The connections, also called skip connections, allowed that information can be copied over layers and allows the backpropagated gradient information to skip certain layers, if necessary \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
 This is achieved by adding the output of one layer directly to the output of a later layer, bypassing one or more intermediate layers.
 During backpropagation of the gradient, a very small gradient can flow this way more easily back through the network,  alleviating the vanishing gradient problem and enabling better learning capabilities \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
 The decision of which layers to skip is learned by the model itself during the training through the backpropagation algorithm \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
+
+\begin{figure}
+    \begin{subfigure}{0.31\textwidth}
+      \includegraphics[width=\linewidth]{images/cnns.png}
+      \caption{Convolutional neural networks} \label{fig:cnns}
+    \end{subfigure}%
+    \hspace*{\fill}   % maximize separation between the subfigures
+    \begin{subfigure}{0.31\textwidth}
+      \includegraphics[width=\linewidth]{images/rnns.png}
+      \caption{recurrent neural network} \label{fig:rnns}
+    \end{subfigure}%
+    \hspace*{\fill}   % maximizeseparation between the subfigures
+    \begin{subfigure}{0.31\textwidth}
+        \includegraphics[width=\linewidth]{images/resnet.png}
+        \caption{resudzak betwirj} \label{fig:resnet}
+      \end{subfigure}%
+    \hspace*{\fill}   % maximizeseparation between the subfigures
+  \caption{Overview Neural Network Architectures} \label{fig:NN_architectures_Overview}
+\end{figure}
 
 Lastly, inspired by the human cognitive capabilities to focus on specific parts of an input, attention mechanisms have been introduced \cite{niu2021ReviewAttentionMechanism, aggarwal2018NeuralNetworksDeep}.
 The implementation of attention in neural networks tries to address the problem of information overload, and is supposed to enable the network to allocate their resources \cite{niu2021ReviewAttentionMechanism}.
@@ -308,29 +346,141 @@ In natural language processing attention mechanism try to improve to capture the
 For instance, this has been achieved through the introduction of a context vector in an \gls{rnn} encoder-decoder \cite{DBLP:journals/corr/BahdanauCB14} or through self-attention \cite{vaswani2017AttentionAllYou} (see \autoref{ch:preliminaries-generativeAlgorithms-transformers} for a detailed explanation on self-attention).
 
 
-\section{Generative Algorithms}
-\label{ch:preliminaries-generativeAlgorithms}
+\section{Deep generative Models}
+\label{ch:preliminaries-generativeMlgorithms}
 
-\subsection{Autoencoders}
-\label{ch:preliminaries-generativeAlgorithms-variationalAutoencoders}
+Deep generative \glspl{model} have revolutionized the field of artificial intelligence and machine learning by generating new and original data based on existing patterns and structures. 
+Generative models try to learn a joint distribution over all the available variables \cite{kingma2019IntroductionVariationalAutoencoders}, also called the generative modeling problem \cite{goodfellow2020GenerativeAdversarialNetworks}.
+Formally, in generative modeling training examples $x$ are drawn from an unkonwn distribution $p_{data}(x)$ and a generative modeling algorithm is trained to learn a distribution $p_{model}(x;\theta)$ that approximates $p_{data}(x)$ as closely as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
+$\theta$ are the models parameters that determine the models output and usually learned by searching for $\theta$ values that result in $p_{model}$ to be as similar to $p_{data}$ as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
+Several powerful generative modeling approaches with different architectures have emerged, each with its own strengths and weaknesses. 
+This section will explore four of the most popular approaches: variational autoencoders, generative adversarial networks, transformers, and diffusion models. [TODO: label auf section]
 
-from \cite{kingma2013AutoEncodingVariationalBayes}
+\subsection{Variational Autoencoders}
+\label{ch:preliminaries-generativeAlgorithms-variationalAutoencoders} 
 
-Figure 1 from \cite{razghandi2022VariationalAutoencoderGenerativea}
+In order to understand \glspl{vae} \cite{kingma2013AutoEncodingVariationalBayes}, an introduction to vanilla autoencoders is required.
+Autoencoders, firstly introduced in \cite{rumelhart1986LearningInternalRepresentations}, are a neural network architecture, designed to generate a copy of the input \cite{Goodfellow-et-al-2016, Bank2020Autoencoders}.
+This is done by compressing the original input $x$ into a meaningful representation by constricting the number of nodes in the intermediate hidden layer \cite{aggarwal2018NeuralNetworksDeep, Bank2020Autoencoders}, also called bottleneck.
+\autoref{fig:ae} shows that an autoencoder consists of two deep-learning modules, the encoder and the decoder.
+The encoder function (or generative model \cite{kingma2019IntroductionVariationalAutoencoders}), $z=f(x)$ receives an input $x$ and creates a latent representation (also called "code" \cite{aggarwal2018NeuralNetworksDeep}) with a dimensionality smaller than $x$ \cite{Goodfellow-et-al-2016, Bank2020Autoencoders}.
+The decoder (or recognition model \cite{kingma2019IntroductionVariationalAutoencoders}) receives the latent representation $z$ and tries to reconstruct the original input, $r=g(z)$ with the same dimensionality as $x$ \cite{Goodfellow-et-al-2016}.
+In order for the autoencoder to learn and to optimize the models parameters, a loss $L$ is calculated by applying a reconstruction loss function, that measures how close the reconstruction is to its original counterpart \cite{Bank2020Autoencoders, maheshwari2022AutoencoderIssuesChallenges}.
+The reconstruction loss depends on the use case, for instance, it could be the Mean-squared error between $x$ and $r$, $L=\sum_{i=1}^{N}(x_i-r_i)^2$ for $N$ features in $x$, \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
+Since $z$ is restricted in dimensionality, a simple copying from input to output, \ie $g(f(x))=x$, should not be possible and the encoder should learn to create an approximation of $x$ with its most important features \cite{aggarwal2018NeuralNetworksDeep}.
+Therefore, autoencoders are a dimensionality reduction technique.
+The latent representation of a fully linear autoencoder without any non-linear operations achieves the same representation as a \gls{pca} \cite{plaut2018PrincipalSubspacesPrincipal,Bank2020Autoencoders}.
+Further variations of autoencoders have emerged.
+Deep autoencoders expand the neural network from one hidden layer to multiple hidden layers with non-linear activation functions, further increasing the representation power \cite{aggarwal2018NeuralNetworksDeep}.
+Other variants include denoising autoencoders, convolutional autoencoders or sparse autoencoders \cite{maheshwari2022AutoencoderIssuesChallenges,Goodfellow-et-al-2016}.
+However, vanilla autoencoders suffer from a lack of regularity in the latent space, because they struggle with interpolation for datapoints that have not been present in the input sequence \cite{razghandi2022VariationalAutoencoderGenerativea}.
 
-% what are autoencoders
-encoder transforms input into latent space which is reconstructed by decoder \cite{razghandi2022VariationalAutoencoderGenerativea}
---> suffer from "lack of regularity in latent space \cite{razghandi2022VariationalAutoencoderGenerativea}
+\glspl{vae} increase the reconstruction robustness by letting the decoder sample from continuos distributions \cite{kingma2013AutoEncodingVariationalBayes}.
+This is achieved by introducing the \gls{kl} divergence \autoref{eqn:kl-divergence} to ensure the latent space representation follows a standard gaussian distribution (zero mean and unit variance) \cite{razghandi2022VariationalAutoencoderGenerativea, aggarwal2018NeuralNetworksDeep}.
+Instead of the encoder mapping the input into a fixed vector $z$, it is mapped into a distribution, by generating two vectors representing the mean $\mu$ and standard deviation $\sigma$ of the distribution \cite{razghandi2022VariationalAutoencoderGenerativea, aggarwal2018NeuralNetworksDeep}.
+Constraining the hidden representation $z$ to a gaussian distribution allows the decoder to generate new data by simply feeding samples from the standard normal distribution \cite{aggarwal2018NeuralNetworksDeep}.
+However, if every object is generated from the same distribution, distinguishing between different objects or reconstructing them from a given input would be impossible.
+Thus, the distribution of the encoded information $z$, conditioned on a specific input $x$, would differ from the standard normal distribution.
+Hence, the constraint that the hidden representation $z$ follows a standard normal distribution would not be achieved across the encoded distribution from a single object but rather for the entire dataset \cite{aggarwal2018NeuralNetworksDeep}.
+The encoder is represented as $q(z|x)$, creating the conditional distribution from which the latent vector is sampled $z\sim q(z|x)$ \cite{kingma2013AutoEncodingVariationalBayes}.
+However, this stochastic sampling process makes computations non-differentiable.
+In other words, the backpropagation of the gradient is not possible and our neural networks weights cannot be updated \cite{aggarwal2018NeuralNetworksDeep}.
+To address this issue, a "reparameterization trick" was introduced \cite[p. 4]{kingma2013AutoEncodingVariationalBayes}.
+Since $z$ is normal distributed ($z\sim N(\mu,\sigma^2)$) it can be rewritten as $z=\mu+\sigma\epsilon$ with $\epsilon$ used as an auxiliary noise variable $\epsilon \sim N(0,1)$ sampled from the standard normal distribution \cite{kingma2013AutoEncodingVariationalBayes}.
+This transformation moves the stochastic sampling process to the fixed $\epsilon$ variable and allows $\mu$ and $\sigma$ to be differentiable variables, which allows the gradient to flow and the neural network to learn \autoref{fig:vae} \cite{kingma2013AutoEncodingVariationalBayes}.
+In order for the model to learn that $z$ should be close to normal distribution, a regularization loss is introduced using the \gls{kl}-divergence.
+The \gls{kl}-divergence is defined as:
 
-% what are variational autoencoders
-use the KL divergence and encode a gaussian distribution in latent space \cite{razghandi2022VariationalAutoencoderGenerativea}
-% how do they work
-% mathematical formulation
-% Advantages / Problems / Challenges
+\begin{equation}
+    \label{eqn:kl-divergence}
+    KL(p\parallel q) = \sum_{i}^{N}p_i\cdot log(\frac{p_i}{q_i})
+\end{equation}
+
+with distributions $p$ and $q$.
+
+
+\begin{equation}
+    \label{eqn:regularization_loss}
+    L_{regularization} = KL(q(z|x) \parallel p(z))
+\end{equation}
+
+The \gls{kl}-divergence is a measures how diverged two probability distributions are from one another.
+Minimizing it means optimizing the parameters of $\mu$ and $\sigma$ towards resembling the distributions it is compared to.
+
+Additionally, a reconstruction loss is computed, based on the negative log-likelihood that measuring the error between the input and output and is minimized:
+
+\begin{equation}
+    \label{eqn:reconstruction_loss}
+    L_{reconstruction} =-\mathbb{E}_{q(z|x)}[logp(x|z)]
+\end{equation}
+with $E_{q(z|x)}$ denoting the expectation with respect to the encoder distribution.
+
+Hence, the final loss function that is minimized during the training of the \gls{vae} is the combination both loss functions\footnote{The signs change since minimizing the negative log-likelihood is equivalent to maximizing the log likelihood. Hence, we convert the loss to a minimization loss by multiplying it with -1}:
+
+\begin{equation}
+    \label{eqn:vae_loss}
+    L_{vae} =\mathbb{E}_{q(z|x)}[logp(x|z)]-KL(q(z|x) \parallel p(z))
+\end{equation}
+
+
+
+\begin{figure}
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{images/ae.png}
+      \caption{Autoencoder} \label{fig:ae}
+    \end{subfigure}%
+    \hspace*{\fill}   % maximize separation between the subfigures
+    \begin{subfigure}{0.45\textwidth}
+      \includegraphics[width=\linewidth]{images/vae.png}
+      \caption{Variational Autoencoder} \label{fig:vae}
+    \end{subfigure}%
+    \hspace*{\fill}   % maximizeseparation between the subfigures
+  \caption{Architecture Autoencoder and Variational autoencoder} \label{fig:vae_overview}
+\end{figure}
+[TODO: Make sure functions in image are identical to the ones in the text]
+
+%https://towardsdatascience.com/understanding-variational-autoencoders-vaes-f70510919f73
 
 
 \subsection{Generative Adversarial Networks}
 \label{ch:preliminaries-generativeAlgorithms-generativeAdversarialNetworks}
+
+\Glspl{gan} \cite{NIPS2014_5ca3e9b1} have been introduced in 2014 as a new architecture to address the generative modeling problem.
+The architecture of \Glspl{gan} is based on game theory where two \glspl{model} compete in a zero-sum min-max game \cite{NIPS2014_5ca3e9b1, zhao2022CTABGANEnhancingTabular}.
+The two \glspl{model}, usually neural networks, are called the generator and the discriminator and are competing with one another.
+While the generator is tasked to generate realistic looking data points, its adversary the discriminator is tasked to discriminate whether a given datapoint is a real datapoint or a fake datapoint, produced by the generator.
+The generator function $G(z;\theta_G)$ with learnable parameters $\theta_G$ receives as input a vector $z$ and is tasked to transform $z$ into a realistic looking sample $x$.
+An input vector $z$ is drawn from a prior distributions $p(z)$, usually a gaussian or uniform distribution, and is just an unstructured noise vector.
+The fake data sample $x=G(z)$ "is intended to be statistically indistinguishable from the training data" $p_{data}$ \cite[p. 141]{goodfellow2020GenerativeAdversarialNetworks}.
+The discriminator function $D(x;\theta_D)$ with learnable parameters $\theta_D$ receives as input samples $x$ that could either stem from $p_{data}$ or from $p_{model}$ generated by the generator.
+Like a binary classifier, it tries to predict whether a given sample $x$ is real or fake \cite{NIPS2014_5ca3e9b1}.+
+The discriminators output classification is finally used in the backpropagation algorithm to update not only the discriminators parameters $\theta_D$, but also the generators parameters $\theta_G$.
+So while the generator tries to produce real looking fake data samples, the discriminator tries to tell real from fake data samples apart. 
+This type of training can be seen as a mentor (discriminator) providing feedback to a student (generator) on the quality of his work \cite{zhao2022CTABGANEnhancingTabular}.
+Formally, the objective function $J_D$ for the discriminator that will be maximized if real $x$ are correctly classified to $1$ and fake $x$ correctly to $0$ can be defined as \cite{aggarwal2018NeuralNetworksDeep}:
+
+\begin{equation}
+    \label{eqn:discriminator}
+    Maximize_DJ_D= \sum_{x\in p_{data}}^{} log [D(x)] + \sum_{x\in p_{model}}^{} log [1-D(x)]
+\end{equation}
+
+with the first part of \autoref{eqn:discriminator} handling the real data samples and the second part the synthetic data samples.
+Hence, the discriminator tries to maximize correctly predicting real and fake samples as real and fake respectively.
+
+The generator on the hand the hand tries to fool the discriminator.
+Therefore, the generator tries to minimize the likelihood, that the generated fake samples are flagged as fake.
+Its objective function $J_G$ is defined as \cite{aggarwal2018NeuralNetworksDeep}:
+\begin{equation}
+    \label{eqn:generator}
+    Minimize_GJ_G= \sum_{x\in p_{model}}^{} log [1-D(x)] = \sum_{x\in p_z}^{} log [1-D(G(z))]
+\end{equation}
+
+Ultimately, the generator and the discriminator are playing a two-player minimax game with the following value function:
+
+\begin{equation}
+    \label{eqn:minmax}
+    \min_G\max_DV(D,G)=\mathbb{E}_{x\sim p_{data}(x)} [log D(x)] + \mathbb{E}_{z\sim p_z(z)}[log( 1-D(G(Z)))]
+\end{equation}
 
 % what are GAN's
 \cite{goodfellow2020GenerativeAdversarialNetworks}
