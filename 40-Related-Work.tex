@@ -6,6 +6,23 @@
 \section{Generative Adversarial Networks Models}
 \label{ch:relatedWork-generativeAdversarialNetworksModels}
 
+
+mirza2014ConditionalGenerativeAdversarial
+% what improvements have been done to GAN's
+- gans struggled with generating discrete variables \cite{torfi2020CorGANCorrelationCapturingConvolutionala}
+- State of the art Gan approaches only focused on continouse and categorical types, overlooking mixed data types \cite{zhao2022CTABGANEnhancingTabular}
+
+- conditional GAN \cite{mirza2014ConditionalGenerativeAdversarial}
+
+
+% mathematical formulation
+% Advantages / Problems / Challenges (Mode Collapse, etc.)
+- remarkable performance generating syntehtic images and time series data \cite{mckeever2020SynthesisingTabularDatasets}
+- struggle with mode collapse --> generate same sample \cite{torfi2020CorGANCorrelationCapturingConvolutionala}
+- wasserstein loss helps against mode collapse \cite{frogner2015LearningWassersteinLoss} \cite{arjovsky2017WassersteinGenerativeAdversarial} and has been implemented in many gans (e.g. \cite{zhao2022CTABGANEnhancingTabular})
+- gradient penalty \cite{gulrajani2017ImprovedTrainingWasserstein}
+
+
 \subsection{CTGAN}
 \label{ch:relatedWork-generativeAdversarialNetworksModels-ctgan}
 
@@ -16,6 +33,10 @@
 \label{ch:relatedWork-transformers}
 
 TabTransformer only embeddeds categorical values --> cont not through attention --> no correlation capture \cite{somepalli2021SAINTImprovedNeural}
+
+- TabNet is one of the first transformer-based models for tabular data \cite{borisov2022DeepNeuralNetworks}
+- padhi2021TabularTransformersModeling
+
 
 %-------------------------------------------------------------------------
 \section{Diffusion Models}

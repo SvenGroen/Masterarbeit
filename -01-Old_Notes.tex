@@ -162,3 +162,35 @@ AUTOENCODERS:
         % how do they work
         % mathematical formulation
         % Advantages / Problems / Challenges
+
+
+GANS:
+% what are GAN's
+\cite{goodfellow2020GenerativeAdversarialNetworks}
+- have been used very sucessfully in many different domains \cite{li2022TTSGANTransformerbasedTimeSeries}
+ 
+
+% how do they work
+\cite{zhao2022CTABGANEnhancingTabular}:
+- trained via a zero-sum min-max game 
+- the discriminator tries to maximize the objective, while the generator tries to minimize it.
+- mentor (D) providing feedback to a student (G) on the quality of his work
+
+
+\cite{li2022TTSGANTransformerbasedTimeSeries}
+- 2 NN (gen and dis)
+- gen inp: rand vec of specified dimension; gen out: same dimension, as similar to real training data
+- dis: binary classifier, distiguish real and generated data
+--> play zero sum game against each other
+--> trz to each nash equilibrium
+
+
+TRANSFORMER:
+relies on multiple self-attention layers, surpasses other network architectures and shows properties of universal computation engine \cite{li2022TTSGANTransformerbasedTimeSeries}
+
+have been very successfull on textual and visual data (//siehe quellen im paper) \cite{borisov2022DeepNeuralNetworks} and also been applied to tabular data \cite{padhi2021TabularTransformersModeling} \cite{gorishniy2022EmbeddingsNumericalFeatures}
+
+% What are transformers
+% How do they work
+% In what context are they used (usually not for data synthesis)
+% Advantages / Problems / Challenges
