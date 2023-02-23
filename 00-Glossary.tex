@@ -15,6 +15,19 @@
     plural=models
 }
 
+\newglossaryentry{lvm}{
+    name={latent variable model},
+    description={
+        Latent variable models are a type of probabilistic model that use latent or hidden variables to explain the observed data. 
+        They model the relationship between the observed data and the latent variables through a set of conditional probability distributions. [TODO: QUELLE FINDEN]
+        The goal is often to use this joint distribution to make predictions or perform inference about the data, which typically involves marginalizing over the latent variables. 
+        This means integrating over all possible values of the latent variables to obtain the probability distribution of the observed data.
+        \cite{bishop1998latent}
+    },
+    plural={latent variable models}
+
+}
+
 % Akkronyme
 \newacronym{vgm}{VGM}{Variational Gaussian mixture model}
 
@@ -29,3 +42,4 @@
 \newacronym{gan}{GAN}{Generative Adversarial Network}
 \newacronym{mlp}{MLP}{multilayer perceptron}
 \newacronym{relu}{ReLU}{rectified linear activation unit}
+\newacronym{ddpm}{DDPM}{denoising diffusion probabilistic models}

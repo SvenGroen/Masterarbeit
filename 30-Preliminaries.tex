@@ -351,8 +351,9 @@ For instance, this has been achieved through the introduction of a context vecto
 
 Deep generative \glspl{model} have revolutionized the field of artificial intelligence and machine learning by generating new and original data based on existing patterns and structures. 
 Generative models try to learn a joint distribution over all the available variables \cite{kingma2019IntroductionVariationalAutoencoders}, also called the generative modeling problem \cite{goodfellow2020GenerativeAdversarialNetworks}.
-Formally, in generative modeling training examples $x$ are drawn from an unkonwn distribution $p_{data}(x)$ and a generative modeling algorithm is trained to learn a distribution $p_{model}(x;\theta)$ that approximates $p_{data}(x)$ as closely as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
+Formally, in generative modeling training examples $x$ are drawn from an unkonwn distribution $p_{data}(x)$ and a generative modeling algorithm is trained to learn a distribution density function $p_{model}(x;\theta)$ that approximates the true probability density function $p_{data}(x)$ as closely as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
 $\theta$ are the models parameters that determine the models output and usually learned by searching for $\theta$ values that result in $p_{model}$ to be as similar to $p_{data}$ as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
+
 Several powerful generative modeling approaches with different architectures have emerged, each with its own strengths and weaknesses. 
 This section will explore four of the most popular approaches: variational autoencoders, generative adversarial networks, transformers, and diffusion models. [TODO: label auf section]
 
@@ -385,8 +386,15 @@ Hence, the constraint that the hidden representation $z$ follows a standard norm
 The encoder is represented as $q(z|x)$, creating the conditional distribution from which the latent vector is sampled $z\sim q(z|x)$ \cite{kingma2013AutoEncodingVariationalBayes}.
 However, this stochastic sampling process makes computations non-differentiable.
 In other words, the backpropagation of the gradient is not possible and our neural networks weights cannot be updated \cite{aggarwal2018NeuralNetworksDeep}.
-To address this issue, a "reparameterization trick" was introduced \cite[p. 4]{kingma2013AutoEncodingVariationalBayes}.
+To address this issue, a"reparameterization trick (\autoref{eqn:reparameterization}) was introduced \cite[p. 4]{kingma2013AutoEncodingVariationalBayes}.
 Since $z$ is normal distributed ($z\sim N(\mu,\sigma^2)$) it can be rewritten as $z=\mu+\sigma\epsilon$ with $\epsilon$ used as an auxiliary noise variable $\epsilon \sim N(0,1)$ sampled from the standard normal distribution \cite{kingma2013AutoEncodingVariationalBayes}.
+
+\begin{equation}
+  \label{eqn:reparameterization}
+  N(\mu,\sigma^2) =\mu+\sigma\epsilon
+\end{equation}
+\caption[Reparameterization]{Reparameterization trick}
+
 This transformation moves the stochastic sampling process to the fixed $\epsilon$ variable and allows $\mu$ and $\sigma$ to be differentiable variables, which allows the gradient to flow and the neural network to learn \autoref{fig:vae} \cite{kingma2013AutoEncodingVariationalBayes}.
 In order for the model to learn that $z$ should be close to normal distribution, a regularization loss is introduced using the \gls{kl}-divergence.
 The \gls{kl}-divergence is defined as:
@@ -485,7 +493,7 @@ Ultimately, the generator and the discriminator are playing a two-player minimax
 \autoref{eqn:minmax} is used to formulate the loss functions that are used in the training.
 However, \cite{NIPS2014_5ca3e9b1} notes that in practice, \autoref{eqn:minmax} "may not provide sufficient gradient [for the generator] to learn well" \cite[p. 3]{NIPS2014_5ca3e9b1}.
 This seems to be caused by the fact, that the discriminator is able to reject the early samples from the generator with a high confidence, which results in poor learning capabilities \cite{NIPS2014_5ca3e9b1}.
-The proposed solution for this is to change the objective function from the generator from the minimization function \cite{eqn:generator} to a maximization of $logD(G(z))$.
+The proposed solution for this is to change the objective function from the generator from the minimization function \auoref{eqn:generator} to a maximization of $logD(G(z))$.
 Thus, instead of minimizing the discriminator being correct, the new objective is to maximize the discriminator being wrong. 
 The two loss functions $L_G$, $L_D$ that are minimized during training of the generator and discriminator respectively are defined as:
 
@@ -555,6 +563,119 @@ The attention mechanism can be defined as \cite[p.4]{vaswani2017AttentionAllYou}
 
 \subsection{Diffusion Probabilistic Models}
 \label{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModels}
+
+\Glspl{ddpm} (from now on referred to as "diffusion models"), firstly introduced by \cite{sohl-dickstein2015DeepUnsupervisedLearning}, are a generative modeling approach inspired by non-equilibrium statistical physics \cite{sohl-dickstein2015DeepUnsupervisedLearning}.
+On a high level, the whole diffusion concept can be summarized as:
+
+\begin{quotation}
+  "The essential idea, (...) is to systematically and slowly destroy structure in a data distribution through an iterative forward diffusion process. 
+  We then learn a reverse diffusion process that restores structure in data, yielding a highly flexible and tractable generative model of the data." \cite[p. 1]{sohl-dickstein2015DeepUnsupervisedLearning}
+\end{quotation}
+Formally, \cite{ho2020DenoisingDiffusionProbabilistic} defines diffusion models as a class of \glspl{lvm} [TODO:fix] of the form $p_\theta(x_0):= \int_{}^{}p_\theta(x_{0:T})dx_{1:T}$,
+with $x_1, ..., x_T$ as latents of same dimensionality as samples from the data distribution $x_0 \sim q(x_0)$.
+Diffusion models consist of a forward process and a reverse process.
+During the forward process, an initial data point $x0$ is obtained from the data distribution $q(x_0)$.
+In the forward process (also called diffusion process), a fixed markov chain [TODO: Glossar?] gradually adds noise to the data.
+$T$ defines the number of noising step and $x1,...,x_T$ denoting the latent variables, \ie the noised versions of the original data, with $x_T$ being the fully noised version of the data.
+The amount of added (gaussian) noise in each timestep varies depending on the current timestep, which is controlled by a variance schedule $\beta_1, ..., \beta_T \in (0,1)$.
+The forward process is defined as:
+
+
+\begin{equation}
+  \label{eqn:forwards_1}
+  \begin{align*}
+    q(x_{1:T} | x_0) := \prod_{t=1}^T q(x_t | x_{t-1}), \quad
+    q(x_t | x_{t-1}) := \mathcal{N}(x_t; \sqrt{1 - \beta_t} x_{t-1}, \beta_t I)
+  \end{align*}
+\end{equation}
+
+For the variance schedule it holds that if $\beta_1 < \beta_2 < ... < \beta_T$ for $t\rightarrow\infty$, the final latent $x_t$ is isotropic gaussian noise, \ie, $x_t \sim \mathcal{N}(0, \textbf{I})$, with identity matrix $\textbf{I}$.
+If the reverse process is learned, this feature allows to sample from a gaussian distribution to generate new samples.
+$\beta$ increases linearly in the original \gls{ddpm} approach \cite{ho2020DenoisingDiffusionProbabilistic} but was later improved to follow a cosine schedule \cite{nichol2021ImprovedDenoisingDiffusion}, improving the overall quality of the model.
+
+\autoref{eqn:forwards_1} shows how in an iterative manner one noising step can be applied to get from $x_{t-1}$ to $x_t$ with $q(x_t | x_{t-1})$.
+Through the use of a reparameterization (see \autoref{eqn:reparameterization}) and defining $\alpha := 1-\beta_t$ and $\overline{\alpha_t}:=\prod_{s=1}^{t}a_s$
+Thus, the forward diffusion process can be expressed as:
+
+\begin{equation}
+  \label{eqn:forwards_2}
+  \begin{align*}
+    q(x_t | x_0) \quad & := \mathcal{N}(x_t; \sqrt{\bar{\alpha}_t} x_0, (1 - \bar{\alpha}_t) \textbf{I})
+     &:= \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon \textrm{, with } \epsilon\sim\mathcal{N}(0, \textbf{I})
+  \end{align*}
+\end{equation}
+
+\autoref{eqn:forwards_2} allows to compute the forward noising from $x_0$ to any timestep $t$ within one computation step, instead of iteratively applying noise over and over again.
+
+During the reverse process, the goal is to learn the reverse distribution from noised data $x_t$ to slightly less noised data $x_{t-1}$, $q(x_{t-1}|x_t)$.
+With bayes-theorem we can see that $q(x_{t-1}|x_t) = \frac{p(x_{t-1},x_t)}{p(x)}$, which means $q(x_{t-1}|x_t)$ depends on the marginal distribution of $x_t$, denoted as $p(x_t)$.
+To calculate the marginal probability distribution $p(x_t)$ integration over all possible realizations of $x_{t-1}$ would be necessary, which would be computationally intractable.
+As a result, $q(x_{t-1}|x_t)$ is approximated by a neural network with learnable parameters $\theta$ that learns the joint distribution $p_{\theta}(x_{0:T})$.
+$p_{\theta}(x_{0:T})$ is a Marcov-chain [TODO: glossar], defined in \autoref{eqn:reverse_1}, with the transitions defined in \autoref{eqn:reverse_2}.
+
+\begin{equation}
+  \label{eqn:reverse_1}
+  \begin{align*}
+    p_{\theta}(x_{0:T}) := p(x_T) \prod_{t=1}^T p_{\theta}(x_{t-1} | x_t),
+  \end{align*}
+\end{equation}
+
+\begin{equation}
+  \label{eqn:reverse_2}
+  \begin{align*}
+    p_{\theta}(x_{t-1}|x_t) := \mathcal{N}(x_{t-1}; \mu_{\theta}(x_t, t), \Sigma_{\theta}(x_t, t))
+  \end{align*}
+\end{equation}
+    
+While the mean $\mu_{\theta}(x_t, t)$ is learned by the neural network, the variance $\Sigma_{\theta}(x_t, t)$ stayed fixed in the initial work by \cite{ho2020DenoisingDiffusionProbabilistic} 
+but was later in \cite{nichol2021ImprovedDenoisingDiffusion} learned as well.
+
+Like in \glspl{vae} (\autoref{ch:preliminaries-generativeAlgorithms-variationalAutoencoders}), the model is trained by minimizing its negative log-likelihood (= maximizing the log-likelihood) $-log(p_\theta(x_0))$.
+$p_\theta(x_0)$ depends on all timesteps before $x_0$ and is, therefore, not tractable in practice.
+As a solution, the variational lower bound on the negative log likelihood can be computed (ELBO [todo: REF]) \autoref{eqn:vlb}
+
+\begin{equation}
+  \label{eqn:vlb}
+  \begin{align*}
+    $-log(p_\theta(x_0)) \leq -log(p_\theta(x_0)) + KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$
+  \end{align*}
+\end{equation}
+
+The \gls{kl}-divergence (\autoref{eqn:kl-divergence}) is a non-negative measure of dissimilarity between two probability distributions. 
+By minimizing the \gls{kl}-divergence as the objective function in the given inequality, the right-hand side is reduced, leading to a smaller or equal left-hand side. 
+Consequently, minimizing the KL divergence  can only decrease the negative log-likelihood term on the left-hand side of the inequality. 
+This implies that the objective function provides a lower bound on the log-likelihood, and any improvement in minimizing the \gls{kl}-divergence will ultimately lead to an enhancement in this lower bound.
+Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{1:T}|x_0)})$ and some reformulations (see \autoref{TODO:APPENDIX}) using bayes-rule results in \autoref{eqn:vlb2}:
+
+\begin{equation}
+  \label{eqn:vlb2}
+  \begin{align*}
+    -log(p_\theta(x_0)) \leq log(\frac{q(x_{1:T})|x_0)}{p_\theta(x_{0:T})})
+  \end{align*}
+\end{equation}
+
+\autoref{eqn:vlb2} is the variational lower bound that is minimized during training to optimizing $-log(p_\theta(x_0))$.
+With additional reformulations (see \autoref{TODO:APPENDIX}), the loss function can be derived as:
+
+\begin{equation}
+  \label{eqn:vlb2}
+  \begin{align*}
+   $\mathbb{E}\biggl[\underbrace{D_{KL}(q(x_{T}|x_0) \parallel p(x_T))}_{L_T} + \sum_{t>1}^{} \underbrace{  D_{KL}(q(x_{t-1}|x_t,x_0) \parallel p_\theta(x_{t-1}|x_t)) }_{L_{t-1}}  \underbrace{ -log p_\theta(x_0|x_1) }_{L_{0}}\biggr]$
+  \end{align*}
+\end{equation}
+
+
+
+https://www.arxiv-vanity.com/papers/2209.10948/
+
+https://theaisummer.com/latent-variable-models/
+
+https://matheo.uliege.be/bitstream/2268.2/15989/15/Master_thesis.pdf
+
+https://towardsdatascience.com/understanding-diffusion-probabilistic-models-dpms-1940329d6048
+
+https://www.youtube.com/watch?v=HoKDTa5jHvg&t=951s
+
 
 % What are diffusion probabilistic models
 first paper \cite{sohl-dickstein2015DeepUnsupervisedLearning}

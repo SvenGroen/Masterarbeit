@@ -3,7 +3,7 @@
 % Import von Paketen und Optionen die das gesamte Dokument betreffen
 % sind in myPreamble.sty ausgelagert.
 \usepackage{myPreamble}
-
+\include{00-Glossary}
 \makeglossaries
 
 \begin{document}
@@ -22,7 +22,7 @@
 \tableofcontents
 \cleardoublepage
 
-\include{00-Glossary}
+% \include{00-Glossary}
 %\printglossaries[type=\acronymtype, title=Abkurzungsverzeichnis]
 %\abbreviationsname[Abkürzungsverzeichnis]
 \printglossary[type=main, title={Glossary}]
