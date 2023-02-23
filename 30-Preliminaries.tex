@@ -637,7 +637,7 @@ As a solution, the variational lower bound on the negative log likelihood can be
 \begin{equation}
   \label{eqn:vlb}
   \begin{align*}
-    $-log(p_\theta(x_0)) \leq -log(p_\theta(x_0)) + KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$
+    -log(p_\theta(x_0)) \leq -log(p_\theta(x_0)) + KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))
   \end{align*}
 \end{equation}
 
@@ -660,9 +660,33 @@ With additional reformulations (see \autoref{TODO:APPENDIX}), the loss function 
 \begin{equation}
   \label{eqn:vlb2}
   \begin{align*}
-   $\mathbb{E}\biggl[\underbrace{D_{KL}(q(x_{T}|x_0) \parallel p(x_T))}_{L_T} + \sum_{t>1}^{} \underbrace{  D_{KL}(q(x_{t-1}|x_t,x_0) \parallel p_\theta(x_{t-1}|x_t)) }_{L_{t-1}}  \underbrace{ -log p_\theta(x_0|x_1) }_{L_{0}}\biggr]$
+   \mathbb{E}\biggl[\underbrace{D_{KL}(q(x_{T}|x_0) \parallel p(x_T))}_{L_T} + \sum_{t>1}^{} \underbrace{  D_{KL}(q(x_{t-1}|x_t,x_0) \parallel p_\theta(x_{t-1}|x_t)) }_{L_{t-1}}  \underbrace{ -log p_\theta(x_0|x_1) }_{L_{0}}\biggr]
   \end{align*}
 \end{equation}
+
+$L_T$ consists of $q(x_{T}|x_0)$ is a noising forward process that has no learnable parameters and $p(x_T)$ is gaussian distributed noise.
+If the forward process correctly destroys the data, $q(x_{T}|x_0)$ will converge to a standard gaussian distribution as well and one can be certain that $L_T$ will be close to $0$.
+Thus, $L_T$ will be neglected.
+$L_{0}$ can be computed using the \gls{cdf} of the Gaussian [TODO: Verstehen] \cite{nichol2021ImprovedDenoisingDiffusion}.
+Inside $L_{t-1}$, one compares the forward noising step $q(x_{t-1}|x_t,x_0)$ that is also conditioned on the input $x_0$ with the reverse process $p_\theta(x_{t-1}|x_t)$.
+Both terms have a closed form solution with:
+
+\begin{equation}
+q(x_{t-1}|x_t,x_0) = \mathcal{N}(x_{t-1};\tilde{\mu_t}(x_t,x_0), \tilde{\beta_t}\textbf{I})
+\end{equation}
+
+with 
+\begin{equation}
+\tilde{\mu_t}(x_t, x_0) := \frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t}{1 - \alpha_{\bar{t}}}x_0 +   \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1})}{1 - \bar{\alpha}_{t}}x_t \quad \textrm{and }
+\tilde{\beta_t}:=\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta_t \nonumber
+\end{equation}
+
+
+
+
+
+
+
 
 
 
