@@ -251,6 +251,24 @@
   keywords = {Generative adversarial networks,In vitro,Reinforcement learning,Sampling methods,Signal processing,Speech processing,Training}
 }
 
+@inproceedings{abadi2016DeepLearningDifferential,
+  title = {Deep {{Learning}} with {{Differential Privacy}}},
+  booktitle = {Proceedings of the 2016 {{ACM SIGSAC Conference}} on {{Computer}} and {{Communications Security}}},
+  author = {Abadi, Martin and Chu, Andy and Goodfellow, Ian and McMahan, H. Brendan and Mironov, Ilya and Talwar, Kunal and Zhang, Li},
+  date = {2016-10-24},
+  series = {{{CCS}} '16},
+  pages = {308--318},
+  publisher = {{Association for Computing Machinery}},
+  location = {{New York, NY, USA}},
+  doi = {10.1145/2976749.2978318},
+  url = {https://doi.org/10.1145/2976749.2978318},
+  urldate = {2023-02-27},
+  abstract = {Machine learning techniques based on neural networks are achieving remarkable results in a wide variety of domains. Often, the training of models requires large, representative datasets, which may be crowdsourced and contain sensitive information. The models should not expose private information in these datasets. Addressing this goal, we develop new algorithmic techniques for learning and a refined analysis of privacy costs within the framework of differential privacy. Our implementation and experiments demonstrate that we can train deep neural networks with non-convex objectives, under a modest privacy budget, and at a manageable cost in software complexity, training efficiency, and model quality.},
+  isbn = {978-1-4503-4139-4},
+  keywords = {deep learning,differential privacy},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\4X4W2NAB\\Abadi et al_2016_Deep Learning with Differential Privacy.pdf}
+}
+
 @article{acharyaGenSynMultistageFramework,
   title = {{{GenSyn}}: {{A Multi-stage Framework}} for {{Generating Synthetic Microdata}} Using {{Macro Data Sources}}},
   author = {Acharya, Angeela and Sikdar, Siddhartha and Das, Sanmay and Rangwala, Huzefa},
@@ -477,6 +495,20 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\RVEMPGID\\Bourou et al_2021_A Review of Tabular Data Synthesis Using GANs on an IDS Dataset.pdf}
 }
 
+@thesis{brenninkmeijer2019GenerationEvaluationTabular,
+  type = {mathesis},
+  title = {On the {{Generation}} and {{Evaluation}} of {{Tabular Data}} Using {{GANs}}},
+  author = {Brenninkmeijer, Bauke and Hille, Youri and Vries, Arjen},
+  date = {2019-10-14},
+  institution = {{Radboud University}},
+  location = {{Nijmegen, Netherlands}},
+  url = {https://www.researchgate.net/publication/344227988_On_the_Generation_and_Evaluation_of_Tabular_Data_using_GANs},
+  abstract = {With privacy regulations becoming stricter, the opportunity to apply synthetic data is growing rapidly. Synthetic data can be used in any setting where access to data with personal information is not strictly necessary. However, many require the synthetic data to present the same relations as the original data. Existing statistical models and anonymization tools often have adverse effects on the quality of data for downstream tasks like classification. Deep learning based synthesization techniques like GANs provide solutions for cases where it is vital these relations are kept. Inspired by GANs, we propose an improvement in the state-of-the-art in maintaining these relations in synthetic data. Our proposal includes three contributions. First, we propose the addition of skip connections in the generator, which increases gradient flow and modeling capacity. Second, we propose using the WGAN-GP architecture for training the GAN, which suffers less from mode-collapse and has a more meaningful loss. And finally, we propose a new similarity metric for evaluating synthetic data. This metric better captures different aspects of synthetic data when comparing it to real data. We study the behaviour of our proposed model adaptations against several baseline models on three datasets. Our results show that our proposals improve on the state-of-the-art models, by creating higher quality data. Our evaluation metric captures quality improvements in synthetic data and gives detailed insight into the strengths and weaknesses of evaluated models. We conclude that our proposed adaptations should be used for data synthesis, and our evaluation metric is precise and gives a balanced view of different aspects of the data.},
+  langid = {english},
+  pagetotal = {71},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\WE3W7F5E\\Brenninkmeijer et al_2019_On the Generation and Evaluation of Tabular Data using GANs.pdf}
+}
+
 @inproceedings{brocke2009ReconstructingGiantImportance,
   title = {Reconstructing the {{Giant}}: {{On}} the {{Importance}} of {{Rigour}} in {{Documenting}} the {{Literature Search Process}}},
   shorttitle = {Reconstructing the {{Giant}}},
@@ -515,6 +547,18 @@
   abstract = {This paper studies the synthesis of high-dimensional datasets with differential privacy (DP). The state-of-the-art solution addresses this problem by first generating a set M of noisy low-dimensional marginals of the input data 𝐷, and then use them to approximate the data distribution in 𝐷 for synthetic data generation. However, it imposes several constraints on M that considerably limits the choices of marginals. This makes it difficult to capture all important correlations among attributes, which in turn degrades the quality of the resulting synthetic data.},
   langid = {english},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\93W5EBK4\\Cai et al_2021_Data synthesis via differentially private markov random fields.pdf}
+}
+
+@thesis{capel2022MasterThesisDenoising,
+  type = {mathesis},
+  title = {Master Thesis : {{Denoising}} Diffusion Probabilistic Models Applied to Energy Forecasting in Power Systems},
+  author = {Capel, Hernandez},
+  date = {2022},
+  institution = {{University of Liège}},
+  location = {{Liege, Belgium}},
+  langid = {english},
+  pagetotal = {75},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\BGZPLJVQ\\Capel - Master thesis  Denoising diffusion probabilistic .pdf}
 }
 
 @article{Castro201937,
@@ -876,6 +920,43 @@
   urldate = {2022-07-10},
   abstract = {Aims               . Compressed sensing realized by means of regularized deconvolution and the finite isotropic wavelet transform is effective and reliable in hard X-ray solar imaging.                                         Methods               . The method uses the finite isotropic wavelet transform with the Meyer function as the mother wavelet. Furthermore, compressed sensing is realized by optimizing a sparsity-promoting regularized objective function by means of the fast iterative shrinkage-thresholding algorithm. Eventually, the regularization parameter is selected by means of the Miller criterion.                                         Results               . The method is applied against both synthetic data mimicking measurements made with the Spectrometer/Telescope Imaging X-rays (STIX) and experimental observations provided by the Reuven Ramaty High Energy Solar Spectroscopic Imager (RHESSI). The performances of the method are qualitatively validated by comparing some morphological properties of the reconstructed sources with those of the corresponding synthetic configurations. Furthermore, the results concerning experimental data are compared with those obtained by applying other visibility-based reconstruction methods.                                         Conclusions               . The results show that when the new method is applied to synthetic STIX visibility sets, it provides reconstructions with a spatial accuracy comparable to the accuracy provided by the most popular method in hard X-ray solar imaging and with a higher spatial resolution. Furthermore, when it is applied to experimental RHESSI data, the reconstructions are characterized by reliable photometry and by a notable reduction of the ringing effects caused by the instrument point spread function.},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\2L7TGG4Y\\Duval-Poo et al_2018_Solar hard X-ray imaging by means of compressed sensing and finite isotropic.pdf}
+}
+
+@inproceedings{dwork2008DifferentialPrivacySurvey,
+  title = {Differential {{Privacy}}: {{A Survey}} of {{Results}}},
+  shorttitle = {Differential {{Privacy}}},
+  booktitle = {Theory and {{Applications}} of {{Models}} of {{Computation}}},
+  author = {Dwork, Cynthia},
+  editor = {Agrawal, Manindra and Du, Dingzhu and Duan, Zhenhua and Li, Angsheng},
+  date = {2008},
+  series = {Lecture {{Notes}} in {{Computer Science}}},
+  pages = {1--19},
+  publisher = {{Springer}},
+  location = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-540-79228-4_1},
+  abstract = {Over the past five years a new approach to privacy-preserving data analysis has born fruit [13, 18, 7, 19, 5, 37, 35, 8, 32]. This approach differs from much (but not all!) of the related literature in the statistics, databases, theory, and cryptography communities, in that a formal and ad omnia privacy guarantee is defined, and the data analysis techniques presented are rigorously proved to satisfy the guarantee. The key privacy guarantee that has emerged is differential privacy. Roughly speaking, this ensures that (almost, and quantifiably) no risk is incurred by joining a statistical database.},
+  isbn = {978-3-540-79228-4},
+  langid = {english},
+  keywords = {Differential Privacy,Privacy Mechanism,Statistical Database,Statistical Query,True Answer},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\NDJGV3GN\\Dwork_2008_Differential Privacy.pdf}
+}
+
+@incollection{dwork2011DifferentialPrivacy,
+  title = {Differential {{Privacy}}},
+  booktitle = {Encyclopedia of {{Cryptography}} and {{Security}}},
+  author = {Dwork, Cynthia},
+  editor = {van Tilborg, Henk C. A. and Jajodia, Sushil},
+  options = {useprefix=true},
+  date = {2011},
+  pages = {338--340},
+  publisher = {{Springer US}},
+  location = {{Boston, MA}},
+  doi = {10.1007/978-1-4419-5906-5_752},
+  url = {https://doi.org/10.1007/978-1-4419-5906-5_752},
+  urldate = {2023-02-27},
+  isbn = {978-1-4419-5906-5},
+  langid = {english},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\LHGN5LVM\\Dwork_2011_Differential Privacy.pdf}
 }
 
 @book{eid2010StatistikUndForschungsmethoden,
@@ -1699,6 +1780,17 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\8IKQ4TIM\\Jain et al_2018_Imagining an Engineer.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\K2MPTXQT\\1811.html}
 }
 
+@inproceedings{jordon2018PATEGANGeneratingSynthetic,
+  title = {{{PATE-GAN}}: {{Generating Synthetic Data}} with {{Differential Privacy Guarantees}}},
+  shorttitle = {{{PATE-GAN}}},
+  author = {Jordon, James and Yoon, Jinsung and Schaar, M.},
+  date = {2018-09-27},
+  url = {https://www.semanticscholar.org/paper/PATE-GAN%3A-Generating-Synthetic-Data-with-Privacy-Jordon-Yoon/af1841e1db6579f1f1777a59c7e9e4658d2ac466},
+  urldate = {2023-02-27},
+  abstract = {Machine learning has the potential to assist many communities in using the large datasets that are becoming more and more available. Unfortunately, much of that potential is not being realized because it would require sharing data in a way that compromises privacy. In this paper, we investigate a method for ensuring (differential) privacy of the generator of the Generative Adversarial Nets (GAN) framework. The resulting model can be used for generating synthetic data on which algorithms can be trained and validated, and on which competitions can be conducted, without compromising the privacy of the original dataset. Our method modifies the Private Aggregation of Teacher Ensembles (PATE) framework and applies it to GANs. Our modified framework (which we call PATE-GAN) allows us to tightly bound the influence of any individual sample on the model, resulting in tight differential privacy guarantees and thus an improved performance over models with the same guarantees. We also look at measuring the quality of synthetic data from a new angle; we assert that for the synthetic data to be useful for machine learning researchers, the relative performance of two algorithms (trained and tested) on the synthetic dataset should be the same as their relative performance (when trained and tested) on the original dataset. Our experiments, on various datasets, demonstrate that PATE-GAN consistently outperforms the stateof-the-art method with respect to this and other notions of synthetic data quality.},
+  eventtitle = {International {{Conference}} on {{Learning Representations}}}
+}
+
 @article{kaloskampis2020SyntheticDataCivil,
   title = {Synthetic Data in the Civil Service},
   author = {Kaloskampis, Ioannis and Joshi, Chaitanya and Cheung, Catrin and Pugh, David and Nolan, Louisa},
@@ -2187,7 +2279,7 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\7YIGMM5I\\Lin et al_2022_A survey of transformers.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\LX5HKVQV\\S2666651022000146.html}
 }
 
-@misc{little2021GenerativeAdversarialNetworksa,
+@inproceedings{little2021GenerativeAdversarialNetworksa,
   title = {Generative {{Adversarial Networks}} for {{Synthetic Data Generation}}: {{A Comparative Study}}},
   shorttitle = {Generative {{Adversarial Networks}} for {{Synthetic Data Generation}}},
   author = {Little, Claire and Elliot, Mark and Allmendinger, Richard and Samani, Sahel Shariati},
@@ -2735,6 +2827,21 @@
   urldate = {2023-02-16},
   abstract = {The autoencoder is an effective unsupervised learning model which is widely used in deep learning. It is well known that an autoencoder with a single fully-connected hidden layer, a linear activation function and a squared error cost function trains weights that span the same subspace as the one spanned by the principal component loading vectors, but that they are not identical to the loading vectors. In this paper, we show how to recover the loading vectors from the autoencoder weights.},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\3I63QMCJ\\Plaut_2018_From Principal Subspaces to Principal Components with Linear Autoencoders.pdf}
+}
+
+@inproceedings{pmlr-v68-choi17a,
+  title = {Generating Multi-Label Discrete Patient Records Using Generative Adversarial Networks},
+  booktitle = {Proceedings of the 2nd Machine Learning for Healthcare Conference},
+  author = {Choi, Edward and Biswal, Siddharth and Malin, Bradley and Duke, Jon and Stewart, Walter F. and Sun, Jimeng},
+  editor = {Doshi-Velez, Finale and Fackler, Jim and Kale, David and Ranganath, Rajesh and Wallace, Byron and Wiens, Jenna},
+  date = {2017-08-18/2017-08-19},
+  series = {Proceedings of Machine Learning Research},
+  volume = {68},
+  pages = {286--305},
+  publisher = {{PMLR}},
+  url = {https://proceedings.mlr.press/v68/choi17a.html},
+  abstract = {Access to electronic health record (EHR) data has motivated computational advances in medical research. However, various concerns, particularly over privacy, can limit access to and collaborative use of EHR data. Sharing synthetic EHR data could mitigate risk. In this paper, we propose a new approach, medical Generative Adversarial Network (medGAN), to generate realistic synthetic patient records. Based on input real patient records, medGAN can generate high-dimensional discrete variables (e.g., binary and count features) via a combination of an autoencoder and generative adversarial networks. We also propose minibatch averaging to efficiently avoid mode collapse, and increase the learning efficiency with batch normalization and shortcut connections. To demonstrate feasibility, we showed that medGAN generates synthetic patient records that achieve comparable performance to real data on many experiments including distribution statistics, predictive modeling tasks and a medical expert review. We also empirically observe a limited privacy risk in both identity and attribute disclosure using medGAN.},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\ZAA6WHRI\\Choi et al_2017_Generating multi-label discrete patient records using generative adversarial.pdf}
 }
 
 @article{pollman2014MercuryBioaccumulationFactors,
@@ -3726,6 +3833,24 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\LVI9IVVH\\Wu et al_2022_Medical Scientific Table-to-Text Generation with Human-in-the-Loop under the.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\WIYUZXNW\\2205.html}
 }
 
+@misc{xie2018DifferentiallyPrivateGenerative,
+  title = {Differentially {{Private Generative Adversarial Network}}},
+  author = {Xie, Liyang and Lin, Kaixiang and Wang, Shu and Wang, Fei and Zhou, Jiayu},
+  date = {2018-02-19},
+  number = {arXiv:1802.06739},
+  eprint = {1802.06739},
+  eprinttype = {arxiv},
+  primaryclass = {cs, stat},
+  publisher = {{arXiv}},
+  doi = {10.48550/arXiv.1802.06739},
+  url = {http://arxiv.org/abs/1802.06739},
+  urldate = {2023-02-27},
+  abstract = {Generative Adversarial Network (GAN) and its variants have recently attracted intensive research interests due to their elegant theoretical foundation and excellent empirical performance as generative models. These tools provide a promising direction in the studies where data availability is limited. One common issue in GANs is that the density of the learned generative distribution could concentrate on the training data points, meaning that they can easily remember training samples due to the high model complexity of deep networks. This becomes a major concern when GANs are applied to private or sensitive data such as patient medical records, and the concentration of distribution may divulge critical patient information. To address this issue, in this paper we propose a differentially private GAN (DPGAN) model, in which we achieve differential privacy in GANs by adding carefully designed noise to gradients during the learning procedure. We provide rigorous proof for the privacy guarantee, as well as comprehensive empirical evidence to support our analysis, where we demonstrate that our method can generate high quality data points at a reasonable privacy level.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Cryptography and Security,Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\STGZS9AZ\\Xie et al_2018_Differentially Private Generative Adversarial Network.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\4DSFGMQR\\1802.html}
+}
+
 @misc{xu2018SynthesizingTabularData,
   title = {Synthesizing {{Tabular Data}} Using {{Generative Adversarial Networks}}},
   author = {Xu, Lei and Veeramachaneni, Kalyan},
@@ -3814,6 +3939,25 @@
   langid = {american},
   organization = {{Statology}},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\L8TG6DTH\\long-tail-distribution.html}
+}
+
+@thesis{zbinden2022ImplementingExperimentingDiffusion,
+  type = {mathesis},
+  title = {Implementing and {{Experimenting}} with {{Diffusion Models}} for {{Text-to-Image Generation}}},
+  author = {Zbinden, Robin},
+  date = {2022-09-22},
+  eprint = {2209.10948},
+  eprinttype = {arxiv},
+  primaryclass = {cs},
+  institution = {{École Polytechnique Fédérale de Lausanne}},
+  location = {{Lausanne, Switzerland}},
+  url = {http://arxiv.org/abs/2209.10948},
+  urldate = {2023-02-26},
+  abstract = {Taking advantage of the many recent advances in deep learning, text-to-image generative models currently have the merit of attracting the general public attention. Two of these models, DALL-E 2 and Imagen, have demonstrated that highly photorealistic images could be generated from a simple textual description of an image. Based on a novel approach for image generation called diffusion models, text-to-image models enable the production of many different types of high resolution images, where human imagination is the only limit. However, these models require exceptionally large amounts of computational resources to train, as well as handling huge datasets collected from the internet. In addition, neither the codebase nor the models have been released. It consequently prevents the AI community from experimenting with these cutting-edge models, making the reproduction of their results complicated, if not impossible. In this thesis, we aim to contribute by firstly reviewing the different approaches and techniques used by these models, and then by proposing our own implementation of a text-to-image model. Highly based on DALL-E 2, we introduce several slight modifications to tackle the high computational cost induced. We thus have the opportunity to experiment in order to understand what these models are capable of, especially in a low resource regime. In particular, we provide additional and analyses deeper than the ones performed by the authors of DALL-E 2, including ablation studies. Besides, diffusion models use so-called guidance methods to help the generating process. We introduce a new guidance method which can be used in conjunction with other guidance methods to improve image quality. Finally, the images generated by our model are of reasonably good quality, without having to sustain the significant training costs of state-of-the-art text-to-image models.},
+  archiveprefix = {arXiv},
+  pagetotal = {63},
+  keywords = {Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\WRB8M4UR\\Zbinden_2022_Implementing and Experimenting with Diffusion Models for Text-to-Image.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\BDPPEW39\\2209.html}
 }
 
 @inproceedings{zhang2018GenerativeAdversarialNetwork,

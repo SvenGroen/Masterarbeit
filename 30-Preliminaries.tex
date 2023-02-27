@@ -49,16 +49,20 @@ An example for such an interdependency could occur in a demographics table, wher
 for instance, a person under 18 years old is considered a minor and has different legal rights and responsibilities compared to an adult.
 
 The authors of \cite{borisov2022DeepNeuralNetworks} identify four possible challenges when working with tabular data in a learning context.
-The first identified challenge is the low quality of the data. Typical quality issues include missing values, noise in the data, extreme data points, data inconsistencies, class imbalance or high dimensionalities after preprocessing \cite{borisov2022DeepNeuralNetworks}[CONFIRM 1].
-Secondly the missing irregular spatial dependencies of tabular data. Other common data formats like images or audio are homogeneous, 
+The first identified challenge is the "low-quality" of the data \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
+Typical quality issues include missing values, noise in the data, extreme data points, data inconsistencies, class imbalance or high dimensionalities after preprocessing \cite{borisov2022DeepNeuralNetworks}[CONFIRM 1].
+Secondly the "missing or complex irregular spatial dependencies" of tabular data \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
+Other common data formats like images or audio are homogeneous, 
 meaning that they consists of only 1 feature type \cite{borisov2022DeepNeuralNetworks}.
 Since tabular data consists of multiple features, made up of a mixture of categorical and numerical values, it is a heterogeneous data format with data points as rows and features as columns \cite{borisov2022DeepNeuralNetworks}.
 This makes is especially challenging for neural networks to work with since the correlations between the features is weaker because they often do not have any form of spatial or semantic relationship like image or text data has \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}.
-The third challenge is about the dependency on preprocessing. \cite{borisov2022DeepNeuralNetworks} highlights the importance of a preprocessing and explicit feature construction step that is necessary when working with tabular data in a deep learning context.
+The third challenge is about the "dependency on preprocessing" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
+\cite{borisov2022DeepNeuralNetworks} highlights the importance of a preprocessing and explicit feature construction step that is necessary when working with tabular data in a deep learning context.
 This preprocessing step is crucial since it does not only strongly influences the performance of deep learning \glspl{model} \cite{gorishniy2022EmbeddingsNumericalFeatures} 
 it also introducing new challenges. 
 Depending on the preprocessing strategy (\autoref{sec:preprocessing}) it is possible to create a very sparse feature matrix, create a synthetic ordinal ordering of a nominal variable or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
-The last and fourth challenge concerns the importance of a single feature. In homogeneous data multiple features need to change in order to change the class of the data. 
+The last and fourth challenge concerns the "importance of single features" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
+In homogeneous data multiple features need to change in order to change the class of the data. 
 For heterogeneous tabular data a small change in one feature variable can already alter the class of the row. 
 \cite{borisov2022DeepNeuralNetworks} illustrates this with the example of an image, where multiple pixels (\ie features) need to change in a coordinated manner in order to change the content (\ie class) of the image.
 For tabular data a single change in a cell can change the prediction of a predictive \gls{model} \cite{borisov2022DeepNeuralNetworks}. 
@@ -72,7 +76,7 @@ Switching an individuals "education" value from "Preschool" to "Doctorate" would
 
 Different data types can and should be processed into a meaningful format to be useful for deep learning \glspl{model} in different ways \cite{fan2020RelationalDataSynthesisa, lederrey2022DATGANIntegratingExperta}.
 It is usually the first step before working with the data on any task \cite{izonin2022TwoStepDataNormalization}.
-Data preprocessing itself consists of multiple different tasks: Data cleaning, data normalization, data transformation, data integration, missing value imputation and noise identification \cite{garcia2016BigDataPreprocessing}
+\cite{garcia2016BigDataPreprocessing} states, that data preprocessing itself consists of multiple different tasks: Data cleaning, data normalization, data transformation, data integration, missing value imputation and noise identification.
 While each of the preprocessing tasks is in itself important, 
 \cite{fitkov-norris2012EvaluatingImpactCategorical} and \cite{gorishniy2022EmbeddingsNumericalFeatures} showed that a proper transformation of categorical and numerical entries respectively can have a significant influence on a deep learning \glspl{model} performance.
 \cite{xu2019ModelingTabularData} showed the importance of normalization for synthetic tabular data generation.
@@ -565,21 +569,27 @@ The attention mechanism can be defined as \cite[p.4]{vaswani2017AttentionAllYou}
 \label{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModels}
 
 \Glspl{ddpm} (from now on referred to as "diffusion models"), firstly introduced by \cite{sohl-dickstein2015DeepUnsupervisedLearning}, are a generative modeling approach inspired by non-equilibrium statistical physics \cite{sohl-dickstein2015DeepUnsupervisedLearning}.
+\cite{ho2020DenoisingDiffusionProbabilistic} showed in their work how diffusion models are able to successfully generate high quality synthetic images.
+This section will provide an explanatory introduction to diffusion model concept, drawing heavily on the foundational work of \cite{ho2020DenoisingDiffusionProbabilistic}.
+Although several other researchers have made notable advancements to  diffusion probabilistic models, the work presented in \cite{ho2020DenoisingDiffusionProbabilistic} 
+serves as the cornerstone upon which all subsequent improvements have been built.
+Improvements and alternations made to \cite{ho2020DenoisingDiffusionProbabilistic} will be discussed in detail in \autoref{ch:relatedWork-diffusionModels}.
+
 On a high level, the whole diffusion concept can be summarized as:
 
 \begin{quotation}
   "The essential idea, (...) is to systematically and slowly destroy structure in a data distribution through an iterative forward diffusion process. 
   We then learn a reverse diffusion process that restores structure in data, yielding a highly flexible and tractable generative model of the data." \cite[p. 1]{sohl-dickstein2015DeepUnsupervisedLearning}
 \end{quotation}
-Formally, \cite{ho2020DenoisingDiffusionProbabilistic} defines diffusion models as a class of \glspl{lvm} [TODO:fix] of the form $p_\theta(x_0):= \int_{}^{}p_\theta(x_{0:T})dx_{1:T}$,
+
+Formally, \cite{ho2020DenoisingDiffusionProbabilistic} defines diffusion models as a class of \glspl{lvm} of the form $p_\theta(x_0):= \int_{}^{}p_\theta(x_{0:T})dx_{1:T}$,
 with $x_1, ..., x_T$ as latents of same dimensionality as samples from the data distribution $x_0 \sim q(x_0)$.
 Diffusion models consist of a forward process and a reverse process.
 During the forward process, an initial data point $x0$ is obtained from the data distribution $q(x_0)$.
 In the forward process (also called diffusion process), a fixed markov chain [TODO: Glossar?] gradually adds noise to the data.
 $T$ defines the number of noising step and $x1,...,x_T$ denoting the latent variables, \ie the noised versions of the original data, with $x_T$ being the fully noised version of the data.
-The amount of added (gaussian) noise in each timestep varies depending on the current timestep, which is controlled by a variance schedule $\beta_1, ..., \beta_T \in (0,1)$.
+The amount of added (gaussian) noise in each timestep varies depending on the current timestep, which is controlled by a variance schedule $\beta_1, ..., \beta_T \in (0,1)$ \cite{ho2020DenoisingDiffusionProbabilistic}.
 The forward process is defined as:
-
 
 \begin{equation}
   \label{eqn:forwards_1}
@@ -589,11 +599,10 @@ The forward process is defined as:
   \end{align*}
 \end{equation}
 
-For the variance schedule it holds that if $\beta_1 < \beta_2 < ... < \beta_T$ for $t\rightarrow\infty$, the final latent $x_t$ is isotropic gaussian noise, \ie, $x_t \sim \mathcal{N}(0, \textbf{I})$, with identity matrix $\textbf{I}$.
-If the reverse process is learned, this feature allows to sample from a gaussian distribution to generate new samples.
+For the variance schedule it holds that if $\beta_1 < \beta_2 < ... < \beta_T$ for $t\rightarrow\infty$, the final latent $x_t$ is isotropic gaussian noise, \ie, $x_t \sim \mathcal{N}(0, \textbf{I})$, with identity matrix $\textbf{I}$ \cite{zbinden2022ImplementingExperimentingDiffusion}.
 $\beta$ increases linearly in the original \gls{ddpm} approach \cite{ho2020DenoisingDiffusionProbabilistic} but was later improved to follow a cosine schedule \cite{nichol2021ImprovedDenoisingDiffusion}, improving the overall quality of the model.
 
-\autoref{eqn:forwards_1} shows how in an iterative manner one noising step can be applied to get from $x_{t-1}$ to $x_t$ with $q(x_t | x_{t-1})$.
+\autoref{eqn:forwards_1} \cite{ho2020DenoisingDiffusionProbabilistic} shows how in an iterative manner one noising step can be applied to get from $x_{t-1}$ to $x_t$ with $q(x_t | x_{t-1})$.
 Through the use of a reparameterization (see \autoref{eqn:reparameterization}) and defining $\alpha := 1-\beta_t$ and $\overline{\alpha_t}:=\prod_{s=1}^{t}a_s$
 Thus, the forward diffusion process can be expressed as:
 
@@ -605,13 +614,13 @@ Thus, the forward diffusion process can be expressed as:
   \end{align*}
 \end{equation}
 
-\autoref{eqn:forwards_2} allows to compute the forward noising from $x_0$ to any timestep $t$ within one computation step, instead of iteratively applying noise over and over again.
+\autoref{eqn:forwards_2}\cite{ho2020DenoisingDiffusionProbabilistic} allows to compute the forward noising from $x_0$ to any timestep $t$ within one computation step, instead of iteratively applying noise over and over again.
 
 During the reverse process, the goal is to learn the reverse distribution from noised data $x_t$ to slightly less noised data $x_{t-1}$, $q(x_{t-1}|x_t)$.
 With bayes-theorem we can see that $q(x_{t-1}|x_t) = \frac{p(x_{t-1},x_t)}{p(x)}$, which means $q(x_{t-1}|x_t)$ depends on the marginal distribution of $x_t$, denoted as $p(x_t)$.
-To calculate the marginal probability distribution $p(x_t)$ integration over all possible realizations of $x_{t-1}$ would be necessary, which would be computationally intractable.
+To calculate the marginal probability distribution $p(x_t)$ integration over all possible realizations of $x_{t-1}$ would be necessary, which would be computationally intractable \cite{capel2022MasterThesisDenoising}.
 As a result, $q(x_{t-1}|x_t)$ is approximated by a neural network with learnable parameters $\theta$ that learns the joint distribution $p_{\theta}(x_{0:T})$.
-$p_{\theta}(x_{0:T})$ is a Marcov-chain [TODO: glossar], defined in \autoref{eqn:reverse_1}, with the transitions defined in \autoref{eqn:reverse_2}.
+$p_{\theta}(x_{0:T})$ is a Marcov-chain [TODO: glossar], defined in \autoref{eqn:reverse_1}, with the transitions defined in \autoref{eqn:reverse_2} \cite{capel2022MasterThesisDenoising, ho2020DenoisingDiffusionProbabilistic}.
 
 \begin{equation}
   \label{eqn:reverse_1}
@@ -628,10 +637,10 @@ $p_{\theta}(x_{0:T})$ is a Marcov-chain [TODO: glossar], defined in \autoref{eqn
 \end{equation}
     
 While the mean $\mu_{\theta}(x_t, t)$ is learned by the neural network, the variance $\Sigma_{\theta}(x_t, t)$ stayed fixed in the initial work by \cite{ho2020DenoisingDiffusionProbabilistic} 
-but was later in \cite{nichol2021ImprovedDenoisingDiffusion} learned as well.
+but was later in \cite{nichol2021ImprovedDenoisingDiffusion} learned as well \cite{zbinden2022ImplementingExperimentingDiffusion}.
 
 Like in \glspl{vae} (\autoref{ch:preliminaries-generativeAlgorithms-variationalAutoencoders}), the model is trained by minimizing its negative log-likelihood (= maximizing the log-likelihood) $-log(p_\theta(x_0))$.
-$p_\theta(x_0)$ depends on all timesteps before $x_0$ and is, therefore, not tractable in practice.
+$p_\theta(x_0)$ depends on all timesteps before $x_0$ and is, therefore, not tractable in practice \cite{zbinden2022ImplementingExperimentingDiffusion}.
 As a solution, the variational lower bound on the negative log likelihood can be computed (ELBO [todo: REF]) \autoref{eqn:vlb}
 
 \begin{equation}
@@ -643,9 +652,9 @@ As a solution, the variational lower bound on the negative log likelihood can be
 
 The \gls{kl}-divergence (\autoref{eqn:kl-divergence}) is a non-negative measure of dissimilarity between two probability distributions. 
 By minimizing the \gls{kl}-divergence as the objective function in the given inequality, the right-hand side is reduced, leading to a smaller or equal left-hand side. 
-Consequently, minimizing the KL divergence  can only decrease the negative log-likelihood term on the left-hand side of the inequality. 
+Consequently, minimizing the KL divergence can only decrease the negative log-likelihood term on the left-hand side of the inequality. 
 This implies that the objective function provides a lower bound on the log-likelihood, and any improvement in minimizing the \gls{kl}-divergence will ultimately lead to an enhancement in this lower bound.
-Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{1:T}|x_0)})$ and some reformulations (see \autoref{TODO:APPENDIX}) using bayes-rule results in \autoref{eqn:vlb2}:
+Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{1:T}|x_0)})$ and some reformulations (see \autoref{TODO:APPENDIX}) using bayes-rule results in \autoref{eqn:vlb2} \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
   \label{eqn:vlb2}
@@ -655,113 +664,298 @@ Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x
 \end{equation}
 
 \autoref{eqn:vlb2} is the variational lower bound that is minimized during training to optimizing $-log(p_\theta(x_0))$.
-With additional reformulations (see \autoref{TODO:APPENDIX}), the loss function can be derived as:
+With additional reformulations (see \autoref{TODO:APPENDIX}), the loss function can be derived as \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
-  \label{eqn:vlb2}
+  \label{eqn:vlb3}
   \begin{align*}
    \mathbb{E}\biggl[\underbrace{D_{KL}(q(x_{T}|x_0) \parallel p(x_T))}_{L_T} + \sum_{t>1}^{} \underbrace{  D_{KL}(q(x_{t-1}|x_t,x_0) \parallel p_\theta(x_{t-1}|x_t)) }_{L_{t-1}}  \underbrace{ -log p_\theta(x_0|x_1) }_{L_{0}}\biggr]
   \end{align*}
 \end{equation}
 
-$L_T$ consists of $q(x_{T}|x_0)$ is a noising forward process that has no learnable parameters and $p(x_T)$ is gaussian distributed noise.
+$L_T$ consists of $q(x_{T}|x_0)$ and is a noising forward process that has no learnable parameters and $p(x_T)$ is gaussian distributed noise.
 If the forward process correctly destroys the data, $q(x_{T}|x_0)$ will converge to a standard gaussian distribution as well and one can be certain that $L_T$ will be close to $0$.
 Thus, $L_T$ will be neglected.
 $L_{0}$ can be computed using the \gls{cdf} of the Gaussian [TODO: Verstehen] \cite{nichol2021ImprovedDenoisingDiffusion}.
 Inside $L_{t-1}$, one compares the forward noising step $q(x_{t-1}|x_t,x_0)$ that is also conditioned on the input $x_0$ with the reverse process $p_\theta(x_{t-1}|x_t)$.
-Both terms have a closed form solution with:
+Both terms have a closed form solution with \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
+  \label{eqn:lt-1_1}
+  p_\theta(x_{t-1}|x_t)= \mathcal{N}(x_{t-1};\mu_\theta(x_t,t), \beta\textbf{I})
+\end{equation}
+
+\begin{equation}
+  \label{eqn:lt-1_2}
 q(x_{t-1}|x_t,x_0) = \mathcal{N}(x_{t-1};\tilde{\mu_t}(x_t,x_0), \tilde{\beta_t}\textbf{I})
 \end{equation}
 
-with 
+
+\autoref{eqn:lt-1_2} can be further simplified, considering that:
 \begin{equation}
-\tilde{\mu_t}(x_t, x_0) := \frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t}{1 - \alpha_{\bar{t}}}x_0 +   \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1})}{1 - \bar{\alpha}_{t}}x_t \quad \textrm{and }
-\tilde{\beta_t}:=\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta_t \nonumber
+  \begin{align}
+    &\tilde{\mu_t}(x_t, x_0) := \frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t}{1 - \alpha_{\bar{t}}}x_0 +   \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1})}{1 - \bar{\alpha}_{t}}x_t \quad \textrm{and }
+    \tilde{\beta_t}:=\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta_t \nonumber\\
+  \end{align}
+\end{equation}
+    
+\begin{equation}
+  \begin{align}
+    &x_t = \sqrt{\bar{\alpha}_{t}}x_0+\sqrt[]{1-\bar{\alpha}_t}\epsilon \quad\textrm{and }
+    x_0 = \frac{1}{\sqrt{\bar{\alpha}_t}}(x_t-\sqrt[]{1-\bar{\alpha}_t}\epsilon) \nonumber\\
+  \end{align}
+\end{equation}
+
+with $\beta$ being fixed by \cite{ho2020DenoisingDiffusionProbabilistic} and the mean $\tilde{\mu_t}$ is being further simplified to \autoref{eqn:lt-1_3} \cite{ho2020DenoisingDiffusionProbabilistic}:
+
+\begin{equation}
+  \begin{align}
+    \label{eqn:lt-1_3}
+    \tilde{\mu_t}(x_t, x_0) = \frac{1}{\sqrt{\bar{\alpha}_t}}(x_t - \frac{\beta_t}{\sqrt[]{1-\bar{\alpha}_t}}\epsilon)
+  \end{align}
+\end{equation}
+
+which is just scaled random noise that is substracted from $x_t$, the fully noised data.
+
+Hence, the \gls{kl}-divergence in $L_{t-1}$ in \autoref{eqn:vlb2} ultimately measures the difference between the actual noise, that was added ($\tilde{\mu_t}$ in \autoref{eqn:lt-1_3}) and the predicted noise from the neural network ($\mu_\theta$ in \autoref{eqn:lt-1_1})
+
+\cite{ho2020DenoisingDiffusionProbabilistic} proposes the \gls{mse} between $\tilde{\mu_t}$ and $\mu_\theta$:
+
+\begin{equation}
+  \begin{align}
+    \label{eqn:mse_loss}
+    L_{t-1} = \mathbb{E}_q \left[ \frac{1}{2\sigma_t^2} \left\Vert \tilde{\mu}_t(x_t, x_0) - \mu_\theta(x_t, t) \right\Vert^2 \right] + C
+  \end{align}
+\end{equation}
+
+The constant $C$ will be removed during training, as it does not depend on $\theta$ \cite{ho2020DenoisingDiffusionProbabilistic}.
+By reparameterization \autoref{eqn:reparameterization} of $\mu_\theta$ it is reformulated in the following way:
+
+\begin{equation}
+  \begin{align}
+    \label{eqn:mse_loss_2}
+    \mu_\theta(x_t,t)= \frac{1}{\sqrt{\alpha_t}}(x_t - \frac{\beta_t}{\sqrt[]{1-\bar{\alpha}_t}}\epsilon_\theta(x_t,t)) 
+  \end{align}
+\end{equation}
+
+With the reparameterization of \autoref{eqn:mse_loss_2} the parametrization of what the model should predict in the reverse process ($x_t \rightarrow x_{t-1}$) is moved. 
+Instead of predicting the mean and variance of the reverse distribution ($p_\theta(x_{t-1|x_t})$), \ie directly predicting the less noised data, 
+the model predicts the noise $\epsilon$ that makes the difference between $x_{t-1}$ and ${x_t}$.
+In other words, instead of predicting the new data directly, the model learns to predict what noise it needs to remove from the data \cite{capel2022MasterThesisDenoising}.
+Ultimately, during sampling $x_{t-1}$ can be calculated by
+
+\begin{equation}
+  \begin{align*}
+    \label{eqn:xt-1}
+    x_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(x_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha}t}}\epsilon_{\theta}(x_t,t)\right) + \sigma_t z \textrm{,}\quad
+    \textrm{with } \beta_t := 1-\alpha_t
+  \end{align*}
+\end{equation}
+
+where $z\sim\mathcal{N}(0,\textbf{I})$ is a random component that is added during the reverse process (except for $t=1$) to ensure the generation of diverse samples.
+
+Substituting $\tilde{\mu_t}$ as in \autoref{eqn:lt-1_3} and $\mu_\theta$ as in \autoref{eqn:mse_loss_2} with some further simplification leads to:
+
+\begin{equation}
+  \begin{align*}
+    \label{eqn:eqn:lt-1_4}
+    L_{t-1} &= \mathbb{E}_{x_0,\epsilon} \left[  \frac{\beta^2_t}{2\sigma_t^2 \alpha_t (1-\bar{\alpha}_t)} ||\epsilon - \epsilon_\theta(x_t,t)||^2 \right] \\
+    &= \mathbb{E}_{x_0,\epsilon} \left[  \frac{\beta^2_t}{2\sigma_t^2 \alpha_t (1-\bar{\alpha}_t)} ||\epsilon - \epsilon_\theta( \underbrace{\sqrt{\bar{\alpha}_t} x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon}_{x_t}, t)||^2 \right]
+  \end{align*}
 \end{equation}
 
 
+Ultimately, the authors of \cite[p. 5]{ho2020DenoisingDiffusionProbabilistic} discovered, that simplifying the loss term even further improves not only the sample quality,
+but is also easier to implement.
+\autoref{eqn:eqn:l_simple} shows the final simplified loss function $L_{simple}$:
 
 
+\begin{equation}
+  \begin{align*}
+    \label{eqn:eqn:l_simple}
+    L_{simple}(\theta) = \mathbb{E}_{t, x_0,\epsilon} \left[ ||\epsilon - \epsilon_\theta( \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon, t)||^2 \right]
+  \end{align*}
+\end{equation}
+
+The authors \cite{ho2020DenoisingDiffusionProbabilistic} state that this simplified loss version is a weighted variational bound, which down-weights the loss for small $t$'s, which corresponds to data point with only little added noise.
+They further argue, that this is actually beneficial for the model, since learning small noise is not difficult and therefore the model can focus more on the large $t$'s, where the denoising is more difficult \cite{ho2020DenoisingDiffusionProbabilistic}.
+
+\autoref{alg:training} shows the full training algorithm, which will be realized by firstly randomly sampling a datapoint $x_0 \sim q(x_0)$ from the dataset, a timestep $t\sim Uniform(\{1, ..., T\})$ and some random gaussian noise $\epsilon \sim \mathcal{N}(0, \textbf{I})$.
+Afterwards, the gradient step will then be performed according to \autoref{eqn:eqn:l_simple} using gradient descent.
+
+\begin{algorithm}
+  \caption[Training]{Training \cite[p. 4]{ho2020DenoisingDiffusionProbabilistic}}
+  \label{alg:training}
+  \begin{algorithmic}
+    \Repeat
+    \State $x_0 \sim q(x_0)$
+    \State $t\sim Uniform(\{1, ..., T\})$
+    \State $\epsilon \sim \mathcal{N}(0, \textbf{I})$
+    \State Take gradient descent step on
+    \State \hskip1.5em $\nabla_\theta||\epsilon - \epsilon_\theta( \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon, t)||^2$
+    \Until converged
+  \end{algorithmic}
+\end{algorithm}
 
 
+Sampling on the other hand follows the algorithm \autoref{alg:sampling}, starting with sampling gaussian noise $x_T$.
+The gaussian noise is then denoised in an iterative manner for $T$ timesteps according to \autoref{eqn:xt-1} until a new, noise-free datapoint $x_0$ is generated.
 
+\begin{algorithm}
+\caption[Sampling algorithm]{Sampling algorithm \cite[p. 4]{ho2020DenoisingDiffusionProbabilistic}}
+  \label{alg:sampling}
+  \begin{algorithmic}
+  \State $x_T \sim \mathcal{N}(0, \mathbf{I})$
+  \For{$t = T, \dots, 1$}
+  \State $z \sim \mathcal{N}(0, \mathbf{I})$ if $t > 0$ else $z = 0$
+  \State $x_{t-1} = \frac{1}{\sqrt{\alpha_t}}\left(x_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha}t}}\epsilon_{\theta}(x_t,t)\right) + \sigma_t z$
+  \EndFor
+  \State \Return $x_0$
+  \end{algorithmic}
+\end{algorithm}
 
-
-
-https://www.arxiv-vanity.com/papers/2209.10948/
-
-https://theaisummer.com/latent-variable-models/
-
-https://matheo.uliege.be/bitstream/2268.2/15989/15/Master_thesis.pdf
-
-https://towardsdatascience.com/understanding-diffusion-probabilistic-models-dpms-1940329d6048
-
-https://www.youtube.com/watch?v=HoKDTa5jHvg&t=951s
-
-
-% What are diffusion probabilistic models
-first paper \cite{sohl-dickstein2015DeepUnsupervisedLearning}
-first famouse paper \cite{ho2020DenoisingDiffusionProbabilistic}
-improvements> \cite{nichol2021ImprovedDenoisingDiffusion}
-follow up: \cite{dhariwal2021DiffusionModelsBeat}
-
-\cite{ho2022ClassifierFreeDiffusionGuidance}
-
-\cite{rombach2022HighResolutionImageSynthesis}
-
-% mathematical formulation
-% How do they work
-% In what context are they used (usually image synthesis)
-% Advantages / Problems / Challenges
-
-
-% for tabular data
-\cite{zheng2022DiffusionModelsMissing} for missing data
-
-\cite{kotelnikov2022TabDDPMModellingTabular} tabddpm
-\cite{hoogeboom2021ArgmaxFlowsMultinomial} multinomial diffusion
-
-
-\subsection{Diffusion Probabilistic Models for Tabular Data}
-\label{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModelsTabularData}
-
-% How can Diffusion Probabilistic Models be used for tabular data
-% Challenges of using Diffusion Probabilistic Models for tabular data (mixed data types --> different noising process, etc.)
+In summary, \cite{ho2020DenoisingDiffusionProbabilistic} introduced \gls{ddpm} based on the work of \cite{sohl-dickstein2015DeepUnsupervisedLearning}.
+Their diffusion model is based on a markov chain and consists of two parts, the forward noising and backward denoising part.
+During the forward process, a timestep $t$ is samples and the raw input data $x_0$ is noised accordingly using \autoref{eqn:forwards_2}.
+A function approximater (usually a neural network) with learnable parameters $\theta$ tries to remove the noise by predicting the noise, that was added during the forward process.
+This difference between the actual noise $\epsilon$ and the predicted noise $\epsilon_{\theta}$ is used as a loss function (\autoref{eqn:eqn:l_simple}) to perform gradient descent.
+Once the training is finished and the model converged, new synthetic data can be generated during sampling.
+In the sampling process, gaussian noise can be sampled and the model progressively denoises the sample for $T$ timesteps until a new, denoised datapoint $x_0$ is generated.
 
 
 %-------------------------------------------------------------------------
 \section{Evaluation of Synthetic Tabular Data}
 \label{ch:preliminaries-evaluationOfSyntheticTabularData}
 
-- there is no universal metric for data synthesis \cite{hernandez2022SyntheticDataGeneration}
-- utility and information disclosure metric dimensions \cite{goncalves2020GenerationEvaluationSynthetic}
-- structural similarity \cite{elemam2020SevenWaysEvaluate}
+In order to measure the effectiveness of synthetic tabular data generation model, a proper evaluation of the generated synthetic dataset is required.
+This evaluation is no trivial tasks, due to the complexity and challenges of tabular data discussed in \autoref{ch:preliminaries-dataSynthesis-tabularData}.
+Other data modalities, like images, are usually much easier to evaluate, for example through human inspection \cite{chundawat2022UniversalMetricRobust}. 
+This is not the case for tabular data, where a variety of factors need to be considered during evaluation.
+\cite{goncalves2020GenerationEvaluationSynthetic} identifies two major dimensions that need to be considered during the evaluation, "data utility" and "information disclosure".
+The former dimensionality focuses on the quality of the synthetic data in terms of usefulness and statistical similarity.
+A synthetic dataset should have the same statistical and practical properties as its real counterpart from which it was generated, so it is useful in practice and could be used as a substitute  [Todo: "practical properties" verständlich?].
+The latter focuses on the amount of information that was carried over from the original dataset, since the synthetic dataset should not just be a copy of the real dataset.
+Hence, it is realized by privacy measures that capture how much information of the real dataset is disclosed in the synthetic dataset \cite{goncalves2020GenerationEvaluationSynthetic}.
+\cite[p. 2]{little2021GenerativeAdversarialNetworksa} highlights that these two evaluation aspects, "high data utility" and "low disclosure risk" are two "competing interests" that need to be balanced.
+This section will present different ways to evaluate synthetic tabular data, that each focus on a different evaluation aspect.
+\cite{elemam2020SevenWaysEvaluate} identifies seven different ways to evaluate the utility aspect of synthetic data.
+However, in the literature and in practice only a few approaches are used and will be presented in greater detail.
+Firstly, statistical similarity (data utility) will be presented, followed by machine learning efficiency (data utility) and privacy evaluation methods (information disclosure).
+Lastly, additional evaluation methods are shortly listed and a proposed "similarity score" as a unified metric is presented.
 
 \subsection{Statistical Evaluation}
-\label{ch:preliminaries-evaluationOfSyntheticTabularData-statisticalEvaluation}
+\label{ch:preliminaries-statisticalEvaluation}
+
+There are various different metrics that can be used to measure the statistical similarity between a synthetic dataset and the corresponding real dataset.
+As a start, synthetic data should have similar basic statistical measures.
+For example, \cite{delcarmenrodriguez-hernandez2017DataGenCARSGeneratorSynthetic} compares different statistical properties of the original and synthetic data. 
+The authors include computing the mean, standard deviation, proportion of unique values, and number of distinct values for each attribute.
+
+\cite{goncalves2020GenerationEvaluationSynthetic} proposes multiple more complex statistical measures, that go beyond the comparison of single values.
+The \gls{kl}-divergence or its extension the Jensen-shannon distance \cite{zhao2022CTABGANEnhancingTabular} can be calculated between a pair of probability distributions from the real and synthetic dataset \cite{goncalves2020GenerationEvaluationSynthetic, li2022TTSGANTransformerbasedTimeSeries}.
+While this measures the similarity for one variable of the data only, correlations between multiple variables can be measured as well using the \gls{pcd} \cite{goncalves2020GenerationEvaluationSynthetic}.
+This metric measured if the synthetic dataset has similar correlations like the real dataset.
+Another measurement is the support coverage score \cite{goncalves2020GenerationEvaluationSynthetic}
+The support-coverage metric deals with the mathematical support of the fields. 
+Specifically, it compares whether the set of possible values in the synthetic dataset is similar or identical to that in the original dataset.
 
 \subsection{Machine Learning Efficiency}
-\label{ch:preliminaries-evaluationOfSyntheticTabularData-machineLearningEfficiency}
+\label{ch:preliminaries-machineLearningEfficiency}
+
+The machine learning efficacy (also referred to as "machine learning utility"\cite{zhang2021GANBLRTabularData} or "cross classification" \cite{goncalves2020GenerationEvaluationSynthetic}) is an approach that measures the utility of synthetic data and has been used in a variety of works \cite{zhao2022CTABGANEnhancingTabular, xu2019ModelingTabularData, zhang2021GANBLRTabularData, bourou2021ReviewTabularData, ge2021KaminoConstraintawareDifferentially}.
+This metric investigates whether "it is possible to replace the real with generated data to solve problems using Machine Leaning models" \cite[p. 7]{bourou2021ReviewTabularData}.
+A set of classification models (for example decision trees, regression models, neural networks and more) are evaluated in a classification or regression task.
+\cite[p. 7]{goncalves2020GenerationEvaluationSynthetic} highlights two distinct ways to perform the machine learning efficacy:
+\begin{enumerate}
+  \item "CrCl-RS": train on real data, test on hold-out data (test set) from both real and synthetic datasets.
+  \item "CrCl-SR": train on synthetic data and test on hold-out data from both real and synthetic datasets.
+\end{enumerate}
+\cite{goncalves2020GenerationEvaluationSynthetic} argues, that the former useful to evaluate if statistical properties are similar between real and synthetic datasets,
+and that the latter allows to confirm whether "scientific conclusions drawn from (...) models trained on synthetic datasets can safely be applied to real datasets" \cite[p. 7]{goncalves2020GenerationEvaluationSynthetic}
+The performance of the classification models itself is based on commonly used metrics for classification/regression tasks, such as the f1-score or RMSE-score \cite{bourou2021ReviewTabularData, chundawat2022UniversalMetricRobust}.
+It is important to mention, that there is no universally excepted way to perform this machine learning efficacy.
+For example, \cite{zhao2022CTABGANEnhancingTabular} makes use five models and calculates five different metrics, 
+\cite{ge2021KaminoConstraintawareDifferentially} on the other hand uses nine different models but calculates only three different metric scores.
+Moreover, \cite{kunar2021DTGANDifferentialPrivatea} uses four models with four metrics and \cite{kim2021OCTGANNeuralODEbased} uses three models on only one metric.
+In addition to the variety of models and metric scores used, each model can have different hyperparameters.
+For example, \cite{kunar2021DTGANDifferentialPrivatea} uses the default hyperparameters\footnote{from the scikit library \cite{scikit-learn}} for all models and 
+\cite{kim2021OCTGANNeuralODEbased} choses the hyperparameters that show best performance on in cross-validation.
+Lastly, the different generation models might use different datasets to compute their machine learning efficacy score on.
+Even though most of the generation approaches have adopted the "CrCl-SR"\cite{goncalves2020GenerationEvaluationSynthetic} approach to calculate the machine learning efficacy score,
+the aforementioned variabilities in terms of metrics- and model-choice make it hard to compare the performance across the different generative models using the machine learning efficacy.
+
 
 \subsection{Privacy Evaluation}
 \label{ch:preliminaries-evaluationOfSyntheticTabularData-privacyEvaluation}
+\cite{goncalves2020GenerationEvaluationSynthetic} discussed two types of privacy aspects that should be evaluated, "membership disclosure" and "attribute disclosure".
+While the former is concern with the question if an individual from the original dataset can be identified in the synthetic dataset, the latter is concerned with the possibility of inferring original values for an attribute of the original dataset, given the synthetic dataset.
+To measure the membership disclosure, \cite{goncalves2020GenerationEvaluationSynthetic} proposes to calculate the distance of synthetic datapoints to real datapoints.
+If this distance is smaller than a certain value, the synthetic datapoint is considered to be a present in the original dataset.
+The distance measure used by \cite{goncalves2020GenerationEvaluationSynthetic} was the Hamming-distance, but this could be replaced with a similarity measure of choice, depending on the data.
+attribute disclosure could be measured by testing, if a potential attacker could infer, unknown attributes, given a subset of known attributes by using a k-nearest neighbors algorithm \cite{goncalves2020GenerationEvaluationSynthetic}.
+These privacy measures are especially prominent and important in the context of medical data, that has usually sensitive information \cite{goncalves2020GenerationEvaluationSynthetic, pmlr-v68-choi17a}.
+
+To ensure privacy is granted, research towards including \gls{dp}\cite{dwork2008DifferentialPrivacySurvey} in the model has been made, \eg in \cite{xie2018DifferentiallyPrivateGenerative, jordon2018PATEGANGeneratingSynthetic, torfi2022DifferentiallyPrivateSynthetic}.
+Differential privacy is a concept in the field of data privacy that aims to protect the privacy of individuals while still allowing useful information to be extracted from data \cite{dwork2008DifferentialPrivacySurvey}. 
+It provides a mathematical framework for measuring the privacy risk associated with releasing data, and for designing algorithms that minimize this risk \cite{dwork2008DifferentialPrivacySurvey, zhao2022CTABGANEnhancingTabular}.
+This can be achieved by injecting noise to the gradients during the learning process \cite{xie2018DifferentiallyPrivateGenerative}.
 
 \subsection{Additional Evaluation Methods}
 \label{ch:preliminaries-evaluationOfSyntheticTabularData-otherMetrics}
 
-% Bias and stability
-% Domain Expertise
+There are several other ways to evaluate synthetic data that do not fall directly into the categories above, but are worth mentioning.
+\cite{elemam2020SevenWaysEvaluate} mentioned, that the quality of synthetic data can be determined by a domain expert, 
+who is familiar with how data in the given domain is supposed to look like.
+The expert could be asked to differentiate a set of synthetic data samples from a set of real data samples and the accuracy could be measured.
+However, this metric is not only highly dependent on the individual expert, it is also very time consuming and and hardly viable in practice.
+
+Another measured proposed by \cite{elemam2020SevenWaysEvaluate}, is to compute aggregations and statistics of the synthetic data and compare it to publicly available known statistics and aggregations that is about the same topic.
+If the synthetic is good, it would "tell the same story as the public data" \cite[p. 58]{elemam2020SevenWaysEvaluate}.
+
+In order to determine the stability of the generative model, \cite{elemam2020SevenWaysEvaluate} proposes, that the model could be used to generate not a single synthetic dataset, but multiple.
+Evaluation (\eg using statistical measure like in \autoref{ch:preliminaries-statisticalEvaluation}) is then be performed on all synthetic datasets and averages are calculated.
+This should highlight, if the generative model has learned any form of bias or instability, which is not desirable \cite{elemam2020SevenWaysEvaluate}.
+
+Lastly, \cite{hernandez2022SyntheticDataGeneration} proposes a set of resemblance techniques to measure the similarity of the synthetic data to the real data.
+Most of the proposed methods have already been mentioned and fall into one of the categories above, such as "consultation with [...] experts" or computing "correlation coefficients" \cite{hernandez2022SyntheticDataGeneration}.
+Another viable way to quickly get an indication on how well the similarity is, is through visualization techniques.
+\cite{hernandez2022SyntheticDataGeneration} proposes dimensionality reduction techniques like \gls{pca}, histograms of attributes and correlation matrices can be computed and visualized.
+With this visualization a human can quickly determine, if the visualizations produced by the synthetic data resemble those of the real data.
+For example, this type of visual evaluation was perform in the works \cite{li2022TTSGANTransformerbasedTimeSeries, leminh2021AirGenGANbasedSynthetica, mckeever2020SynthesisingTabularDatasets}.
+
 
 \subsection{Similarity Score}
-\label{ch:preliminaries-evaluationOfSyntheticTabularData-similarityScore}
+\label{ch:preliminaries-similarityScore}
+Given the previous sections, one can see that a variety of evaluation techniques exists.
+This is problematic for comparing the various approaches to generate synthetic data, as there is no universally excepted metric or benchmark to compare the techniques \cite{hernandez2022SyntheticDataGeneration}.
+\cite{brenninkmeijer2019GenerationEvaluationTabular} proposes a similarity score, to address this issue by providing a single score that aggregates different matrices that are used throughout the literature. 
+It consists of the average five different similarity metrics, that cover different aspects of the data, these are:
+\begin{itemize}
+  \item $S_{basic}$: compares the mean and standard deviation of the real and synthetic dataset using $Spearman's$ $\rho$ \cite{lane2003IntroductionStatistics} correlation.
+  \item $S_{corr}$: calculates correlations/association between the columns within the real and synthetic dataset using a correlation/association matrix. 
+  Different statistical correlation measures had been used to measure the correlation between columns of different data types \cite[p. 37]{brenninkmeijer2019GenerationEvaluationTabular}.
+  Ultimately, the matrices are compared using Pearson correlation $\rho_{pearson}$.
+  \item $S_{mirr}$: the mirror column association score is similar to $S_{corr}$, but instead of comparing the correlations occurring between columns within the dataset,
+  the metric compares wether the same columns in the real and synthetic dataset correlate.
+  This is done for each column and the average score is calculate.
+  \item $S_{pca}$: measures if the dimensionality reduction of the real and synthetic dataset through \gls{pca} is similar or not.
+  Five principal components are computed for each dataset and the average error in percentage between both \glspl{pca} is calculated using the mean absolute percentage error.
+  \item $S_{est}$: is a machine learning efficacy similarity score. Four different models are chosen, depending on wether the dataset is a classification or regression dataset, and performance metric averages are computed.
+  As performance metric, the root mean squared error and F1 score for regression or classification tasks respectively is chosen.
+\end{itemize}
+
+
+
+
+
+
+brenninkmeijer2019GenerationEvaluationTabular
+chundawat2022UniversalMetricRobust
+
+
 % https://www.researchgate.net/publication/344227988_On_the_Generation_and_Evaluation_of_Tabular_Data_using_GANs
 
 % TOREAD: https://www.researchgate.net/publication/361949372_TabSynDex_A_Universal_Metric_for_Robust_Evaluation_of_Synthetic_Tabular_Data
 
 %-------------------------------------------------------------------------
-
-
-
 
