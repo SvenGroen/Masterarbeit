@@ -26,6 +26,8 @@ A synthetic data generation \gls{model} would possibly allow developers to gener
 
 \subsection{Tabular Data}
 \label{ch:preliminaries-dataSynthesis-tabularData}
+[TODO: Discrete has 2 kinds: ordinal and categorical --> unterschied raussuchen und quelle finden (categrocial durch discrete ersetzten)]
+
 
 Tabular data is the most one of the most common forms of structured data \cite{hernandez2022SyntheticDataGeneration} used to store, classify and share information \cite{pilaluisa2022ContextualWordEmbeddings}.
 A table is made up of individual cell entries stored in rows and columns where rows can be seen as individual data points and columns are the different features \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}
@@ -822,6 +824,74 @@ This difference between the actual noise $\epsilon$ and the predicted noise $\ep
 Once the training is finished and the model converged, new synthetic data can be generated during sampling.
 In the sampling process, gaussian noise can be sampled and the model progressively denoises the sample for $T$ timesteps until a new, denoised datapoint $x_0$ is generated.
 
+\subsection{Multinomial Diffusion}
+\gls{ddpm} is using a gaussian diffusion process, that is designed to operate in continuous space \cite{kotelnikov2022TabDDPMModellingTabular}.
+However, many different data types are of categorical nature, where the gaussian noising process proposed in \autoref{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModels} is not applicable.
+As a response, \cite{hoogeboom2021ArgmaxFlowsMultinomial} introduces multinomial diffusion, "a diffusion model directly defined on categorical variables" \cite[p, 3]{hoogeboom2021ArgmaxFlowsMultinomial}.
+
+\cite{hoogeboom2021ArgmaxFlowsMultinomial} defines the multinomial diffusion process in the following way:
+
+\begin{equation}
+  \begin{align*}
+    \label{eqn:mul_diff1}
+    q(x_{t}|x_{t-1}) = \mathcal{C}(x_t|(1-\beta_t)x_{t-1}+\beta_t/K)
+  \end{align*}
+\end{equation}
+
+with $\beta_t$ reflecting the probability to replace a current category value by a new category, samples from a categorical uniform distribution, ultimately controlling the amount of noise added \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
+Furthermore, $\mathcal{C}$ denotes a categorical distribution and $x_t$ in a one-hot encoded categorical vector format with $K$ different classes, $x_t\in\{0,1\}^K$ \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
+
+The noising step from $x_0$ to any noised version $x_t$ can be expressed as:
+
+\begin{equation}
+  \begin{align*}
+    \label{eqn:mul_diff2}
+    q(x_{t}|x_{0}) = \mathcal{C}(x_t|\overline{\alpha}_tx_{0}+(1-\overline{\alpha}_t)/K)
+  \end{align*}
+\end{equation}
+
+with $\alpha_t = 1-\beta_t$ and $\overline{\alpha}_t = \prod_{\tau=1}^{t}\alpha_\tau$.
+Uniform noise is added over the $K$ classes in each timestep.
+If $(1-\beta_t)$ is large, the model is likely to the previous category from $x_{t-1}$, likewise, if it is small, 
+the model will more rely on sampling a random category from a uniform distribution over all categorical values for the variable.
+
+\cite{hoogeboom2021ArgmaxFlowsMultinomial} derives from \autoref{eqn:mul_diff1} and \autoref{eqn:mul_diff2} the categorical posterior:
+
+\begin{equation}
+  \begin{gathered}
+  \label{eqn:mul_diff3}
+  q(x_{t-1}|x_t, x_{0}) = \mathcal{C}(x_{t-1}|\theta_{post}(x_t,x_0)),\textrm{ where } \theta_{post}(x_t,x_0)=\tilde{\theta}/\sum_{k=1}^{K}\tilde{\theta}_k \\
+  \textrm{and } \tilde{\theta} = \left[\alpha_tx_{t}+(1-\alpha_t)/K \right] \odot \left[\overline{\alpha}_{t-1}x_{0}+(1-\overline{\alpha}_{t-1})/K \right]
+  \end{gathered}
+\end{equation}
+
+\cite{hoogeboom2021ArgmaxFlowsMultinomial} argues, that predicting the added noise, as in \cite{ho2020DenoisingDiffusionProbabilistic},
+is difficult and instead the authors predict a probability vector for $\hat{x_0}$ from $x_t$.
+The reverse distribution $p_\theta(x_{t-1}|x_t)$ is realized in the form of $q(x_{t-1}|x_t,\hat{x_0})$ where $\hat{x_0}=\mu(x_t, t)$ is predicted by the model and tries to approximate $x_0$ \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
+Hence:
+
+\begin{equation}
+  \begin{align*}
+    \label{eqn:mul_diff4}
+    p(x_0|x_1) = \mathcal{C}(x_0|\hat{x}_0) \textrm{ and } p(x_{t-1}|x_t) =  \mathcal{C}(x_{t-1}|\theta_{post}(x_t, \hat{x}_0)) \textrm{ where } \hat{x}_0=\mu(x_t,t)
+  \end{align*}
+\end{equation}
+
+In other words, to determine the categorical value assigned to $x_{t-1}$ (or $x_0$ in the last step) is based on the predicted probabilities $\hat{x}_0$ produced by the model.
+
+
+The loss function in terms of \gls{kl}-divergence (\autoref{eqn:vlb3}) can be computed with \autoref{eqn:mul_diff3} and \autoref{eqn:mul_diff4}:
+
+\begin{equation}
+  \begin{align*}
+    \label{eqn:mul_diff5}
+    L_{t-1}&=\text{KL}\Big(q(x_{t-1}|x_t, x_0)\big\vert\big\vert p(x_{t-1}|x_t)\Big) = \text{KL}\Big(C(\theta_{post}(x_t, x_0))\big\vert\big\vert C(\theta_{post}(x_t, \hat{x}_0))\Big) \textrm{ and}\\
+    L_{0} &= -logp(x_0|x_1) = \sum_{k}^{}x_{0,k}log\hat{x}_{0,k}
+  \end{align*}
+\end{equation}
+
+Like in \cite{ho2020DenoisingDiffusionProbabilistic}, $L_{t}$ has no learnable parameters and will be omitted.
+
 
 %-------------------------------------------------------------------------
 \section{Evaluation of Synthetic Tabular Data}
@@ -872,7 +942,7 @@ A set of classification models (for example decision trees, regression models, n
 \end{enumerate}
 \cite{goncalves2020GenerationEvaluationSynthetic} argues, that the former useful to evaluate if statistical properties are similar between real and synthetic datasets,
 and that the latter allows to confirm whether "scientific conclusions drawn from (...) models trained on synthetic datasets can safely be applied to real datasets" \cite[p. 7]{goncalves2020GenerationEvaluationSynthetic}
-The performance of the classification models itself is based on commonly used metrics for classification/regression tasks, such as the f1-score or RMSE-score \cite{bourou2021ReviewTabularData, chundawat2022UniversalMetricRobust}.
+The performance of the classification models itself is based on commonly used metrics for classification/regression tasks, such as the f1-score or \gls{rmse}-score \cite{bourou2021ReviewTabularData, chundawat2022UniversalMetricRobust}.
 It is important to mention, that there is no universally excepted way to perform this machine learning efficacy.
 For example, \cite{zhao2022CTABGANEnhancingTabular} makes use five models and calculates five different metrics, 
 \cite{ge2021KaminoConstraintawareDifferentially} on the other hand uses nine different models but calculates only three different metric scores.
@@ -927,13 +997,14 @@ For example, this type of visual evaluation was perform in the works \cite{li202
 \subsection{Similarity Score}
 \label{ch:preliminaries-similarityScore}
 Given the previous sections, one can see that a variety of evaluation techniques exists.
-This is problematic for comparing the various approaches to generate synthetic data, as there is no universally excepted metric or benchmark to compare the techniques \cite{hernandez2022SyntheticDataGeneration}.
+This is problematic for comparing the various approaches to generate synthetic data, as there is no universally excepted metric or benchmark to compare the techniques \cite{hernandez2022SyntheticDataGeneration, chundawat2022UniversalMetricRobust}.
 \cite{brenninkmeijer2019GenerationEvaluationTabular} proposes a similarity score, to address this issue by providing a single score that aggregates different matrices that are used throughout the literature. 
 It consists of the average five different similarity metrics, that cover different aspects of the data, these are:
 \begin{itemize}
   \item $S_{basic}$: compares the mean and standard deviation of the real and synthetic dataset using $Spearman's$ $\rho$ \cite{lane2003IntroductionStatistics} correlation.
   \item $S_{corr}$: calculates correlations/association between the columns within the real and synthetic dataset using a correlation/association matrix. 
   Different statistical correlation measures had been used to measure the correlation between columns of different data types \cite[p. 37]{brenninkmeijer2019GenerationEvaluationTabular}.
+  Pearson's correlation for two continues columns, correlation ratio between continuos and categorical and Theil's U for two categorical \cite{brenninkmeijer2019GenerationEvaluationTabular, lane2003IntroductionStatistics}.  
   Ultimately, the matrices are compared using Pearson correlation $\rho_{pearson}$.
   \item $S_{mirr}$: the mirror column association score is similar to $S_{corr}$, but instead of comparing the correlations occurring between columns within the dataset,
   the metric compares wether the same columns in the real and synthetic dataset correlate.
@@ -946,16 +1017,130 @@ It consists of the average five different similarity metrics, that cover differe
 
 
 
+The authors of \cite{chundawat2022UniversalMetricRobust} propose TabSynDex, a single similarity score based upon the combination of multiple scores covering different aspects of data similarity like in the works of \cite{brenninkmeijer2019GenerationEvaluationTabular}.
+In their work, they point out weaknesses of the similarity score, proposed by \cite{brenninkmeijer2019GenerationEvaluationTabular}.
+
+[TODO: Weaknesses]
+
+
+\begin{description}
+  \item Basic statistical measure:
+  computes basic statistics of the data for each column, namely mean, median and standard deviation, and calculates the relative error between the real and fake columns:
+  
+  \begin{equation}
+    \begin{align*}
+      \label{eqn:rel_err}
+      e=\frac{1}{N} \bigg| \frac{R_i-F_i}{R_i} \bigg| 
+      \end{align*}
+  \end{equation}
+
+  with $R_i$ and $F_i$ denoting the statistical measure of column $i$ for the real and synthetic data, respectively.
+  The score for each metric is calculated as:
+  $$s_m = 1-\frac{e^m_1+e^m_2+...+e^m_n}{n} \textrm{, with }m \in \{mean, median, std\}$$
+  where n is the number of columns.
+  The final score will be calculated as
+
+
+  \begin{equation}
+    \begin{align*}
+      \label{eqn:s_basic}
+      S_{basic} = \frac{s_{mean}+s_{median}+s_{std_dev}}{3}
+      \end{align*}
+  \end{equation}
+
+
+  \item Log-transformer Correlation:
+  compares the correlations between columns within the datasets to compute two matrices with $n^2$ values, for $n$ columns.
+  Correlations are calculated depending on the datatype, like in \cite{brenninkmeijer2019GenerationEvaluationTabular}.
+  The matrix entries are also log-transformed to account for the issue of very small values in the correlation matrix of real data, which can result in higher relative error values when compared to the correlation matrix for generated data, even if both correlations are nearly zero. 
+  The log-transformation helps to rescale the values and provide a more accurate comparison between the correlation matrices of real and generated data.
+  \autoref{eqn:s_corr} defines the correlation score, where $sln(x) = sign(x)ln(|x|)$ and $r_{i,j}, s_{i,j}$ indicating the matrix entries of the real and synthetic data.
+  $sign(x)$ is defined as
+  $$\textrm{sign}(x) = \begin{cases}1 & \text{if } x > 0 & -1 & \text{if } x < 0 & 0 & \text{if } x = 0\end{cases}$$
+  which results in the final score:
+  \begin{equation}
+    \begin{align*}
+      \label{eqn:s_corrl}
+      S_{corrl} = 1-\frac{1}{n^2-n} \sum_{i=1}^{n}\sum_{j=1_{j \neq i}}^{n} \bigg| \frac{sln(r_{i,j})- sln(s_{i,j})}{sln(r_{i,j})}\bigg| 
+      \end{align*}
+  \end{equation}
+
+
+  \item Propensity Mean Squared Error:
+  is used to "robustly discriminate between real and synthetic data" \cite[p. 3]{chundawat2022UniversalMetricRobust}.
+  The \gls{pmse} is computed by combining a set of samples from the real and synthetic dataset and adding a label $Y$ to each entry, 
+  indicating wether the given sample stems from the real or the synthetic dataset.
+  A logistic regression model is trained to predict probabilities $\hat{p}_i$ for each sample $i$ for it being a synthetic or real data sample.
+  The \gls{pmse} is calculated as:
+  $$pMSE = 1-\frac{1}{N} \sum_{i=1}^{n}(\hat{p}_i-c)^2$$
+
+  with $c=N_{syn}/(N_{real}+N_{syn})$ indicating the proportion of synthetic samples.
+  
+  For a similarity score, \cite{chundawat2022UniversalMetricRobust} also computes the expected value of \gls{pmse}, when the real and synthetic data are indistinguishable 
+  using the $pMSE_0$ score, calculated as \cite{snoke2018GeneralSpecificUtility,chundawat2022UniversalMetricRobust}:
+  $$\mathbb{E}(pMSE_0) = \frac{(k-1)(1-c)^2c}{N}$$
+  with the logistic regression model having $k$ parameters (including bias) \cite{chundawat2022UniversalMetricRobust}.
+  \cite{chundawat2022UniversalMetricRobust} improves the original metric as introduced in \cite{snoke2018GeneralSpecificUtility} further through the introduction
+  of a value $\alpha$ that can be chosen task specific and helps standardization of the score to $[0,1]$ (the authors default is set to $\alpha=1.2$)
+  The final score is calculated as 
+  \begin{equation}
+    \begin{align*}
+      \label{eqn:s_pmse}
+      S_{pMSE} = \alpha^{|1-\frac{pMSE}{\mathbb{E}(pMSE_0)}|}
+      \end{align*}
+  \end{equation}
+  that calculates the ration of $pMSE$ and $pMSE_0$.
+  Hence, the closer the ratio is to 1, the more indistinguishable the synthetic data is from the real data \cite{chundawat2022UniversalMetricRobust}.
+  
+
+  \item Regularized Support Coverage:
+  measures how well a synthetic dataset covers the variables in a real dataset. 
+  For a single variable, the score is calculated as the average of the number of samples in each category in the fake data 
+  divided by the number of samples in the corresponding category in the real data, multiplied by a scaling factor. 
+  It penalizes the score more if rare categories are not well-represented. 
+  
+  Mathematically, the score for a single variable or column $c$ is calculated as follows:
+
+  $$ s_{cr} = \frac{1}{n_{cat}} \sum_{i=1}^{n_{cat}} \frac{n^s_i}{n^r_i} \cdot scaling~factor $$
+
+where $n_{cat}$ is the number of categories for a variable, $n^s_i$ is the number of samples in that category in the synthetic data, $n^r_i$ is the corresponding number of samples in the real data, and the scaling factor is $N_{real}/N_{syn}$ \cite{chundawat2022UniversalMetricRobust}.
+The authors limit the score to a predefined $\beta$ value (the authors default is set to $\beta=2$), to account for the potential for $s_{cr}$ to become very sensitive to $n^s_i$, if $n^r_i$ is very small \cite{chundawat2022UniversalMetricRobust}.
+
+The final Scr score is calculated as the average of the score for each column \cite{chundawat2022UniversalMetricRobust}:
+
+\begin{equation}
+  \begin{align*}
+    \label{eqn:s_cr}
+    S_{cr} = \frac{1}{n} \sum_{i=1}^{n} s_{cr_i}
+    \end{align*}
+\end{equation}
 
 
 
-brenninkmeijer2019GenerationEvaluationTabular
-chundawat2022UniversalMetricRobust
+  \item Machine Learning Efficacy:
+  is a metric to indicate how useful the synthetic data is in a machine learning scenario (see \autoref{ch:preliminaries-machineLearningEfficiency}).
+  \cite{chundawat2022UniversalMetricRobust} adopts the proposed metrics and models by \cite{brenninkmeijer2019GenerationEvaluationTabular} that differentiates the chosen set of models and metric based on
+  if the dataset contains a classification or regression target.
+  The models include Random Forest-, Lasso-, Ridge- and ElasticNet-Regression for regression tasks and Logistic Regression-, Random Forest-,  Decision Tree- and \gls{mlp}-classifier for classification tasks \cite{brenninkmeijer2019GenerationEvaluationTabular, chundawat2022UniversalMetricRobust}.
+  For each model, two versions are trained, one trained on synthetic, and one trained on real training data.
+  Their performance is tested on the real and fake targets using the f1-score or \gls{rmse}-score.
+  For each model, the relative error (\autoref{eqn:rel_err}) is calculated between metric results of the model that was trained on real data and the model that was trained on synthetic data.
+  The final score is the average performance error for all four models:
 
+  \begin{equation}
+    \begin{align*}
+      \label{eqn:s_ml}
+      S_{ml} = 1-\frac{e_{m1}+e_{m2}+e_{m3}+e_{m4}}{4}
+      \end{align*}
+  \end{equation}
+  where $e_{mi}$ is the error for the $i^{th}$ model \cite{chundawat2022UniversalMetricRobust}.
+\end{description}
 
-% https://www.researchgate.net/publication/344227988_On_the_Generation_and_Evaluation_of_Tabular_Data_using_GANs
+The final unified metric is the average of all scores mentioned above and is described in \autoref{eqn:tabsyndex}\cite{chundawat2022UniversalMetricRobust}:
 
-% TOREAD: https://www.researchgate.net/publication/361949372_TabSynDex_A_Universal_Metric_for_Robust_Evaluation_of_Synthetic_Tabular_Data
-
-%-------------------------------------------------------------------------
-
+\begin{equation}
+  \begin{align*}
+    \label{eqn:tabsyndex}
+    TabSynDex = \frac{S_{basic}+S_{corrl}+S_{pMSE}+S_{cr}+S_{ml}}{5}
+    \end{align*}
+\end{equation}
