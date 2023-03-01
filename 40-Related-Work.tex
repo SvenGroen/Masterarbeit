@@ -1,46 +1,85 @@
 \chapter{Related Work}
 \label{ch:relatedWork}
 
+Recently, a lot of research is conducted in the are of tabular data modeling.
+This section covers the most important approaches towards tabular data synthesis.
+In the first section, a focus on \glspl{gan} is set, where several improvements over the last years has led to state of the art performance.
+Next, other influencial approaches towards tabular data synthesis, that do not rely on Gans are discussed
+Afterwards diffusion models are discussed.
+Since diffusion models have been extensively researched in the image generation domain, most influential works and their improvements are discussed firstly.
+Lastly, the focus shifts on approaches, that use diffusion for tabular data.
+
+
 
 %-------------------------------------------------------------------------
 \section{Generative Adversarial Networks Models}
 \label{ch:relatedWork-generativeAdversarialNetworksModels}
 
+The \gls{gan}-architecture is a common way to address the problem of tabular data synthesis in the literature \cite{borisov2022DeepNeuralNetworks}.
+Over the last years, several improvements have been made to account for their shortcomings, such as the introduction of the Wasserstein\cite{frogner2015LearningWassersteinLoss}  distance \cite{arjovsky2017WassersteinGenerativeAdversarial}, conditioning \cite{mirza2014ConditionalGenerativeAdversarial} or gradient penalty \cite{gulrajani2017ImprovedTrainingWasserstein}.
+\Glspl{gan} have already shown stunning results across several data modalities \cite{mckeever2020SynthesisingTabularDatasets} and their success extends also into the
+domain of tabular data generation.
 
-mirza2014ConditionalGenerativeAdversarial
-% what improvements have been done to GAN's
-- gans struggled with generating discrete variables \cite{torfi2020CorGANCorrelationCapturingConvolutionala}
-- State of the art Gan approaches only focused on continouse and categorical types, overlooking mixed data types \cite{zhao2022CTABGANEnhancingTabular}
+The authors of medGAN \cite{choi2017GeneratingMultilabelDiscrete} showed how \glspl{gan} can be used in the medical domain to generate synthetic patient records.
+Their medGAN is able to work with discrete data and includes an autoencoder in their architecture.
 
-- conditional GAN \cite{mirza2014ConditionalGenerativeAdversarial}
+TableGAN proposed by \cite{park2018DataSynthesisBased}, takes a different approach towards the preprocessing of the tabular data compared to other researches.
+They use a simplistic minmax scaling for continuos columns and label encode categorical values and space them into a range of $[-1, 1]$.
+The biggest change is, that the authors convert the tabular 1-dimensional data into a 2-dimensional matrix form.
+This allows to make use of \glspl{cnn} inside their model.
+
+There are also models that specifically focus on privacy, such as PATE ("Private Aggregation of Teacher Ensembles")-GAN  \cite{jordon2018PATEGANGeneratingSynthetic}.
+PATE-GAN demonstrates, that it is able to produce not only high quality synthetic data, but also able to hold strict privacy guarantees.
+
+The TGAN \cite{xu2018SynthesizingTabularData} model is able to generate discrete and continuous data simultaneously.
+TGAN deals with continuous variables through a mode-specific normalization through \glspl{gmm}\cite[p. 3]{xu2018SynthesizingTabularData}.
+Their architecture includes \gls{lstm} cells with attention that generate the data column-wise\cite{xu2018SynthesizingTabularData}.
+
+The authors of TGAN follow up on their own work and introduce a new architecture named CTGAN \cite{xu2019ModelingTabularData}.
+They first identified the biggest challenges in tabular data generation, namely "mixed data types", "Non-Gaussian distributions", "Multinomial distributions", "learning form sparse one-hot encoded vectors" and "highly imbalanced categorical columns" \cite[p. 3]{xu2019ModelingTabularData}.
+To address some of these issues, they improve their preprocessing and their architecture.
+Firstly, instead of using a \gls{gmm}, they use a \gls{vgmm} \cite{xu2019ModelingTabularData}.
+Secondly, they introduce the possibility to condition the \gls{gan} to produce certain values of a column through employing a conditional vector during training \cite{xu2019ModelingTabularData}.
+Lastly, they changed their model architecture by removing \gls{lstm} cells for better computation time, added batch normalization [TODO QUELLE], 
+and adopted a \gls{gan} architecture that uses Wasserstein-distance and gradient penalty \cite{gulrajani2017ImprovedTrainingWasserstein}.
+
+Additional research towards improving the CTGAN has been made by Zhao, Kunar, Chen and Birke that introduced CTAB-GAN \cite{zhao2021CTABGANEffectiveTablea} and their successor CTAB-GAN+ \cite{zhao2022CTABGANEnhancingTabular}.
+The CTAB-GAN specifically focuses on addressing the biggest challenges when working with tabular data (see \autoref{TODO: challenges section}).
+The authors criticize that other works do not account for mixed data types \cite{zhao2022CTABGANEnhancingTabular}.
+As a result, they introduce a mixed-data type encoding (TODO: REF) that allows to encode a column that contains both, categorical and numerical data.
+This is achieved in conjunction with the mode-specific normalization, which was also used by \cite{xu2018SynthesizingTabularData, xu2019ModelingTabularData}.
+Additionally, CTAB-GAN introduces an additional auxiliary classifier to provide "additional supervision to improve its [CTAB-GANs] utility for ML applications" \cite[p. 2]{zhao2021CTABGANEffectiveTablea}.
+The authors newest version of CTAB-GAN, called CTAB-GAN+ \cite{zhao2022CTABGANEnhancingTabular}, achieves state of the art performance on synthetic data generation.
+Changes compared to the first CTAB-GAN version include, new feature encoding, adopting Wasserstein distance and gradient penalty, auxiliary classifier can be exchanged for an auxiliary regression model
+and using differential privacy stochastic gradient decent \cite{abadi2016DeepLearningDifferentiala} for discriminator training (adopted from \cite{jordon2018PATEGANGeneratingSynthetic}) \cite{zhao2022CTABGANEnhancingTabular}.
+
+In summary, it gets clear that a lot of different approaches exist for tabular data synthesis, each usually focusing on improving certain aspects that make dealing with tabular data challenging.
+Since this section is meant to give an overview of the topic, 
+it is necessary to mention that there exist numerous other noteworthy studies that merit further exploration. 
+However, they are not included in this thesis due to limitations in length. 
+These works provide valuable insights and contributions to the field under investigation, and their exclusion should not be interpreted as a lack of significance or relevance. 
+In particular, the works of \cite{fan2020RelationalDataSynthesisa, hernandez2022SyntheticDataGeneration, bourou2021ReviewTabularData} provide a valuable overview of the research area.
 
 
-% mathematical formulation
-% Advantages / Problems / Challenges (Mode Collapse, etc.)
-- remarkable performance generating syntehtic images and time series data \cite{mckeever2020SynthesisingTabularDatasets}
-- struggle with mode collapse --> generate same sample \cite{torfi2020CorGANCorrelationCapturingConvolutionala}
-- wasserstein loss helps against mode collapse \cite{frogner2015LearningWassersteinLoss} \cite{arjovsky2017WassersteinGenerativeAdversarial} and has been implemented in many gans (e.g. \cite{zhao2022CTABGANEnhancingTabular})
-- gradient penalty \cite{gulrajani2017ImprovedTrainingWasserstein}
-
-
-\subsection{CTGAN}
-\label{ch:relatedWork-generativeAdversarialNetworksModels-ctgan}
-
-\subsection{CTAB GAN}
-\label{ch:relatedWork-generativeAdversarialNetworksModels-ctabGAN}
-%-------------------------------------------------------------------------
-\section{Transformer Models}
+\section{Other Models}
 \label{ch:relatedWork-transformers}
 
+%TRANSFORMER
 TabTransformer only embeddeds categorical values --> cont not through attention --> no correlation capture \cite{somepalli2021SAINTImprovedNeural}
 
 - TabNet is one of the first transformer-based models for tabular data \cite{borisov2022DeepNeuralNetworks}
 - padhi2021TabularTransformersModeling
 
+%VAE
+
+- TVAE
 
 %-------------------------------------------------------------------------
 \section{Diffusion Models}
 \label{ch:relatedWork-diffusionModels}
+
+\subsection{Diffusion Probabilistic Models}
+\label{ch:preliminaries-diffusionProbabilisticModelsTabularData}
 
 
 \subsection{Diffusion Probabilistic Models for Tabular Data}
@@ -49,7 +88,7 @@ TabTransformer only embeddeds categorical values --> cont not through attention 
 % How can Diffusion Probabilistic Models be used for tabular data
 % Challenges of using Diffusion Probabilistic Models for tabular data (mixed data types --> different noising process, etc.)
 
-\subsection{Tab-DDPM}
+\subsubsection{Tab-DDPM}
 \label{ch:relatedWork-diffusionModels-tabDDPM}
 
 % Paper for image synthesis
