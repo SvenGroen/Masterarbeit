@@ -119,7 +119,7 @@ This vector of real numbers tries to capture "semantic regularities in vector sp
 The goal of embeddings is to create a vector space, in which semantically similar values are also numerically similar \cite{pilaluisa2022ContextualWordEmbeddings}.
 It can be differentiated between static embeddings and contextualized embeddings. 
 While the former embedding technique always provides the same numerical representation for an input value, the latter embedding technique changes the vector representation of value based on its surrounding context \cite{pilaluisa2022ContextualWordEmbeddings}.
-This is especially important in the natural language processing domain, where contextual embeddings has led to state-of-the-art improvements \cite{pilaluisa2022ContextualWordEmbeddings}.
+This is especially important in the \gls{nlp} domain, where contextual embeddings has led to state-of-the-art improvements \cite{pilaluisa2022ContextualWordEmbeddings}.
 Homonyms or polysemic words like "bat" or "second" are words that carry multiple different meanings and their semantic meaning therefore changes with the context they are used in. [TODO: QUELLE]
 Hence, the contextualized embedding vector of the word "second" in the context of time (\eg "it took me 3 seconds") should be different to the one where "second" is used in the context of a competition (\eg "he achieved the second place").
 Contextualized embeddings have to be learned during some form of (pre-) training \cite{devlin2019BERTPretrainingDeep, iida2021TABBIEPretrainedRepresentations, deng2021TURLTableUnderstanding}. 
@@ -245,7 +245,7 @@ A successful tabular data generator should be able to recreate such properties o
 \section{Deep Learning Architectures}
 \label{ch:preliminaries-deepLearningArchitectures}
 
-Deep learning has rapidly become a dominant force in artificial intelligence, revolutionizing various fields including computer vision, natural language processing, and data generation. 
+Deep learning has rapidly become a dominant force in artificial intelligence, revolutionizing various fields including computer vision, \gls{nlp}, and data generation. 
 Complex architectures made up of many layers of artificial neural networks are used to build deep learning models.
 These architectures have enabled the creation of highly accurate and efficient models that are capable of processing vast amounts of data. 
 In recent years, the development of new deep learning architectures has been a key area of research, leading to the creation of powerful models.
@@ -344,11 +344,11 @@ The decision of which layers to skip is learned by the model itself during the t
 
 Lastly, inspired by the human cognitive capabilities to focus on specific parts of an input, attention mechanisms have been introduced \cite{niu2021ReviewAttentionMechanism, aggarwal2018NeuralNetworksDeep}.
 The implementation of attention in neural networks tries to address the problem of information overload, and is supposed to enable the network to allocate their resources \cite{niu2021ReviewAttentionMechanism}.
-An attention mechanism has been successfully applied to various tasks in different domains, such as computer vision or natural language processing \cite{niu2021ReviewAttentionMechanism}.
+An attention mechanism has been successfully applied to various tasks in different domains, such as computer vision or \gls{nlp} \cite{niu2021ReviewAttentionMechanism}.
 The architectural realization of attention is realized differently, depending on the task at hand \cite{aggarwal2018NeuralNetworksDeep}.
 The attention mechanism in computer vision involves weighting different regions of the image based on their relevance to the task \cite{aggarwal2018NeuralNetworksDeep}. 
 This can be achieved through techniques such as spatial attention, channel attention or temporal attention \cite{guo2022AttentionMechanismsComputer}.
-In natural language processing attention mechanism try to improve to capture the meaning of a sentence \cite{niu2021ReviewAttentionMechanism}. 
+In \gls{nlp} attention mechanism try to improve to capture the meaning of a sentence \cite{niu2021ReviewAttentionMechanism}. 
 For instance, this has been achieved through the introduction of a context vector in an \gls{rnn} encoder-decoder \cite{DBLP:journals/corr/BahdanauCB14} or through self-attention \cite{vaswani2017AttentionAllYou} (see \autoref{ch:preliminaries-generativeAlgorithms-transformers} for a detailed explanation on self-attention).
 
 
@@ -520,7 +520,7 @@ This process is repeated iteratively until a nash equilibrium is reached, at whi
 In 2017 \cite{vaswani2017AttentionAllYou} proposed the transformer architecture for sequence modeling tasks.
 While in this domain \gls{rnn} based approaches have been established state-of-the-art approaches, the newly proposed transformer architecture can be trained in a parallel manner,
 overcoming the main issue of \gls{rnn}-based models, their high computational demand.
-Transformers have been successfully adapted in multiple domains, such as natural language processing \cite{gillioz2020OverviewTransformerbasedModels}, computer vision \cite{khan2022TransformersVisionSurvey}, audio processing \cite{gong2022SSASTSelfSupervisedAudio} or on tabular data \cite{huang2020TabTransformerTabularData} 
+Transformers have been successfully adapted in multiple domains, such as \gls{nlp} \cite{gillioz2020OverviewTransformerbasedModels}, computer vision \cite{khan2022TransformersVisionSurvey}, audio processing \cite{gong2022SSASTSelfSupervisedAudio} or on tabular data \cite{huang2020TabTransformerTabularData} 
 and shows properties of a universal computation engine \cite{lu2021PretrainedTransformersUniversal, lin2022SurveyTransformers}.
 This is achieved through the combination of several mechanism, namely, self-attention, multi-head attention, embeddings and positional encoding \cite{vaswani2017AttentionAllYou}.
 
@@ -769,12 +769,12 @@ Substituting $\tilde{\mu_t}$ as in \autoref{eqn:lt-1_3} and $\mu_\theta$ as in \
 
 Ultimately, the authors of \cite[p. 5]{ho2020DenoisingDiffusionProbabilistic} discovered, that simplifying the loss term even further improves not only the sample quality,
 but is also easier to implement.
-\autoref{eqn:eqn:l_simple} shows the final simplified loss function $L_{simple}$:
+\autoref{eqn:l_simple} shows the final simplified loss function $L_{simple}$:
 
 
 \begin{equation}
   \begin{align*}
-    \label{eqn:eqn:l_simple}
+    \label{eqn:l_simple}
     L_{simple}(\theta) = \mathbb{E}_{t, x_0,\epsilon} \left[ ||\epsilon - \epsilon_\theta( \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon, t)||^2 \right]
   \end{align*}
 \end{equation}
@@ -783,7 +783,7 @@ The authors \cite{ho2020DenoisingDiffusionProbabilistic} state that this simplif
 They further argue, that this is actually beneficial for the model, since learning small noise is not difficult and therefore the model can focus more on the large $t$'s, where the denoising is more difficult \cite{ho2020DenoisingDiffusionProbabilistic}.
 
 \autoref{alg:training} shows the full training algorithm, which will be realized by firstly randomly sampling a datapoint $x_0 \sim q(x_0)$ from the dataset, a timestep $t\sim Uniform(\{1, ..., T\})$ and some random gaussian noise $\epsilon \sim \mathcal{N}(0, \textbf{I})$.
-Afterwards, the gradient step will then be performed according to \autoref{eqn:eqn:l_simple} using gradient descent.
+Afterwards, the gradient step will then be performed according to \autoref{eqn:l_simple} using gradient descent.
 
 \begin{algorithm}
   \caption[Training]{Training \cite[p. 4]{ho2020DenoisingDiffusionProbabilistic}}
@@ -820,11 +820,12 @@ In summary, \cite{ho2020DenoisingDiffusionProbabilistic} introduced \gls{ddpm} b
 Their diffusion model is based on a markov chain and consists of two parts, the forward noising and backward denoising part.
 During the forward process, a timestep $t$ is samples and the raw input data $x_0$ is noised accordingly using \autoref{eqn:forwards_2}.
 A function approximater (usually a neural network) with learnable parameters $\theta$ tries to remove the noise by predicting the noise, that was added during the forward process.
-This difference between the actual noise $\epsilon$ and the predicted noise $\epsilon_{\theta}$ is used as a loss function (\autoref{eqn:eqn:l_simple}) to perform gradient descent.
+This difference between the actual noise $\epsilon$ and the predicted noise $\epsilon_{\theta}$ is used as a loss function (\autoref{eqn:l_simple}) to perform gradient descent.
 Once the training is finished and the model converged, new synthetic data can be generated during sampling.
 In the sampling process, gaussian noise can be sampled and the model progressively denoises the sample for $T$ timesteps until a new, denoised datapoint $x_0$ is generated.
 
 \subsection{Multinomial Diffusion}
+\label{ch:multinomial}
 \gls{ddpm} is using a gaussian diffusion process, that is designed to operate in continuous space \cite{kotelnikov2022TabDDPMModellingTabular}.
 However, many different data types are of categorical nature, where the gaussian noising process proposed in \autoref{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModels} is not applicable.
 As a response, \cite{hoogeboom2021ArgmaxFlowsMultinomial} introduces multinomial diffusion, "a diffusion model directly defined on categorical variables" \cite[p, 3]{hoogeboom2021ArgmaxFlowsMultinomial}.

@@ -62,17 +62,17 @@ In particular, the works of \cite{fan2020RelationalDataSynthesisa, hernandez2022
 
 
 \section{Other Models}
-\label{ch:relatedWork-transformers}
+\label{ch:relatedWork-Other Models}
 
-%TRANSFORMER
-TabTransformer only embeddeds categorical values --> cont not through attention --> no correlation capture \cite{somepalli2021SAINTImprovedNeural}
+There are several other approaches towards generating synthetic tabular data, that do not rely on \glspl{gan}.
+Famous classical approaches include SMOTE \cite{chawla2002SMOTESyntheticMinority}, an over-sampling technique to tackle imbalanced datasets, bayesian approaches like \cite{zhang2017PrivBayesPrivateData} or using a hidden markov model  as in \cite{dahmen2019SynSysSyntheticData}.
+Another class of models take an probabilistic approach, such as flow based models \cite{kamthe2021CopulaFlowsSynthetic} or \gls{vae} based approaches \cite{kingma2013AutoEncodingVariationalBayes}.
+In \cite{xu2019ModelingTabularData}, the authors do not only introduce CTGAN, they also present TVAE, a tabular variational autoencoder.
+Recently, transformer models, which have been heavily used in the \gls{nlp} domain, have also been applied to tabular data.
+The authors of \cite{huang2020TabTransformerTabularData} introduce TabTransformer that learns contextual embeddings and can be applied on tabular data for (semi-) supervised learning scenarios.
+In terms of synthetic data generation, \cite{padhi2021TabularTransformersModeling} was able to generate synthetic tabular time-series data, using their TabGPT model and a tokenization of the tabular entries.
 
-- TabNet is one of the first transformer-based models for tabular data \cite{borisov2022DeepNeuralNetworks}
-- padhi2021TabularTransformersModeling
 
-%VAE
-
-- TVAE
 
 %-------------------------------------------------------------------------
 \section{Diffusion Models}
@@ -81,19 +81,187 @@ TabTransformer only embeddeds categorical values --> cont not through attention 
 \subsection{Diffusion Probabilistic Models}
 \label{ch:preliminaries-diffusionProbabilisticModelsTabularData}
 
+Since the release of \gls{ddpm} \cite{ho2020DenoisingDiffusionProbabilistic}, several researches have worked on diffusion models and were able to improve the models performance in terms of quality and efficiency.
+In \cite{nichol2021ImprovedDenoisingDiffusion} build upon the work of \cite{ho2020DenoisingDiffusionProbabilistic} and propose changes to improve the models performance.
+Instead of fixing the variance, the authors learn the variance with $\mathpzc{v}$ as the output vector of the model that is transformed into variances with:
+
+\begin{equation}
+    \label{eqn:impr_diff}
+    \begin{align*}
+        \Sigma_{\theta}^{}(x_t,t)=exp(\mathpzc{v}log\beta_t+(1-\mathpzc{v})log\hat{\beta}_t)
+    \end{align*}
+\end{equation}
+
+The loss $L_{simple}$ does not depend on the variance, which results in \cite{nichol2021ImprovedDenoisingDiffusion} proposing a hybrid loss:
+
+\begin{equation}
+    \label{eqn:l_hybrid}
+    \begin{align*}
+        L_{hybrid} =L_{simple}+\lambda L_{vlb}
+    \end{align*}
+\end{equation}
+
+with scaling factor $\lambda$ and variational lower bound loss $L_{vlb}$.
+
+Secondly, the authors propose a different noise schedule for the noising forward process.
+The authors argue, that the previous linear noising process destroys the information in the image too fast, especially towards the end \cite{nichol2021ImprovedDenoisingDiffusion}.
+As a consequence, they introduce a cosine schedule.
+\autoref{fig:cosine} shows latent samples from a linear noising schedule (top) and from the proposed cosine schedule (bottom) \cite[Figure 3, p. 4]{nichol2021ImprovedDenoisingDiffusion}, where one can see how the cosine schedule noises the image more slowly \cite{nichol2021ImprovedDenoisingDiffusion}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/cosine.png}
+    \caption{latent samples from a linear noising schedule (top) and from the proposed cosine schedule (bottom) \cite[Figure 3, p. 4]{nichol2021ImprovedDenoisingDiffusion}}
+    \label{fig:cosine}
+\end{figure}
+
+A major milestone for diffusion models was done by \cite{dhariwal2021DiffusionModelsBeat}, where the authors were able to show, that diffusion models are able to outperform \gls{gan}
+models, who have been considered state of the art at that time, on image synthesis \cite{dhariwal2021DiffusionModelsBeat}.
+The authors state:
+
+\begin{quotation}
+    "We hypothesize that the gap between diffusion models and GANs stems from at least two factors: 
+    first, that the model architectures used by recent GAN literature have been heavily explored and refined; 
+    second, that GANs are able to trade off diversity for fidelity, producing high quality samples but not covering the whole distribution. 
+    We aim to bring these benefits to diffusion models, first by improving model architecture and then by devising a scheme for trading off diversity for fidelity. 
+    With these improvements, we achieve a new state-of-the-art, surpassing GANs on several different metrics and datasets." \cite[p. 2]{dhariwal2021DiffusionModelsBeat}
+\end{quotation}
+
+
+Thus, they argue, that \gls{gan} models received more attention and therefore much more improvements towards their architecture and training have been discovered, leading to their superior performance.
+Furthermore, similar improvements on diffusion models would show, that they are able to outperform \gls{gan} models.
+These improvements include:
+First, several architectural improvements \cite[section 3]{dhariwal2021DiffusionModelsBeat} and introducing a classifier guidance mechanism for conditioning \cite[section 4]{dhariwal2021DiffusionModelsBeat}.
+Architectural changes include, added residual blocks, additional attention mechanism at different layers, adaptive group normalization and adding class embeddings into residual blocks \cite{dhariwal2021DiffusionModelsBeat}.
+To further improve the conditioning mechanism, \ie controlling what class the model will generate, an additional classifier is introduced \cite{dhariwal2021DiffusionModelsBeat}. 
+This classifier is trained on noisy image and is tasked to predict the class of the image.
+During sampling, the gradients produced by this classifier are used by the diffusion model, to guide it towards producing an image of that class \cite{dhariwal2021DiffusionModelsBeat}.
+With these improvements, the authors were able to outperform \gls{gan} models on unconditional and class-conditional image generation.
+Additionally, their model can be controlled in terms of diversity or fidelity through a scaling of the classifier guidance gradients.
+
+Since classifier guidance as presented above required training of an additional classifier and thus, increasing the time for computation, \cite{ho2022ClassifierFreeDiffusionGuidance}
+introduced a mechanism to achieve a guidance mechanism without an additional classifier.  
+Their guidance mechanism is based around the idea of jointly training a conditional diffusion and an unconditional diffusion model.
+The model achieves a trade-off between diversity and fidelity through the adjustments of weights that control a mixing of the score estimates of the unconditional and conditioning diffusion model \cite{ho2022ClassifierFreeDiffusionGuidance}.
+
+All above models apply the diffusion process on the pixel space, resulting in large tensors that require more computation time and require large \glspl{gpu} \cite{rombach2022HighResolutionImageSynthesis}.
+\cite{rombach2022HighResolutionImageSynthesis} addresses this issue by moving the diffusion process from the pixel space, to a latent space.
+In a first step, the encoder part of an autoencoder (see \autoref{ch:preliminaries-generativeAlgorithms-variationalAutoencoders}) is trained to learn a latent representation with smaller dimensionality of the input image \cite{rombach2022HighResolutionImageSynthesis}.
+A decoder is than tasked to reconstruct the original input, given the encoded latent representation.
+\autoref{fig:latent-diff} shows the architecture of the overall latent diffusion model \cite[Figure 3, p.4]{rombach2022HighResolutionImageSynthesis}.
+The input is transformed into a latent vector $z$ through the pre-trained encoder \cite{rombach2022HighResolutionImageSynthesis}.
+Inside this latent space, the diffusion with forward and reverse noising process is performed \cite{rombach2022HighResolutionImageSynthesis}.
+Additional conditioning information can be added by transforming the conditioning input into the latent space as well \cite{rombach2022HighResolutionImageSynthesis}.
+The denoising model is changed compared to previous approaches through the addition of cross-attention blocks \cite{rombach2022HighResolutionImageSynthesis}.
+After the denoising is completed, the pre-trained decoder moves the latent diffusion model output back into the pixel space, generating an image \cite{rombach2022HighResolutionImageSynthesis}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/latent-diff.png}
+    \caption{Latent diffusion model architecture \cite[Figure 3, p.4]{rombach2022HighResolutionImageSynthesis}}
+    \label{fig:latent-diff}
+\end{figure}
+
+Thanks to the authors of \cite{rombach2022HighResolutionImageSynthesis} and Huggingface \cite{2023HuggingFaceAI}, the latent diffusion model was made publicly available and
+pipeline-framework was developed, allowing developers to easily build upon the existing work, test out the model locally, and explore and expand new features \cite{huggingface2023DiffusersPipelines}.
+This step has led to a variety of community build diffusion models, ranging from an image-to-image impainting diffusion model to a text-to-image diffusion model with multilingual support \cite{CommunityExamples}.
+
+
+% nichol2021ImprovedDenoisingDiffusion
+% dhariwal2021DiffusionModelsBeat
+% ho2022ClassifierFreeDiffusionGuidance
+% rombach2022HighResolutionImageSynthesis
+
 
 \subsection{Diffusion Probabilistic Models for Tabular Data}
 \label{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModelsTabularData}
+At the time of writing, there has only been very limited work on applying diffusion models to tabular data.
 
-% How can Diffusion Probabilistic Models be used for tabular data
-% Challenges of using Diffusion Probabilistic Models for tabular data (mixed data types --> different noising process, etc.)
+\subsubsection{Diffusion on tabular data imputation}
 
-\subsubsection{Tab-DDPM}
+\cite{tashiro2021CSDIConditionalScorebased} proposed a conditional score-based diffusion model (CSDI) for the task of probabilistic time series imputation.
+Their CSDI model showed a significant performance increase generating time-series data, compared to other imputation techniques.
+\cite{zheng2022DiffusionModelsMissing} showed how the CSDI model can be used in the context of missing value imputation in tabular data (CSDI_T).
+The authors address in their work the problem of handling numerical and categorical variables simultaneously.
+Their diffusion model does reconstruct the complete original image (\eg a complete tabular data row), instead the diffusion model
+receives a splitted version of the input, one part that is observable ("conditional part") $x^{co}$ and one part that in unobservable ("target part") $x^{ta}$.
+The goal of the model is, given the unnoised observed part and the noised version of the unobserved part, return the denoised unobserved part of the next timestep, 
+\ie $p_\theta(x^{ta}_{t-1}|x^{ta}_{t},x^{co}_{0})$ \cite{zheng2022DiffusionModelsMissing}.
+Categorical entries are converted in three different ways, so that they can be handled in conjunction with numerical values.
+Categorical values are either one-hot encoded, analog-bits encoded (or binary encoded) or embedded through a feature tokenization approach, proposed by \cite{gorishniy2021RevisitingDeepLearning}.
+In the embedding encoding, numerical values are encoded as well, however, during training, neither the categorical nor the numerical embeddings are learned \cite{2023DiffusionModelsMissing}
+The authors observed that diffusion achieves the best metric result for the task of missing imputation for the tested datasets \cite{zheng2022DiffusionModelsMissing}.
+The different encoding techniques perform comparably well, with the embedding technique outperforming the other two technique by a slight margin \cite{zheng2022DiffusionModelsMissing}.
+
+
+\subsubsection{Diffusion on tabular data synthesis}
 \label{ch:relatedWork-diffusionModels-tabDDPM}
 
-% Paper for image synthesis
-% paper for diffusion for missing data entries
-% Paper for tabular data synthesis
+The task of synthesizing an entire tabular dataset through diffusion has been only explored by \cite{kotelnikov2022TabDDPMModellingTabular}.
+The authors introduce their diffusion model, called TabDDPM, for tabular data synthesis, outperforming existing state of the art approaches using alternative architectures like \glspl{gan} or \glspl{vae} \cite{kotelnikov2022TabDDPMModellingTabular}. 
+Since TabDDPM approach will be the base for this thesis, it will be explained in greater detailed in this section.
+
+\cite{kotelnikov2022TabDDPMModellingTabular} like \cite{zheng2022DiffusionModelsMissing}, identify the need for processing categorical variables in some form, so that they can be processes by a diffusion model.
+However, TabDDPM takes a different approach compared to the CSDI model, by using two different diffusion processes.
+The classical gaussian diffusion process \cite{ho2020DenoisingDiffusionProbabilistic} for numerical columns and multinomial diffusion \cite{hoogeboom2021ArgmaxFlowsMultinomial}(\autoref{ch:multinomial-Diffusion}) for categorical/binary columns\cite{zheng2022DiffusionModelsMissing}.
+Firstly, the features are preprocessed.
+Numerical features are transformed using the gaussian quantile transform (\autoref{sec:dataNormalization}) and categorical features are one-hot encoded (\autoref{sec:dataTransformation}) \cite{kotelnikov2022TabDDPMModellingTabular}.
+The objective function is defined as:
+
+\begin{equation}
+    \label{eqn:tabddpm_loss}
+    \begin{align*}
+        L^{TabDDPM}_{t} =L^{simple}_t + \frac{\sum_{i \leq C}^{}L^i_{t}}{C}
+    \end{align*}
+\end{equation}
+
+where $L^{simple}_t$ is equivalent to \autoref{eqn:l_simple} and $L^i_{t}$ being the \gls{kl}-divergence for each multinomial diffusion term ($L_{t-1}$ in \autoref{eqn:vlb3}) divided by the number of categorical features $C$ \cite{kotelnikov2022TabDDPMModellingTabular}.
+
+The neural network that is used to predict the noise in the reverse process is a simple \gls{mlp} based upon the works of \cite{gorishniy2021RevisitingDeepLearning}.
+Based upon the works of \cite{nichol2021ImprovedDenoisingDiffusion, dhariwal2021DiffusionModelsBeat}, the authors combined the input $x_{in}$ with a sinusoidal temporal embedding and a class label embedding.
+(further details on the architecture in [TODO: own architecure part])
+
+TabDDPM is compared against several baseline models, include TVAE \cite{xu2019ModelingTabularData}, CTABGAN \cite{zhao2021CTABGANEffectiveTablea} and CTABGAN+ \cite{zhao2022CTABGANEnhancingTabular}
+and a classical interpolation based approach SMOTE \cite{chawla2002SMOTESyntheticMinority}.
+The datasets that have been used for generating synthetic data are 15 in total, of which six are of task type regression, seven are binary classification and two are multiclass classification tasks \cite{kotelnikov2022TabDDPMModellingTabular}.
+Eight of the datasets have numerical and categorical features and seven only consists of numerical features \cite{kotelnikov2022TabDDPMModellingTabular}.
+The overall number of features in the datasets varies heavily, for a full list refer to "Table 2" in \cite[p. 5]{kotelnikov2022TabDDPMModellingTabular}.
+
+The main evaluation metric chosen by the authors is the machine learning efficiency (\autoref{ch:preliminaries-machineLearningEfficiency}).
+\cite{kotelnikov2022TabDDPMModellingTabular} realizes this in two different ways, firstly, by using a set of machine and deep learning models\footnote[]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}} and combining their performance,
+secondly, using a CatBoost model \cite{prokhorenkova2018CatBoostUnbiasedBoosting}, a state of the art model on tabular tasks \cite{kotelnikov2022TabDDPMModellingTabular} and a \gls{mlp} architecture proposed by \cite{gorishniy2021RevisitingDeepLearning}.
+In the latter, the models are previously tuned on the real dataset, so that best hyperparameters can be found for each dataset, which will be used during the evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
+To account for other random factors, that could influence the result, the authors compute their machine learning efficacy metric scores by generating five different synthetic datasets, and train the evaluation models for ten random initializations.
+The average over all these 50 variations is reported (\cite[Table 3, 4, p. 8]{kotelnikov2022TabDDPMModellingTabular}) including their standard deviation \cite{kotelnikov2022TabDDPMModellingTabular}.
+The authors summarize three major findings \cite{kotelnikov2022TabDDPMModellingTabular}:
+\begin{itemize}
+    \item TabDDPM outperforms TVAE and CTABGAN+ on most datasets.
+    \item The classical approach SMOTE shows surprisingly competitive performance.
+    \item The authors contend that the second evaluation protocol, which employs a state-of-the-art model such as CatBoost, is more suitable for calculating the ML efficiency, 
+    despite the prevalent use of the first protocol in prior works. 
+    The former set of models show overall lower metric scores, compared to the CatBoost model.
+    Thus, the authors argue, their performance values are uninformative.
+    Additionally, for the set of models the models trained on synthetic data outperformed the models trained on actual real data, indicating that the 
+    synthetic data is "more valuable than the real" data \cite[p. 8]{kotelnikov2022TabDDPMModellingTabular}.
+    This behavior cannot be observed if tuned \gls{mlp} or CatBoost models are used for evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
+\end{itemize}
+
+Additionally, the authors provide a small qualitative comparison, based upon distribution plots and correlation matrices.
+In their comparison they show that the produces feature distribution plots by TabDDPM for a selected number of columns of different datasets looks more similar 
+to the real distributions, compared to plots produced by CTABGAN+ or TVAE \cite{kotelnikov2022TabDDPMModellingTabular}.
+The authors argue, that this observation is consistent for numerical columns, categorical columns, as well as mixed data type columns \cite{kotelnikov2022TabDDPMModellingTabular}.
+The pairwise correlation matrices difference plots (performed in a similar way like in \cite{brenninkmeijer2019GenerationEvaluationTabular}) shows a smaller difference of the synthetic data to the real data for the TabDDPM model, compared to CTABGAN+ and TVAE.
+The authors assert that the illustrations provided demonstrate that their TabDDPM model exhibits greater flexibility than other alternatives and generates synthetic data of higher quality \cite{kotelnikov2022TabDDPMModellingTabular}.
+
+Lastly, \cite{kotelnikov2022TabDDPMModellingTabular} performs a privacy evaluation against the SMOTE approach.
+The median \gls{dcr} is measured, which calculates the minimum distance to real datapoints for each synthetic sample.
+Small \glspl{dcr} point towards a mere copying of data samples (Overfitting), while high values indicate actual new synthetic data samples \cite{kotelnikov2022TabDDPMModellingTabular}.
+The results presented by the authors show a higher \gls{dcr} score for TabDDPM for all datasets compared to SMOTE, while having a similar or higher machine learning efficacy score \cite{kotelnikov2022TabDDPMModellingTabular}.
+
+To summarize, the TabDDPM approach is a novel way to generate synthetic data of high utility using gaussian and multinomial diffusion.
+TabDDPM outperforms other state of the art baseline models in terms of machine learning efficacy on multiple datasets and distributions and correlations produced from synthetic data by TabDDPM look more similar to the real data than synthetic data produced by other models.
 
 
-%-------------------------------------------------------------------------
+
+
+
