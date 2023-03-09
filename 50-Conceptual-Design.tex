@@ -2,7 +2,7 @@
 \label{ch:conceptualDesign}
 
 \section{Requirements}
-\label{ch:conceptualDesign-requirements}
+\label{ch:requirements}
 
 In a first step, requirements towards the synthetic data generation system will be established.
 The goal is to gather a systematic collection of requirements on which the success of the developed system can be meassured.
@@ -72,33 +72,34 @@ The following requirements R1 - RN are the non-functional requirements for the s
 
 
 \subsection*{Functional Requirements}
+\label{sec:func_requirements}
 Functional requirements describe what the software system should do and which functional aspects need to be implemented for this.
 
 \begin{description}
-    \item[Parameter selection] 
+    \item[FR[TODO] - Parameter selection] 
     \item[Training Configuration]: %- device, preprocessing, seeds
     Each experiment needs a training configuration.
 
-    \item[Training, Sampling, Evaluation[TODO:???]]  
+    \item[FR[TODO] - Training, Sampling, Evaluation[TODO:???]]  
     
 
-    \item[Hyperparameter search]:
+    \item[FR[TODO] - Hyperparameter search]:
     In order to find the best parameters, some form of hyperparameter search should be implemented.
 
-    \item[Adding Tabular processing]:
+    \item[FR[TODO] - Adding Tabular processing]:
     An interface on tabular processing mechanisms is required, such that different mechanism can be added easily and consistently.
     
-    \item[Tabular processing selection]:
+    \item[FR[TODO] - Tabular processing selection]:
     It should be possible to easily select which tabular processing mechanism will be applied
 
-    \item[Tabular processing fit]:
+    \item[FR[TODO] - Tabular processing fit]:
     If necessary, Tabular processing mechanism should be able to be fitted.
     However, it is required, that the tabular processing mechanism only receives training data and does not have access to the test data.
 
-    \item[Tabular processing transform]:
+    \item[FR[TODO] - Tabular processing transform]:
     Each Tabular processing mechanism needs to transform the raw data into a specified format.
 
-    \item[Tabular processing inverse transform]:
+    \item[FR[TODO] - Tabular processing inverse transform]:
     Each Tabular processing mechanism needs to able to inverse transformed data back into its original form.
 
 \end{description}
@@ -205,9 +206,7 @@ A detailed activity diagram for each script can be found at [TODO: EINFÜGEN].
 In order to start one of the above scripts, a configuration file has to be specified, specifying the most important parameters for training, sampling and evaluation.
 For example, \autoref{lst:configuration} shows how such a configuration file could look like and which parameters need to be specified
 
-\begin{lstlisting}
-    \label{lst:configuration}
-    \caption[short]{Example configuration file}
+\begin{lstlisting}[label={lst:configuration}, caption={Example configuration file}]
     parent_dir = "exp/adult/check"
     real_data_path = "data/adult/"
     num_numerical_features = 6
@@ -263,6 +262,7 @@ For example, \autoref{lst:configuration} shows how such a configuration file cou
     cat_min_frequency = "__none__"
     cat_encoding = "__none__"
     y_policy = "default"
+
 \end{lstlisting}    
 
 
@@ -282,10 +282,8 @@ Therefore, each dataset is separated into nine parts, following the following na
 X\_[cat|num]\_[train|val|test].npy and for the target y\_[train|val|test].npy
 
 Additionally, a info.json file is provided, containing necessary information for handling the data.
-In \autref{lst:info} one can see how such an info-file contains the information how the above mentioned splits have been done and what kind of task this dataset usually has (it is differentiated between binary classification (binclass), multiclass classification (multiclass) and regression (regression)).
-\begin{lstlisting}
-    \label{lst:info}
-    \caption[short]{Example data info file}
+In \autoref{lst:info} one can see how such an info-file contains the information how the above mentioned splits have been done and what kind of task this dataset usually has (it is differentiated between binary classification (binclass), multiclass classification (multiclass) and regression (regression)).
+\begin{lstlisting}[label={lst:info},caption={Example data info file}]
     {
     "name": "Adult",
     "id": "adult--default",
@@ -301,9 +299,7 @@ Inside the code of TabDDPM, a custom dataset class provided by the author handle
 
 
 
-
-
-\section{Proposed Solution}
+\section{Proposed Concept}
 \label{ch:conceptualDesign-changes}
 
 To answer the research questions specified in [TODO], changes to the current architecture need to be made.
@@ -336,36 +332,44 @@ Changes are highlighted in green and affect each step in the diffusion process, 
 \subsection{Tabular Processing}
 \label{ch:conceptualDesign-codeExtensions-dataPreprocessing}
 
---> Wie finde ich
+The main source for finding the processing mechanisms should be academic literature, where said mechanism has been applied to a related problem successful
+The selection of which tabular processing mechanisms are realized is heavily dependent on the requirements defined in \autoref{sec:func_requirements} (specifically, FR[TODO] - FR[TODO]).
 
-\cite{borisov2022DeepNeuralNetworks} provides a taxonomy for data learning for tabular data with "data transformation methods" into "single dim encodings" and "multi dim encodings" 
---> Approaches in diese taxonomy einordnen
+For a tabular processing mechanism to be used, the following conditions must be met:
 
+\begin{enumerate}
+    \item reversibility: the tabular processing mechanism must be able to not only transform the data into a different format, it also must be able to revert the transformation,
+    such that the data can be transform back into its original form.
+    \item compatibility: the data must be able to be separated into numerical and categorical parts after the transformation,
+    since the remaining code expects data in this format, as specified in \autoref{sec:data_format}.
+    \item complexity: the time it takes for transforming the data should be within a reasonable timeframe, do not add too much additional computation time on the already extensive model tuning process.
+    \item availability: due to the limited time frame of this thesis, the code for the mechanisms should be publicly available (or could be implemented within a reasonable timeframe).
+\end{enumerate}
 
-\subsection{Evaluation}
-\label{ch:conceptualDesign-codeExtensions-evaluation}
-
-% How and where is the statistical similarity measured? 
-
-\subsection{Experiment Run}
-\label{ch:conceptualDesign-codeExtensions-experimentRun}
-
-% How did the Experiment Run change with the code extensions?
-% Hyperparameters
+based upon the above mentioned criteria, tabular processing mechanisms should be selected.
 
 \section{Experiments}
+\label{ch:conceptualDesign-Experiments}
 
-% What experiments with which changes are planned?
-% Baseline 1: no preprocessing + statistical similarity
-% Baseline 2: Other Data Generation algorithms (GAN, ...) + statistical similarity 
-% Experiment 1.1: preprocessing Bayesian gaussian mixture + statistical similarity
-% Experiment 2.1: preprocessing embeddings + statistical similarity
-% ...
-% Experiment N: Baseline 1 + hyperparameter optimization based on statistical similarity
-% if Experiment N > Baseline 1:
-%   Experiment 1.2: preprocessing Bayesian gaussian mixture + hyperparameter optimization based on statistical similarity
-%   Experiment 2.2: preprocessing embeddings + hyperparameter optimization based on statistical similarity
-%   ...
-\subsection{Reproduction of existing Results}
-\label{ch:conceptualDesign-existingCodeBase-reproductionOfExistingResults}
-% Reproduce the results of the paper "Diffusion Probabilistic Models for Tabular Data Synthesis"
+To systematically analyze the performance of the different tabular processing mechanism, the following baseline experiments should be performed:
+
+\begin{description}
+    \item[Real:] Comparison of the real training data with the real test data. 
+    The similarity evaluation is expected to be very high, since the data is from the same distribution.
+    The computed machine learning efficacy score can be seen as an objective value that should be reached.
+    The closer the synthetic data based machine learning efficacy results are to this target, the better the synthetic data.
+    \item[Baseline-TabDDPM:] Reproduction of the TabDDPM results of the authors \cite{kotelnikov2022TabDDPMModellingTabular} but with the addition of computing the similarity evaluation.
+    \item[Baseline-TVAE:] Like Baseline-TabDDPM but for TVAE.
+    \item[Baseline-CTABGAN:] Like Baseline-TabDDPM but for CTABGAN.
+    \item[Baseline-CTABGAN+:] Like Baseline-TabDDPM but for CTABGAN+.
+    \item[Baseline-SMOTE:] Like Baseline-TabDDPM but for SMOTE.
+\end{description}
+
+For each implemented Tabular Processing mechanism, the following two experiments should be at least performed:
+
+\begin{description}
+    \item[Experiment 1:] Tabular Processing combined with TabDDPM with additional similarity evaluation. Hyperparameters tuned like in the original experiment (tuned after CatBoost-machine learning efficacy score).
+    \item[Experiment 2:] Like Experiment 1, but hyperparameters are optimized towards the similarity evaluation instead of the machine learning efficacy score.
+\end{description}
+
+depending on the results of the above experiments, additional experiments can be performed for a subset of promising Tabular Processing mechanisms, \eg testing different preprocessing methods after the tabular processing.

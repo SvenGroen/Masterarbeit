@@ -1,30 +1,7 @@
 \chapter{Preliminaries}
 \label{ch:preliminaries}
 
-%-------------------------------------------------------------------------
-\section{Data Synthesis}
-\label{ch:preliminaries-dataSynthesis}
-
-\subsection{Synthetic Data}
-\label{ch:preliminaries-dataSynthesis-syntheticData}
-Synthetic data can be defined as "(...) artificially generated data, that are modelled on real data, with the same structure and properties as the original data (...)" \cite[p. 2]{kaloskampis2020SyntheticDataCivil} 
-but without containing any actual specific information or entries of the actual real data. 
-While first synthetic data approaches \cite{gelman1992InferenceIterativeSimulation} focused on imputation techniques to generate synthetic data, the advent of deep learning has led to the topic gaining importance \cite{kowalczyk2022TaxonomyUseSynthetic, kaloskampis2020SyntheticDataCivil}
-The importance of data is growing rapidly [TODO: QUELLE FINDEN] but accessing and collecting real data is usually expensive [TODO: QUELLE FINDEN] or simply not possible due to the sensitivity of the data (\eg medical records) \cite{esteban2017RealvaluedMedicalTimea} or due to regulatory restrictions, such as the \gls{gdpr} \cite{european_commission_regulation_2016}.
-Synthetic data on the other hand is, compared to the collection of real data, cheap to generate \cite{leminh2021AirGenGANbasedSynthetica} and fulfils regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular}.
-
-Hence, synthetic data could be used as an alternative to real data in various use-cases,
-including but not limited to machine learning, software development or data sharing scenarios.
-Access to data is still one of the biggest bottlenecks when developing machine learning or deep learning \glspl{model} \cite{fan2020RelationalDataSynthesisa}.
-Synthetic data could be used to increase the data quality, by rebalancing skewed dataset \cite{zhao2022CTABGANEnhancingTabular} 
-or increasing the dataset size as additional training data or in combination with the real data \cite{leminh2021AirGenGANbasedSynthetica, kim2021OCTGANNeuralODEbased}.
-Synthetic data can also be used in situations where working with the real data is not possible, due to privacy or availability reasons [TODO: bessere quelle raussuchen]\cite{zhao2022CTABGANEnhancingTabular}.
-In software development, high quality test data is crucial for development but challenging and time consuming to generate \cite{whiting2008CreatingRealisticScenariobased}.
-Developers time to create such datasets is usually scarce and it might be the case that developers do not even have the permission to see the data, due to its sensitivity \cite{whiting2008CreatingRealisticScenariobased}.
-A synthetic data generation \gls{model} would possibly allow developers to generate test data with predefined characteristics and without it being restricted in any form.
-
-
-\subsection{Tabular Data}
+\section{Tabular Data}
 \label{ch:preliminaries-dataSynthesis-tabularData}
 [TODO: Discrete has 2 kinds: ordinal and categorical --> unterschied raussuchen und quelle finden (categrocial durch discrete ersetzten)]
 
@@ -73,7 +50,7 @@ Switching an individuals "education" value from "Preschool" to "Doctorate" would
 
 
 
-\subsubsection{Tabular Data Preprocessing}
+\subsection{Tabular Data Preprocessing}
 \label{sec:preprocessing}
 
 Different data types can and should be processed into a meaningful format to be useful for deep learning \glspl{model} in different ways \cite{fan2020RelationalDataSynthesisa, lederrey2022DATGANIntegratingExperta}.
@@ -84,7 +61,7 @@ While each of the preprocessing tasks is in itself important,
 \cite{xu2019ModelingTabularData} showed the importance of normalization for synthetic tabular data generation.
 Since the focus of the work is on tabular data and its synthesis, the following section will highlight the most important tabular data transformation and normalization approaches.
 
-\subsubsubsection{Data Transformation}
+\subsubsection{Data Transformation}
 \label{sec:dataTransformation}
 
 \cite{borisov2022DeepNeuralNetworks} introduces a taxonomy for data transformation methods and subdivides the existing approaches into "Single-Dimensional Encodings" and "Multi-Dimensional Encodings".
@@ -138,7 +115,7 @@ This latent representation is, like in embeddings, a learned representation lear
 Both architectures transform tabular data into an image like format in order to make use of \glspl{cnn}.
 
 
-\subsubsubsection{Data Normalization and Standardization}
+\subsubsection{Data Normalization and Standardization}
 \label{sec:dataNormalization} 
 
 Normalization and standardization techniques are applied to numerical columns and scales the values so that their distribution is adjusted \cite{garcia2016BigDataPreprocessing}.
@@ -189,7 +166,34 @@ Another approach to standardize the range of a column between 0 and 1 is a Quant
 The Quantile-transformation allows to map all values of a random variable into an desired output distribution, such as the uniform or normal distribution, 
 using the quantile function on the inverse cumulative distribution of the random variable. This transformation preserves the rank order of the values but distorts correlations and distances within and across features \cite{scikit-learnPreprocessingData}.
 
+
+
+
+%-------------------------------------------------------------------------
+\section{Data Synthesis}
+\label{ch:preliminaries-dataSynthesis}
+
+\subsection{Synthetic Data}
+\label{ch:preliminaries-dataSynthesis-syntheticData}
+Synthetic data can be defined as "(...) artificially generated data, that are modelled on real data, with the same structure and properties as the original data (...)" \cite[p. 2]{kaloskampis2020SyntheticDataCivil} 
+but without containing any actual specific information or entries of the actual real data. 
+While first synthetic data approaches \cite{gelman1992InferenceIterativeSimulation} focused on imputation techniques to generate synthetic data, the advent of deep learning has led to the topic gaining importance \cite{kowalczyk2022TaxonomyUseSynthetic, kaloskampis2020SyntheticDataCivil}
+The importance of data is growing rapidly [TODO: QUELLE FINDEN] but accessing and collecting real data is usually expensive [TODO: QUELLE FINDEN] or simply not possible due to the sensitivity of the data (\eg medical records) \cite{esteban2017RealvaluedMedicalTimea} or due to regulatory restrictions, such as the \gls{gdpr} \cite{european_commission_regulation_2016}.
+Synthetic data on the other hand is, compared to the collection of real data, cheap to generate \cite{leminh2021AirGenGANbasedSynthetica} and fulfils regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular}.
+
+Hence, synthetic data could be used as an alternative to real data in various use-cases,
+including but not limited to machine learning, software development or data sharing scenarios.
+Access to data is still one of the biggest bottlenecks when developing machine learning or deep learning \glspl{model} \cite{fan2020RelationalDataSynthesisa}.
+Synthetic data could be used to increase the data quality, by rebalancing skewed dataset \cite{zhao2022CTABGANEnhancingTabular} 
+or increasing the dataset size as additional training data or in combination with the real data \cite{leminh2021AirGenGANbasedSynthetica, kim2021OCTGANNeuralODEbased}.
+Synthetic data can also be used in situations where working with the real data is not possible, due to privacy or availability reasons [TODO: bessere quelle raussuchen]\cite{zhao2022CTABGANEnhancingTabular}.
+In software development, high quality test data is crucial for development but challenging and time consuming to generate \cite{whiting2008CreatingRealisticScenariobased}.
+Developers time to create such datasets is usually scarce and it might be the case that developers do not even have the permission to see the data, due to its sensitivity \cite{whiting2008CreatingRealisticScenariobased}.
+A synthetic data generation \gls{model} would possibly allow developers to generate test data with predefined characteristics and without it being restricted in any form.
+
+
 \subsection{Synthetic Tabular Data Generation}
+\label{sec: synthetic tabular data generation}
 
 Generative models have recently received a lot of attention, thanks to their impressive results generating a variety of data formats, 
 such as images \cite{ho2020DenoisingDiffusionProbabilistic, dhariwal2021DiffusionModelsBeat, rombach2022HighResolutionImageSynthesis}, videos \cite{ho2022VideoDiffusionModels, Gen1Runway}, text \cite{radfordImprovingLanguageUnderstanding, 2022ChatGPTOptimizingLanguage} or music \cite{agostinelli2023MusicLMGeneratingMusic, martirosRiffusion}.
