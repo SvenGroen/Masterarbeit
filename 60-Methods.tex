@@ -1,3 +1,20 @@
+
+======================================================================
+mpmsvc: starting package maintenance...
+mpmsvc: installation directory: "C:\Program Files\MiKTeX 2.9"
+mpmsvc: package repository: https://mirror.physik.tu-berlin.de/pub/CTAN/systems/win32/miktex/tm/packages/
+mpmsvc: visiting repository https://mirror.physik.tu-berlin.de/pub/CTAN/systems/win32/miktex/tm/packages/...
+mpmsvc: repository type: remote package repository
+mpmsvc: loading package repository manifest...
+mpmsvc: downloading https://mirror.physik.tu-berlin.de/pub/CTAN/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
+mpmsvc: 0.31 MB, 8.83 Mbit/s
+mpmsvc: package repository digest: 3674491bed299d91e698400fdde52459
+mpmsvc: going to download 72663 bytes
+mpmsvc: going to install 43 file(s) (1 package(s))
+mpmsvc: downloading https://mirror.physik.tu-berlin.de/pub/CTAN/systems/win32/miktex/tm/packages/latexindent.tar.lzma...
+mpmsvc: 0.07 MB, 7.55 Mbit/s
+mpmsvc: extracting files from latexindent.tar.lzma...
+======================================================================
 \chapter{Methodology}
 \label{ch:methodology}frac
 
@@ -8,22 +25,46 @@
 The architecture of the developed software was developed with the requirements in \autoref{ch:requirements} in mind.
 The following section will explain how the individual additions to the existing code are designed and why the design was chosen.
 
-\subsection[]{Tabular Processor Architecture}
+
+\subsection[]{Tabular Processor}
 \label{ch:architecture-tabularProcessor}
 
-The tabular processor is defined as an abstract class with three core methods, each tabular processing mechanism needs to implement.
+To allow for a flexible use and the possibility to add additional processing mechanism, the strategy design pattern (\autoref{fig:design}) was chosen \cite{gamma1994design}.
+The pattern is especially useful, if a certain behavior is required but needs to be realized in different ways.
+The Strategy defines what kind of methods need to be implemented and the concrete implementations, the different strategies, implement the behavior in different ways.
+Depending on the context, different strategies can be used interchangeably, since all implemented the same functionalities.
+Additionally, new strategies can be added easily without affecting any of the other strategies or the context \cite{gamma1994design}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/strategy.png}
+	\caption{Strategy Pattern \cite[p. 316]{gamma1994design}}
+	\label{fig:design}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/tabular_processor.png}
+	\caption{Tabular Processor Design}
+	\label{fig:tabular_processor}
+\end{figure}
+
+\autoref{fig:tabular_processor} shows how the strategy pattern is realized.
+The overall Strategy is defined in the TabularProcessor class in the form of an abstract class with three core methods, each tabular processing mechanism needs to implement.
 These functions are the fit, transform and inverse transform functions (FR[TODO]- FR[TODO]).
-Thanks to the use of the abstract class, a clear definition of what a tabular transform should do is given.
-Each tabular processor is different and realizes the transformation of the data in a different way, however,
-each tabular processor will be used by the program in the same way (fit according to the data, transform the data and reconstruct transformed data).
-Hence, additional tabular processing mechanism can be easily added, by just implementing the abstract methods (FR[TODO]).
+
+Each different tabular processing strategy is different and realizes the transformation of the data in a different way by implementing the abstract classes of the parent strategy.
+Therefore, Additional tabular processing mechanism can be easily added, by just implementing the abstract methods (FR[TODO]).
 Furthermore, the tabular processing mechanism can be exchanged easily, since they share the same functions.
+This is handled in the TabularDataController class, which equivalent to the Context in the Strategy Pattern.
+The TabularDataController handles all relevant aspects in order to use the tabular processing mechanisms, including but not limited to the instantiation, fitting, saving and loading of tabularProcessor instances.
 To instantiate a tabular processor, the data separated into categorical, numerical and target as numpy-arrays \cite{harris2020array} need to be provided.
 The first step in using the tabular processor is fitting it according to the data.
 Additional required information for fitting can be provided through meta-data in the form of a dictionary.
 Note that this fit function might not be necessary, depending on the processing mechanism, however, it should be implemented anyways.
 Only after fitting, the transform function can be called, transforming the data and returning the transformed data in the same format.
 The inverse transformation works in the same way, but just reversing transformed data back into its original format.
+
 
 \subsection[]{Tabular Processor Implementations}
 \label{ch:architecture-tabularProcessor-implementations}
@@ -44,7 +85,7 @@ Additionally, the authors allow missing values, which are treated as another cat
 Furthermore, the authors introduce a "general transform" mechanism \cite[p. 7]{zhao2022CTABGANEnhancingTabular} that is supposed to be used for simple distributions and counters the problem of exploding dimensionality caused by a one-hot encoding \cite{zhao2022CTABGANEnhancingTabular}.
 This general transformation is mapping of the value into a range of  [-1, 1], that is achieved through a shifted and scaled min-max normalization (see MinMaxScaler in \autoref{sec:dataNormalization}).
 Mathematically, the encoded datapoint $x^t_i$ can be computed using the original datapoint $x_i$ in column $x$ through the following formula:
-$$x^t_i=2* \frac{x_i-\min(x)}{\max(x)}-\min(x)-1$$ 
+$$x^t_i=2* \frac{x_i-\min(x)}{\max(x)}-\min(x)-1$$
 which can easily be reversed with:
 $$X_i = (\max(x)-\min(x))*\frac{X^t_i+1}{2}+\min(x)$$
 Categorical values are label encoded before applying the normalization \cite{zhao2022CTABGANEnhancingTabular}.
@@ -53,14 +94,14 @@ For categorical values, the general transformation should only be applied if the
 Lastly, the authors log-transform columns that suffer from very long-tails (see \autoref{sec: synthetic tabular data generation}), because \Glspl{bgm} seem to have difficulties to encode values towards the tail \cite{zhao2022CTABGANEnhancingTabular}.
 The log-transformation of each value $\tau$ in the column will be compressed to $\tau^e$, given a lower bound $l$ using:
 \begin{equation}
-    \label{eqn:log-transform}
-    \begin{align*}
-        \tau^e = 
-        \begin{cases}
-            log(\tau) &\text{if} l>0\\
-            log(\tau-l+\epsilon) &\text{if} l\leq0 \text{, where } \epsilon > 0
-        \end{cases}
-    \end{align*}
+	\label{eqn:log-transform}
+	\begin{align*}
+		\tau^e =
+		\begin{cases}
+			log(\tau)            & \text{if} l>0                                 \\
+			log(\tau-l+\epsilon) & \text{if} l\leq0 \text{, where } \epsilon > 0
+		\end{cases}
+	\end{align*}
 \end{equation}
 
 This encoding strategy is realized in the BGMProcessor class, that uses the DataPrep and DataTransformer class, as developed by \cite{zhao2022CTABGANEnhancingTabular}.
@@ -101,9 +142,32 @@ Inside the Tabular Processor, this is realized by extending the info.json (\auto
 \subsubsection*{FTProcessor}
 \label{ch:FTProcessor}
 
+The FTProcessor, short for Feature Tokenizer Processor, is based upon the work of \cite{zheng2022DiffusionModelsMissing, gorishniy2021RevisitingDeepLearning}.
+The feature tokenizer transforms tabular data into a static embedding representation.
+Categorical columns are embedded through an Embedding layer, which is basically a look up table \cite{EmbeddingPyTorch13} of fixed size.
+Each categorical input tensor of dimensions $[N]$ will be transformed in an embedding of size $[N,H]$ with $H$ as the embedding dimensionality \cite{gorishniy2021RevisitingDeepLearning}.
+Numerical columns will be processed by a simple multiplication of a linear layers weights \cite{gorishniy2021RevisitingDeepLearning}.
+Lastly, a bias term is added to both categorical and numerical columns.
+\autoref{fig:ft} illustrates how a tabular data row with tree numerical and two categorical features could be transformed into a new tensor \cite[Figure 2a, p.4]{gorishniy2021RevisitingDeepLearning}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/ft.png}
+	\caption{Feature Tokenization \cite[Figure 2a, p.4]{gorishniy2021RevisitingDeepLearning}}
+	\label{fig:ft}
+\end{figure}
+
+While in the original work of \cite{gorishniy2021RevisitingDeepLearning}, the feature tokenizer is directly in front of a transformer model, allowing the gradients to flow through the embedding and linear layers during training.
+This enables the model to learn a meaningful embedding.
+In the adaptation of \cite{2023DiffusionModelsMissing} and in this thesis, the weights of the layers are frozen, hence, learning is not possible and the embedding is static.
+In this thesis, the data transformation and the actual model training are fully separated, hence, gradients can not flow back to the feature tokenizer to update any weights of the embeddings.
 
 
 %-------------------------------------------------------------------------
+
+
+\subsection[short]{title}
+
 \section{Experimental Setup}
 \label{ch:methods-experimentalSetup}
 %-------------------------------------------------------------------------
