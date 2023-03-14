@@ -125,8 +125,8 @@ Inside the Tabular Processor, this is realized by extending the info.json (\auto
 \subsubsection*{FTProcessor}
 \label{ch:FTProcessor}
 
-The FTProcessor, short for Feature Tokenizer Processor, is based upon the work of \cite{zheng2022DiffusionModelsMissing, gorishniy2021RevisitingDeepLearning}.
-The feature tokenizer transforms tabular data into a static embedding representation.
+The FTProcessor, short for \gls{ft} Processor, is based upon the work of \cite{zheng2022DiffusionModelsMissing, gorishniy2021RevisitingDeepLearning}.
+The \gls{ft} transforms tabular data into a static embedding representation.
 Categorical columns are embedded through an Embedding layer, which is basically a look up table \cite{EmbeddingPyTorch13} of fixed size.
 Each categorical input tensor of dimensions $[N]$ will be transformed in an embedding of size $[N,H]$ with $H$ as the embedding dimensionality \cite{gorishniy2021RevisitingDeepLearning}.
 Numerical columns will be processed by a simple multiplication of a linear layers weights \cite{gorishniy2021RevisitingDeepLearning}.
