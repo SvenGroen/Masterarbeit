@@ -1,22 +1,5 @@
-
-======================================================================
-mpmsvc: starting package maintenance...
-mpmsvc: installation directory: "C:\Program Files\MiKTeX 2.9"
-mpmsvc: package repository: https://mirror.physik.tu-berlin.de/pub/CTAN/systems/win32/miktex/tm/packages/
-mpmsvc: visiting repository https://mirror.physik.tu-berlin.de/pub/CTAN/systems/win32/miktex/tm/packages/...
-mpmsvc: repository type: remote package repository
-mpmsvc: loading package repository manifest...
-mpmsvc: downloading https://mirror.physik.tu-berlin.de/pub/CTAN/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma...
-mpmsvc: 0.31 MB, 8.83 Mbit/s
-mpmsvc: package repository digest: 3674491bed299d91e698400fdde52459
-mpmsvc: going to download 72663 bytes
-mpmsvc: going to install 43 file(s) (1 package(s))
-mpmsvc: downloading https://mirror.physik.tu-berlin.de/pub/CTAN/systems/win32/miktex/tm/packages/latexindent.tar.lzma...
-mpmsvc: 0.07 MB, 7.55 Mbit/s
-mpmsvc: extracting files from latexindent.tar.lzma...
-======================================================================
 \chapter{Methodology}
-\label{ch:methodology}frac
+\label{ch:methodology}
 
 
 \section*{Architecture}
@@ -37,14 +20,14 @@ Additionally, new strategies can be added easily without affecting any of the ot
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{images/strategy.png}
+	\includegraphics[width=0.8\textwidth]{images/strategy.png}
 	\caption{Strategy Pattern \cite[p. 316]{gamma1994design}}
 	\label{fig:design}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{images/tabular_processor.png}
+	\includegraphics[width=0.8\textwidth]{images/tabular_processor.png}
 	\caption{Tabular Processor Design}
 	\label{fig:tabular_processor}
 \end{figure}
@@ -105,7 +88,7 @@ The log-transformation of each value $\tau$ in the column will be compressed to 
 \end{equation}
 
 This encoding strategy is realized in the BGMProcessor class, that uses the DataPrep and DataTransformer class, as developed by \cite{zhao2022CTABGANEnhancingTabular}.
-These classes require additional information about the dataset, provided by the user, including what columns are categorical, categorical in a numeric format [TODO:Überprüfen], numerical, mixed (including what values are categorical) as well as what columns require a log-transformation and which a general transformation.
+These classes require additional information about the dataset, provided by the user, including what columns are categorical, categorical columns that have a high cardinality/dimensionality\footnote[]{Inside the code of the authors, they refer to it as "non_categorical_columns", which is a bit misleading. Categorical columns with high dimensionality are transformed to numerical columns and handled as if they were continuous.}, numerical, mixed (including what values are categorical) as well as what columns require a log-transformation and which a general transformation.
 Inside the Tabular Processor, this is realized by extending the info.json (\autoref{lst:info}) with an additional entry, dataset\_config [TODO: Kursiv?], see \autoref{lst:info_extended} for an example.
 
 \begin{lstlisting}[label={lst:info_extended},caption={Example extended data info file}]
@@ -119,7 +102,7 @@ Inside the Tabular Processor, this is realized by extending the info.json (\auto
             (...), 
             "income"
             ],
-        "non_cat_columns": [], // categorical columns in numeric form
+        "non_cat_columns": [], // high dim-categorical
         "log_columns": [], // log-transformation
         "general_columns": [ //  general-transformation
             "age"
@@ -157,43 +140,151 @@ Lastly, a bias term is added to both categorical and numerical columns.
 	\label{fig:ft}
 \end{figure}
 
+To revert the data that are produced by the diffusion model to the original data format, the numerical and categorical columns need to be handled differently.
+Numerical output is divided element-wise by the corresponding embedding weights and the average value is computed, as the final output\cite{zheng2022DiffusionModelsMissing}.
+For categorical output, the closest categorical embedding is determined by computing the euclidean distance between the produced output and every categorical embedding \cite{zheng2022DiffusionModelsMissing}.
+
 While in the original work of \cite{gorishniy2021RevisitingDeepLearning}, the feature tokenizer is directly in front of a transformer model, allowing the gradients to flow through the embedding and linear layers during training.
 This enables the model to learn a meaningful embedding.
 In the adaptation of \cite{2023DiffusionModelsMissing} and in this thesis, the weights of the layers are frozen, hence, learning is not possible and the embedding is static.
 In this thesis, the data transformation and the actual model training are fully separated, hence, gradients can not flow back to the feature tokenizer to update any weights of the embeddings.
 
 
-%-------------------------------------------------------------------------
-
-
-\subsection[short]{title}
-
 \section{Experimental Setup}
 \label{ch:methods-experimentalSetup}
-%-------------------------------------------------------------------------
+
+The code was developed in python version 3.9.7 and made use of several libraries.
+A full list can be found in [TODO:].
+
+The training was performed using Microsoft Azure Machine Learning Studio.
+Each experiment was executed on an STANDARD_NC6 compute cluster running on linux, consisting of six virtual \glspl{cpu} (Intel Xeon E5-2690v3) with 56 GB Memory, 340 GB (SSD) Storage and the computing of one-half \gls{gpu} (Tesla K80) with 12 GB \gls{gpu} memory \cite{msft2022NCseriesAzureVirtual}.
+
+The hyperparameter search space for the various models was not changed and is equal to the experiments in \cite{kotelnikov2022TabDDPMModellingTabular} and .
+\begin{table}[h]
+	\centering
+	\begin{tabular}{l | l }
+		\hline
+		Parameter                 & Distribution        \\
+		\hline
+		Max depth                 & UniformInt[3, 10]   \\
+		Learning rate             & LogUniform[1e-5, 1] \\
+		Bagging temperature       & Uniform[0,1]        \\
+		L2 leaf reg               & LogUniform[1,10]    \\
+		Leaf estimation iteration & UniformInt[1,10]    \\
+		\hline
+		Number of tuning trials   & 100
+	\end{tabular}
+	\caption{CatBoost evaluation model hyperparameter tuning search space (proposed by \cite{gorishniy2021RevisitingDeepLearning})}
+	\label{tab:catboost_tune}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{l | l }
+		\toprule
+		Parameter               & Distribution                       \\
+		\midrule
+		Learning Rate           & LogUniform[1e-5,3e-3]              \\
+		Batch Size              & Cat\{256,4096\}                    \\
+		Diffusion timesteps     & Cat\{100,1000\}                    \\
+		Training iterations     & Cat\{5000,10000,20000\}            \\
+		\# MLP layers           & Int\{2,4,6,8\}                     \\
+		MLP layer width         & Int\{128,256,512,1024\}            \\
+		Proportion of samples   & Float\{0.25, 0.5, 1, 2\}           \\
+		\midrule
+		Train size              & \#entries in training dataset      \\
+		\# Samples              & Proportion of samples * Train size \\
+		Dropout                 & 0.0                                \\
+		Scheduler               & cosine                             \\
+		Gaussian diffusion loss & mse                                \\
+		\bottomrule
+		Number of tuning trials & 100
+	\end{tabular}
+	\caption{TabDDPM model hyperparameter tuning search space}
+	\label{tab:diff_tune}
+\end{table}
+
+
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{l | l }
+		\hline
+		Parameter               & Distribution                     \\
+		\hline
+		\# classif. layers      & UniformInt[1,6]                  \\
+		Classif. layer size     & Int\{62, 128, 256, 512\}         \\
+		Training itertations    & Cat\{5000, 20000, 30000\}        \\
+		Batch size              & Cat\{456,4096\}                  \\
+		Embedding dim.          & Int\{16,32,64,128,256,512,1024\} \\
+		Loss factor             & LogUniform[0.01, 10]             \\
+		Proportion of samples   & Float\{0.25, 0.5, 1, 2, 4, 8\}   \\
+		\hline
+		Number of tuning trials & 100
+	\end{tabular}
+	\caption{TVAE model hyperparameter tuning search space}
+	\label{tab:tvae_tune}
+
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{l | l }
+		\hline
+		Parameter               & Distribution                   \\
+		\hline
+		\# classif. layers      & UniformInt[1,4]                \\
+		Classif. layer size     & Int\{62, 128, 256\}            \\
+		Training itertations    & Cat\{1000, 5000, 7500\}        \\
+		Batch size              & Int\{512,1024,2048\}           \\
+		random dim.             & Int\{16,32,64,128\}            \\
+		\# Channels             & Int\{16, 32, 64\}              \\
+		Proportion of samples   & Float\{0.25, 0.5, 1, 2, 4, 8\} \\
+		\hline
+		Number of tuning trials & 30
+	\end{tabular}
+	\caption{CTAGBAG/CTABGAN+ model hyperparameter tuning search space. Training iterations and Number of tuning trails was reduced compared to the original \cite{kotelnikov2022TabDDPMModellingTabular}, to reduce computation time.}
+	\label{tab:ctabgan_tune}
+\end{table}
+
+[TODO: explain the different Parameters?]
+
+
 \section{Datasets}
 \label{ch:methods-datasets}
-%-------------------------------------------------------------------------
-\section{Reproduction of existing results}
 
-\section{Implementation Details}
-\label{ch:methods-implementationDetails}
+The dataset that was used for experiments is the Adult dataset, also known as "Census Income" from the UCI Machine Learning repository \cite{Dua:2019}.
+The dataset was constructed through an extraction from a 1994 census database \cite{kohavi1996ScalingAccuracyNaiveBayes}.
+Overall, the dataset has 15 columns, of which nine are categorical and six are continuous, and 48842 rows.
 
-\subsection{Model Architecture}
-\label{ch:methods-implementationDetails-modelArchitecture}
+The continuous columns are:
 
-\subsection{Training}
-\label{ch:methods-implementationDetails-training}
+age, fnlwgt, education-num, capital-gain, capital-loss, hours-per-week
 
-\subsubsection{Hyperparameters}
-\label{ch:methods-implementationDetails-training-hyperparameters}
+and the categorical columns are:
 
-\subsubsection{Train loop and loss function}
-\label{ch:methods-implementationDetails-training-trainLoopAndLossFunction}
+workclass, education, marital-status, occupation, relationship, race, sex, native-country, income
 
-\subsection{Sampling}
-\label{ch:methods-implementationDetails-sampling}
+The dataset was created for binary classification, where the model should predict the column value of the income column (either ">50K" or "<=50K").
 
-\subsection{Evaluation}
-\label{ch:methods-implementationDetails-evaluation}
-%-------------------------------------------------------------------------
+\autoref{tab:adult} shows five entries of the dataset:
+
+
+\begin{table}[h]
+	\centering
+	\resizebox{\columnwidth}{!}{
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			\textbf{age} & \textbf{workclass} & \textbf{fnlwgt} & \textbf{education} & \textbf{education-num} & \textbf{marital-status} & \textbf{occupation} & \textbf{relationship} & \textbf{race} & \textbf{sex} & \textbf{capital-gain} & \textbf{capital-loss} & \textbf{hours-per-week} & \textbf{native-country} & \textbf{income} \\ \hline
+			39.0         & State-gov          & 77516.0         & Bachelors          & 13.0                   & Never-married           & Adm-clerical        & Not-in-family         & White         & Male         & 2174.0                & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\ \hline
+			50.0         & Self-emp-not-inc   & 83311.0         & Bachelors          & 13.0                   & Married-civ-spouse      & Exec-managerial     & Husband               & White         & Male         & 0.0                   & 0.0                   & 13.0                    & United-States           & $\leq$50K       \\ \hline
+			38.0         & Private            & 215646.0        & HS-grad            & 9.0                    & Divorced                & Handlers-cleaners   & Not-in-family         & White         & Male         & 0.0                   & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\ \hline
+			53.0         & Private            & 234721.0        & 11th               & 7.0                    & Married-civ-spouse      & Handlers-cleaners   & Husband               & Black         & Male         & 0.0                   & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\ \hline
+			28.0         & Private            & 338409.0        & Bachelors          & 13.0                   & Married-civ-spouse      & Prof-specialty      & Wife                  & Black         & Female       & 0.0                   & 0.0                   & 40.0                    & Cuba                    & $\leq$50K       \\ \hline
+		\end{tabular}
+	}
+	\caption{Adult income dataset, 5 exemplary entries}
+	\label{tab:adult}
+\end{table}
+
+

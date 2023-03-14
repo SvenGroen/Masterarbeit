@@ -147,6 +147,7 @@ An overview on how the overall process in this synthetic data generation approac
 % Diagram explaining the current Software architecture
 
 \subsubsection[]{Scripts}
+\label{ch:scripts}
 
 The implementation \cite{kotelnikov2022TabDDPMModellingTabular} already provides necessary scripts that allow for an
 easy training, sampling, evaluation and hyperparameter tuning for their proposed TabDDPM model as well as for the models TabDDPM is compared against.
@@ -354,7 +355,7 @@ based upon the above mentioned criteria, tabular processing mechanisms should be
 To systematically analyze the performance of the different tabular processing mechanism, the following baseline experiments should be performed:
 
 \begin{description}
-    \item[Real:] Comparison of the real training data with the real test data. 
+    \item[Baseline-Real:] Comparison of the real training data with the real test data. 
     The similarity evaluation is expected to be very high, since the data is from the same distribution.
     The computed machine learning efficacy score can be seen as an objective value that should be reached.
     The closer the synthetic data based machine learning efficacy results are to this target, the better the synthetic data.
@@ -373,3 +374,10 @@ For each implemented Tabular Processing mechanism, the following two experiments
 \end{description}
 
 depending on the results of the above experiments, additional experiments can be performed for a subset of promising Tabular Processing mechanisms, \eg testing different preprocessing methods after the tabular processing.
+
+\subsection[]{Evaluation}
+\label{ch:conceptualDesign-Evaluation}
+TODO:
+ML efficacy like in the original paper + Tabsyndex similarity score + similarity score of anderes paper (+bilder von denen)
+
+aufzählen was alles klassische ml efficacy is (acc, f1, roc) und was sim_score werte sind
