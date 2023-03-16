@@ -349,31 +349,6 @@ For a tabular processing mechanism to be used, the following conditions must be 
 
 based upon the above mentioned criteria, tabular processing mechanisms should be selected.
 
-\section{Experiments}
-\label{ch:conceptualDesign-Experiments}
-
-To systematically analyze the performance of the different tabular processing mechanism, the following baseline experiments should be performed:
-
-\begin{description}
-    \item[Baseline-Real:] Comparison of the real training data with the real test data. 
-    The similarity evaluation is expected to be very high, since the data is from the same distribution.
-    The computed machine learning efficacy score can be seen as an objective value that should be reached.
-    The closer the synthetic data based machine learning efficacy results are to this target, the better the synthetic data.
-    \item[Baseline-TabDDPM:] Reproduction of the TabDDPM results of the authors \cite{kotelnikov2022TabDDPMModellingTabular} but with the addition of computing the similarity evaluation.
-    \item[Baseline-TVAE:] Like Baseline-TabDDPM but for TVAE.
-    \item[Baseline-CTABGAN:] Like Baseline-TabDDPM but for CTABGAN.
-    \item[Baseline-CTABGAN+:] Like Baseline-TabDDPM but for CTABGAN+.
-    \item[Baseline-SMOTE:] Like Baseline-TabDDPM but for SMOTE.
-\end{description}
-
-For each implemented Tabular Processing mechanism, the following two experiments should be at least performed:
-
-\begin{description}
-    \item[Experiment 1:] Tabular Processing combined with TabDDPM with additional similarity evaluation. Hyperparameters tuned like in the original experiment (tuned after CatBoost-machine learning efficacy score).
-    \item[Experiment 2:] Like Experiment 1, but hyperparameters are optimized towards the similarity evaluation instead of the machine learning efficacy score.
-\end{description}
-
-depending on the results of the above experiments, additional experiments can be performed for a subset of promising Tabular Processing mechanisms, \eg testing different preprocessing methods after the tabular processing.
 
 \subsection[]{Evaluation}
 \label{ch:conceptualDesign-Evaluation}

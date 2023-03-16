@@ -153,11 +153,48 @@ In this thesis, the data transformation and the actual model training are fully 
 \section{Experimental Setup}
 \label{ch:methods-experimentalSetup}
 
+\subsection{Experiments}
+\label{ch:Experiments}
+
+To systematically analyze the performance of the different tabular processing mechanism, the following baseline experiments should be performed:
+
+\begin{description}
+    \item[Baseline-Real:] Comparison of the real training data with the real test data. 
+    The similarity evaluation is expected to be very high, since the data is from the same distribution.
+    The computed machine learning efficacy score can be seen as an objective value that should be reached.
+    The closer the synthetic data based machine learning efficacy results are to this target, the better the synthetic data.
+    \item[Baseline-TabDDPM:] Reproduction of the TabDDPM results of the authors \cite{kotelnikov2022TabDDPMModellingTabular} but with the addition of computing the similarity evaluation.
+    \item[Baseline-TVAE:] Like Baseline-TabDDPM but for TVAE.
+    \item[Baseline-CTABGAN:] Like Baseline-TabDDPM but for CTABGAN.
+    \item[Baseline-CTABGAN+:] Like Baseline-TabDDPM but for CTABGAN+.
+    \item[Baseline-SMOTE:] Like Baseline-TabDDPM but for SMOTE.
+\end{description}
+
+For each implemented Tabular Processing mechanism, the following two experiments should be at least performed:
+
+\begin{description}
+    \item[Experiment 1:] Tabular Processing combined with TabDDPM with additional similarity evaluation. Hyperparameters tuned like in the original experiment (tuned after CatBoost-machine learning efficacy score).
+    \item[Experiment 2:] Like Experiment 1, but hyperparameters are optimized towards the similarity evaluation instead of the machine learning efficacy score.
+    \item[Experiment 3:] Like Experiment 2, but instead of a quantile transform function being applied after the tabular processing, a Minmax-Scaler strategy is used.
+\end{description}
+
+depending on the results in the first experiments, subsequent experiments are performed only for a subset of promising Tabular Processing mechanisms, \eg testing different preprocessing methods after the tabular processing.
+
+To not get confused with the different model versions, the models are named after the following principal:
+
+Modelname[-TabularProcessor]$^{tuning}_{preprocessing}$
+
+The modelname is followed by an optional tabular processing mechanism, the tuning strategy ("ml" for "machine learning efficacy" or "s" for "TabSynDex similarity score) is indicated via a superscript and the preprocessing strategy ("q" for "quantile transform" or "m" for "MinMax")  is indicated via a subscript.
+
+\subsection{Execution Environment}
+\label{ch:environment}
+
+
 The code was developed in python version 3.9.7 and made use of several libraries.
 A full list can be found in [TODO:].
 
 The training was performed using Microsoft Azure Machine Learning Studio.
-Each experiment was executed on an STANDARD_NC6 compute cluster running on linux, consisting of six virtual \glspl{cpu} (Intel Xeon E5-2690v3) with 56 GB Memory, 340 GB (SSD) Storage and the computing of one-half \gls{gpu} (Tesla K80) with 12 GB \gls{gpu} memory \cite{msft2022NCseriesAzureVirtual}.
+Each experiment was executed on an STANDARD\_NC6 compute cluster running on linux, consisting of six virtual \glspl{cpu} (Intel Xeon E5-2690v3) with 56 GB Memory, 340 GB (SSD) Storage and the computing of one-half \gls{gpu} (Tesla K80) with 12 GB \gls{gpu} memory \cite{vikancha-msft2022NCseriesAzureVirtual}.
 
 The hyperparameter search space for the various models was not changed and is equal to the experiments in \cite{kotelnikov2022TabDDPMModellingTabular} and .
 \begin{table}[h]
