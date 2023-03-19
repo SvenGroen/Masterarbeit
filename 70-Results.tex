@@ -382,29 +382,29 @@ The goal of the synthetic data generation method is to produce synthetic data wh
 \autoref{fig:pca_base} shows the \gls{pca} plots for the different baseline models. All plots show some similarity with the \gls{pca}-plot from the original dataset,
 except for the TVAE model.
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.2\textwidth}
+	\begin{subfigure}{0.23\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/pca/tab-ddpm-bgm.jpg}
 		\caption{TabDDPM-BGM$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.2\textwidth}
+	\begin{subfigure}{0.23\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/pca/tab-ddpm-ft.jpg}
 		\caption{TabDDPM-FT$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.2\textwidth}
+	\begin{subfigure}{0.23\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/pca/tab-ddpm-simTune-minmax.jpg}
 		\caption{TabDDPM$^{s}_m$}
 	\end{subfigure}
-	\begin{subfigure}{0.2\textwidth}
+	\begin{subfigure}{0.23\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/pca/tab-ddpm-simTune.jpg}
 		\caption{TabDDPM$^{s}_q$}
 	\end{subfigure}
-	\caption{Correlation Matrix difference from selected experiment models.}
+	\caption{\gls{pca} for selected experiment models.}
 	\label{fig:pca_diffusion}
 \end{figure}
 
@@ -419,10 +419,177 @@ This \gls{pca}-plot and the remaining model versions plots can be found at \auto
 For each model version distribution plots for each column can be found at \autoref{A:distributions}, comparing the distributions of the synthetic data with the real data.
 This section will highlight some interesting plots for selected models.
 
+In terms of categorical distributions (\autoref{fig:education} displays the education column distributions as an example) all baseline models are able to reproduce the original distributions,
+with CTABGAN+$^{ml}$ and TabDDPM$^{ml}_q$ replicating the original distribution best.
+The \gls{bgm} tabular processing model also reproduced the categorical distributions in a comparable way to the TabDDPM counterpart.
+The \gls{ft} tabular processing model on the other hand, was not able reproduce the original distribution at all and failed to mimic the real data.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_education/tvae.jpg}
+		\caption{TVAE$^{ml}$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_education/ctabgan.jpg}
+		\caption{CTABGAN$^{ml}$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_education/ctabgan+.jpg}
+		\caption{CTABGAN+$^{ml}$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_education/SMOTE.jpg}
+		\caption{SMOTE}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_education/tab-ddpm.jpg}
+		\caption{TabDDPM$^{ml}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_education/tab-ddpm-bgm.jpg}
+		\caption{TabDDPM-BGM$^{ml}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_education/tab-ddpm-ft.jpg}
+		\caption{TabDDPM-FT$^{ml}_q$}
+	\end{subfigure}
+	\caption{Education column for baseline models.}
+	\label{fig:education}
+\end{figure}
+
+The tuning towards the similarity score did not affect the categorical distributions in any model.
+The same is true for changing to the Minmax scaling, since it only affects continuous values. 
 
 
-\section{Analysis}
-\label{ch:results-analysis}
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/tvae.jpg}
+		\caption{TVAE$^{ml}$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/ctabgan.jpg}
+		\caption{CTABGAN$^{ml}$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/ctabgan+.jpg}
+		\caption{CTABGAN+$^{ml}$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/SMOTE.jpg}
+		\caption{SMOTE}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm.jpg}
+		\caption{TabDDPM$^{ml}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-simTune.jpg}
+		\caption{TabDDPM$^{s}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-simTune-minmax.jpg}
+		\caption{TabDDPM$^{s}_m$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-ft.jpg}
+		\caption{TabDDPM-FT$^{ml}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm.jpg}
+		\caption{TabDDPM-BGM$^{ml}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm-simTune-minmax.jpg}
+		\caption{TabDDPM-BGM$^{s}_m$}
+	\end{subfigure}
+	\caption{Age column for selected model versions. Please not that the Y-axis range may vary due to the range of the synthetic data.}
+	\label{fig:age}
+\end{figure}
+
+\autoref{fig:age} shows, that this observation does not extend towards continuos columns, given the column age as an example.
+Across the baseline models, CTABGAN+$^{ml}$ and TabDDPM$^{ml}_q$ are again best able to reproduce the original data distribution of the example column.
+All TabDDPM-BGM models produce distributions, that are comparable to those produced by the baseline TabDDPM.
+Again, TabDDPM-FT, fails to replicate the target distributions at all.
+Interestingly, the similarity score hyperparameter optimization did not affect the TabDDPM distributions to any visible extend.
+However, the Minmax scaling reduced the TabDDPM capability to create a realistic distribution, whose probability distributions rather follows a Gaussian distribution, failing to replicate the detailed peaks of the original dataset.
+This behavior was not present in the \gls{bgm} version with Minmax scaling.
+
+
+\subsection[]{Cumulative distribution function}
+
+All \gls{cdf} plots can be found in \autoref{A:cumsum}.
+The plots show, that the \glspl{cdf} of the synthetic data created by CTABGAN+$^{ml}$ and TabDDPM$^{ml}_q$ comes closest to
+the \glspl{cdf} of the real data across the baseline models (best visible for columns "native-country" or "hours-per-week").
+The selected plots in \autoref{fig:cdf} show how the \gls{ft} tabular processing failed again to reproduce the original datas \gls{cdf}.
+TabDDPM-BGM on the other hand was able to produce synthetic data, whose \gls{cdf} correctly mimics the \gls{cdf} of the real data.
+One could argue, that TabDDPM and TabDDPM that have been tuned after the similarity score are slightly better able to 
+reproduce \gls{cdf} plots for categorical columns whose categories are imbalanced (\eg see column "native-country", where the majority of values equal "United-States").
+This improvement is more visible for the \gls{bgm} version.
+The Minmax scaling did affect the TabDDPM version greatly and "smoothed out" its \glspl{cdf}.
+This phenomenon was not present in the TabDDPM-BGM version with Minmax scaling.
+
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/cdf/tvae.jpg}
+		\caption{TVAE$^{ml}$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/cdf/ctabgan+.jpg}
+		\caption{CTABGAN+$^{ml}$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm-bgm-simTune.jpg}
+		\caption{TabDDPM-BGM$^{s}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm-ft.jpg}
+		\caption{TabDDPM-FT$^{ml}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm.jpg}
+		\caption{TabDDPM$^{ml}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm-simTune-minmax.jpg}
+		\caption{TabDDPM$^{s}_m$}
+	\end{subfigure}
+	\caption{\gls{cdf} plots for selected model versions for the columns "native-country" and "hours-per-week" of the adult income dataset \cite{Dua:2019}}
+	\label{fig:cdf}
+\end{figure}
+
+
+
+
+
+\section{Discussion}
+\label{ch:results-discussion}
 %-------------------------------------------------------------------------
 
 
