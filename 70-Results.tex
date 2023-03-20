@@ -466,7 +466,7 @@ The \gls{ft} tabular processing model on the other hand, was not able reproduce 
 \end{figure}
 
 The tuning towards the similarity score did not affect the categorical distributions in any model.
-The same is true for changing to the Minmax scaling, since it only affects continuous values. 
+The same is true for changing to the Minmax scaling, since it only affects continuous values.
 
 
 \begin{figure}[h]
@@ -541,7 +541,7 @@ The plots show, that the \glspl{cdf} of the synthetic data created by CTABGAN+$^
 the \glspl{cdf} of the real data across the baseline models (best visible for columns "native-country" or "hours-per-week").
 The selected plots in \autoref{fig:cdf} show how the \gls{ft} tabular processing failed again to reproduce the original datas \gls{cdf}.
 TabDDPM-BGM on the other hand was able to produce synthetic data, whose \gls{cdf} correctly mimics the \gls{cdf} of the real data.
-One could argue, that TabDDPM and TabDDPM that have been tuned after the similarity score are slightly better able to 
+One could argue, that TabDDPM and TabDDPM that have been tuned after the similarity score are slightly better able to
 reproduce \gls{cdf} plots for categorical columns whose categories are imbalanced (\eg see column "native-country", where the majority of values equal "United-States").
 This improvement is more visible for the \gls{bgm} version.
 The Minmax scaling did affect the TabDDPM version greatly and "smoothed out" its \glspl{cdf}.
@@ -592,23 +592,145 @@ This phenomenon was not present in the TabDDPM-BGM version with Minmax scaling.
 \label{ch:results-discussion}
 %-------------------------------------------------------------------------
 
-
-TODO: Continue here
 \begin{table}[h]
 	\centering
-	\caption{Comparison of Model A and Model B}
-	\label{tab:model-comparison}
-	\begin{tabular}{|l|ccc|ccc|}
+	\begin{tabular}{lrrr}
 		\toprule
-		\multirow{2}{*}{\textbf{Metrics}} & \multicolumn{3}{c|}{\textbf{TabDDPM}} & \multicolumn{3}{c|}{\textbf{TabDDPM-BGM}}                                                                                      \\ \cline{2-7}
-		                                  & \textbf{ML-Efficacy}                  & \textbf{Similarity Score}                 & \textbf{Diff.} & \textbf{ML-Efficacy} & \textbf{Similarity Score} & \textbf{Diff.} \\
+		\textbf{Model}       & \textbf{Accurarcy} & \textbf{F1}     & \textbf{ROC-AUC} \\
 		\midrule
-		\multicolumn{1}{|l|}{Accurarcy}   & 0.82                                  & 0.73                                      & +0.            & 0.76                 & 0.81                      & +0.            \\
-		\multicolumn{1}{|l|}{Metric 2}    & 0.69                                  & 0.64                                      & +0.            & 0.72                 & 0.71                      & +0.            \\
-		\multicolumn{1}{|l|}{Metric 3}    & 0.91                                  & 0.88                                      & +0.            & 0.89                 & 0.86                      & +0.            \\
+		Real                 & 0.874              & 0.815           & 0.928            \\
+		TVAE$^{ml}$          & 0.845              & 0.780           & 0.900            \\
+		SMOTE                & 0.858              & 0.791           & 0.910            \\
+		CTABGAN$^{ml}$       & 0.850              & 0.775           & 0.900            \\
+		CTABGAN+$^{ml}$      & 0.855              & 0.775           & 0.907            \\
+		TabDDPM$^{ml}_q$     & 0.860              & 0.794           & 0.913            \\
+		TabDDPM-BGM$^{ml}_q$ & \textbf{0.863}     & \textbf{0.798} & \textbf{0.916}   \\
+		TabDDPM-FT$^{ml}_q$  & 0.785              & 0.552           & 0.821            \\
+		CTABGAN$^{s}_q$      & 0.850              & 0.776           & 0.900            \\
+		TVAE$^{s}$           & 0.845              & 0.780           & 0.900            \\
+		TabDDPM$^{s}_q$      & 0.856              & 0.782           & 0.908            \\
+		TabDDPM-BGM$^{s}_q$  & 0.859              & 0.792           & 0.911            \\
+		TabDDPM-FT$^{s}_q$   & 0.766              & 0.451           & 0.712            \\
+		TabDDPM$^{s}_m$      & 0.856              & 0.778           & 0.910            \\
+		TabDDPM-BGM$^{s}_m$  & 0.857              & 0.787           & 0.909            \\
 		\bottomrule
 	\end{tabular}
+	\caption[]{Overview of all machine learning efficacy results for all tested model versions.}
+	\label{tab:ml-all}
 \end{table}
+
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{lrrrrrr}
+		\toprule
+		\textbf{Model}       & \textbf{Similarity Score} & \textbf{Basic} & \textbf{Correlation} & \textbf{ML}    & \textbf{Support} & \textbf{pMSE}  \\
+		\midrule
+		Real                 & 0.960                     & 0.992          & 0.943                & 0.998          & 0.984            & 0.882          \\
+		TVAE$^{ml}$          & 0.658                     & 0.854          & 0.814                & 0.962          & 0.657            & 0.000          \\
+		SMOTE                & 0.723                     & 0.953          & 0.865                & 0.992          & 0.804            & 0.000          \\
+		CTABGAN$^{ml}$       & 0.741                     & 0.940          & 0.832                & 0.984          & 0.947            & 0.000          \\
+		CTABGAN+$^{ml}$      & 0.750                     & 0.969          & 0.882                & 0.990          & 0.892            & 0.019          \\
+		TabDDPM$^{ml}_q$     & 0.759                     & 0.973          & 0.919                & 0.992          & 0.874            & 0.035          \\
+		TabDDPM-BGM$^{ml}_q$ & 0.742                     & 0.964          & 0.918                & \textbf{0.996} & 0.831            & 0.000          \\
+		TabDDPM-FT$^{ml}_q$  & 0.595                     & 0.495          & 0.648                & 0.869          & 0.963            & 0.000          \\
+		CTABGAN$^{s}_q$      & 0.740                     & 0.938          & 0.833                & 0.984          & 0.947            & 0.000          \\
+		TVAE$^{s}$           & 0.658                     & 0.856          & 0.815                & 0.962          & 0.656            & 0.000          \\
+		TabDDPM$^{s}_q$      & 0.852                     & 0.976          & 0.921                & 0.991          & 0.952            & 0.420          \\
+		TabDDPM-BGM$^{s}_q$  & 0.857                     & \textbf{0.982} & 0.858                & 0.991          & 0.920            & 0.532          \\
+		TabDDPM-FT$^{s}_q$   & 0.588                     & 0.512          & 0.619                & 0.818          & \textbf{0.992}   & 0.000          \\
+		TabDDPM$^{s}_m$      & \textbf{0.869}            & 0.938          & \textbf{0.930}       & 0.990          & 0.928            & \textbf{0.558} \\
+		TabDDPM-BGM$^{s}_m$  & 0.856                     & 0.981          & 0.913                & 0.992          & 0.915            & 0.476          \\
+		\bottomrule
+	\end{tabular}
+	\caption[]{Overview of all similarity score results for all tested model versions.}
+	\label{tab:sim-all}
+\end{table}
+
+- The goal of the thesis was to answer the research question:
+- The key findings:
+- interpretation:
+	- relation to previous studies
+	- any differences to previous results
+	- what are contributions
+
+limitations
+future work
+
+
+
+
+ML efficacy:
+
+- TabDDPM-BGM$^{ml}_q$ outperforms all + good visual results
+
+sim-score:
+
+- TabDDPM$^{s}_m$ highest similarity score (highest score in correlation and pMSE) but plots showed mixed picture: 
+	- correlation good, pca bad, distributions for continuos bad (failing details) but good for categorical, same for cumsum plots (rather an approximation/generalization)
+- TabDDPM-BGM$^{s}_q$ and TabDDPM-BGM$^{s}_m$ slightly worse (-0.012 and -0.013 respectively), but visual results much better.
+- TabDDPM-BGM$^{s}_q$ only slightly worse than TabDDPM$^{s}_m$ in all metrics where TabDDPM$^{s}_m$ was better. BIggest difference in correlation score (prob. due to quantile transform, that loses correlation information (TODO: QUELLE)),
+but correlation score can be increase by switching to minmax scaling TabDDPM-BGM$^{s}_m$, which improves the correlation and basic score but reduces the support and pMSE- score
+--> BGM stabilizes results --> continuos more detailed due to multimodal approach --> more robust to changes?
+
+- support score best for FT, but FT fails in all other aspects, TabDDPM$^{s}_q$ is second best in support coverage 
+- pMSE is almost 0 for all models except TabDDPM$^{s}$  and TabDDPM-BGM$^{s}$  that have been tuned towards Similarity score (but only for the diffusion models, not the others).
+	- tuning after ml efficacy resulted in an pMSE score near 0 for diffusion models --> hyperparameter tuning has big influence
+
+
+baselines:
+- TVAE performed the worst out of all baseline models. Hyperparameter tuning did not affect the results in any noticeable way.
+- CTABGAN+ best out of the baseline-non-diffusion models (current state of the art). Comparable to TabDDPM, but TabDDPM outperforms CTABGAN+.
+
+
+tabular processing:
+- The TabDDPM-FT$^{ml}_q$ and TabDDPM-FT$^{s}_q$ models have the lowest scores across all metrics, suggesting that they fail to reproduce the original data distribution and quality.
+- BGM processor achieves best ml efficacy scores, especially when tuned towards it.
+- BGM also reliable able to produce realistic data that looks similar to original data (viasual results)
+
+
+similarity tuning:
+- The similarity score optimization improves the performance of some models (such as TabDDPM-BGM) but not others (such as CTABGAN), implying that different models may require different tuning strategies.
+- compared to ml-tuning, sim-tuning has slightly worse ml-performance, but greatly improves in all other TabSynDey metrics --> highlights the importance of evaluating synthetic data using more than 1 metric, to cover different aspects.
+- sim-tuning enables diffusion models to achieve a pMSE score that is not 0 (or close to it) 
+
+
+minmax or quantile:
+- The TabDDPM-BGM$^{s}_m$ model has a lower similarity score than the TabDDPM-BGM$^{s}_q$ model, implying that using quantile normalization can improve its ability to preserve the statistical properties of the original data
+--> quantile might reduce correlations but preserve the statistical properties of the original data (the ranking)
+--> using minmax increases correlations resamblence, but can introduce new issues:
+	--> for TabDDPM, continouse column distribution could only be approximated and details (individual spikes) got lost
+	--> TabDDPM-BGM did not observe a loss of details in the spikes, but a reduced pMSE score (which increased for the non-BGM variant)
+	==> BGM produces reliable plots, even with changes
+
+Overall:
+- diffusion approach outperforms all other comparable model types in all observed metrics
+- The TabDDPM-BGM$^{ml}_q$ model has the highest accuracy, F1 and ROC-AUC scores among all models, indicating that it is the most effective model for generating synthetic data that can be used for machine learning tasks
+- The SMOTE model has a high similarity score but a low accuracy and F1 score, suggesting that it is good at generating synthetic data for statistical analysis but not for machine learning tasks
+- Findings demonstrate that synthetic tabular data generation is a challenging task that requires careful consideration of various factors such as data quality, distribution, correlation, balance and utility. 
+Second, they suggest that different methods of synthetic tabular data generation have different strengths and weaknesses depending on the intended use case and evaluation criteria. 
+Third, they provide insights into how to improve existing methods or develop new ones by applying techniques such as Bayesian Gaussian Mixture models, quantile normalization or fine-tuning.
+
+
+
+
+
+% TODO: Continue here
+% \begin{table}[h]
+% 	\centering
+% 	\caption{Comparison of Model A and Model B}
+% 	\label{tab:model-comparison}
+% 	\begin{tabular}{|l|ccc|ccc|}
+% 		\toprule
+% 		\multirow{2}{*}{\textbf{Metrics}} & \multicolumn{3}{c|}{\textbf{TabDDPM}} & \multicolumn{3}{c|}{\textbf{TabDDPM-BGM}}                                                                                      \\ \cline{2-7}
+% 		                                  & \textbf{ML-Efficacy}                  & \textbf{Similarity Score}                 & \textbf{Diff.} & \textbf{ML-Efficacy} & \textbf{Similarity Score} & \textbf{Diff.} \\
+% 		\midrule
+% 		\multicolumn{1}{|l|}{Accurarcy}   & 0.82                                  & 0.73                                      & +0.            & 0.76                 & 0.81                      & +0.            \\
+% 		\multicolumn{1}{|l|}{Metric 2}    & 0.69                                  & 0.64                                      & +0.            & 0.72                 & 0.71                      & +0.            \\
+% 		\multicolumn{1}{|l|}{Metric 3}    & 0.91                                  & 0.88                                      & +0.            & 0.89                 & 0.86                      & +0.            \\
+% 		\bottomrule
+% 	\end{tabular}
+% \end{table}
 
 
 

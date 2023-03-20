@@ -4,10 +4,28 @@
 \section{Problem Statement and Motivation} 
 \label{ch:intro-problemStatement}
 
+
+
+a lot of success in the image generation domain, but tabular data generation much more impactful?
+
+In the era of deep learning and big data, the need for accurate and reliable data in high quantities is paramount.
+For machine and deep learning models, training data is essential to perform any kind of desired inference.
+Gathering and accumulating real world data is still expensive and restricted through regulations like GDPR.
+GAN models dominate the area of tab data syn.
+
+Recently, diffusion models, a relatively new type of generative models, outperformed gans in image synthesis.
+TabDDPM showed that this could be extended to tabular data.
+in image synthesis, improvements done to gans appleid to diffusion models lead to very good performance 
+--> do the same for tabular data
+--> Can improvements be transferred
+--> what aspects of synthesis are diffusions good at, what bad at
+
+- tabular data format main form of data (used in several industries)
+- over past few years a variety of genereative models appeard.
+
+- Gans still fail to produce nicht unterscheidbare daten (pMSE score aus TabSynDex)
 - success of DNNs \cite{borisov2022DeepNeuralNetworks}
-- deployment of data-driven application requires solving 3 challenges (inference, data generation & interpretability) \cite{borisov2022DeepNeuralNetworks} (Focus on data generation)
-- inference is most crucial but needs preprocessed training data with good quality --> data generation to address challenges (missing values, rebalancing, etc) \cite{borisov2022DeepNeuralNetworks}
-- it might be simply impossible to use the actual data due to privacy concerns \cite{borisov2022DeepNeuralNetworks}
+
 
 % For what do we need data? --> data is used everywhere
 % Problems of real data (scarcity, privacy, etc.)

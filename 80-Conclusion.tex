@@ -11,8 +11,17 @@
 % Adversarial loss (anlehnung an pmse score) (adverserial model soll x'_t-1 (NN prediction) und x_t-1 (original) unterscheiden)
 % tabular processing infront of preprocessing--> why not after
 % tabular processing in training loop einbauen?
+- To test more datasets with diverse characteristics to generalize the findings and identify potential sources of variation or bias.
+- To use more metrics with different perspectives to evaluate the performance and trade-offs of different methods.
+- To explore more hyperparameters or variations for each method to optimize their performance and adaptability.
 
 %-------------------------------------------------------------------------
 \section{Limitations}
 \label{ch:results-limitations}
 %-------------------------------------------------------------------------
+
+However, this study also has some limitations that need to be acknowledged. One limitation is that it only used one real dataset (the Adult dataset) to evaluate the performance of different methods. 
+Therefore, it is possible that some methods may perform better or worse on other datasets with different characteristics such as size, dimensionality or complexity. 
+Another limitation is that it only used a subset of possible metrics to measure the performance of different methods. 
+Therefore, it is possible that some methods may have advantages or disadvantages on other metrics such as privacy preservation or computational efficiency. 
+A third limitation is that it only tested a fixed set of hyperparameters for each method. Therefore, it is possible that some methods may benefit from further optimization or customization.
