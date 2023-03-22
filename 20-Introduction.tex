@@ -4,104 +4,59 @@
 \section{Problem Statement and Motivation} 
 \label{ch:intro-problemStatement}
 
-
-
-a lot of success in the image generation domain, but tabular data generation much more impactful?
-
+Tabular data is an essential tool in our society due to its ability to organize and present data in a structured manner that can be easily analyzed and interpreted by humans and machines alike. 
+This makes it an indispensable tool for decision-making processes in many fields, including finance, medical research, and many more.
 In the era of deep learning and big data, the need for accurate and reliable data in high quantities is paramount.
 For machine and deep learning models, training data is essential to perform any kind of desired inference.
 Gathering and accumulating real world data is still expensive and restricted through regulations like GDPR.
-GAN models dominate the area of tab data syn.
+In recent years, generative modeling approaches address these issues by creating a synthetic copy of the original tabular dataset.
+This synthetic data version should maintain the important statistical properties and correlations while not disclosing any information from the real original dataset \cite{goodfellow2020GenerativeAdversarialNetworks, mottini2018AirlinePassengerName}.
+While in the image domain, generative models already show human-like capability to produce highly realistic images \cite{dhariwal2021DiffusionModelsBeat},
+tabular data synthesis approaches still show room for improvements \cite{chundawat2022UniversalMetricRobust}.
+One of the reasons for this, is heterogeneous nature of tabular data, which generative models need to reproduce.
+Tabular data usually consist of a mixture of numerical and categorical distributions with dependencies, which is difficult to capture and to reproduce \cite{borisov2022DeepNeuralNetworks}.
+So far, \gls{gan} based approaches have shown state-of-the-art capabilities to create synthetic tabular data, which have also been the best model for synthetic image generation.
+However, diffusion based models have recently been able to outperform \glspl{gan} on the task of image synthesis \cite{dhariwal2021DiffusionModelsBeat}.
+As a result, researchers have tried to use diffusion models to generate synthetic tabular data with promising results \cite{kotelnikov2022TabDDPMModellingTabular, zheng2022DiffusionModelsMissing}.
 
-Recently, diffusion models, a relatively new type of generative models, outperformed gans in image synthesis.
-TabDDPM showed that this could be extended to tabular data.
-in image synthesis, improvements done to gans appleid to diffusion models lead to very good performance 
---> do the same for tabular data
---> Can improvements be transferred
---> what aspects of synthesis are diffusions good at, what bad at
+\cite{dhariwal2021DiffusionModelsBeat} argued, that \glspl{gan} have shown superior performance against diffusion due to the fact, that they have been investigated more deeply by researchers.
+The authors were able to show in their work, that with a few improvements, diffusion models were capable of outperforming \glspls{gan} on image synthesis.
+A similar observation can be made in the tabular data domain, where the majority of recent publications propose \gls{gan} based solutions.
+First results \cite{kotelnikov2022TabDDPMModellingTabular} indicate the superior performance of diffusion models over \glspl{gan} extends to the tabular data synthesis domain.
+Nevertheless, applying diffusion models to tabular data is still a novel approach and further research is required \cite{borisov2022DeepNeuralNetworks}.
 
-- tabular data format main form of data (used in several industries)
-- over past few years a variety of genereative models appeard.
-
-- Gans still fail to produce nicht unterscheidbare daten (pMSE score aus TabSynDex)
-- success of DNNs \cite{borisov2022DeepNeuralNetworks}
-
-
-% For what do we need data? --> data is used everywhere
-% Problems of real data (scarcity, privacy, etc.)
-% What is synthetic data in 1 sentence
-% What is special about tabular data
-% use cases of synthetic data (privacy, scalability, availability, etc.)
-% Why to use diffusion for synthetic data generation
-
-
-% Motivation: Diffusion Probabilistic Models
-% GAN's very successful for tabular data synthesis (plateau reached?)
-% Diffusion beat GAN's in image synthesis (why not for tabular data?)
-% first research shows that diffusion is better than GAN's for tabular data
-% several improvements had been done to GAN's but not yet for Diffusion models
-% Question arises: Can improvements from GAN's be transferred to Diffusion models?
-
+ 
 \section{Goals and Research Questions}
 \label{ch:intro-goals}
+The overall goal of this thesis is to further investigate how diffusion models can be successfully applied to the task of tabular data synthesis.
+This work will build upon the work of \cite{kotelnikov2022TabDDPMModellingTabular} and will explore, how the existing approach, called TabDDPM, can be further improved by adapting 
+already existing tabular processing mechanism from previous tabular data synthesis solutions.
+Furthermore, the evaluation and comparison of the diffusion model to various other generative modeling techniques will be extended through the usage and analysis
+of multiple similarity metrics as proposed by \cite{chundawat2022UniversalMetricRobust}.
+The goal of this extended evaluation is to uncover possible unknown modeling properties of diffusion models that have not been discovered in previous works.
 
-% Goals: extend the existing code base for special data preprocessing, statistical similarity (and maybe U-Net architecture)
-% Goals: analysis on how to improve a Diffusion model for tabular data synthesis
+To summarize, this thesis will investigate the following \glspl{rq}:
 
-% Research Questions:
-% 1. does preprocessing the data into a specific format improve the results?
-% 2. how good is diffusion for tabular data synthesis in terms of statistical similarity?
-% 3. does a special tabular data synthesis metric improve the results when used for hyperparameter optimization?
+\begin{description}
+    \item[\gls{rq}1:] What are the effects on the generative capability of the tabular data synthesis model TabDDPM by adding additional tabular data processing mechanisms to the existing generation pipeline.
+    \item[\gls{rq}2:] How does TabDDPM (and its variants, produced to answer \gls{rq}) compare to other generative models in terms of several similarity metrics, including \cite{chundawat2022UniversalMetricRobust}.
+\end{description}
 
-% (Wenn Zeit übrig ist):
-% 3. does using a U-Net architecture improve the results? (maybe)
-% 4. Can the similarity score be incorporated into the loss function? (maybe)
+Answering the above questions contributes to the overall research domain by showing possible strengths and weaknesses of diffusion models
+as a new approach in the tabular data synthesis domain. 
 
-
-\section{Proceeeding}
-\label{ch:intro-proceeeding}
-
-% Proceeeding:
-% Literature research on Diffusion models and GAN's
-% --> What has been done, what has worked, what has not worked, what can be used for diffusion models
-% --> decide which improvements are most promising and will be implemented
-% Use existing code base for Diffusion models
-% --> implement improvements proposed for GAN's and apply to them Diffusion
-% --> train different Diffusion versions
-% --> Evaluate the results with additional meassures (statistical meassures)
-% Compare the results with the current state of the art
-% Analyze the results and draw conclusions (what works, what doesn't work, what can be improved)
-
+\section{Proceeding}
+\label{ch:intro-proceeding}
+In order to answer the above stated \glspl{rq}, the following steps have been taken.
+Prior to any experiments, a literature search has been performed about possible different approaches to process tabular data and tabular data synthesis and how to evaluate it.
+From this research, a selection of tabular processing mechanism was made based on predefined criteria (\autoref{ch:Concept-criteria}).
+Using the existing TabDDPM model \cite{kotelnikov2022TabDDPMModellingTabular}, the results of the original authors needed to be replicated and validated in a first step.
+Afterwards, the software was extended to integrate the selected tabular processing mechanism.
+The already existing evaluation proposed in \cite{kotelnikov2022TabDDPMModellingTabular} was extended by an additional, more elaborate evaluation \cite{akim2023TabDDPMModellingTabular}.
+Lastly, the different model versions have been trained and the results have been compared and analyzed.
 
 \section{Contributions}
 \label{ch:intro-contributions}
-%Problem Statement: Clearly state the research problem being addressed and explain why it is important. Provide a detailed definition of the problem and explain how it relates to the field of tabular data synthesis.
-
-%Research Objectives: Define the specific research objectives of the thesis and explain how they contribute to the overall research problem.
-
-%Research Methodology: Describe the methodology used to address the research problem, including the techniques and tools used, the data sources used, and the data analysis techniques used.
-
-\subsection{Data Preprocessing}
-\label{ch:intro-contributions-dataPreprocessing}
-
-% Data preprocessing is a crucial step in data synthesis
-% Use special preprocessing for tabular data
-% flexible and extendable preprocessing module inside the current implementation
-
-\subsection{Model Architecture} % maybe 
-\label{ch:intro-contributions-modelArchitecture}
-
-% Current Diffusion models are based on simple MLP's
-% U-Net architecture is used for image synthesis
-% Use U-Net architecture for tabular data synthesis?
-
-\subsection{Extended Evaluation}
-\label{ch:intro-contributions-extendedEvaluation}
-
-% Current work focuses on Machine learning efficiency
-% Add additional evaluation metrics
-% "Similarity Score" used from Master thesis paper that aggregates several metrics
-
 
 \section{Outline}
 \label{ch:intro-outline}
