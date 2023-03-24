@@ -521,7 +521,7 @@ The same is true for changing to the Minmax scaling, since it only affects conti
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm-simTune-minmax.jpg}
 		\caption{TabDDPM-BGM$^{s}_m$}
 	\end{subfigure}
-	\caption{Age column for selected model versions. Please not that the Y-axis range may vary due to the range of the synthetic data.}
+	\caption{Age column for selected model versions. Please note, that the Y-axis range may vary due to the range of the synthetic data.}
 	\label{fig:age}
 \end{figure}
 
@@ -548,7 +548,7 @@ The Minmax scaling did affect the TabDDPM version greatly and "smoothed out" its
 This phenomenon was not present in the TabDDPM-BGM version with Minmax scaling.
 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.23\textwidth}
 		\centering
@@ -586,11 +586,16 @@ This phenomenon was not present in the TabDDPM-BGM version with Minmax scaling.
 
 
 
-
+\newpage
 
 \section{Discussion}
 \label{ch:results-discussion}
 %-------------------------------------------------------------------------
+
+The goal of this thesis is to investigate the performance of adding the tabular processing mechanisms to the TabDDPM model (\gls{rq}1) and 
+to expand upon the already existing machine learning efficacy evaluation performed by \cite{kotelnikov2022TabDDPMModellingTabular} through the similarity score metrics proposed by \cite{chundawat2022UniversalMetricRobust}.
+
+\subsection*{Analysis of Visual and Numerical Results}
 
 \begin{table}[h]
 	\centering
@@ -646,103 +651,260 @@ This phenomenon was not present in the TabDDPM-BGM version with Minmax scaling.
 	\caption[]{Overview of all similarity score results for all tested model versions.}
 	\label{tab:sim-all}
 \end{table}
+[TODO: Tune ctabgan+]
 
-The goal of this thesis is to show the effects of adding the tabular processing mechanisms to the TabDDPM model (\gls{rq}1) and 
-to expand upon the already existing machine learning efficacy evaluation performed by \cite{kotelnikov2022TabDDPMModellingTabular} through the similarity score metrics by \cite{chundawat2022UniversalMetricRobust}.
-
-Given all the results in \auotref{tab:sim-all}, \autoref{tab:sim-all} and the visual results in \autoref{ch:results-Visual}, it gets clear, that the \gls{ft} processing mechanism failed and is not recommended.
-Even though its support score is highest, all other metrics and plots show that the model was not able to produce synthetic data that resembles the original dataset.
-
-\autoref{tab:ml-all} shows the machine learning efficacy results for all model versions using a CatBoost classification model.
-Out of all models, TabDDPM-BGM$^{ml}_q$ shows the best machine learning efficacy performance across all tested metrics.
+Based on the obtained results, it is evident that the processing mechanism for \gls{ft} has failed and is not advisable. 
+Despite having the highest overall support score, all other measurements and visual representations indicate that the model was not capable of generating synthetic data that closely resembles the original dataset.
+As a consequence, the TabDDPM-FT variations will not be further discussed and analyzed.
+The \gls{bgm} processor variant was able to produce not only good numerical but also visual results.
+In terms of machine learning efficacy, the TabDDPM-BGM$^{ml}_q$ version shows the best machine learning efficacy performance across all tested metrics (\autoref{tab:ml-all}: Accurarcy, F1 and AUC-ROC and \autoref{tab:sim-all}: ML).
 However, the advantage over its simpler counterpart TabDDPM$^{ml}_q$ is only marginal (+0.003\%-points).
-As expected, models tuned towards machine learning efficacy outperform models tuned towards similarity score in the machine learning efficacy scores.
-Yet, the metric of the similarity tuned models is only slightly reduced but its compensated by an even larger increase in other metrics (pMSE +0.4-0.5\%-points).
-The results also show, that the SMOTE approach is a reliable sampling technique when the synthetic data will be used in a machine learning scenario, as its machine learning efficacy results 
-are superior to the other non-diffusion baseline models and being much less complex.
+Overall, models with hyperparameters tuned towards machine learning efficacy outperform models with hyperparameters tuned towards similarity score in the machine learning efficacy scores, as one would expect.
+For the non-diffusion baseline models, the results show, that the SMOTE approach is a reliable sampling technique when the synthetic data will be used in a machine learning scenario.
+Its machine learning efficacy results are superior to the other non-diffusion baseline models while the model being overall less complex.
+For other scenarios, CTABGAN+ achieves the best overall performance in terms of numerical and visual results, for non-diffusion based models.
+Nevertheless, the best found CTABGAN+ version is inferior to the best found diffusion model [TODO: Check].
 
-The different similarity metrices presented in \autoref{tab:sim-all} allow several new insights that an evaluation of just the machine learning efficacy would not show.
+Changing the tuning strategy to the similarity score, allowed several observations to be made.
+Firstly, non-diffusion models metric results had no significant effects on the baseline models, all of their metric scores stayed roughly the same.
+Diffusion models on the other hand, showed several changes in the numerical results.
+Overall, diffusion models with a similarity score tuning show reduced machine learning efficacy metric scores compared to their machine learning efficacy counterpart.
+While this reduction is relative small, the similarity metrics have been increased significantly.
+Especially the \gls{pmse} score was increased (+0.4-0.5\%-points), thanks to the similarity tuning.
+% Sim Tune - pmse
+The big increase in the \gls{pmse} score for diffusion models is especially worth highlighting.
+Previously, all non-diffusion baseline models failed to produce data, that is non-differentiable from the real-data by a logistic regression model, which is indicated by the \gls{pmse} score.
+This confirms the observation made by the authors of \cite{chundawat2022UniversalMetricRobust}, who also observe that all of their tested models (mainly \gls{gan}-based) achieve a \gls{pmse} of 0.
+\cite{chundawat2022UniversalMetricRobust} experiments only identified one model, a \gls{gan} model with gradient penalty and wasserstein distance, which was able to achieve a peak \gls{pmse} score of 0.4.
+Tuning the hyperparameter towards the similarity score, which includes the \gls{pmse} score, allows to increase the \gls{pmse} score to values between 0.42 and 0.55 for diffusion models TabDDPM and TabDDPM-BGM.
+The same tuning strategy did not affect the \gls{pmse} score of baseline models like TVAE or CTABGAN. 
+This indicates that diffusion based models are better able to produce synthetic data, that is harder to differentiate from its real counterpart.
 
-%effect of minmax vs quantile
-The TabDDPM$^{s}_m$ highest overall similarity score (due to the highest score in correlation and pMSE), however, the visual results need to be considered as well.
-Even though the correlation difference plot of TabDDPM$^{s}_m$ looks good, the distribution and \gls{cdf} plot of continuos columns look worse than the plot of other models. 
-Compared to other models (\eg TabDDPM$^{s}_q$) continuos plots lack details and rather approximate the original distribution than fully replicate it.
-TabDDPM$^{s}_q$ does not show this behavior, which indicates that the Minmax scaling to the numerical columns causes this behavior.
-TabDDPM-BGM$^{s}_m$ does also not show this behavior even though MinMax scaling is applied. 
-However, after the MinMax is inversed, the tabular processing mechanism is inversed, which involves the mode-specific normalization in the case of the \gls{bgm}-Processor.
-This indicates that the \gls{bgm} processing can reliably replicate the original data distributions.
+In addition to the increase of the \gls{pmse} score, the other metrics that make up the similarity score have increased as well, but on a smaller scale.
+Only correlation values got decreased slightly through the similarity tuning.
+This observation holds for TabDDPM and TabDDPM-BGM, but not for the baseline models (TVAE and CTABGAN), whose metric results remained unchanged after switching the tuning strategy..
+This indicates, that the importance for hyperparameter tuning is much higher for diffusion models in tabular data synthesis, as their tuning strategy affects the metric outcomes significantly.
+
+Replacing the quantile transform function with minmax scaling for the TabDDPM (TabDDPM$^{s}_m$) has led to the highest overall similarity score.
+It scored highest in both correlation and \gls{pmse}, leading to the high overall similarity score.
 According to \cite{QuantileTransformer}, the quantile transform function is a non-linear transformation that may distort correlations between variables.
 This is also observable in the correlation metric score, where TabDDPM$^{s}_q$ and TabDDPM-BGM$^{s}_q$ have a lower correlation score than their minmax scaling counterpart.
+However, it is important to also take into consideration the visual results.
+Although the correlation difference plot of TabDDPM$^{s}_m$ appears satisfactory, the distribution and \gls{cdf} plot of continuous columns look worse when compared to those of other models. 
+The continuous plots of TabDDPM$^{s}_m$ lack details and rather approximate the original distribution.
+The models quantile transform counterpart TabDDPM$^{s}_q$ does not show this behavior, producing overall more realistic plots.
+This indicates that the minmax scaling, which is applied to the numerical columns, causes this kind of behavior.
+On the other hand, TabDDPM-BGM$^{s}_m$, does not show this behavior even though MinMax scaling is applied. 
+However for TabDDPM-BGM, after the MinMax is inverted, the tabular processing mechanism is inverted as well, which involves the mode-specific normalization in the case of the \gls{bgm}-Processor.
+This indicates, that the TabDDPM-BGM is not affected by quantile or minmax scaling to the same extend, as the plain TabDDPM is.
+
+To summarize, the following observations could be made:
+
+\begin{itemize}
+	\item The processing mechanism for \gls{ft} has failed and is not advisable, as it could not generate synthetic data that closely resembles the original dataset.
+	\item The \gls{bgm} processor produced good numerical and visual results.
+	\item TabDDPM-BGM$^{ml}_q$ shows the best machine learning efficacy performance across all tested metrics.
+	\item Out of the baseline models, SMOTE is a reliable sampling technique for non-diffusion baseline models in machine learning scenarios.
+	In other scenarios, CTABGAN+ is the preferred non-diffusion model.
+	\item Diffusion models outperform non-diffusion models in tabular data synthesis.
+	\item Diffusion models with similarity score tuning led to models with an non-zero \gls{pmse} score.
+	\item Hyperparameter tuning is more important for diffusion models in tabular data synthesis, as their tuning strategy significantly affects metric outcomes.
+	\item Replacing the quantile transform function with minmax scaling for TabDDPM (TabDDPM$^{s}_m$) led to the highest overall similarity score, but also resulted in worse distribution and \gls{cdf} plot of continuous columns.
+	\item TabDDPM-BGM is not affected by quantile or minmax scaling to the same extent as the plain TabDDPM.
+\end{itemize}
+
+\subsection*{Analysis of Research Questions}
+
+\subsubsection{RQ1}
+
+The results obtained in this study provide insights into the research questions posed in Section \ref{ch:intro-goals}.
+\gls{rq}1 is concerned with the effects of additional tabular data processing mechanisms on TabDDPM.
+It could be shown, that by incorporating additional tabular data processing mechanisms, the TabDDPM model was able to achieve improved performance compared to the baseline models.
+This was only the case for the \gls{bgm} processing but not the \gls{ft} processing.
+It was found that the TabDDPM-BGM$^{s}_q$ is the best suited model for producing synthetic data, that will be used in a machine learning scenario.
+Even though TabDDPM$^{s}_m$ achieved the highest overall similarity score, its visual results lack detail for numerical columns.
+Hence TabDDPM-BGM should in general be preferred, with TabDDPM-BGM$^{s}_q$ producing slightly better basic, support and \gls{pmse} scores and TabDDPM-BGM$^{s}_m$ producing good correlations.
+
+The visual results reinforced these findings, with correlation difference and PCA plots produced by TabDDPM-BGM variants closely resembling the original dataset.
+In addition to that, TabDDPM-BGM are reliably able to reproduce distributions and \glspl{cdf} of the original dataset.
+The biggest difference was observable when replacing the quantile transformation with the minmax scaling.
+While the plain TabDDPM$^s_m$ model struggled to reproduce the detail in the original continuos columns, the \gls{bgm} processing variant was able to.
+
+To summarize, the tabular processor encodes the data into a different data format, which will be processed by the TabDDPM afterwards.
+Depending on the encoded data format, the generative capability of TabDDPM changed.
+From the \gls{ft} processed data, the TabDDPM model was not able to generate realistic synthetic data.
+The \gls{bgm} technique on the other hand, encoded the data in a reliable manner, such that the diffusion model was able to produce synthetic data, that closely resemblance the original dataset in multiple aspects.
+With the \gls{bgm} technique, the TabDDPM showed improved generative capabilities, with better performance across various metrics and more realistic synthetic data generation, compared to TabDDPM without \gls{bgm}.
+Hence, the results suggest, that introducing a tabular processor to the synthesization pipeline can improve the overall quality of the produce synthetic data.
+
+
+\subsubsection{RQ2}
+\gls{rq}2 is concerned with an extended evaluation of Diffusion based tabular data synthesis, that goes beyond an machine learning efficacy evaluation.
+In this thesis, TabSynDex evaluation metric \cite{chundawat2022UniversalMetricRobust} in addition to a CatBoost machine learning efficacy was performed.
+This evaluation revealed new insights into the performance of diffusion based models compared to other model types in tabular data synthesis.
+Overall, it could be observed, that the the superior performance of TabDDPM compared to the non-diffusion models found in \cite{kotelnikov2022TabDDPMModellingTabular}
+could not only be confirmed with the results of this thesis, but it could be shown that the superior performance also extends to the other tested metrics (basic statistics, correlations, ml, support).
+
+Furthermore, the evaluation also highlights the importance of hyperparameter tuning for diffusion model in tabular data synthesis.
+While a change in the hyperparameter tuning strategy did hardly effect non-diffusion models, it greatly effected the TabDDPM approach.  
+If hyperparameter are tuned towards the TabSynDex Similarity score, diffusion models outperform all other models, including \gls{vae} and \gls{gan}-based approaches,
+in all tested metrics.
+The biggest effect was visible in the \gls{pmse} score, indicating the differentiability of the synthetic data from the real data.
+Non-diffusion models consistently produced synthetic data, that resulted in a near-zero \gls{pmse} score, even if their hyperparameters have been tuned towards maximizing it.
+However, diffusion model variants tested in this thesis were able to produce \gls{pmse} scores of up to 0.55\%.
+
+The evaluation strategy in this thesis also included analysis of visualizations of the synthetic data in multiple ways.
+This evaluation revealed, that TabDDPM and its variance produce synthetic data whose plots resemble the original data plots more closely than the synthetic data plots of non-diffusion models.
+Additionally, the visual inspect revealed the effects of changing the hyperparameter tuning strategy or data preprocessing strategy has on diffusion models.
+For example, TabDDPM$^{s}_m$ metrics result suggest that it produces the best model overall to produce synthetic data, as it has the highest overall similarity score.
+However, its plots show a reduced capability to accurately recreate continuos columns.
+
+In summary, the evaluation performed in the thesis showed that TabDDPM and its \gls{bgm} variant outperform other generative models, 
+including \gls{vae} and \gls{gan}-based approaches, in an extended similarity evaluation based on the TabSynDex metric, 
+machine learning efficacy and a visualization analysis.
+Hyperparameter tuning greatly affected the performance of diffusion models, and visualizations revealed that diffusion models produce synthetic data that more closely resemble the original data than non-diffusion models.
+Ultimately, this thesis showed the importance of an elaborate evaluation of synthetic data, as new insights on the behavior of diffusion models for tabular data synthesis could be gained,
+which are of benefit for potential future diffusion based models.
+Additionally, such an extended evaluation allows for a holistic view on the produced synthetic data, uncovering strengths and weaknesses from different perspectives.
+
+\section{Limitations}
+\label{ch:results-limitations}
+%-------------------------------------------------------------------------
+
+This study has some limitations that need to be acknowledged. 
+The biggest limitation is, that only one real dataset (the adult dataset \cite{Dua:2019}) to evaluate the performance of different models has been used. 
+Therefore, it is possible that some model versions may perform better or worse on other datasets with different characteristics such as size, dimensionality or complexity. 
+The reason for this was the limited access to computing resources.
+As a consequence, all observations and results made in this thesis only hold for the adult dataset and should not be generalized, until they can be confirmed on multiple datasets.
+
+A second limitation is that during hyperparameter tuning only a fixed set of hyperparameters were tested. 
+Therefore, it is possible that some methods may benefit from further optimization or customization.
+
+Furthermore, although the set of evaluation metrics have been larger compared to the original authors \cite{kotelnikov2022TabDDPMModellingTabular},
+an additional, even larger evaluation should be considered. 
+In particular, privacy and model complexity related metrics have not been considered in this experiment and would likely reveal new valuable insights.
+
+Lastly, diffusion models, like most other deep neural networks, suffer from a lack of interpretability, as they are considered a black-box model \cite{benitez1997AreArtificialNeural}.
+
+\section{Future Work}
+\label{ch:results-futureWork}
+
+As the implementation of diffusion models for synthesizing tabular data represents a relatively innovative approach with limited research to date, numerous promising avenues for future investigations exist.
+Firstly, to overcome limitations presented in \autoref{ch:results-limitations} a larger set of datasets are required to confirm the results observed in this thesis.
+More datasets with diverse characteristics to generalize the findings and identify potential sources of variation or bias
+
+Moreover, incorporating a variety of metrics with diverse perspectives is essential for evaluating the performance and trade-offs of distinct tabular data generation methods. 
+This is particularly relevant for privacy-related metrics, as recent research suggests that diffusion models may not effectively protect privacy and allow to extract training data samples \cite{carlini2023ExtractingTrainingData}.
+
+Moreover, it is likely that diffusion models can be further improved through several changes.
+First, the hyperparameter search space could be broader and cover more hyperparameters.
+Second, the neural network itself could be replaced by a more sophisticated one.
+The proposed network by \cite{kotelnikov2022TabDDPMModellingTabular} which predicts the noise in the reverse process follows a simple architecture.
+In the image generation domain, a more complex U-Net \cite{ronneberger2015UNetConvolutionalNetworks} architecture with attention layers at different layers were proposed \cite{dhariwal2021DiffusionModelsBeat}.
+\cite{dhariwal2021DiffusionModelsBeat} showed that such changes led to a better generation quality.
+Hence, it is possible that similar changes to the models architecture would lead to better generative capabilities.
+Other changes could be made towards further improving the loss function.
+It might be worth investigating, wether some sort of adversarial loss could be implemented, similar to \gls{gan} models.
+For example, an adversarial network could be tasked to tell apart which noise (the noise that will be removed from the noise image) was predicted by the neural network and which was the actual noise.
+This information could be used to further enhance the capability of the diffusion network to remove noise from $x_{t}$ to get to $x_{t-1}$.
+Lastly, depending on the results of an elaborate privacy evaluation, introducing differential privacy \cite{dwork2011DifferentialPrivacy} into the diffusion model might be worth investigating, which has been done extensively in the \gls{gan} domain \cite{jordon2018PATEGANGeneratingSynthetic,9054559, kunar2021DTGANDifferentialPrivatea, torfi2022DifferentiallyPrivateSynthetic}.
+
+In terms of the tabular processor mechanism, several changes and different technique could be implemented to improve the overall generation pipeline.
+At the moment, the tabular processor mechanism is fully separated from the diffusion processes.
+Fully incorporating the tabular processor into the neural network architecture for some mechanisms would allow a gradient flow through processing mechanism.
+This would especially interesting for embedding mechanisms, as they could learn in this way to create a meaningful representation of the data.
+Alternatively, a pre-training mechanism for the tabular processor could be possible, such that embedding layers are able to learn meaningful representations before the actual tabular data synthesis.
+
+There exists several different tabular processor techniques that could be worth investigating.
+For example, the model TABBIE \cite{iida2021TABBIEPretrainedRepresentations} and TURL \cite{deng2021TURLTableUnderstanding} show different ways to create
+meaningful-context aware representations of tabular data.
+Future researches could adapt their work and use the pretrained embeddings, created by the model, to encode the tabular data before processing it in the diffusion pipeline.
+One of the biggest challenge hear is to correctly revert the data back into its original data format, after it has been synthesized.
+A possible solution for this could be training a decoder module, as in \cite{rombach2022HighResolutionImageSynthesis}, adapting an encoder-decoder architecture.
+This decoder could be specifically trained towards reverting the previously encoded data back into its human-readable format.
+In this solution, the tabular processing inverse function is basically not implemented directly by the developer, but it is learned through a neural network.
+
+As one can see, there is a multitude of possible research directions for diffusion based tabular data synthesis.
+Future research should first focus on removing the possible limitations of this thesis, through a more elaborate experimental setup with more datasets.
+Here, potential privacy issues are required to be investigated.
+Depending on the results, architectural changes and additional tabular processing mechanisms are worth investigating.
+
+% To summarize, the following observations can be made:
+
+% \begin{description}
+% 	\item[Diffusion models:] Diffusion based model outperform the other tested model types on all investigated metrics and produce better visual results.
+% 	\item[Tabular Processing:] A \gls{bgm} tabular processing mechanism improves the machine learning efficacy of TabDDPM  
+% \end{description}
+
+
+
+% Overall:
+% - diffusion approach outperforms all other comparable model types in all observed metrics
+% - The TabDDPM-BGM$^{ml}_q$ model has the highest accuracy, F1 and ROC-AUC scores among all models, indicating that it is the most effective model for generating synthetic data that can be used for machine learning tasks
+% - The SMOTE model has a high similarity score but a low accuracy and F1 score, suggesting that it is good at generating synthetic data for statistical analysis but not for machine learning tasks
+% - Findings demonstrate that synthetic tabular data generation is a challenging task that requires careful consideration of various factors such as data quality, distribution, correlation, balance and utility. 
+% Second, they suggest that different methods of synthetic tabular data generation have different strengths and weaknesses depending on the intended use case and evaluation criteria. 
+% Third, they provide insights into how to improve existing methods or develop new ones by applying techniques such as Bayesian Gaussian Mixture models, quantile normalization or fine-tuning.
+
+
+% ML efficacy:
+
+% - TabDDPM-BGM$^{ml}_q$ outperforms all + good visual results
+
+% sim-score:
+
+% - TabDDPM$^{s}_m$ highest similarity score (highest score in correlation and pMSE) but plots showed mixed picture: 
+% 	- correlation good, pca bad, distributions for continuos bad (failing details) but good for categorical, same for cumsum plots (rather an approximation/generalization)
+% - TabDDPM-BGM$^{s}_q$ and TabDDPM-BGM$^{s}_m$ slightly worse (-0.012 and -0.013 respectively), but visual results much better.
+% - TabDDPM-BGM$^{s}_q$ only slightly worse than TabDDPM$^{s}_m$ in all metrics where TabDDPM$^{s}_m$ was better. BIggest difference in correlation score (prob. due to quantile transform, that loses correlation information (TODO: QUELLE)),
+% but correlation score can be increase by switching to minmax scaling TabDDPM-BGM$^{s}_m$, which improves the correlation and basic score but reduces the support and pMSE- score
+% --> BGM stabilizes results --> continuos more detailed due to multimodal approach --> more robust to changes?
+
+% - support score best for FT, but FT fails in all other aspects, TabDDPM$^{s}_q$ is second best in support coverage 
+% - pMSE is almost 0 for all models except TabDDPM$^{s}$ and TabDDPM-BGM$^{s}$  that have been tuned towards Similarity score (but only for the diffusion models, not the others).
+% 	- tuning after ml efficacy resulted in an pMSE score near 0 for diffusion models --> hyperparameter tuning has big influence
+
+
+% baselines:
+% - TVAE performed the worst out of all baseline models. Hyperparameter tuning did not affect the results in any noticeable way.
+% - CTABGAN+ best out of the baseline-non-diffusion models (current state of the art). Comparable to TabDDPM, but TabDDPM outperforms CTABGAN+.
+
+
+% tabular processing:
+% - The TabDDPM-FT$^{ml}_q$ and TabDDPM-FT$^{s}_q$ models have the lowest scores across all metrics, suggesting that they fail to reproduce the original data distribution and quality.
+% - BGM processor achieves best ml efficacy scores, especially when tuned towards it.
+% - BGM also reliable able to produce realistic data that looks similar to original data (viasual results)
+
+
+% similarity tuning:
+% - The similarity score optimization improves the performance of some models (such as TabDDPM-BGM) but not others (such as CTABGAN), implying that different models may require different tuning strategies.
+% - compared to ml-tuning, sim-tuning has slightly worse ml-performance, but greatly improves in all other TabSynDey metrics --> highlights the importance of evaluating synthetic data using more than 1 metric, to cover different aspects.
+% - sim-tuning enables diffusion models to achieve a pMSE score that is not 0 (or close to it) 
+
+
+% minmax or quantile:
+% - The TabDDPM-BGM$^{s}_m$ model has a lower similarity score than the TabDDPM-BGM$^{s}_q$ model, implying that using quantile normalization can improve its ability to preserve the statistical properties of the original data
+% --> quantile might reduce correlations but preserve the statistical properties of the original data (the ranking)
+% --> using minmax increases correlations resamblence, but can introduce new issues:
+% 	--> for TabDDPM, continouse column distribution could only be approximated and details (individual spikes) got lost
+% 	--> TabDDPM-BGM did not observe a loss of details in the spikes, but a reduced pMSE score (which increased for the non-BGM variant)
+% 	==> BGM produces reliable plots, even with changes
 
 
 
 
-ML efficacy:
+% What are the effects on the generative capability of the tabular data synthesis model 
+% TabDDPM by adding additional tabular data processing mechanisms to the existing generation pipeline.
 
-- TabDDPM-BGM$^{ml}_q$ outperforms all + good visual results
+% - The goal of the thesis was to answer the research question:
+% - The key findings:
+% - interpretation:
+% 	- relation to previous studies
+% 	- any differences to previous results
+% 	- what are contributions
 
-sim-score:
-
-- TabDDPM$^{s}_m$ highest similarity score (highest score in correlation and pMSE) but plots showed mixed picture: 
-	- correlation good, pca bad, distributions for continuos bad (failing details) but good for categorical, same for cumsum plots (rather an approximation/generalization)
-- TabDDPM-BGM$^{s}_q$ and TabDDPM-BGM$^{s}_m$ slightly worse (-0.012 and -0.013 respectively), but visual results much better.
-- TabDDPM-BGM$^{s}_q$ only slightly worse than TabDDPM$^{s}_m$ in all metrics where TabDDPM$^{s}_m$ was better. BIggest difference in correlation score (prob. due to quantile transform, that loses correlation information (TODO: QUELLE)),
-but correlation score can be increase by switching to minmax scaling TabDDPM-BGM$^{s}_m$, which improves the correlation and basic score but reduces the support and pMSE- score
---> BGM stabilizes results --> continuos more detailed due to multimodal approach --> more robust to changes?
-
-- support score best for FT, but FT fails in all other aspects, TabDDPM$^{s}_q$ is second best in support coverage 
-- pMSE is almost 0 for all models except TabDDPM$^{s}$ and TabDDPM-BGM$^{s}$  that have been tuned towards Similarity score (but only for the diffusion models, not the others).
-	- tuning after ml efficacy resulted in an pMSE score near 0 for diffusion models --> hyperparameter tuning has big influence
-
-
-baselines:
-- TVAE performed the worst out of all baseline models. Hyperparameter tuning did not affect the results in any noticeable way.
-- CTABGAN+ best out of the baseline-non-diffusion models (current state of the art). Comparable to TabDDPM, but TabDDPM outperforms CTABGAN+.
-
-
-tabular processing:
-- The TabDDPM-FT$^{ml}_q$ and TabDDPM-FT$^{s}_q$ models have the lowest scores across all metrics, suggesting that they fail to reproduce the original data distribution and quality.
-- BGM processor achieves best ml efficacy scores, especially when tuned towards it.
-- BGM also reliable able to produce realistic data that looks similar to original data (viasual results)
-
-
-similarity tuning:
-- The similarity score optimization improves the performance of some models (such as TabDDPM-BGM) but not others (such as CTABGAN), implying that different models may require different tuning strategies.
-- compared to ml-tuning, sim-tuning has slightly worse ml-performance, but greatly improves in all other TabSynDey metrics --> highlights the importance of evaluating synthetic data using more than 1 metric, to cover different aspects.
-- sim-tuning enables diffusion models to achieve a pMSE score that is not 0 (or close to it) 
-
-
-minmax or quantile:
-- The TabDDPM-BGM$^{s}_m$ model has a lower similarity score than the TabDDPM-BGM$^{s}_q$ model, implying that using quantile normalization can improve its ability to preserve the statistical properties of the original data
---> quantile might reduce correlations but preserve the statistical properties of the original data (the ranking)
---> using minmax increases correlations resamblence, but can introduce new issues:
-	--> for TabDDPM, continouse column distribution could only be approximated and details (individual spikes) got lost
-	--> TabDDPM-BGM did not observe a loss of details in the spikes, but a reduced pMSE score (which increased for the non-BGM variant)
-	==> BGM produces reliable plots, even with changes
-
-Overall:
-- diffusion approach outperforms all other comparable model types in all observed metrics
-- The TabDDPM-BGM$^{ml}_q$ model has the highest accuracy, F1 and ROC-AUC scores among all models, indicating that it is the most effective model for generating synthetic data that can be used for machine learning tasks
-- The SMOTE model has a high similarity score but a low accuracy and F1 score, suggesting that it is good at generating synthetic data for statistical analysis but not for machine learning tasks
-- Findings demonstrate that synthetic tabular data generation is a challenging task that requires careful consideration of various factors such as data quality, distribution, correlation, balance and utility. 
-Second, they suggest that different methods of synthetic tabular data generation have different strengths and weaknesses depending on the intended use case and evaluation criteria. 
-Third, they provide insights into how to improve existing methods or develop new ones by applying techniques such as Bayesian Gaussian Mixture models, quantile normalization or fine-tuning.
-
-
-
-
-What are the effects on the generative capability of the tabular data synthesis model 
-TabDDPM by adding additional tabular data processing mechanisms to the existing generation pipeline.
-
-- The goal of the thesis was to answer the research question:
-- The key findings:
-- interpretation:
-	- relation to previous studies
-	- any differences to previous results
-	- what are contributions
-
-limitations
-future work
+% limitations
+% future work
 
 
 
@@ -765,5 +927,5 @@ future work
 
 
 
-The tuning of the hyperparameters had a significant effect on the performance of the different models.
+% The tuning of the hyperparameters had a significant effect on the performance of the different models.
 

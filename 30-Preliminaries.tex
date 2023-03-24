@@ -167,8 +167,6 @@ The Quantile-transformation allows to map all values of a random variable into a
 using the quantile function on the inverse cumulative distribution of the random variable. This transformation preserves the rank order of the values but distorts correlations and distances within and across features \cite{scikit-learnPreprocessingData}.
 
 
-
-
 %-------------------------------------------------------------------------
 \section{Data Synthesis}
 \label{ch:preliminaries-dataSynthesis}
@@ -286,10 +284,6 @@ A simple \gls{mlp} is already able to learn any "reasonable" function, which is 
     \hspace*{\fill}   % maximizeseparation between the subfigures
   \caption{Overview Neural Networks} \label{fig:NN_Overview}
 \end{figure}
-
-
-
-
 
 Convolutional networks, or \glspl{cnn} \cite{lecun1998GradientbasedLearningApplied}, are a specialized type of neural network.
 As their name indicate, they perform convolutions on the data \autoref{fig:cnns}.
@@ -958,7 +952,7 @@ For example, \cite{kunar2021DTGANDifferentialPrivatea} uses the default hyperpar
 Lastly, the different generation models might use different datasets to compute their machine learning efficacy score on.
 Even though most of the generation approaches have adopted the "CrCl-SR"\cite{goncalves2020GenerationEvaluationSynthetic} approach to calculate the machine learning efficacy score,
 the aforementioned variabilities in terms of metrics- and model-choice make it hard to compare the performance across the different generative models using the machine learning efficacy.
-
+[TODO: ACC, F1 und ROC-AUC erklären?]
 
 \subsection{Privacy Evaluation}
 \label{ch:preliminaries-evaluationOfSyntheticTabularData-privacyEvaluation}

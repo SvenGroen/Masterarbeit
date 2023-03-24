@@ -1,27 +1,31 @@
 \chapter{Conclusion}
 \label{ch:conclusion}
 
+\section*{Conclusion}
+\label{ch:conclusion}
 
-%-------------------------------------------------------------------------
-\section{Future Work}
-\label{ch:results-futureWork}
+In this thesis, the effect of different tabular processing mechanism on diffusion based tabular data synthesis has been investigated.
+An already existing tabular data generation pipeline has been extended, to allow for an easy implementation of different tabular encoding and decoding strategies.
+With this, the existing pipeline of TabDDPM \cite{kotelnikov2022TabDDPMModellingTabular} was extended by two tabular processing mechanism, that encode the tabular data before the training, and revert the data back after sampling synthetic data.
+The extended pipeline was evaluated using a CatBoost based machine learning efficacy evaluation, as well as a TabSynDex metric and visualization of the synthetic data.
+The TabSynDex metric itself consists of five sub-metrics who capture different similarity aspects of the synthetic data.
+Several observations could be made in set of experiments.
+Firstly, the results in terms of machine learning efficacy performance of the authors of the TabDDPM pipeline could be confirmed \cite{kotelnikov2022TabDDPMModellingTabular}.
+Thanks to the addition of the TabSynDex metrics, it could be shown that TabDDPM superior performance against a set of non-diffusion baseline models also extends
+to the TabSynDex similarity metrics.
 
-% Training by sampling
-% Model architecture
-% Adversarial loss (anlehnung an pmse score) (adverserial model soll x'_t-1 (NN prediction) und x_t-1 (original) unterscheiden)
-% tabular processing infront of preprocessing--> why not after
-% tabular processing in training loop einbauen?
-- To test more datasets with diverse characteristics to generalize the findings and identify potential sources of variation or bias.
-- To use more metrics with different perspectives to evaluate the performance and trade-offs of different methods.
-- To explore more hyperparameters or variations for each method to optimize their performance and adaptability.
+While adding a Feature Tokenization (\gls{ft}) processing mechanism into the TabDDPM generation pipeline transforms the tabular data in such a way,
+that the diffusion model was not able to generate any meaningful data, which could be seen in the visual result.
+Adopting a more complex encoding/decoding strategy from \cite{zhao2022CTABGANEnhancingTabular}, which uses a Bayesian-Gaussian-Mixture model (\gls{bgm}),
+improved TabDDPMs generative capabilities in producing synthetic data that is useful in machine learning scenarios.
+This has shown, that changing the data format of tabular data greatly affects the diffusion models generative capability.
 
-%-------------------------------------------------------------------------
-\section{Limitations}
-\label{ch:results-limitations}
-%-------------------------------------------------------------------------
-
-However, this study also has some limitations that need to be acknowledged. One limitation is that it only used one real dataset (the Adult dataset) to evaluate the performance of different methods. 
-Therefore, it is possible that some methods may perform better or worse on other datasets with different characteristics such as size, dimensionality or complexity. 
-Another limitation is that it only used a subset of possible metrics to measure the performance of different methods. 
-Therefore, it is possible that some methods may have advantages or disadvantages on other metrics such as privacy preservation or computational efficiency. 
-A third limitation is that it only tested a fixed set of hyperparameters for each method. Therefore, it is possible that some methods may benefit from further optimization or customization.
+Furthermore, the importance of hyperparameter tuning for diffusion models was highlighted.
+Diffusion models tuned towards the TabSynDex similarity score showed great improvements in several of the TabSynDex metrices.
+In the performed experiments, diffusion models have been the first models to achieve a non-zero \gls{pmse} score, which other current state-of-art models have not been capable of.
+Further experiments showed, how changing data normalization strategy can on the one hand increase metric results but on the other hand worsen visual results.
+This insight underlines the importance of an visual evaluation of synthetic data, to get proper estimate the quality of the produce synthetic data.
+From all performed experiments, it can be concluded, that diffusion based tabular data synthesis achieves is superior to other model types, such as \gls{gan} or \gls{vae}.
+Diffusion models have not only shown overall better metric and visual results, but they are also more flexible, as a hyperparameter tuning already effects the metrics outcome greatly.
+Out of all models, TabDDPM-BGM$^{s}$ models showed the best overall performance.
+However, potential users should alter the model pipelines design depending on the use case of the synthetic data, with TabDDPM-BGM$^{s}_m$ producing the best correlation score, TabDDPM-BGM$^{ml}_q$ best machine learning efficacy scores and TabDDPM-BGM$^{s}_q$ best basic statistical values and \gls{pmse} results.

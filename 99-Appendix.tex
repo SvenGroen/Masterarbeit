@@ -321,4 +321,16 @@
 
 
 
+\section*{TODO}
+\[
+\begin{aligned}
+L & =\mathbb{E}_{q}\left[-\log \frac{p_{\theta}\left(\mathbf{x}_{0: T}\right)}{q\left(\mathbf{x}_{1: T} \mid \mathbf{x}_{0}\right)}\right] \\
+& =\mathbb{E}_{q}\left[-\log p\left(\mathbf{x}_{T}\right)-\sum_{t \geq 1} \log \frac{p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)}{q\left(\mathbf{x}_{t} \mid \mathbf{x}_{t-1}\right)}\right] \\
+& =\mathbb{E}_{q}\left[-\log p\left(\mathbf{x}_{T}\right)-\sum_{t>1} \log \frac{p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)}{q\left(\mathbf{x}_{t} \mid \mathbf{x}_{t-1}\right)}-\log \frac{p_{\theta}\left(\mathbf{x}_{0} \mid \mathbf{x}_{1}\right)}{q\left(\mathbf{x}_{1} \mid \mathbf{x}_{0}\right)}\right] \\
+& =\mathbb{E}_{q}\left[-\log p\left(\mathbf{x}_{T}\right)-\sum_{t>1} \log \frac{p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)}{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}, \mathbf{x}_{0}\right)} \cdot \frac{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{0}\right)}{q\left(\mathbf{x}_{t} \mid \mathbf{x}_{0}\right)}-\log \frac{p_{\theta}\left(\mathbf{x}_{0} \mid \mathbf{x}_{1}\right)}{q\left(\mathbf{x}_{1} \mid \mathbf{x}_{0}\right)}\right] \\
+& =\mathbb{E}_{q}\left[-\log \frac{p\left(\mathbf{x}_{T}\right)}{q\left(\mathbf{x}_{T} \mid \mathbf{x}_{0}\right)}-\sum_{t>1} \log \frac{p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)}{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}, \mathbf{x}_{0}\right)}-\log p_{\theta}\left(\mathbf{x}_{0} \mid \mathbf{x}_{1}\right)\right]
+& =\mathbb{E}_{q}\left[D_{\mathrm{KL}}\left(q\left(\mathbf{x}_{T} \mid \mathbf{x}_{0}\right) \| p\left(\mathbf{x}_{T}\right)\right)+\sum_{t>1} D_{\mathrm{KL}}\left(q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}, \mathbf{x}_{0}\right) \| p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)\right)-\log p_{\theta}\left(\mathbf{x}_{0} \mid \mathbf{x}_{1}\right)\right]
+
+\end{aligned}
+\]
 
