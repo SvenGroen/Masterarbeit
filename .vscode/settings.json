@@ -3,6 +3,10 @@
         "datapoints",
         "ERKLÄRUNG",
         "generalizability",
+        "polysemic",
         "synthesization"
+    ],
+    "cSpell.enableFiletypes": [
+        "!latex"
     ]
 }
