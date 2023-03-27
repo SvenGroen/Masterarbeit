@@ -6,6 +6,7 @@
 
 
 \section*{Visual Results}
+\label{A:Visual_results}
 \subsection[]{Correlation Difference Matrix}
 \label{A:corr_matrix}
 
@@ -321,16 +322,64 @@
 
 
 
-\section*{TODO}
-\[
-\begin{aligned}
-L & =\mathbb{E}_{q}\left[-\log \frac{p_{\theta}\left(\mathbf{x}_{0: T}\right)}{q\left(\mathbf{x}_{1: T} \mid \mathbf{x}_{0}\right)}\right] \\
-& =\mathbb{E}_{q}\left[-\log p\left(\mathbf{x}_{T}\right)-\sum_{t \geq 1} \log \frac{p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)}{q\left(\mathbf{x}_{t} \mid \mathbf{x}_{t-1}\right)}\right] \\
-& =\mathbb{E}_{q}\left[-\log p\left(\mathbf{x}_{T}\right)-\sum_{t>1} \log \frac{p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)}{q\left(\mathbf{x}_{t} \mid \mathbf{x}_{t-1}\right)}-\log \frac{p_{\theta}\left(\mathbf{x}_{0} \mid \mathbf{x}_{1}\right)}{q\left(\mathbf{x}_{1} \mid \mathbf{x}_{0}\right)}\right] \\
-& =\mathbb{E}_{q}\left[-\log p\left(\mathbf{x}_{T}\right)-\sum_{t>1} \log \frac{p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)}{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}, \mathbf{x}_{0}\right)} \cdot \frac{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{0}\right)}{q\left(\mathbf{x}_{t} \mid \mathbf{x}_{0}\right)}-\log \frac{p_{\theta}\left(\mathbf{x}_{0} \mid \mathbf{x}_{1}\right)}{q\left(\mathbf{x}_{1} \mid \mathbf{x}_{0}\right)}\right] \\
-& =\mathbb{E}_{q}\left[-\log \frac{p\left(\mathbf{x}_{T}\right)}{q\left(\mathbf{x}_{T} \mid \mathbf{x}_{0}\right)}-\sum_{t>1} \log \frac{p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)}{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}, \mathbf{x}_{0}\right)}-\log p_{\theta}\left(\mathbf{x}_{0} \mid \mathbf{x}_{1}\right)\right]
-& =\mathbb{E}_{q}\left[D_{\mathrm{KL}}\left(q\left(\mathbf{x}_{T} \mid \mathbf{x}_{0}\right) \| p\left(\mathbf{x}_{T}\right)\right)+\sum_{t>1} D_{\mathrm{KL}}\left(q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}, \mathbf{x}_{0}\right) \| p_{\theta}\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}\right)\right)-\log p_{\theta}\left(\mathbf{x}_{0} \mid \mathbf{x}_{1}\right)\right]
+\section*{Extended derivations}
+\label{A:derivations}
+\subsection*{Diffusion propabilistic models}
+Several derivations have been presented in a short format for better readability.
+This section will cover left-out derivations.
+For a more detailed explanation \cite{weng2021WhatAreDiffusion, outlier2022DiffusionModelsPaper} is recommended.
+For further details please refer to \cite{sohl-dickstein2015DeepUnsupervisedLearning, ho2020DenoisingDiffusionProbabilistic}.
 
-\end{aligned}
-\]
+Derivation to get from \autoref{eqn:vlb} to \autoref{eqn:vlb2}:
 
+Given:
+
+\begin{equation}
+    \label{eqn:kl-divergence_appendix}
+    KL(p\parallel q) = \int p(x)\cdot log(\frac{p(x)}{q(x)})dx
+\end{equation}
+
+and
+
+\begin{equation}
+    \label{eqn:simplify1}
+	\begin{align}
+    p_\theta(x_{1:T}|x_0) &= \frac{p_\theta(x_0|x_{1:T})p_\theta(x_{1:T})}{p_\theta(x_0)} && \textrm{using bayes rule}\\
+	&= \frac{p_\theta(x_0,x_{1:T})}{p_\theta(x_{0})} && \textrm{summarize to joint probability}\\
+	&= \frac{p_\theta(x_{0:T})}{p_\theta(x_{0})} && \textrm{summarize to joint probability}\\
+\end{align}
+\end{equation}
+
+Derivation:
+
+\begin{subequations}
+	\label{eqn:vlb2_appendix}
+	\begin{align}
+		-log(p_\theta(x_0)) &\leq -log(p_\theta(x_0)) + KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0)) &&\textrm{}\\
+		&= -log(p_\theta(x_0)) + log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{1:T}|x_0)}) && \textrm{using \autoref{eqn:kl-divergence_appendix}}\\
+		&=-log(p_\theta(x_0)) + log(\frac{q(x_{1:T})|x_0}{\frac{p_\theta(x_{0:T})}{p_\theta(x_{0})}}) && \textrm{using \autoref{eqn:simplify1}}\\
+		&= -log(p_\theta(x_0)) + log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{0:T})})+log(p_\theta(x_{0})) && \textrm{Fraction rule}\\
+		&= log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{0:T})})	&& \textrm{canceling out}\\
+		\textrm{Let }L_{VLB} &= \mathbb{E}_{q(x_0:T)}\big[log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{0:T})}) \big] \geq - \mathbb{E}_{q(x_0)}log(p_\theta(x_0))
+	\end{align}
+\end{subequations}
+
+
+Derivation to get from \autoref{eqn:vlb2} to \autoref{eqn:vlb3}:
+\begingroup
+\small
+\begin{subequations}
+	\label{eqn:vlb3_appendix}
+	\begin{align}
+	& L_{VLB}=\mathbb{E}_{q\left(\mathbf{x}_{0: T}\right)}\left[\log \frac{q\left(\mathbf{x}_{1: T} \mid \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_{0: T}\right)}\right] \\
+	& =\mathbb{E}_q\left[\log \frac{\prod_{t=1}^T q\left(\mathbf{x}_t \mid \mathbf{x}_{t-1}\right)}{p_\theta\left(\mathbf{x}_T\right) \prod_{t=1}^T p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)}\right] \\
+	& =\mathbb{E}_q\left[-\log p_\theta\left(\mathbf{x}_T\right)+\sum_{t=1}^T \log \frac{q\left(\mathbf{x}_t \mid \mathbf{x}_{t-1}\right)}{p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)}\right] \\
+	& =\mathbb{E}_q\left[-\log p_\theta\left(\mathbf{x}_T\right)+\sum_{t=2}^T \log \frac{q\left(\mathbf{x}_t \mid \mathbf{x}_{t-1}\right)}{p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)}+\log \frac{q\left(\mathbf{x}_1 \mid \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_0 \mid \mathbf{x}_1\right)}\right] \\
+	& =\mathbb{E}_q\left[-\log p_\theta\left(\mathbf{x}_T\right)+\sum_{t=2}^T \log \left(\frac{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)} \cdot \frac{q\left(\mathbf{x}_t \mid \mathbf{x}_0\right)}{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_0\right)}\right)+\log \frac{q\left(\mathbf{x}_1 \mid \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_0 \mid \mathbf{x}_1\right)}\right] \\
+	& =\mathbb{E}_q\left[-\log p_\theta\left(\mathbf{x}_T\right)+\sum_{t=2}^T \log \frac{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)}+\sum_{t=2}^T \log \frac{q\left(\mathbf{x}_t \mid \mathbf{x}_0\right)}{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_0\right)}+\log \frac{q\left(\mathbf{x}_1 \mid \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_0 \mid \mathbf{x}_1\right)}\right] \\
+	& =\mathbb{E}_q\left[-\log p_\theta\left(\mathbf{x}_T\right)+\sum_{t=2}^T \log \frac{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)}+\log \frac{q\left(\mathbf{x}_T \mid \mathbf{x}_0\right)}{q\left(\mathbf{x}_1 \mid \mathbf{x}_0\right)}+\log \frac{q\left(\mathbf{x}_1 \mid \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_0 \mid \mathbf{x}_1\right)}\right] \\
+	& =\mathbb{E}_q\left[\log \frac{q\left(\mathbf{x}_T \mid \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_T\right)}+\sum_{t=2}^T \log \frac{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0\right)}{p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)}-\log p_\theta\left(\mathbf{x}_0 \mid \mathbf{x}_1\right)\right] \\
+	& =\mathbb{E}_q[\underbrace{D_{\mathrm{KL}}\left(q\left(\mathbf{x}_T \mid \mathbf{x}_0\right) \| p_\theta\left(\mathbf{x}_T\right)\right)}_{L_T}+\sum_{t=2}^T \underbrace{D_{\mathrm{KL}}\left(q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0\right) \| p_\theta\left(\mathbf{x}_{t-1} \mid \mathbf{x}_t\right)\right)}_{L_{t-1}}-\underbrace{\log p_\theta\left(\mathbf{x}_0 \mid \mathbf{x}_1\right)}_{L_0}]
+	\end{align}
+\end{subequations}
+\endgroup
