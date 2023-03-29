@@ -2,21 +2,22 @@
 \label{ch:methodology}
 
 
-\section*{Architecture}
+\section{Architecture}
 \label{ch:architecture}
 
-The architecture of the developed software was developed with the requirements in \autoref{ch:requirements} in mind.
+The software's architecture was developed with the requirements in \autoref{ch:requirements} in mind.
 The following section will explain how the individual additions to the existing code are designed and why the design was chosen.
 
 
-\subsection[]{Tabular Processor}
+\subsection{Tabular Processor}
 \label{ch:architecture-tabularProcessor}
 
-To allow for a flexible use and the possibility to add additional processing mechanism, the strategy design pattern (\autoref{fig:design}) was chosen \cite{gamma1994design}.
-The pattern is especially useful, if a certain behavior is required but needs to be realized in different ways.
-The Strategy defines what kind of methods need to be implemented and the concrete implementations, the different strategies, implement the behavior in different ways.
-Depending on the context, different strategies can be used interchangeably, since all implemented the same functionalities.
-Additionally, new strategies can be added easily without affecting any of the other strategies or the context \cite{gamma1994design}.
+To allow for flexible use and the possibility of adding additional processing mechanisms (R5 - Maintainability), the \textit{strategy design} pattern (\autoref{fig:design}) was chosen \cite{gamma1994design}.
+The pattern is beneficial if a specific behavior is required but needs to be realized in different ways.
+The \textit{Strategy} class defines what kind of methods need to be implemented and what behavior the class should have.
+The \textit{Strategy} children define the different \textit{ConcreteStrategy} and realize the desired behavior in different ways.
+Different \textit{ConcreteStrategies} can be used interchangeably depending on the \textit{Context} since all implement the same functionalities.
+Additionally, new \textit{ConcreteStrategies} can be added easily without affecting any of the other \textit{ConcreteStrategy} or the \textit{Context} \cite{gamma1994design}.
 
 \begin{figure}[h]
 	\centering
@@ -32,49 +33,59 @@ Additionally, new strategies can be added easily without affecting any of the ot
 	\label{fig:tabular_processor}
 \end{figure}
 
-\autoref{fig:tabular_processor} shows how the strategy pattern is realized.
-The overall Strategy is defined in the TabularProcessor class in the form of an abstract class with three core methods, each tabular processing mechanism needs to implement.
-These functions are the fit, transform and inverse transform functions (FR[TODO]- FR[TODO]).
+\autoref{fig:tabular_processor} shows how the \textit{Strategy} design pattern is realized.
+The overall \textit{Strategy} is defined in the \textit{TabularProcessor} class in the form of an abstract class with three core methods each tabular processing mechanism needs to implement.
+These functions are the \textit{fit}, \textit{transform}, and \textit{inverse transform} functions (FR2.1 - FR2.3).
 
 Each different tabular processing strategy is different and realizes the transformation of the data in a different way by implementing the abstract classes of the parent strategy.
-Therefore, Additional tabular processing mechanism can be easily added, by just implementing the abstract methods (FR[TODO]).
-Furthermore, the tabular processing mechanism can be exchanged easily, since they share the same functions.
-This is handled in the TabularDataController class, which equivalent to the Context in the Strategy Pattern.
-The TabularDataController handles all relevant aspects in order to use the tabular processing mechanisms, including but not limited to the instantiation, fitting, saving and loading of tabularProcessor instances.
-To instantiate a tabular processor, the data separated into categorical, numerical and target as numpy-arrays \cite{harris2020array} need to be provided.
+Therefore, new tabular processing mechanisms can be easily added by just implementing the abstract methods (R2, FR2).
+Furthermore, the tabular processing mechanism can be exchanged easily since they share the same functions.
+This is handled in the \textit{TabularDataController} class, equivalent to the \textit{Strategy} design pattern \textit{Context}.
+The \textit{TabularDataController} handles all relevant aspects to use the tabular processing mechanisms, including but not limited to the instantiation, fitting, saving, and loading of \textit{TabularProcessor} instances.
+The data, which is separated into categorical, numerical, and target as numpy arrays \cite{harris2020array}, needs to be provided to instantiate a tabular processor.
 The first step in using the tabular processor is fitting it according to the data.
-Additional required information for fitting can be provided through meta-data in the form of a dictionary.
-Note that this fit function might not be necessary, depending on the processing mechanism, however, it should be implemented anyways.
-Only after fitting, the transform function can be called, transforming the data and returning the transformed data in the same format.
-The inverse transformation works in the same way, but just reversing transformed data back into its original format.
+Additional required information for fitting can be provided through meta-data in the form of a dictionary, which may change for different realizations.
+Note that this fit function might not be necessary, depending on the processing mechanism, but it is required to be implemented anyways.
+Only after fitting the transform function can be called, transforming the data and returning the transformed data in the same format.
+The inverse transformation works similarly, reversing transformed data back to its original format.
 
 
-\subsection[]{Tabular Processor Implementations}
+\subsection{Tabular Processor Implementations}
 \label{ch:architecture-tabularProcessor-implementations}
 
 Three different tabular processor versions have been implemented.
-The IdentityProcessor, does not do anything to the data.
-It is used to do experiments without any tabular processing mechanism.
+The \textit{IdentityProcessor} does not do anything to the data.
+It is used to do experiments without any tabular processing mechanism and allows reproducing the original results of \cite{kotelnikov2022TabDDPMModellingTabular}.
+In this thesis, only two approaches have been implemented, the \gls{bgm} (\autoref{ch:BGMProcessor}) and \gls{ft} (\autoref{ch:FTProcessor}).
+Other potential tabular processing mechanisms have been considered but usually lack one of the specified criteria in \autoref{ch:Concept-criteria}.
+The biggest challenge usually is the reversibility, since there are several encoding strategies that only work with the encoded version of the data.
+Consequently, they do not require decoding the encoded data and are, therefore, not implemented.
+Indeed, a decoding mechanism could be invented for each process that does not have one already.
+However, this would extend the scope of this thesis, as it would be very complex and time-consuming and remains an open task for future researchers.
 
-\subsubsection*{BGMProcessor}
+\subsubsection{BGMProcessor}
 \label{ch:BGMProcessor}
 
 The BGMProcessor is the same processing mechanism that has been introduced by the CTABGAN+ model \cite{zhao2022CTABGANEnhancingTabular}.
-Firstly, a mixed-type encoding is introduced, specifically designed to encode single columns that contain both, numerical and categorical data types.
-For the continues values, the authors adapt the mode-specific normalization technique from \cite{xu2019ModelingTabularData} using a \gls{bgm} implementation \cite{BayesianGaussianMixture}, which is a \gls{vgm} (see \autoref{sec:dataNormalization} for details).
-For the categorical values, the $\beta$ one-hot vector is extended the number of possible categorical values in the column.
-If a categorical value should be encoded, the $\alpha$ value is set to 0 and the one-hot encoding indicating the specific category is set to 1.
+This processing mechanism was chosen since it fulfills all criteria mentioned in \autoref{ch:Concept-criteria}.
+Moreover, it is part of a state-of-the-art tabular data synthesis \gls{gan}-based model, which has already proven successfulss.
+
+Firstly, a mixed-type encoding is introduced, specifically designed to encode single columns containing a mixed data type of numerical and categorical data types.
+For the continuous values in the column, the authors adapt the mode-specific normalization technique from \cite{xu2019ModelingTabularData} using a \gls{bgm} implementation \cite{BayesianGaussianMixture}, which is a \gls{vgm} (see \autoref{sec:dataNormalization} for details).
+For the categorical values, the $\beta$ one-hot vector is extended by the number of possible categorical values in the column.
+If a categorical value should be encoded, the $\alpha$ value is set to 0, and the one-hot encoding indicating the specific category is set to 1.
 Additionally, the authors allow missing values, which are treated as another categorical entry.
+
 Furthermore, the authors introduce a "general transform" mechanism \cite[p. 7]{zhao2022CTABGANEnhancingTabular} that is supposed to be used for simple distributions and counters the problem of exploding dimensionality caused by a one-hot encoding \cite{zhao2022CTABGANEnhancingTabular}.
-This general transformation is mapping of the value into a range of  [-1, 1], that is achieved through a shifted and scaled min-max normalization (see MinMaxScaler in \autoref{sec:dataNormalization}).
+This general transformation is mapping the values into a range of [-1, 1], which is achieved through a shifted and scaled min-max normalization (see MinMaxScaler in \autoref{sec:dataNormalization}).
 Mathematically, the encoded datapoint $x^t_i$ can be computed using the original datapoint $x_i$ in column $x$ through the following formula:
 $$x^t_i=2* \frac{x_i-\min(x)}{\max(x)}-\min(x)-1$$
-which can easily be reversed with:
+Which can easily be reversed in the following way:
 $$X_i = (\max(x)-\min(x))*\frac{X^t_i+1}{2}+\min(x)$$
 Categorical values are label encoded before applying the normalization \cite{zhao2022CTABGANEnhancingTabular}.
-The authors observe, that this simplistic general transformation for continuos values only works well for simple distribution (\eg single-mode gaussian) and not for complex distributions, for which the mode-spefic normalization is preferred \cite{zhao2022CTABGANEnhancingTabular}.
-For categorical values, the general transformation should only be applied if the number of categories a column can take is very high and would lead to very sparse vectors that make computation difficult \cite{zhao2022CTABGANEnhancingTabular}.
-Lastly, the authors log-transform columns that suffer from very long-tails (see \autoref{sec: synthetic tabular data generation}), because \Glspl{bgm} seem to have difficulties to encode values towards the tail \cite{zhao2022CTABGANEnhancingTabular}.
+The authors observe that this simplistic general transformation for continuous values only works well for simple distributions (\eg single-mode gaussian) and not for complex distributions, for which the mode-specific normalization is preferred \cite{zhao2022CTABGANEnhancingTabular}.
+For categorical values, the general transformation should only be applied if the number of categories a column can take is very high and would lead to very sparse vectors that make computation complex \cite{zhao2022CTABGANEnhancingTabular}.
+Lastly, the authors log-transform columns that suffer from very long tails (see \autoref{sec: synthetic tabular data generation}) because \Glspl{bgm} seem to have difficulties encoding values towards the tail \cite{zhao2022CTABGANEnhancingTabular}.
 The log-transformation of each value $\tau$ in the column will be compressed to $\tau^e$, given a lower bound $l$ using:
 \begin{equation}
 	\label{eqn:log-transform}
@@ -87,11 +98,12 @@ The log-transformation of each value $\tau$ in the column will be compressed to 
 	\end{align*}
 \end{equation}
 
-This encoding strategy is realized in the BGMProcessor class, that uses the DataPrep and DataTransformer class, as developed by \cite{zhao2022CTABGANEnhancingTabular}.
-These classes require additional information about the dataset, provided by the user, including what columns are categorical, categorical columns that have a high cardinality/dimensionality\footnote[]{Inside the code of the authors, they refer to it as "non_categorical_columns", which is a bit misleading. Categorical columns with high dimensionality are transformed to numerical columns and handled as if they were continuous.}, numerical, mixed (including what values are categorical) as well as what columns require a log-transformation and which a general transformation.
-Inside the Tabular Processor, this is realized by extending the info.json (\autoref{lst:info}) with an additional entry, dataset\_config [TODO: Kursiv?], see \autoref{lst:info_extended} for an example.
+This encoding strategy is realized in the BGMProcessor class, which uses the DataPrep and DataTransformer class, as developed by \cite{zhao2022CTABGANEnhancingTabular}.
+These classes require additional information about the dataset, provided by the user, including what columns are categorical, categorical columns that have a high cardinality/dimensionality\footnote{Inside the code of the authors, they refer to it as "non_categorical_columns", which is a bit misleading. Categorical columns with high dimensionality are transformed into numerical columns and handled as if they were continuous.},
+numerical, mixed (including what values are categorical), as well as what columns require a log transformation and which a general transformation.
+This information is provided to the \textit{BGMProcessor} by extending the info.json (\autoref{lst:info}) with an additional entry, \textit{dataset\_config}, see \autoref{lst:info_extended} for an example.
 
-\begin{lstlisting}[label={lst:info_extended},caption={Example extended data info file}]
+\begin{lstlisting}[label={lst:info_extended},caption={Example extended data info file from the adult dataset (\autoref{ch:methods-datasets})}]
     {
     "name": "Adult",
     [...]
@@ -122,14 +134,18 @@ Inside the Tabular Processor, this is realized by extending the info.json (\auto
     }
 \end{lstlisting}
 
-\subsubsection*{FTProcessor}
+\subsubsection{FTProcessor}
 \label{ch:FTProcessor}
 
-The FTProcessor, short for \gls{ft} Processor, is based upon the work of \cite{zheng2022DiffusionModelsMissing, gorishniy2021RevisitingDeepLearning}.
+The \textit{FTProcessor}, short for \gls{ft} Processor, is based upon the work of \cite{zheng2022DiffusionModelsMissing, gorishniy2021RevisitingDeepLearning}.
+Similar to the \gls{bgm} variant, it fulfills all criteria stated in \autoref{ch:Concept-criteria}.
+However, the \gls{ft} mechanisms have only been used in a data imputation task, where only individual cells must be synthesized.
+It is unclear whether its functionality can be extended to multiple-cell synthesisation.
+
 The \gls{ft} transforms tabular data into a static embedding representation.
-Categorical columns are embedded through an Embedding layer, which is basically a look up table \cite{EmbeddingPyTorch13} of fixed size.
-Each categorical input tensor of dimensions $[N]$ will be transformed in an embedding of size $[N,H]$ with $H$ as the embedding dimensionality \cite{gorishniy2021RevisitingDeepLearning}.
-Numerical columns will be processed by a simple multiplication of a linear layers weights \cite{gorishniy2021RevisitingDeepLearning}.
+Categorical columns are embedded through an Embedding layer, which is basically a look-up table \cite{EmbeddingPyTorch13} of fixed size.
+Each categorical input tensor of dimensions $[N]$ (\ie a table with $N$ columns) will be transformed in an embedding of size $[N,H]$ with $H$ as the embedding dimensionality \cite{gorishniy2021RevisitingDeepLearning}.
+Numerical columns will be processed by a simple multiplication of linear layers weights \cite{gorishniy2021RevisitingDeepLearning}.
 Lastly, a bias term is added to both categorical and numerical columns.
 \autoref{fig:ft} illustrates how a tabular data row with tree numerical and two categorical features could be transformed into a new tensor \cite[Figure 2a, p.4]{gorishniy2021RevisitingDeepLearning}.
 
@@ -140,15 +156,57 @@ Lastly, a bias term is added to both categorical and numerical columns.
 	\label{fig:ft}
 \end{figure}
 
-To revert the data that are produced by the diffusion model to the original data format, the numerical and categorical columns need to be handled differently.
-Numerical output is divided element-wise by the corresponding embedding weights and the average value is computed, as the final output\cite{zheng2022DiffusionModelsMissing}.
+To revert the data that the diffusion model produces to the original data format, the numerical and categorical columns need to be handled differently.
+The corresponding embedding weights divide the numerical output element-wise, and the average value is computed as the final output \cite{zheng2022DiffusionModelsMissing}.
 For categorical output, the closest categorical embedding is determined by computing the euclidean distance between the produced output and every categorical embedding \cite{zheng2022DiffusionModelsMissing}.
 
-While in the original work of \cite{gorishniy2021RevisitingDeepLearning}, the feature tokenizer is directly in front of a transformer model, allowing the gradients to flow through the embedding and linear layers during training.
+In the original work of \cite{gorishniy2021RevisitingDeepLearning}, the feature tokenizer is directly in front of a transformer model, allowing the gradients to flow through the embedding and linear layers during training.
 This enables the model to learn a meaningful embedding.
-In the adaptation of \cite{2023DiffusionModelsMissing} and in this thesis, the weights of the layers are frozen, hence, learning is not possible and the embedding is static.
-In this thesis, the data transformation and the actual model training are fully separated, hence, gradients can not flow back to the feature tokenizer to update any weights of the embeddings.
+In the adaptation of \cite{2023DiffusionModelsMissing} and in this thesis, the weights of the layers are frozen.
+Hence, learning is not possible, and the embedding is static.
+In this thesis, the data transformation and the actual model training are fully separated,
+resulting in gradients not flowing back to the feature tokenizer to update any weights of the embeddings.
 
+\subsection{Changes to the existing software}
+\label{ch:methods-changes}
+The changes to the existing software are various and include multiple major changes as well as a lot of small changes.
+Listing all changes is beyond the scope of this thesis. 
+Below, the major changes to the individual script are listed.
+Additional visualization of the process of the scripts can be found in \autoref{A:activity_diagrams}
+
+\begin{description}
+    \item[train.py:]
+    Before the dataset is preprocessed and transferred into a dataset class, the TabularDataController handles the tabular processing mechanisms.
+	It receives context information on which tabular processing mechanisms and which properties the dataset has through the configuration file and handles the
+	instantiation, fitting, and transformation of the raw data.
+	Lastly, the TabularDataController saves the state of the TabularProcesser, such that it can be reloaded in the sampling.
+
+    \item[sample.py:]
+	A TabularDataController is instantiated at the beginning and loads a previously fit TabularProcesser instance.
+	If there is no previous TabularProcesser instance to be loaded, it will call the fit function again.
+	After the sampling is finished, the TabularProcesser's inverse transform function is called to bring the synthetic data in the original data format.  
+
+    \item[eval\_similarity.py:]
+	This script does not replace the previous evaluation script. 
+	Instead, it is called after the original evaluation script (see \textit{pipeline.py}).
+	First, three TabularDataController instances are created, one for each train-, validation- and test data split.
+	With the TabularDataController instances, pandas \cite{mckinney-proc-scipy-2010} data frames are created, which are required for the TabSynDex similarity score.
+	After the TabSynDex score is calculated, visualization are created, if set by the user.
+
+    \item[pipeline\_*.py:]
+	The basic pipeline hardly changed. 
+	The only major change is that the similarity score evaluation is performed after the default evaluation using machine learning efficacy.
+	In this evaluation, the TabSynDex metric is calculated as well as (if set by the user) visualization are created.
+    
+    \item[tune\_*.py:]
+    Inside the tuning script, the objective function changed.
+	If set by the user, the objective function will be based on the TabSynDex similarity score instead of the machine learning efficacy.
+	To reduce processing time, visualization inside the similarity evaluation part will, by default, only be created after the hyperparameters have been found and the eval\_seeds script will be executed.
+
+	\item[eval\_seeds.py:]
+	The basic eval\_seeds script did not change a lot.
+	Again, the TabSynDex metric will be called after the default machine learning efficacy. 
+\end{description}
 
 \section{Experimental Setup}
 \label{ch:methods-experimentalSetup}
@@ -156,60 +214,76 @@ In this thesis, the data transformation and the actual model training are fully 
 \subsection{Experiments}
 \label{ch:Experiments}
 
-To systematically analyze the performance of the different tabular processing mechanism, the following baseline experiments should be performed:
+To systematically analyze the performance of the different tabular processing mechanisms, the following baseline experiments have been performed:
 
 \begin{description}
-    \item[Baseline-Real:] Comparison of the real training data with the real test data. 
-    The similarity evaluation is expected to be very high, since the data is from the same distribution.
-    The computed machine learning efficacy score can be seen as an objective value that should be reached.
-    The closer the synthetic data based machine learning efficacy results are to this target, the better the synthetic data.
-    \item[Baseline-TabDDPM:] Reproduction of the TabDDPM results of the authors \cite{kotelnikov2022TabDDPMModellingTabular} but with the addition of computing the similarity evaluation.
-    \item[Baseline-TVAE:] Like Baseline-TabDDPM but for TVAE.
-    \item[Baseline-CTABGAN:] Like Baseline-TabDDPM but for CTABGAN.
-    \item[Baseline-CTABGAN+:] Like Baseline-TabDDPM but for CTABGAN+.
-    \item[Baseline-SMOTE:] Like Baseline-TabDDPM but for SMOTE.
+	\item[Baseline-Real:] Comparison of the real training data with the real test data.
+		The similarity evaluation is expected to be very high since the data is from the same joint distribution.
+		The computed machine learning efficacy score can be seen as an objective value that should be reached.
+		The closer the synthetic data based machine learning efficacy results are to this target, the better the synthetic data.
+	\item[Baseline-TabDDPM:] Reproduction of the TabDDPM results of the authors \cite{kotelnikov2022TabDDPMModellingTabular} but with the extend evaluation explained in \autoref{ch:conceptualDesign-Evaluation} (Machine learning efficacy + TabSynDex + Visualizations).
+	\item[Baseline-TVAE:] Like Baseline-TabDDPM but for TVAE.
+	\item[Baseline-CTABGAN:] Like Baseline-TabDDPM but for CTABGAN.
+	\item[Baseline-CTABGAN+:] Like Baseline-TabDDPM but for CTABGAN+.
+	\item[Baseline-SMOTE:] Like Baseline-TabDDPM but for SMOTE.
 \end{description}
 
 For each implemented Tabular Processing mechanism, the following two experiments should be at least performed:
 
 \begin{description}
-    \item[Experiment 1:] Tabular Processing combined with TabDDPM with additional similarity evaluation. Hyperparameters tuned like in the original experiment (tuned after CatBoost-machine learning efficacy score).
-    \item[Experiment 2:] Like Experiment 1, but hyperparameters are optimized towards the similarity evaluation instead of the machine learning efficacy score.
-    \item[Experiment 3:] Like Experiment 2, but instead of a quantile transform function being applied after the tabular processing, a Minmax-Scaler strategy is used.
+	\item[Experiment 1:] Tabular Processing combined with TabDDPM with additional similarity evaluation. Hyperparameters tuned like in the original experiment (tuned after CatBoost-machine learning efficacy score).
+	\item[Experiment 2:] Like Experiment 1, but hyperparameters are optimized towards the TabSynDex similarity score instead of the machine learning efficacy score.
+	\item[Experiment 3:] Like Experiment 2, but instead of a quantile transform function being applied after the tabular processing, a min-max strategy is used.
 \end{description}
 
-depending on the results in the first experiments, subsequent experiments are performed only for a subset of promising Tabular Processing mechanisms, \eg testing different preprocessing methods after the tabular processing.
+Depending on the results of the first experiments, subsequent experiments may only be performed on a subset of promising Tabular processing mechanisms.
 
 To not get confused with the different model versions, the models are named after the following principal:
 
 Modelname[-TabularProcessor]$^{tuning}_{preprocessing}$
 
-The modelname is followed by an optional tabular processing mechanism, the tuning strategy ("ml" for "machine learning efficacy" or "s" for "TabSynDex similarity score) is indicated via a superscript and the preprocessing strategy ("q" for "quantile transform" or "m" for "MinMax")  is indicated via a subscript.
+The Modelname is followed by an optional tabular processing mechanism.
+The tuning strategy ("ml" for "machine learning efficacy score" or "s" for "TabSynDex similarity score") is indicated via a superscript (Experiment 2).
+The preprocessing strategy ("q" for "quantile transform" or "m" for "min-max") is indicated via a subscript (Experiment 3).
 
 \subsection{Execution Environment}
 \label{ch:environment}
 
-
 The code was developed in python version 3.9.7 and made use of several libraries.
-A full list can be found in [TODO:].
+Most important libraries include (for a full list, please see the \textit{environment.yml} file in the source code):
+\begin{itemize}
+	\item azure-core, azureml-core: For running the code in the Microsoft Azure cloud \cite{microsoftCloudComputingServices}.
+	\item catboost (1.0.3): contains the CatBoost model for the machine learning efficacy.
+	\item pytorch (1.10.1): neural network framework.
+	\item table\_evaluator (1.4.2): used to produce visualizations.
+	\item numpy (1.21.4): allows efficient array computing.
+	\item optuna (2.10.1): used for hyperparameter tuning.
+	\item pandas (1.5.2): allows fast computing with dataframes of tabular data.
+	\item scikit-learn (1.0.2): includes several utility functions for machine learning, \eg metrics.
+	\item TabSynDex \cite{chundawatTabSynDexCode}: TabSynDex metric source code.
+\end{itemize}
 
 The training was performed using Microsoft Azure Machine Learning Studio.
-Each experiment was executed on an STANDARD\_NC6 compute cluster running on linux, consisting of six virtual \glspl{cpu} (Intel Xeon E5-2690v3) with 56 GB Memory, 340 GB (SSD) Storage and the computing of one-half \gls{gpu} (Tesla K80) with 12 GB \gls{gpu} memory \cite{vikancha-msft2022NCseriesAzureVirtual}.
+Each experiment was executed on an STANDARD\_NC6 compute cluster running on Linux distribution, consisting of six virtual \glspl{cpu} (Intel Xeon E5-2690v3) with 56 GB Memory, 340 GB (SSD) Storage and the computing of one-half \gls{gpu} (Tesla K80) with 12 GB \gls{gpu} memory \cite{vikancha-msft2022NCseriesAzureVirtual}.
+All experiments could also be performed locally on a windows machine using a \gls{cpu}.
+Local experiments with a \gls{gpu} should be possible but have not been tested.
 
-The hyperparameter search space for the various models was not changed and is equal to the experiments in \cite{kotelnikov2022TabDDPMModellingTabular} and .
+\subsection{Hyperparameters}
+The hyperparameter search space for the various models was not changed and is equal to the experiments in \cite{kotelnikov2022TabDDPMModellingTabular}.
 \begin{table}[h]
 	\centering
-	\begin{tabular}{l | l }
-		\hline
+	\begin{tabular}{lr}
+		\toprule
 		Parameter                 & Distribution        \\
-		\hline
+		\midrule
 		Max depth                 & UniformInt[3, 10]   \\
 		Learning rate             & LogUniform[1e-5, 1] \\
 		Bagging temperature       & Uniform[0,1]        \\
 		L2 leaf reg               & LogUniform[1,10]    \\
 		Leaf estimation iteration & UniformInt[1,10]    \\
-		\hline
-		Number of tuning trials   & 100
+		\midrule
+		Number of tuning trials   & 100                 \\
+		\bottomrule
 	\end{tabular}
 	\caption{CatBoost evaluation model hyperparameter tuning search space (proposed by \cite{gorishniy2021RevisitingDeepLearning})}
 	\label{tab:catboost_tune}
@@ -217,7 +291,7 @@ The hyperparameter search space for the various models was not changed and is eq
 
 \begin{table}[h]
 	\centering
-	\begin{tabular}{l | l }
+	\begin{tabular}{lr}
 		\toprule
 		Parameter               & Distribution                       \\
 		\midrule
@@ -234,8 +308,9 @@ The hyperparameter search space for the various models was not changed and is eq
 		Dropout                 & 0.0                                \\
 		Scheduler               & cosine                             \\
 		Gaussian diffusion loss & mse                                \\
+		\midrule
+		Number of tuning trials & 100                                \\
 		\bottomrule
-		Number of tuning trials & 100
 	\end{tabular}
 	\caption{TabDDPM model hyperparameter tuning search space}
 	\label{tab:diff_tune}
@@ -245,10 +320,10 @@ The hyperparameter search space for the various models was not changed and is eq
 
 \begin{table}[h]
 	\centering
-	\begin{tabular}{l | l }
-		\hline
+	\begin{tabular}{lr}
+		\toprule
 		Parameter               & Distribution                     \\
-		\hline
+		\midrule
 		\# classif. layers      & UniformInt[1,6]                  \\
 		Classif. layer size     & Int\{62, 128, 256, 512\}         \\
 		Training itertations    & Cat\{5000, 20000, 30000\}        \\
@@ -256,8 +331,9 @@ The hyperparameter search space for the various models was not changed and is eq
 		Embedding dim.          & Int\{16,32,64,128,256,512,1024\} \\
 		Loss factor             & LogUniform[0.01, 10]             \\
 		Proportion of samples   & Float\{0.25, 0.5, 1, 2, 4, 8\}   \\
-		\hline
-		Number of tuning trials & 100
+		\midrule
+		Number of tuning trials & 100                              \\
+		\bottomrule
 	\end{tabular}
 	\caption{TVAE model hyperparameter tuning search space}
 	\label{tab:tvae_tune}
@@ -266,10 +342,10 @@ The hyperparameter search space for the various models was not changed and is eq
 
 \begin{table}[h]
 	\centering
-	\begin{tabular}{l | l }
-		\hline
+	\begin{tabular}{lr}
+		\toprule
 		Parameter               & Distribution                   \\
-		\hline
+		\midrule
 		\# classif. layers      & UniformInt[1,4]                \\
 		Classif. layer size     & Int\{62, 128, 256\}            \\
 		Training itertations    & Cat\{1000, 5000, 7500\}        \\
@@ -277,32 +353,35 @@ The hyperparameter search space for the various models was not changed and is eq
 		random dim.             & Int\{16,32,64,128\}            \\
 		\# Channels             & Int\{16, 32, 64\}              \\
 		Proportion of samples   & Float\{0.25, 0.5, 1, 2, 4, 8\} \\
-		\hline
-		Number of tuning trials & 30
+		\midrule
+		Number of tuning trials & 30                             \\
+		\bottomrule
 	\end{tabular}
-	\caption{CTAGBAG/CTABGAN+ model hyperparameter tuning search space. Training iterations and Number of tuning trails was reduced compared to the original \cite{kotelnikov2022TabDDPMModellingTabular}, to reduce computation time.}
+	\caption{CTAGBAG/CTABGAN+ model hyperparameter tuning search space. Training iterations and the number of tuning trails were reduced compared to the original \cite{kotelnikov2022TabDDPMModellingTabular}, to reduce computation time.}
 	\label{tab:ctabgan_tune}
 \end{table}
-
-[TODO: explain the different Parameters?]
-
 
 \section{Datasets}
 \label{ch:methods-datasets}
 
-The dataset that was used for experiments is the Adult dataset, also known as "Census Income" from the UCI Machine Learning repository \cite{Dua:2019}.
+The dataset that was used for experiments is the \textit{Adult} dataset, also known as "Census Income" from the UCI Machine Learning repository \cite{Dua:2019}.
 The dataset was constructed through an extraction from a 1994 census database \cite{kohavi1996ScalingAccuracyNaiveBayes}.
-Overall, the dataset has 15 columns, of which nine are categorical and six are continuous, and 48842 rows.
+Overall, the dataset has 15 columns, of which nine are categorical, and six are continuous, and has 48842 rows.
 
 The continuous columns are:
 
-age, fnlwgt, education-num, capital-gain, capital-loss, hours-per-week
 
-and the categorical columns are:
+\textit{age}, \textit{fnlwgt}, \textit{education-num}, \textit{capital-gain}, \textit{capital-loss} and \textit{hours-per-week}
 
-workclass, education, marital-status, occupation, relationship, race, sex, native-country, income
 
-The dataset was created for binary classification, where the model should predict the column value of the income column (either ">50K" or "<=50K").
+And the categorical columns are:
+
+
+\textit{workclass}, \textit{education}, \textit{marital-status}, \textit{occupation}, \textit{relationship}, \textit{race}, \textit{sex}, \textit{native-country} and \textit{income} (target column)
+
+
+
+The dataset was created for binary classification, where the model should predict the column value of the income column (either \textit{>50K} or \textit{<=50K}).
 
 \autoref{tab:adult} shows five entries of the dataset:
 
@@ -311,16 +390,18 @@ The dataset was created for binary classification, where the model should predic
 	\centering
 	\resizebox{\columnwidth}{!}{
 		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-			\hline
-			\textbf{age} & \textbf{workclass} & \textbf{fnlwgt} & \textbf{education} & \textbf{education-num} & \textbf{marital-status} & \textbf{occupation} & \textbf{relationship} & \textbf{race} & \textbf{sex} & \textbf{capital-gain} & \textbf{capital-loss} & \textbf{hours-per-week} & \textbf{native-country} & \textbf{income} \\ \hline
-			39.0         & State-gov          & 77516.0         & Bachelors          & 13.0                   & Never-married           & Adm-clerical        & Not-in-family         & White         & Male         & 2174.0                & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\ \hline
-			50.0         & Self-emp-not-inc   & 83311.0         & Bachelors          & 13.0                   & Married-civ-spouse      & Exec-managerial     & Husband               & White         & Male         & 0.0                   & 0.0                   & 13.0                    & United-States           & $\leq$50K       \\ \hline
-			38.0         & Private            & 215646.0        & HS-grad            & 9.0                    & Divorced                & Handlers-cleaners   & Not-in-family         & White         & Male         & 0.0                   & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\ \hline
-			53.0         & Private            & 234721.0        & 11th               & 7.0                    & Married-civ-spouse      & Handlers-cleaners   & Husband               & Black         & Male         & 0.0                   & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\ \hline
-			28.0         & Private            & 338409.0        & Bachelors          & 13.0                   & Married-civ-spouse      & Prof-specialty      & Wife                  & Black         & Female       & 0.0                   & 0.0                   & 40.0                    & Cuba                    & $\leq$50K       \\ \hline
+			\toprule
+			\textbf{age} & \textbf{workclass} & \textbf{fnlwgt} & \textbf{education} & \textbf{education-num} & \textbf{marital-status} & \textbf{occupation} & \textbf{relationship} & \textbf{race} & \textbf{sex} & \textbf{capital-gain} & \textbf{capital-loss} & \textbf{hours-per-week} & \textbf{native-country} & \textbf{income} \\
+			\midrule
+			39.0         & State-gov          & 77516.0         & Bachelors          & 13.0                   & Never-married           & Adm-clerical        & Not-in-family         & White         & Male         & 2174.0                & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\
+			50.0         & Self-emp-not-inc   & 83311.0         & Bachelors          & 13.0                   & Married-civ-spouse      & Exec-managerial     & Husband               & White         & Male         & 0.0                   & 0.0                   & 13.0                    & United-States           & $\leq$50K       \\
+			38.0         & Private            & 215646.0        & HS-grad            & 9.0                    & Divorced                & Handlers-cleaners   & Not-in-family         & White         & Male         & 0.0                   & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\
+			53.0         & Private            & 234721.0        & 11th               & 7.0                    & Married-civ-spouse      & Handlers-cleaners   & Husband               & Black         & Male         & 0.0                   & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\
+			28.0         & Private            & 338409.0        & Bachelors          & 13.0                   & Married-civ-spouse      & Prof-specialty      & Wife                  & Black         & Female       & 0.0                   & 0.0                   & 40.0                    & Cuba                    & $\leq$50K       \\
+			\bottomrule
 		\end{tabular}
 	}
-	\caption{Adult income dataset, 5 exemplary entries}
+	\caption{Adult income dataset with five exemplary entries}
 	\label{tab:adult}
 \end{table}
 

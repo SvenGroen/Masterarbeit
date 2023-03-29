@@ -71,7 +71,7 @@ Derivation to get from \autoref{eqn:vlb2} to \autoref{eqn:vlb3}:
 \section{Activity diagrams}
 \label{A:activity_diagrams}
 
-The following section will display the procedures of different scripts.+
+The following section will display the procedures of different scripts.
 Firstly, the scripts' most important processes are displayed as implemented by \cite{kotelnikov2022TabDDPMModellingTabular}. 
 The process of the scripts with the implemented changes are displayed afterward.
 \subsection[]{Original Implementation}
@@ -112,7 +112,7 @@ Instead,  \autoref{fig:a_train_sample_eval} displays only the new similarity eva
 executed after the previous evaluation script (compare \autoref{fig:a_pipeline_changed}).
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{images/train-sample-eval.png}
+	\includegraphics[width=\textwidth]{images/train-sample-eval-Changed.png}
 	\caption{simplified visualization of the train.py, sample.py and eval\_[catboost|mlp|simple].py scripts}
 	\label{fig:a_train_sample_eval}
 \end{figure}
@@ -158,10 +158,9 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 	\begin{subfigure}{0.3\textwidth}
 		\includegraphics[width=\textwidth]{images/correlation_difference/tab-ddpm-ft-simTune.jpg}
 		\caption{TabDDPM-FT$^{s}_q$}
-
     \end{subfigure}
     \caption{Correlation difference matrix for different model versions}
-
+	\label{fig_a:corr_diff}
 \end{figure}
 
 \subsection[]{Principle Component Analysis}

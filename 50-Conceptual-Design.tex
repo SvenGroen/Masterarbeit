@@ -69,6 +69,7 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
     The software shall support tabular data processing techniques that are able to encode and decode tabular data. 
     An \textit{IdentiyProcessor} that has no effect is required to be implemented to test models without any tabular processing mechanism.
     Additional data transformation techniques proposed by \cite{kotelnikov2022TabDDPMModellingTabular}, including normalization or categorical encoding, shall still be supported as intended by the authors.
+    Adding new Tabular orocessing mechanisms shall not effect other Tabular processing mechanisms.
 
     \item[FR2.1 - Tabular processing fit]:
     If necessary, a Tabular processing mechanism should be able to be fitted.
@@ -312,25 +313,38 @@ For a detailed overview of how each individual scripts changed, please refer to 
 \label{ch:Concept-criteria}
 
 The main source for finding the processing mechanisms should be academic literature, where said mechanism has been applied to a related problem successful
-The selection of which tabular processing mechanisms are realized is heavily dependent on the requirements defined in \autoref{sec:func_requirements} (specifically, FR[TODO] - FR[TODO]).
+The selection of which tabular processing mechanisms are realized heavily depends on the requirements defined in \autoref{sec:func_requirements}.
 
 For a tabular processing mechanism to be used, the following conditions must be met:
 
 \begin{enumerate}
-    \item reversibility: the tabular processing mechanism must be able to not only transform the data into a different format, it also must be able to revert the transformation,
-    such that the data can be transform back into its original form.
-    \item compatibility: the data must be able to be separated into numerical and categorical parts after the transformation,
+    \item reversibility: the tabular processing mechanism must not only transform the data into a different format, but it also must be able to revert the transformation
+    such that the data can be transformed back into its original form.
+    \item compatibility: the data must be able to be separated into numerical and categorical parts after the transformation
     since the remaining code expects data in this format, as specified in \autoref{sec:data_format}.
-    \item complexity: the time it takes for transforming the data should be within a reasonable timeframe, do not add too much additional computation time on the already extensive model tuning process.
+    \item complexity: the time it takes to transform the data should be within a reasonable timeframe. They shall not add too much computation time to the already extensive model-tuning process.
     \item availability: due to the limited time frame of this thesis, the code for the mechanisms should be publicly available (or could be implemented within a reasonable timeframe).
 \end{enumerate}
 
-based upon the above mentioned criteria, tabular processing mechanisms should be selected.
+Based on the criteria mentioned above, tabular processing mechanisms should be selected.
 
 
 \subsection[]{Evaluation}
 \label{ch:conceptualDesign-Evaluation}
-TODO:
-ML efficacy like in the original paper + Tabsyndex similarity score + similarity score of anderes paper (+bilder von denen)
+The evaluation framework shall contain multiple evaluation aspects.
+Firstly, the existing machine learning efficacy using a CatBoost model proposed by \cite{kotelnikov2022TabDDPMModellingTabular} shall be executed and remain untouched.
+In addition, the TabSynDex \cite{chundawat2022UniversalMetricRobust} similarity will be performed in each evaluation.
+Machine learning efficacy that is based upon an \gls{mlp} or using a set of classification models will not be performed for the following reasons:
+\begin{enumerate}
+    \item \cite{kotelnikov2022TabDDPMModellingTabular} argues convincingly that machine learning efficacy not based on CatBoost is less informative compared to the CatBoost counterpart.
+    \item The TabSynDex metric contains a machine learning efficacy metric based upon a set of models.
+\end{enumerate}
+Consequently, machine learning efficacy will be evaluated twice in each evaluation, once based on CatBoost and once inside the TabSynDex metric using a set of standard machine learning models.
 
-aufzählen was alles klassische ml efficacy is (acc, f1, roc) und was sim_score werte sind
+Lastly, for a visual evaluation, several plots indicating the similarity of the synthetic data to the real data shall be generated using the implementation of \cite{brenninkmeijer2019GenerationEvaluationTabular}.
+If necessary, modifications to the plots may be required.
+
+% ''TODO:
+% ML efficacy like in the original paper + Tabsyndex similarity score + similarity score of anderes paper (+bilder von denen)
+
+% aufzählen was alles klassische ml efficacy is (acc, f1, roc) und was sim_score werte sind''

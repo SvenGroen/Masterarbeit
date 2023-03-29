@@ -4,28 +4,28 @@
 \section*{Conclusion}
 \label{ch:conclusion}
 
-In this thesis, the effect of different tabular processing mechanism on diffusion based tabular data synthesis has been investigated.
-An already existing tabular data generation pipeline has been extended, to allow for an easy implementation of different tabular encoding and decoding strategies.
-With this, the existing pipeline of TabDDPM \cite{kotelnikov2022TabDDPMModellingTabular} was extended by two tabular processing mechanism, that encode the tabular data before the training, and revert the data back after sampling synthetic data.
-The extended pipeline was evaluated using a CatBoost based machine learning efficacy evaluation, as well as a TabSynDex metric and visualization of the synthetic data.
-The TabSynDex metric itself consists of five sub-metrics who capture different similarity aspects of the synthetic data.
-Several observations could be made in set of experiments.
-Firstly, the results in terms of machine learning efficacy performance of the authors of the TabDDPM pipeline could be confirmed \cite{kotelnikov2022TabDDPMModellingTabular}.
-Thanks to the addition of the TabSynDex metrics, it could be shown that TabDDPM superior performance against a set of non-diffusion baseline models also extends
-to the TabSynDex similarity metrics.
+This thesis investigates the effect of different tabular processing mechanisms on diffusion-based tabular data synthesis.
+An already existing tabular data generation pipeline has been extended to implement different tabular encoding and decoding strategies easily.
+With this, the existing pipeline of TabDDPM \cite{kotelnikov2022TabDDPMModellingTabular} was extended by two tabular processing mechanisms that encode the tabular data before the training and revert the data back after sampling synthetic data.
+The extended pipeline was evaluated using a CatBoost-based machine learning efficacy evaluation, a TabSynDex metric, and visualization of the synthetic data.
+The TabSynDex metric comprises five sub-metrics that capture different similarity aspects of the synthetic data.
+Several observations could be made in a set of experiments.
+Firstly, the results in terms of machine learning efficacy performance of the authors of the TabDDPM pipeline could be reproduced \cite{kotelnikov2022TabDDPMModellingTabular}.
+Thanks to the addition of the TabSynDex metrics, it has been shown that TabDDPM superior performance against a set of non-diffusion baseline models also extends to the TabSynDex similarity metrics.
 
 While adding a Feature Tokenization (\gls{ft}) processing mechanism into the TabDDPM generation pipeline transforms the tabular data in such a way,
 that the diffusion model was not able to generate any meaningful data, which could be seen in the visual result.
 Adopting a more complex encoding/decoding strategy from \cite{zhao2022CTABGANEnhancingTabular}, which uses a Bayesian-Gaussian-Mixture model (\gls{bgm}),
-improved TabDDPMs generative capabilities in producing synthetic data that is useful in machine learning scenarios.
-This has shown, that changing the data format of tabular data greatly affects the diffusion models generative capability.
+improved TabDDPM's generative capabilities in producing synthetic data that is useful in machine-learning scenarios.
+This has shown that changing the tabular data format greatly affects the diffusion model's generative capability.
 
 Furthermore, the importance of hyperparameter tuning for diffusion models was highlighted.
-Diffusion models tuned towards the TabSynDex similarity score showed great improvements in several of the TabSynDex metrices.
+Diffusion models tuned towards the TabSynDex similarity score greatly improved several of the TabSynDex metrics.
 In the performed experiments, diffusion models have been the first models to achieve a non-zero \gls{pmse} score, which other current state-of-art models have not been capable of.
-Further experiments showed, how changing data normalization strategy can on the one hand increase metric results but on the other hand worsen visual results.
-This insight underlines the importance of an visual evaluation of synthetic data, to get proper estimate the quality of the produce synthetic data.
-From all performed experiments, it can be concluded, that diffusion based tabular data synthesis achieves is superior to other model types, such as \gls{gan} or \gls{vae}.
-Diffusion models have not only shown overall better metric and visual results, but they are also more flexible, as a hyperparameter tuning already effects the metrics outcome greatly.
+Further experiments showed how changing the data normalization strategy can, on the one hand, increase metric results but, on the other hand, worsen visual results.
+This insight underlines the importance of a visual evaluation of synthetic data to estimate the quality of the produced synthetic data properly.
+From all performed experiments, it can be concluded that diffusion-based tabular data synthesis is superior to the synthesis of other model types, such as \gls{gan} or \gls{vae}.
+Diffusion models have not only shown overall better metric and visual results, but they are also more flexible, as a hyperparameter tuning already affects the outcome of the metrics greatly.
 Out of all models, TabDDPM-BGM$^{s}$ models showed the best overall performance.
 However, potential users should alter the model pipelines design depending on the use case of the synthetic data, with TabDDPM-BGM$^{s}_m$ producing the best correlation score, TabDDPM-BGM$^{ml}_q$ best machine learning efficacy scores and TabDDPM-BGM$^{s}_q$ best basic statistical values and \gls{pmse} results.
+
