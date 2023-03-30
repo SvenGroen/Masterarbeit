@@ -8,7 +8,7 @@ Tabular data is an essential tool in our society due to its ability to organize 
 that can be easily analyzed and interpreted by humans and machines alike.
 This makes it an indispensable tool for decision-making in many fields, including finance, medical research, etc.
 In the era of deep learning and big data, the need for accurate and reliable data in high quantities is paramount.
-Training data is essential for machine and deep learning models to perform any desired inference.
+Training data is essential for machine and deep learning \glspl{model} to perform any desired inference.
 Gathering and accumulating real-world data is still expensive \cite{borisov2022DeepNeuralNetworks} and restricted through regulations like GDPR \cite{european_commission_regulation_2016}.
 In recent years, generative modeling approaches have addressed these issues by creating a synthetic copy of the original tabular dataset.
 This synthetic data version should maintain the important statistical properties and correlations while not disclosing any information from the real original dataset \cite{goodfellow2020GenerativeAdversarialNetworks, mottini2018AirlinePassengerName}.
@@ -17,7 +17,7 @@ tabular data synthesis approaches still offer room for improvements \cite{chunda
 One of the reasons for this is the heterogeneous nature of tabular data, which generative models need to reproduce.
 Tabular data usually consist of a mixture of numerical and categorical distributions with dependencies, which is difficult to capture and reproduce \cite{borisov2022DeepNeuralNetworks}.
 So far, \gls{gan} based approaches have shown state-of-the-art capabilities to create synthetic tabular data, which have also been the best model for synthetic image generation.
-However, diffusion-based models have recently been able to outperform \glspl{gan} on the task of image synthesis \cite{dhariwal2021DiffusiIonModelsBeat}.
+However, diffusion-based models have recently been able to outperform \glspl{gan} on the task of image synthesis \cite{dhariwal2021DiffusionModelsBeat}.
 As a result, researchers have tried to use diffusion models to generate synthetic tabular data with promising results \cite{kotelnikov2022TabDDPMModellingTabular, zheng2022DiffusionModelsMissing}.
 
 \cite{dhariwal2021DiffusionModelsBeat} argued that \glspl{gan} have shown superior performance against diffusion because researchers have investigated them more deeply.
@@ -81,14 +81,14 @@ The main contributions of this thesis are as follows:
 	      making them more versatile and adaptable than other generative models.
 \end{enumerate}
 
+\newpage
 \section{Outline}
 \label{ch:intro-outline}
 
-This thesis starts with \autoref{ch:introduction}, a comprehensive introduction to the tabular data synthesis research topic, and presents this thesis's research questions.
-Subsequently, in \autoref{ch:preliminaries}, the essential background information required for a complete understanding of tabular data synthesis is provided.
+This thesis starts with essential background information required for a complete understanding of tabular data synthesis in \auotref{ch:preliminaries}.
 This is followed by an outline of the most significant related work in \autoref{ch:relatedWork}, which highlights relevant models from the literature.
 In \autoref{ch:conceptualDesign}, the requirements for the software are listed, and an explanation of the codebase is presented. 
 An expansion of the codebase and a description of the implemented changes follows this. 
-The subsequent chapter, \autoref{ch:implementation}, elucidates how the software was implemented and the architectural changes made.
+The subsequent chapter, \autoref{ch:methodology}, elucidates how the software was implemented and the architectural changes made.
 The experiments' results are presented and analyzed in \autoref{ch:results}. 
 Finally, \autoref{ch:conclusion} summarizes the crucial findings of this thesis.

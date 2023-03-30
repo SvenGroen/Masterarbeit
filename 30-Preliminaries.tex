@@ -23,7 +23,7 @@ These variables are often measured in whole numbers and are used when counting o
 Qualitative variables are often called categorical values and can be further classified into binary or nominal types. cite{lane2003IntroductionStatistics}.
 Binary variables have only two possible outcomes (\eg booleans with \textit{True} or \textit{False}), while nominal variables consist of at least three distinct values that do not follow a specific order \cite{lederrey2022DATGANIntegratingExperta, lane2003IntroductionStatistics}.
 
-
+\newpage
 This work adapts the formal definition of a table from \cite{xu2019ModelingTabularData}:
 
 \begin{displayquote}
@@ -34,7 +34,7 @@ These random variables follow an unknown joint distribution $\mathbb{P}(Q_{1:N_q
 One row $r_j = \{q_{1,j}, \dots, q_{N_q,j}, p_{1,j}, \dots, p_{N_p,j}\}$, $j \in \{1, \dots, n\}$, is one observation from the joint distribution.
 \end{displayquote}
 
-For consistency and simplicity, this thesis will further refer to qualitative columns as "categorical" and refer to quantitative columns as "continuous" or "numerical". 
+For consistency and simplicity, this thesis will further refer to qualitative columns as \textit{categorical} and refer to quantitative columns as \textit{continuous} or \textit{numerical}. 
 Discrete values are not separately mentioned but should be considered included in "continuous"/"numerical" columns.
 
 It is also possible that tabular data can contain other particular data types like dates or timestamps, which often includes information on the specific time a datapoint was recorded \cite{hernandez2022SyntheticDataGeneration}.
@@ -56,7 +56,7 @@ This format presents particular challenges for neural networks when working with
 
 The third challenge is about the "dependency on preprocessing" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
 \cite{borisov2022DeepNeuralNetworks} highlights the importance of a preprocessing and explicit feature construction step that is necessary when working with tabular data in a deep learning context.
-This preprocessing step is crucial since it not only strongly influences the performance of deep learning \glspl{model} \cite{gorishniy2022EmbeddingsNumericalFeatures} 
+This preprocessing step is crucial since it not only strongly influences the performance of deep learning models \cite{gorishniy2022EmbeddingsNumericalFeatures} 
 it also introduces new challenges. 
 Depending on the preprocessing strategy (\autoref{sec:preprocessing}), it is possible to create a very sparse feature matrix, construct a synthetic ordinal ordering of a nominal variable or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
 
@@ -64,19 +64,19 @@ The last and fourth challenge concerns the "importance of single features" \cite
 In homogeneous data, multiple features need to change in order to change the class of the data. 
 For heterogeneous tabular data, a small change in one feature variable can already alter the class of the row. 
 \cite{borisov2022DeepNeuralNetworks} illustrates this with the example of an image, where multiple pixels (\ie features) need to change in a coordinated manner in order to change the content (\ie class) of the image from a dog to a cat.
-For tabular data, a single change in a cell can change the prediction of a predictive \gls{model} \cite{borisov2022DeepNeuralNetworks}. 
-Consider a \gls{model} that has to predict whether an individual's income is higher or lower than US\$ 50.000 per year \cite{Dua:2019} based on the demographic information of that individual.
+For tabular data, a single change in a cell can change the prediction of a predictive model \cite{borisov2022DeepNeuralNetworks}. 
+Consider a model that has to predict whether an individual's income is higher or lower than US\$ 50.000 per year \cite{Dua:2019} based on the demographic information of that individual.
 Switching an individual's "education" value from "Preschool" to "Doctorate" would likely cause the prediction to change from "<=50K" to ">50K".
 
 
 \subsection{Tabular Data Preprocessing}
 \label{sec:preprocessing}
 
-Different data types can and should be processed into a meaningful format to be useful for deep learning \glspl{model} in different ways \cite{fan2020RelationalDataSynthesisa, lederrey2022DATGANIntegratingExperta}.
+Different data types can and should be processed into a meaningful format to be useful for deep learning models in different ways \cite{fan2020RelationalDataSynthesisa, lederrey2022DATGANIntegratingExperta}.
 It is usually the first step before working with the data on any task \cite{izonin2022TwoStepDataNormalization}.
 \cite{garcia2016BigDataPreprocessing} states, that data preprocessing itself consists of multiple different tasks: Data cleaning, data normalization, data transformation, data integration, missing value imputation and noise identification.
 While each of the preprocessing tasks is in itself important, 
-\cite{fitkov-norris2012EvaluatingImpactCategorical} and \cite{gorishniy2022EmbeddingsNumericalFeatures} showed that a proper transformation of categorical and numerical entries respectively can have a significant influence on a deep learning \glspl{model} performance.
+\cite{fitkov-norris2012EvaluatingImpactCategorical} and \cite{gorishniy2022EmbeddingsNumericalFeatures} showed that a proper transformation of categorical and numerical entries respectively can have a significant influence on a deep learning models performance.
 \cite{xu2019ModelingTabularData} showed the importance of normalization for synthetic tabular data generation.
 Since the focus of the work is on tabular data and its synthesis, the following section will highlight the most important tabular data transformation and normalization approaches.
 
@@ -84,7 +84,7 @@ Since the focus of the work is on tabular data and its synthesis, the following 
 \label{sec:dataTransformation}
 
 Borisov \etal introduces a taxonomy for data transformation methods and subdivides the existing approaches into "Single-Dimensional Encodings" and "Multi-Dimensional Encodings" \cite[p. 5]{borisov2022DeepNeuralNetworks} .
-The goal is to transform the different values a column can take and transform them into a different (numeric) representation, such that it can be processed by a deep learning \gls{model}.
+The goal is to transform the different values a column can take and transform them into a different (numeric) representation, such that it can be processed by a deep learning model.
 
 \textbf{Single-Dimensional Encodings:}
 Single-Dimensional encoding techniques encode each cell independently \cite{borisov2022DeepNeuralNetworks}.
@@ -99,9 +99,9 @@ The leave-one-out encoding technique is an approach to encode a categorical colu
 A categorical entry is replaced by the mean of the target variable of all rows where the same category is present, excluding the target value of the to be encoded value.
 Lastly, a hash-based approach is worth mentioning, where a deterministic hash function transforms each category into a numerical form \cite{borisov2022DeepNeuralNetworks}.
 
-Numerical data, such as integers or floating point numbers, can often be used directly in deep learning \glspl{model} without undergoing a special encoding process. 
+Numerical data, such as integers or floating point numbers, can often be used directly in deep learning models without undergoing a special encoding process. 
 This is because deep learning algorithms are designed to handle numerical data and can learn patterns and relationships within the data without the need for additional encoding.
-However, \cite{gorishniy2022EmbeddingsNumericalFeatures} has shown that in some cases, encoding numerical data can improve the performance of deep learning \glspl{model}. 
+However, \cite{gorishniy2022EmbeddingsNumericalFeatures} has shown that in some cases, encoding numerical data can improve the performance of deep learning models. 
 Encoding numerical data can be achieved through various methods such as normalization (see \autoref{sec:dataNormalization}), discretization, or using embeddings.
 
 %Die beiden abschnitte auslagern in eigenen abschnitt? (GGF nur embeddings auslagern?)
@@ -139,12 +139,12 @@ Both architectures transform tabular data into an image like format in order to 
 \label{sec:dataNormalization} 
 
 Normalization and standardization techniques are applied to numerical columns and scales the values so that their distribution is adjusted \cite{garcia2016BigDataPreprocessing}.
-This is especially important in tabular data, where numerical features are likely having a different scale, \eg a column \textit{Age} could have a range of 1 to 100 and a column \textit{Capital-gain} could have a range from 0 to 100.000,\eg as it is the adult income dataset \cite{Dua:2019} (\autoref{ch:methods-datasets}).
+This is especially important in tabular data, where numerical features are likely having a different scale, \eg a column \textit{Age} could have a range of 1 to 100 and a column \textit{Capital-gain} could have a range from 0 to 100.000, \eg as it is the adult income dataset \cite{Dua:2019} (\autoref{ch:methods-datasets}).
 Normalization allows to scale each column a similar range (usually 0 to 1, or -1 to 1) while maintaining the overall distribution of each column \cite{izonin2022TwoStepDataNormalization}.
-Standardization on the hand rescales the data so it follows a normal distribution with mean 0 and standard deviation 1 \cite{scikit-learnPreprocessingData}.
+Standardization on the hand rescales the data so it follows a normal distribution with mean 0 and standard deviation 1 \cite{scikit-learndevelopers2023PreprocessingData}.
 Standardization and Normalization of values is especially important if the data will be used in a machine learning context, where machine learning models might behave unexpectedly if 
-the features do not look similar to a gaussian distribution or are not ranged between 0 and 1 \cite{scikit-learn, scikit-learnPreprocessingData}.
-Through this data rescaling, the sensitivity of \gls{model} to large values is reduced and the generalizability is increased \cite{izonin2022TwoStepDataNormalization}.
+the features do not look similar to a gaussian distribution or are not ranged between 0 and 1 \cite{scikit-learn, scikit-learndevelopers2023PreprocessingData}.
+Through this data rescaling, the sensitivity of model to large values is reduced and the generalizability is increased \cite{izonin2022TwoStepDataNormalization}.
 Two popular standardization and normalization approaches are the standard and the min-max scaler, respectively.
 The standard scaler standardizes a feature value $x_i$ according to the mean and standard distribution of the feature column, so it follows a normal distribution \cite{garcia2016BigDataPreprocessing, izonin2022TwoStepDataNormalization}.
 It can be defined as $x' = \frac{x_i-mean(x)}{std(x)}$, with $x'$ as the standardized $x_i$ value \cite{izonin2022TwoStepDataNormalization}.
@@ -176,14 +176,14 @@ $$r=\alpha_{i,j}\oplus\beta_{i,j}$$
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{images/mode-normalization.png}
-    \caption{An example of mode-specific normalization \cite[Figure 1, p. 4]{xu2019ModelingTabularData}}
+    \caption[Mode-Specific Normalization]{An example of mode-specific normalization \cite[Figure 1, p. 4]{xu2019ModelingTabularData}}
     \label{fig:mode-specific-normalization}
 \end{figure}
 
-Another approach to standardize the range of a column between 0 and 1 is a Quantile-Transformation, a non-linear transformation \cite{scikit-learnPreprocessingData, kotelnikov2022TabDDPMModellingTabular}.
+Another approach to standardize the range of a column between 0 and 1 is a Quantile-Transformation, a non-linear transformation \cite{scikit-learndevelopers2023PreprocessingData, kotelnikov2022TabDDPMModellingTabular}.
 The Quantile-transformation allows mapping all values of a random variable into an desired output distribution, such as the uniform or normal distribution, 
 using the quantile function on the inverse cumulative distribution of the random variable. 
-This transformation preserves the rank order of the values but distorts correlations and distances within and across features \cite{scikit-learnPreprocessingData}.
+This transformation preserves the rank order of the values but distorts correlations and distances within and across features \cite{scikit-learndevelopers2023PreprocessingData}.
 
 
 %-------------------------------------------------------------------------
@@ -195,23 +195,23 @@ This transformation preserves the rank order of the values but distorts correlat
 Synthetic data can be defined as "(...) artificially generated data, that are modelled on real data, with the same structure and properties as the original data (...)" \cite[p. 2]{kaloskampis2020SyntheticDataCivil} 
 but without containing any actual specific information or entries of the actual real data. 
 While first synthetic data approaches \cite{gelman1992InferenceIterativeSimulation} focused on imputation techniques to generate synthetic data, the advent of deep learning has led to the topic gaining importance \cite{kowalczyk2022TaxonomyUseSynthetic, kaloskampis2020SyntheticDataCivil}
-Acquiring and collecting real data can be costly \cite{panovaHowSyntheticData} or may simply not possible due to the sensitivity of the data (\eg medical records) \cite{esteban2017RealvaluedMedicalTimea} or due to regulatory restrictions, such as the \gls{gdpr} \cite{european_commission_regulation_2016}.
-Synthetic data on the other hand is, compared to real data, cheap to generate \cite{leminh2021AirGenGANbasedSynthetica}, fulfils regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular} and can replace or substitue real data in software development for testing \cite{whiting2008CreatingRealisticScenariobased} or machine learning training \cite{panovaHowSyntheticData}.
+Acquiring and collecting real data can be costly \cite{panova2022HowSyntheticData} or may simply not possible due to the sensitivity of the data (\eg medical records) \cite{esteban2017RealvaluedMedicalTimea} or due to regulatory restrictions, such as the \gls{gdpr} \cite{european_commission_regulation_2016}.
+Synthetic data on the other hand is, compared to real data, cheap to generate \cite{leminh2021AirGenGANbasedSynthetica}, fulfils regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular} and can replace or substitue real data in software development for testing \cite{whiting2008CreatingRealisticScenariobased} or machine learning training \cite{panova2022HowSyntheticData}.
 Hence, synthetic data could be used as an alternative to real data in various use-cases.
-Access to data is still one of the biggest bottlenecks when developing machine learning or deep learning \glspl{model} \cite{fan2020RelationalDataSynthesisa}.
+Access to data is still one of the biggest bottlenecks when developing machine learning or deep learning models \cite{fan2020RelationalDataSynthesisa}.
 Synthetic data could be used to increase the data quality, by rebalancing skewed dataset \cite{zhao2022CTABGANEnhancingTabular} 
 or increasing the dataset size as additional training data or in combination with the real data \cite{leminh2021AirGenGANbasedSynthetica, kim2021OCTGANNeuralODEbased}.
 Synthetic data can also be used in situations where working with the real data is not possible, due to privacy or availability reasons \cite{9034117, whiting2008CreatingRealisticScenariobased}.
 In software development, high quality test data is crucial for development but challenging and time consuming to generate \cite{whiting2008CreatingRealisticScenariobased}.
 Developers time to create such datasets is usually scarce and it might be the case that developers do not even have the permission to see the data, due to its sensitivity \cite{whiting2008CreatingRealisticScenariobased}.
-A synthetic data generation \gls{model} would possibly allow developers to generate test data with predefined characteristics and without it being restricted in any form.
+A synthetic data generation model would possibly allow developers to generate test data with predefined characteristics and without it being restricted in any form.
 
 
 \subsection{Synthetic Tabular Data Generation}
 \label{sec: synthetic tabular data generation}
 
 Generative models have recently received a lot of attention, thanks to their impressive results generating a variety of data formats, 
-such as images \cite{ho2020DenoisingDiffusionProbabilistic, dhariwal2021DiffusionModelsBeat, rombach2022HighResolutionImageSynthesis}, videos \cite{ho2022VideoDiffusionModels, Gen1Runway}, text \cite{radfordImprovingLanguageUnderstanding, 2022ChatGPTOptimizingLanguage} or music \cite{agostinelli2023MusicLMGeneratingMusic, martirosRiffusion}.
+such as images \cite{ho2020DenoisingDiffusionProbabilistic, dhariwal2021DiffusionModelsBeat, rombach2022HighResolutionImageSynthesis}, videos \cite{ho2022VideoDiffusionModels, runwayGen1Runway}, text \cite{radfordImprovingLanguageUnderstanding, openai2022ChatGPTOptimizingLanguage} or music \cite{agostinelli2023MusicLMGeneratingMusic, Forsgren_Martiros_2022}.
 
 While synthetic data generation can be applied to various types of data, generating synthetic tabular data is challenging due to the complexity of the underlying joint distributions between variables \cite{borisov2022DeepNeuralNetworks}.
 This work adapts and expands the formal definition of the tabular data generation adapted from \cite[p. 2]{xu2019ModelingTabularData} and expands the definition of a table from \autoref{ch:preliminaries-dataSynthesis-tabularData}:
@@ -244,7 +244,7 @@ Lastly, machine learning and deep learning algorithms can be used to learn the u
 %challanges
 Compared to other data types, the synthesis of tabular data is especially challenging due to its heterogeneity, potential weak correlations among feature and the dependency on preprocessing \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess, gorishniy2022EmbeddingsNumericalFeatures}.
 To create a realistic synthetic dataset, interdependencies that may exists between variables must be captured and 
-it is possible that the \gls{model} overfits on the training data and generalizes relationships between features that are only present in training but not in the test data \cite{lederrey2022DATGANIntegratingExperta}
+it is possible that the model overfits on the training data and generalizes relationships between features that are only present in training but not in the test data \cite{lederrey2022DATGANIntegratingExperta}
 In addition to that, tabular data columns can follow complex distributions, that make the synthesization challenging.
 \cite{zhao2022CTABGANEnhancingTabular} identifies the following four properties of tabular data:
 
@@ -273,7 +273,7 @@ These architectures have enabled the creation of highly accurate and efficient m
 
 In recent years, this development of new deep-learning architectures has been a key area of research, leading to the creation such powerful models.
 This section will start with a high-level introduction into a neural network's most important architectural building blocks.
-Afterwards, the most important deep learning \gls{model} architectures for generating data are presented.
+Afterwards, the most important deep learning model architectures for generating data are presented.
 
 \subsection{Neural Networks}
 \label{ch:preliminaries-deepLearningArchitectures-neuralNetworks}
@@ -295,15 +295,15 @@ A simple \gls{mlp} is already able to learn almost any function, which is why th
 \begin{figure}
     \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\linewidth]{images/perceptron.png}
-      \caption{Perceptron} \label{fig:perceptron}
+      \caption[Perceptron]{Perceptron} \label{fig:perceptron}
     \end{subfigure}%
     \hspace*{\fill}   % maximize separation between the subfigures
     \begin{subfigure}{0.45\textwidth}
       \includegraphics[width=\linewidth]{images/mlp.png}
-      \caption{multilayer perceptron} \label{fig:mlp}
+      \caption[Multilayer Perceptron]{multilayer perceptron} \label{fig:mlp}
     \end{subfigure}%
     \hspace*{\fill}   % maximizeseparation between the subfigures
-  \caption{Overview Neural Networks} \label{fig:NN_Overview}
+  \caption[Overview Perceptron]{Overview Perceptron} \label{fig:NN_Overview}
 \end{figure}
 
 Convolutional networks, or \glspl{cnn} \cite{lecun1998GradientbasedLearningApplied}, are a specialized type of neural network.
@@ -327,7 +327,7 @@ In \glspl{cnn} the learned parameters are shared by using the same convolution k
 As a result, a succession of output values is produced, each of which is dependent on a few close input values. 
 \glspl{rnn} share parameters differently since each output value depends on the predecessor output of it it. 
 This enables parameter sharing via a deep computational graph by allowing the same update algorithm to be applied to all outputs.
-When processing a sequence, \eg a sentence, an \gls{rnn} receives one datapoint,\eg a word, at each timestep.
+When processing a sequence, \eg a sentence, an \gls{rnn} receives one datapoint, \eg a word, at each timestep.
 The network itself has a so called hidden-state that is kept throughout all timesteps and changes with each timestep.
 This, however means, that the output $y_3$ of the input at $x_{t=3}$ depends on the hidden-states $h_0$ through $h_3$ and input $x_0$ through $x_3$.
 As a result, the computational graph where the backpropagation is performed on increases as well \cite{aggarwal2018NeuralNetworksDeep}.
@@ -358,7 +358,7 @@ The decision of which layers to skip is learned by the model itself during the t
         \caption{residual connection} \label{fig:resnet}
       \end{subfigure}%
     \hspace*{\fill}   % maximizeseparation between the subfigures
-  \caption{Overview Neural Network Architectures} \label{fig:NN_architectures_Overview}
+  \caption[Overview Neural Network Architectures]{Overview Neural Network Architectures} \label{fig:NN_architectures_Overview}
 \end{figure}
 
 Lastly, inspired by the human cognitive capabilities to focus on specific parts of an input, attention mechanisms have been introduced \cite{niu2021ReviewAttentionMechanism, aggarwal2018NeuralNetworksDeep}.
@@ -373,13 +373,13 @@ For instance, this has been achieved through the introduction of a context vecto
 \section{Deep generative Models}
 \label{ch:preliminaries-generativeMlgorithms}
 
-Deep generative \glspl{model} have revolutionized the field of artificial intelligence and machine learning by generating new and original data based on existing patterns and structures. 
+Deep generative models have revolutionized the field of artificial intelligence and machine learning by generating new and original data based on existing patterns and structures. 
 Generative models try to learn a joint distribution over all the available variables in a dataset \cite{kingma2019IntroductionVariationalAutoencoders}, which is also called the \textit{generative modeling problem} \cite{goodfellow2020GenerativeAdversarialNetworks}.
 Formally, in generative modeling training examples $x$ are drawn from an unkonwn distribution $p_{data}(x)$ and a generative modeling algorithm is trained to learn a distribution density function $p_{model}(x;\theta)$ that approximates the true probability density function $p_{data}(x)$ as closely as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
 $\theta$ are the models parameters that determine the models output and usually learned by searching for best $\theta$ values that result in $p_{model}$ to be as similar to $p_{data}$ as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
 
 Several powerful generative modeling approaches with different architectures have emerged, each with its strengths and weaknesses. 
-This section will explore four of the most popular approaches: \glspl{vae} (\autoref{ch:preliminaries-variationalAutoencoders}), \glspl{gan} (\auotref{ch:preliminaries-generativeAdversarialNetworks}), transformers (\auotref{ch:preliminaries-transformers}), and diffusion models (\auotref{ch:preliminaries-diffusionProbabilisticModels}). 
+This section will explore four of the most popular approaches: \glspl{vae} (\autoref{ch:preliminaries-variationalAutoencoders}), \glspl{gan} (\autoref{ch:preliminaries-generativeAdversarialNetworks}), transformers (\autoref{ch:preliminaries-transformers}), and diffusion models (\autoref{ch:preliminaries-diffusionProbabilisticModels}). 
 
 \subsection{Variational Autoencoders}
 \label{ch:preliminaries-variationalAutoencoders} 
@@ -417,7 +417,7 @@ Since $z$ is normal distributed ($z\sim N(\mu,\sigma^2)$) it can be rewritten as
   \label{eqn:reparameterization}
   N(\mu,\sigma^2) =\mu+\sigma\epsilon
 \end{equation}
-\caption[Reparameterization]{Reparameterization trick}
+
 
 This transformation moves the stochastic sampling process to the fixed $\epsilon$ variable. 
 It allows $\mu$ and $\sigma$ to be differentiable variables, which enables the gradient to flow and the neural network to learn \cite{kingma2013AutoEncodingVariationalBayes}.
@@ -466,7 +466,7 @@ Hence, the final loss function that is minimized during the training of the \gls
       \caption{Variational Autoencoder} \label{fig:vae}
     \end{subfigure}%
     \hspace*{\fill}   % maximize separation between the subfigures
-  \caption{Architecture Autoencoder and Variational autoencoder} \label{fig:vae_overview}
+  \caption[Autoencoders]{Architecture Autoencoder and Variational autoencoder} \label{fig:vae_overview}
 \end{figure}
 %[TODO: Make sure functions in image are identical to the ones in the text]
 
@@ -477,8 +477,8 @@ Hence, the final loss function that is minimized during the training of the \gls
 \label{ch:preliminaries-generativeAdversarialNetworks}
 
 \Glspl{gan} \cite{NIPS2014_5ca3e9b1} have been introduced in 2014 as a new architecture to address the generative modeling problem.
-The architecture of \glspl{gan} is based on game theory where two \glspl{model} compete in a zero-sum min-max game \cite{NIPS2014_5ca3e9b1, zhao2022CTABGANEnhancingTabular}.
-The two \glspl{model}, usually neural networks, are called the generator and the discriminator and are competing with one another.
+The architecture of \glspl{gan} is based on game theory where two models compete in a zero-sum min-max game \cite{NIPS2014_5ca3e9b1, zhao2022CTABGANEnhancingTabular}.
+The two models, usually neural networks, are called the generator and the discriminator and are competing with one another.
 While the generator is tasked to generate realistic-looking data points, its adversary, the discriminator is tasked to discriminate whether a given datapoint is a real datapoint or a fake datapoint produced by the generator.
 The generator function $G(z;\theta_G)$ with learnable parameters $\theta_G$ receives as input a vector $z$ and is tasked to transform $z$ into a realistic-looking sample $x$.
 An input vector $z$ is drawn from a prior distribution $p(z)$, usually a gaussian or uniform distribution, and is just an unstructured noise vector.
@@ -514,7 +514,7 @@ Ultimately, the generator and the discriminator are playing a two-player minimax
 \end{equation}
 
 \autoref{eqn:minimax} is used to formulate the loss functions that are used in training.
-However, \cite{NIPS2014_5ca3e9b1} notes that in practice, \autoref{eqn:minmax} "may not provide sufficient gradient [for the generator] to learn well" \cite[p. 3]{NIPS2014_5ca3e9b1}.
+However, \cite{NIPS2014_5ca3e9b1} notes that in practice, \autoref{eqn:minimax} "may not provide sufficient gradient [for the generator] to learn well" \cite[p. 3]{NIPS2014_5ca3e9b1}.
 This seems to be caused by the fact that the discriminator is able to reject the early samples from the generator with high confidence, which results in poor learning capabilities \cite{NIPS2014_5ca3e9b1}.
 The proposed solution for this is to change the objective function from the generator from the minimization function \auoref{eqn:generator} to a maximization of $logD(G(z))$.
 Thus, instead of minimizing the discriminator being correct, the new objective is to maximize the discriminator being wrong \cite{NIPS2014_5ca3e9b1}. 
@@ -563,7 +563,7 @@ Additionally, the self-attention modules in the decoder are adapted in such a wa
 This ensures that predictions for a position can only depend on known outputs \cite{vaswani2017AttentionAllYou, lin2022SurveyTransformers}.
 
 Self-attention allows the model to associate individual words in the input with other words in the input.
-This attention mechanism is realized using a scaled Dot-Product on query, key, and value vectors ($Q$,$K$, and $V$ respectively) \cite{vaswani2017AttentionAllYou}.
+This attention mechanism is realized using a scaled Dot-Product on query, key, and value vectors ($Q$, $K$, and $V$ respectively) \cite{vaswani2017AttentionAllYou}.
 All three vectors are created by sending the input through different linear layers.
 The dot product multiplication of the query and key matrixes creates a score matrix that indicates how much focus an individual word should have on the other words, \ie how much the network should attend to it \cite{vaswani2017AttentionAllYou}.
 The created attention matrix is scaled (according to the key dimensionality $d_k$) and multiplied with the value vector to generate the output probabilities.
@@ -579,7 +579,7 @@ The attention mechanism can be defined as \cite[p.4]{vaswani2017AttentionAllYou}
 
 \begin{figure}
   \includegraphics[width=0.8\linewidth]{images/transformer.png}
-\caption{Transformer Architecture} \label{fig:transformer}
+\caption[Transformers]{Transformer Architecture} \label{fig:transformer}
 \end{figure}
 
 
@@ -799,7 +799,7 @@ Therefore the model can focus more on the large $t$'s, where the denoising is mo
 Afterward, the gradient step will then be performed according to \autoref{eqn:l_simple} using gradient descent.
 
 \begin{algorithm}
-  \caption[Training]{Training \cite[p. 4]{ho2020DenoisingDiffusionProbabilistic}}
+  \caption[Training algorithm]{Training \cite[p. 4]{ho2020DenoisingDiffusionProbabilistic}}
   \label{alg:training}
   \begin{algorithmic}
     \Repeat
@@ -841,7 +841,7 @@ In the sampling process, gaussian noise can be sampled, and the model progressiv
 \subsection{Multinomial Diffusion}
 \label{ch:multinomial}
 The \gls{ddpm} apprach uses a gaussian diffusion process, designed to operate in continuous space \cite{kotelnikov2022TabDDPMModellingTabular}.
-However, many different data types are of categorical nature, where the gaussian noising process proposed in \autoref{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModels} is not applicable.
+However, many different data types are of categorical nature, where the gaussian noising process proposed in \autoref{ch:preliminaries-diffusionProbabilisticModels} is not applicable.
 As a response, Hoogeboom \etal \cite{hoogeboom2021ArgmaxFlowsMultinomial} introduces multinomial diffusion, "a diffusion model directly defined on categorical variables" \cite[p, 3]{hoogeboom2021ArgmaxFlowsMultinomial}.
 
 \cite{hoogeboom2021ArgmaxFlowsMultinomial} defines the multinomial diffusion process in the following way:
@@ -979,7 +979,7 @@ To measure the \textit{membership disclosure}, \cite{goncalves2020GenerationEval
 If this distance is smaller than a specific value, the synthetic datapoint is considered to be present in the original dataset.
 The distance measure used by \cite{goncalves2020GenerationEvaluationSynthetic} was the \textit{Hamming-distance}, but this could be replaced with a similarity measure of choice, depending on the data.
 \textit{Attribute disclosure} could be measured by testing if a potential attacker could infer unknown attributes, given a subset of known attributes by using a k-nearest neighbors algorithm \cite{goncalves2020GenerationEvaluationSynthetic}.
-These privacy measures are especially prominent and essential in the context of medical data, that usually has sensitive information \cite{goncalves2020GenerationEvaluationSynthetic, pmlr-v68-choi17a}.
+These privacy measures are especially prominent and essential in the context of medical data, that usually has sensitive information \cite{goncalves2020GenerationEvaluationSynthetic, choi2017GeneratingMultilabelDiscrete}.
 
 To ensure privacy is granted, research towards including \gls{dp} \cite{dwork2008DifferentialPrivacySurvey} in the model has been made, \eg in \cite{xie2018DifferentiallyPrivateGenerative, jordon2018PATEGANGeneratingSynthetic, torfi2022DifferentiallyPrivateSynthetic}.
 \gls{dp} is a concept in the field of data privacy that aims to protect the privacy of individuals while still allowing useful information to be extracted from data \cite{dwork2008DifferentialPrivacySurvey}. 

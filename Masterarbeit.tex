@@ -9,7 +9,8 @@
 \begin{document}
 % --- TITELSEITE ---
 \include{00-titlepage}
-
+\include{10-Abstract.tex}
+\include{11-Acknowledgements.tex}
 % VERZEICHNISSE (Inhaltsverzeichnis, Abkürzungen)
 % Vorspann einleiten --> Seitennummerierung römisch
 \frontmatter
@@ -48,8 +49,8 @@
 \mainmatter
 
 % --- Hauptteil ---
-\include{10-Abstract.tex}
-\include{11-Acknowledgements.tex}
+
+
 \include{20-Introduction.tex}
 \include{30-Preliminaries.tex}
 \include{40-Related-Work.tex}
@@ -65,7 +66,7 @@
 
 \phantomsection
 
-\addcontentsline{toc}{chapter}{References}
+% \addcontentsline{toc}{chapter}{References}
 
 \printbibliography[heading=bibintoc, title={References}]
 
@@ -76,9 +77,9 @@
 %\include{kapitel6}x
 % --- Anhang ---
 \backmatter
-\cleardoublepage
-
-\blindtext[8]
+\pagenumbering{roman}% resets `page` counter to 1
+\setcounter{page}{7}
+\renewcommand*{\thepage}{\roman{page}}
 \cleardoublepage
 \include{99-Appendix}
 \cleardoublepage

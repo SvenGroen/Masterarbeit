@@ -1,6 +1,7 @@
-%\renewcommand\thesection{A.\arabic{section}}
-%\renewcommand\thefigure{A-\arabic{figure}}   
-%\renewcommand\thetable{A-\arabic{table}}   
+\renewcommand\thesection{A.\arabic{section}}
+\renewcommand\thefigure{A-\arabic{figure}}   
+\renewcommand\thetable{A-\arabic{table}}   
+\renewcommand\theequation{A.\arabic{equation}}   
 
 \chapter{Appendix} 
 \label{ch:Appendix}
@@ -34,7 +35,8 @@ and
 \end{equation}
 
 Derivation:
-
+\begingroup
+\small
 \begin{subequations}
 	\label{eqn:vlb2_appendix}
 	\begin{align}
@@ -46,6 +48,7 @@ Derivation:
 		\textrm{Let }L_{VLB} &= \mathbb{E}_{q(x_0:T)}\big[log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{0:T})}) \big] \geq - \mathbb{E}_{q(x_0)}log(p_\theta(x_0))
 	\end{align}
 \end{subequations}
+\endgroup
 
 
 Derivation to get from \autoref{eqn:vlb2} to \autoref{eqn:vlb3}:
@@ -78,19 +81,19 @@ The process of the scripts with the implemented changes are displayed afterward.
 \begin{figure}[!b]
 	\centering
 	\includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{images/pipeline-ORIGINAL.png}
-	\caption{simplified visualization of the pipeline\_\*.py script}
+	\caption[Pipeline Script]{simplified visualization of the pipeline\_\*.py script}
 \end{figure}
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{images/train-sample-eval.png}
-	\caption{simplified visualization of the train.py, sample.py and eval\_[catboost|mlp|simple].py scripts}
+	\caption[Train, Sample, Evaluation Script]{simplified visualization of the train.py, sample.py and eval\_[catboost|mlp|simple].py scripts}
 	\label{fig:a_original_train_sample_eval}
 \end{figure}
 \begin{landscape}
 \begin{figure}
 	\centering
 	\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/tune_eval_seeds-ORIGINAL.png}
-	\caption{simplified visualization of the tune\_*.py scripts and the eval\_seeds.py}
+	\caption[Tuning Script]{simplified visualization of the tune\_*.py scripts and the eval\_seeds.py}
 \end{figure}
 \end{landscape}
 
@@ -102,7 +105,7 @@ Please note that not all changes to the original implementation can be included,
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{images/pipeline-CHANGED.png}
-	\caption{simplified visualization of the changed pipeline\_\*.py script}
+	\caption[Pipeline Script Changes]{simplified visualization of the changed pipeline\_\*.py script}
 	\label{fig:a_pipeline_changed}.
 \end{figure}
 The basic pipeline script hardly changed.
@@ -113,14 +116,14 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{images/train-sample-eval-Changed.png}
-	\caption{simplified visualization of the train.py, sample.py and eval\_[catboost|mlp|simple].py scripts}
+	\caption[Train, Sample, Evaluation Script Changes]{simplified visualization of the train.py, sample.py and eval\_[catboost|mlp|simple].py scripts}
 	\label{fig:a_train_sample_eval}
 \end{figure}
 \begin{landscape}
 	\begin{figure}
 		\centering
 		\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/tune_eval_seeds-CHANGED.png}
-		\caption{simplified visualization of the changed tune\_*.py scripts and the changed eval\_seeds.py}
+		\caption[Tuning Script Changes]{simplified visualization of the changed tune\_*.py scripts and the changed eval\_seeds.py}
 	\end{figure}
 \end{landscape}
 
@@ -163,6 +166,7 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 	\label{fig_a:corr_diff}
 \end{figure}
 
+\newpage
 \subsection[]{Principle Component Analysis}
 \label{A:pca}
 
@@ -189,34 +193,38 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 		\caption{TabDDPM-BGM$^{s}_m$}
 		\label{fig_a:pca_TabDDPMBM}
     \end{subfigure}
-    \caption{Principle Component Analysis for different model versions}
+    \caption[PCA plots Experiment Models]{Principle Component Analysis for different model versions}
     \label{fig_a:pca_diff}
 \end{figure}
+\newpage
+
 
 \subsection[]{Distribution Plots}
 \label{A:distributions}
-%----------
-\newpage
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.6\linewidth}
+		\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/ctabgan+.jpg}
+		\caption{CTABGAN+$^{ml}$}
+	\end{subfigure}
+\end{figure}
+
+
 \begin{landscape}
 	\begin{figure}[h]
 		\centering
 		\hfill
-		\begin{subfigure}{0.3\linewidth}
+		\begin{subfigure}{0.45\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/ctabgan.jpg}
 			\caption{CTABGAN$^{ml}$}
 		\end{subfigure}
 		\hfill
-		\begin{subfigure}{0.3\linewidth}
+		\begin{subfigure}{0.45\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/ctabgan_simTune.jpg}
 			\caption{CTABGAN$^s$}
 		\end{subfigure}	
 		\hfill
-		\begin{subfigure}{0.3\linewidth}
-			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/ctabgan+.jpg}
-			\caption{CTABGAN+$^{ml}$}
-		\end{subfigure}
-		\hfill
-		\caption{Distribution plots for CTABGAN$^{ml}$, CTABGAN$^s$ and CTABGAN+$^{ml}$}
+		\caption[Distribution plots CTABGAN Models]{Distribution plots for CTABGAN$^{ml}$ and CTABGAN$^s$}
 		\label{fig_a:dist_1}
 	\end{figure}
 \end{landscape}
@@ -240,7 +248,7 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/smote.jpg}
 			\caption{SMOTE}
 		\end{subfigure}
-		\caption{Distribution plots for TVAE$^{ml}$, TVAE$^s$ and SMOTE}
+		\caption[Distribution plots Baseline Models]{Distribution plots for TVAE$^{ml}$, TVAE$^s$ and SMOTE}
 		\label{fig_a:dist_2}
 	\end{figure}
 \end{landscape}
@@ -265,7 +273,7 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 			\caption{TabDDPM$^{s}_m$}
 		\end{subfigure}
 		\hfill
-		\caption{Distribution plots for TabDDPM variations}
+		\caption[Distribution plots TabDDPM Models]{Distribution plots for TabDDPM variations}
 		\label{fig_a:dist_3}
 	\end{figure}
 \end{landscape}
@@ -289,7 +297,7 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/tab-ddpm-bgm-simTune-minmax.jpg}
 			\caption{TabDDPM-BGM$^{s}_m$}
 		\end{subfigure}
-		\caption{Distribution plots for TabDDPM-BGM variations}
+		\caption[Distribution plots TabDDPM-BGM Models]{Distribution plots for TabDDPM-BGM variations}
 		\label{fig_a:dist_4}
 	\end{figure}
 \end{landscape}
@@ -308,7 +316,7 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/tab-ddpm-ft-simTune.jpg}
 			\caption{TabDDPM-FT$^{ml}_q$}
 		\end{subfigure}
-		\caption{Distribution plots for TabDDPM-FT variations}
+		\caption[Distribution plots TabDDPM-FT Models]{Distribution plots for TabDDPM-FT variations}
 		\label{fig_a:dist_5}
 	\end{figure}
 \end{landscape}
@@ -317,31 +325,35 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 
 %-------------
 
-
+\newpage
 \subsection[]{Cumulative Distribution Plots}
 \label{A:cumsum}
-%----------
-\newpage
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.6\textwidth}
+		\includegraphics[width=\linewidth]{images/cumsums/ctabgan+.jpg}
+		\caption{CTABGAN+$^{ml}$}
+	\end{subfigure}
+	\caption[Cumulative Distribution plots CTABGAN+ Model]{Cumulative Distribution plots for CTABGAN+$^{ml}$}
+	\label{fig_a:cumsum_0}
+\end{figure}
+
+
 \begin{landscape}
 	\begin{figure}[h]
 		\centering
 		\hfill
-		\begin{subfigure}{0.3\linewidth}
+		\begin{subfigure}{0.45\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/ctabgan.jpg}
 			\caption{CTABGAN$^{ml}$}
 		\end{subfigure}
 		\hfill
-		\begin{subfigure}{0.3\linewidth}
+		\begin{subfigure}{0.45\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/ctabgan_simTune.jpg}
 			\caption{CTABGAN$^s$}
 		\end{subfigure}	
 		\hfill
-		\begin{subfigure}{0.3\linewidth}
-			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/ctabgan+.jpg}
-			\caption{CTABGAN+$^{ml}$}
-		\end{subfigure}
-		\hfill
-		\caption{Cumulative Distribution plots for CTABGAN$^{ml}$, CTABGAN$^s$ and CTABGAN+$^{ml}$}
+		\caption[Cumulative Distribution plots CTABGAN Models]{Cumulative Distribution plots for CTABGAN$^{ml}$ and CTABGAN$^s$}
 		\label{fig_a:cumsum_1}
 	\end{figure}
 \end{landscape}
@@ -365,7 +377,7 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/smote.jpg}
 			\caption{SMOTE}
 		\end{subfigure}
-		\caption{Cumulative Distribution plots for TVAE$^{ml}$, TVAE$^s$ and SMOTE}
+		\caption[Cumulative Distribution plots Baseline Models]{Cumulative Distribution plots for TVAE$^{ml}$, TVAE$^s$ and SMOTE}
 		\label{fig_a:cumsum_2}
 	\end{figure}
 \end{landscape}
@@ -390,7 +402,7 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 			\caption{TabDDPM$^{s}_m$}
 		\end{subfigure}
 		\hfill
-		\caption{Cumulative Distribution plots for TabDDPM variations}
+		\caption[Cumulative Distribution plots TabDDPM Models]{Cumulative Distribution plots for TabDDPM variations}
 		\label{fig_a:cumsum_3}
 	\end{figure}
 \end{landscape}
@@ -414,7 +426,7 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/tab-ddpm-bgm-simTune-minmax.jpg}
 			\caption{TabDDPM-BGM$^{s}_m$}
 		\end{subfigure}
-		\caption{Cumulative Distribution plots for TabDDPM-BGM variations}
+		\caption[Cumulative Distribution plots TabDDPM-BGM Models]{Cumulative Distribution plots for TabDDPM-BGM variations}
 		\label{fig_a:cumsum_4}
 	\end{figure}
 \end{landscape}
@@ -433,7 +445,7 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/tab-ddpm-ft-simTune.jpg}
 			\caption{TabDDPM-FT$^{ml}_q$}
 		\end{subfigure}
-		\caption{Cumulative Distribution plots for TabDDPM-FT variations}
+		\caption[Cumulative Distribution plots TabDDPM-FT Models]{Cumulative Distribution plots for TabDDPM-FT variations}
 		\label{fig_a:cumsum_5}
 	\end{figure}
 \end{landscape}

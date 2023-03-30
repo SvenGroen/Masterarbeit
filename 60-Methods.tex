@@ -22,14 +22,14 @@ Additionally, new \textit{ConcreteStrategies} can be added easily without affect
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{images/strategy.png}
-	\caption{Strategy Pattern \cite[p. 316]{gamma1994design}}
+	\caption[Strategy Design Pattern]{Strategy design pattern \cite[p. 316]{gamma1994design}}
 	\label{fig:design}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{images/tabular_processor.png}
-	\caption{Tabular Processor Design}
+	\caption[Tabular Processor Design]{Tabular Processor Design}
 	\label{fig:tabular_processor}
 \end{figure}
 
@@ -71,13 +71,13 @@ This processing mechanism was chosen since it fulfills all criteria mentioned in
 Moreover, it is part of a state-of-the-art tabular data synthesis \gls{gan}-based model, which has already proven successfulss.
 
 Firstly, a mixed-type encoding is introduced, specifically designed to encode single columns containing a mixed data type of numerical and categorical data types.
-For the continuous values in the column, the authors adapt the mode-specific normalization technique from \cite{xu2019ModelingTabularData} using a \gls{bgm} implementation \cite{BayesianGaussianMixture}, which is a \gls{vgm} (see \autoref{sec:dataNormalization} for details).
+For the continuous values in the column, the authors adapt the mode-specific normalization technique from \cite{xu2019ModelingTabularData} using a \gls{bgm} implementation \cite{scikit-learndevelopers2023BayesianGaussianMixture}, which is a \gls{vgm} (see \autoref{sec:dataNormalization} for details).
 For the categorical values, the $\beta$ one-hot vector is extended by the number of possible categorical values in the column.
 If a categorical value should be encoded, the $\alpha$ value is set to 0, and the one-hot encoding indicating the specific category is set to 1.
 Additionally, the authors allow missing values, which are treated as another categorical entry.
 
 Furthermore, the authors introduce a "general transform" mechanism \cite[p. 7]{zhao2022CTABGANEnhancingTabular} that is supposed to be used for simple distributions and counters the problem of exploding dimensionality caused by a one-hot encoding \cite{zhao2022CTABGANEnhancingTabular}.
-This general transformation is mapping the values into a range of [-1, 1], which is achieved through a shifted and scaled min-max normalization (see MinMaxScaler in \autoref{sec:dataNormalization}).
+This general transformation is mapping the values into a range of [-1, 1], which is achieved through a shifted and scaled min-max normalization (see min-max scaler in \autoref{sec:dataNormalization}).
 Mathematically, the encoded datapoint $x^t_i$ can be computed using the original datapoint $x_i$ in column $x$ through the following formula:
 $$x^t_i=2* \frac{x_i-\min(x)}{\max(x)}-\min(x)-1$$
 Which can easily be reversed in the following way:
@@ -92,14 +92,14 @@ The log-transformation of each value $\tau$ in the column will be compressed to 
 	\begin{align*}
 		\tau^e =
 		\begin{cases}
-			log(\tau)            & \text{if} l>0                                 \\
-			log(\tau-l+\epsilon) & \text{if} l\leq0 \text{, where } \epsilon > 0
+			log(\tau)            & \text{if } l>0                                 \\
+			log(\tau-l+\epsilon) & \text{if } l\leq0 \text{, where } \epsilon > 0
 		\end{cases}
 	\end{align*}
 \end{equation}
 
 This encoding strategy is realized in the BGMProcessor class, which uses the DataPrep and DataTransformer class, as developed by \cite{zhao2022CTABGANEnhancingTabular}.
-These classes require additional information about the dataset, provided by the user, including what columns are categorical, categorical columns that have a high cardinality/dimensionality\footnote{Inside the code of the authors, they refer to it as "non_categorical_columns", which is a bit misleading. Categorical columns with high dimensionality are transformed into numerical columns and handled as if they were continuous.},
+These classes require additional information about the dataset, provided by the user, including what columns are categorical, categorical columns that have a high cardinality/dimensionality\footnote{Inside the code of the authors, they refer to it as "non\_categorical_columns", which is a bit misleading. Categorical columns with high dimensionality are transformed into numerical columns and handled as if they were continuous.},
 numerical, mixed (including what values are categorical), as well as what columns require a log transformation and which a general transformation.
 This information is provided to the \textit{BGMProcessor} by extending the info.json (\autoref{lst:info}) with an additional entry, \textit{dataset\_config}, see \autoref{lst:info_extended} for an example.
 
@@ -143,7 +143,7 @@ However, the \gls{ft} mechanisms have only been used in a data imputation task, 
 It is unclear whether its functionality can be extended to multiple-cell synthesisation.
 
 The \gls{ft} transforms tabular data into a static embedding representation.
-Categorical columns are embedded through an Embedding layer, which is basically a look-up table \cite{EmbeddingPyTorch13} of fixed size.
+Categorical columns are embedded through an Embedding layer, which is basically a look-up table \cite{pytorch2023EmbeddingPyTorch13} of fixed size.
 Each categorical input tensor of dimensions $[N]$ (\ie a table with $N$ columns) will be transformed in an embedding of size $[N,H]$ with $H$ as the embedding dimensionality \cite{gorishniy2021RevisitingDeepLearning}.
 Numerical columns will be processed by a simple multiplication of linear layers weights \cite{gorishniy2021RevisitingDeepLearning}.
 Lastly, a bias term is added to both categorical and numerical columns.
@@ -152,7 +152,7 @@ Lastly, a bias term is added to both categorical and numerical columns.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\textwidth]{images/ft.png}
-	\caption{Feature Tokenization \cite[Figure 2a, p.4]{gorishniy2021RevisitingDeepLearning}}
+	\caption[Feature Tokenization]{Feature Tokenization \cite[Figure 2a, p.4]{gorishniy2021RevisitingDeepLearning}}
 	\label{fig:ft}
 \end{figure}
 
@@ -162,7 +162,7 @@ For categorical output, the closest categorical embedding is determined by compu
 
 In the original work of \cite{gorishniy2021RevisitingDeepLearning}, the feature tokenizer is directly in front of a transformer model, allowing the gradients to flow through the embedding and linear layers during training.
 This enables the model to learn a meaningful embedding.
-In the adaptation of \cite{2023DiffusionModelsMissing} and in this thesis, the weights of the layers are frozen.
+In the adaptation of \cite{zheng2023DiffusionModelsMissing} and in this thesis, the weights of the layers are frozen.
 Hence, learning is not possible, and the embedding is static.
 In this thesis, the data transformation and the actual model training are fully separated,
 resulting in gradients not flowing back to the feature tokenizer to update any weights of the embeddings.
@@ -285,7 +285,7 @@ The hyperparameter search space for the various models was not changed and is eq
 		Number of tuning trials   & 100                 \\
 		\bottomrule
 	\end{tabular}
-	\caption{CatBoost evaluation model hyperparameter tuning search space (proposed by \cite{gorishniy2021RevisitingDeepLearning})}
+	\caption[CatBoost Hyperparameter Search Space]{CatBoost evaluation model hyperparameter tuning search space (proposed by \cite{gorishniy2021RevisitingDeepLearning})}
 	\label{tab:catboost_tune}
 \end{table}
 
@@ -312,7 +312,7 @@ The hyperparameter search space for the various models was not changed and is eq
 		Number of tuning trials & 100                                \\
 		\bottomrule
 	\end{tabular}
-	\caption{TabDDPM model hyperparameter tuning search space}
+	\caption[TabDDPM Hyperparameter Search Space]{TabDDPM model hyperparameter tuning search space}
 	\label{tab:diff_tune}
 \end{table}
 
@@ -335,7 +335,7 @@ The hyperparameter search space for the various models was not changed and is eq
 		Number of tuning trials & 100                              \\
 		\bottomrule
 	\end{tabular}
-	\caption{TVAE model hyperparameter tuning search space}
+	\caption[TVAE Hyperparameter Search Space]{TVAE model hyperparameter tuning search space}
 	\label{tab:tvae_tune}
 
 \end{table}
@@ -357,7 +357,7 @@ The hyperparameter search space for the various models was not changed and is eq
 		Number of tuning trials & 30                             \\
 		\bottomrule
 	\end{tabular}
-	\caption{CTAGBAG/CTABGAN+ model hyperparameter tuning search space. Training iterations and the number of tuning trails were reduced compared to the original \cite{kotelnikov2022TabDDPMModellingTabular}, to reduce computation time.}
+	\caption[CTAGBAG(+) Hyperparameter Search Space]{CTAGBAG/CTABGAN+ model hyperparameter tuning search space. Training iterations and the number of tuning trails were reduced compared to the original \cite{kotelnikov2022TabDDPMModellingTabular}, to reduce computation time.}
 	\label{tab:ctabgan_tune}
 \end{table}
 
@@ -401,7 +401,7 @@ The dataset was created for binary classification, where the model should predic
 			\bottomrule
 		\end{tabular}
 	}
-	\caption{Adult income dataset with five exemplary entries}
+	\caption[Example Adult Dataset]{Adult income dataset with five exemplary entries}
 	\label{tab:adult}
 \end{table}
 

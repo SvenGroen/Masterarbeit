@@ -13,7 +13,7 @@ Firstly, non-functional requirements will be explained before continuing with th
 
 Non-functional requirements (or qualitative requirements) describe requirements and constraints on a system that governs how the functions specified in the functional requirements are to be performed \cite{broy2021EinfuehrungSoftwaretechnik}.
 They focus on the question of how a system's functional requirements should be realized \cite{broy2021EinfuehrungSoftwaretechnik}.
-The ISO-Norm 25010 \cite{SystemsSoftwareEngineering} defined the base characteristics relevant for a software systems quality \cite{haoues2017GuidelineSoftwareArchitecture}.
+The ISO-Norm 25010 \cite{iso/iecSystemsSoftwareEngineering} defined the base characteristics relevant for a software systems quality \cite{haoues2017GuidelineSoftwareArchitecture}.
 The key elements of software architecture include functional suitability, reliability, performance efficiency, compatibility, usability, security, maintainability, and portability \cite{haoues2017GuidelineSoftwareArchitecture}.
 Each of these is of different importance for each software system.
 Additionally, \cite{vogelsang2019RequirementsEngineeringMachine} highlights that additional quality requirements might be necessary in the context of machine learning tasks, for which a standard has yet to be defined.
@@ -114,7 +114,7 @@ An overview of how the overall process in this synthetic data generation approac
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/Overall_original.png}
-    \caption{Overview synthetic data generation process in \cite{akim2023TabDDPMModellingTabular}}
+    \caption[Overview Original Software]{Overview synthetic data generation process in \cite{akim2023TabDDPMModellingTabular}}
     \label{fig:overall_original}
 \end{figure}
 
@@ -170,25 +170,25 @@ The functionality of the most important scripts can be summarized in the followi
     In each training, sampling, and evaluation, the training and validation set are redistributed and shuffled to implement some form of cross-validation \cite{kohavi2001StudyCrossValidationBootstrap}.
     The average evaluation score (machine learning efficacy based) of the five synthetic dataset versions is returned as the objective that Optuna tries to maximize.
     After optimization, the best hyperparameter configuration is saved.
-    If specified, a final evaluation of the best found model can be started by calling \textit{eval\_seeds.py}.
+    If specified, a final evaluation of the best-found model can be started by calling \textit{eval\_seeds.py}.
     \footnotetext[2]{Each implemented baseline model has its own implementation as tune\_\textit{modelName}.py}
     \item[eval\_seeds.py:]
     Performs an extensive evaluation, given a trained model.
-    Starts by loading a pre-trained sampling model ([TabDDPM|SMOTE|CTABGAN|CTABGAN+|TVAE]).
-    The script will produce $n_datasets$ synthetic datasets depending on the specified evaluation parameters by calling the sampling script in the respective \textit{pipeline\_*.py} script.
+    Starts by loading a pre-trained sampling model \\([TabDDPM|SMOTE|CTABGAN|CTABGAN+|TVAE]).
+    The script will produce $n\_datasets$ synthetic datasets depending on the specified evaluation parameters by calling the sampling script in the respective \textit{pipeline\_*.py} script.
     For each produced dataset, evaluation is performed using a predefined evaluation model ([Catboost|MLP]) for a predefined number of random initializations.
     Ultimately, the average metrics is calculated over all performed runs, reported, and saved.
 \end{description}
 
-Hence, to get a fully optimized diffusion model with an extensive evaluation, the user just has to run the \textit{tune\_ddpm.py} script with the \textit{--eval\_seeds} flag.
-A detailed activity diagram for each script can be found at \auotref{A:activity_diagrams}.
+Hence, to get a fully optimized diffusion model with an extensive evaluation, the user just has to run the \textit{tune\_ddpm.py} script with the \textit{- - eval\_seeds} flag.
+A detailed activity diagram for each script can be found at \autoref{A:activity_diagrams}.
 
 \subsubsection[]{Configuration}
 
 In order to start one of the above scripts, a configuration file has to be specified, specifying the most important parameters for training, sampling, and evaluation.
 For example, \autoref{lst:configuration} shows how such a configuration file could look like and which parameters need to be specified
 
-\begin{lstlisting}[label={lst:configuration}, caption={Example configuration file}]
+\begin{lstlisting}[label={lst:configuration}, caption={Example Configuration File}]
     parent_dir = "exp/adult/check"
     real_data_path = "data/adult/"
     num_numerical_features = 6
@@ -247,9 +247,9 @@ For example, \autoref{lst:configuration} shows how such a configuration file cou
 \end{lstlisting}    
 
 
-Model\_type refers to the model that should approximate the noise in the reverse noising process.
+\textit{model\_type} refers to the model that should approximate the noise in the reverse noising process.
 Most parameters are self-explanatory, controlling one specific part of the pipeline.
-For example, all model\_params specify different relevant aspects for instantiating the model, and diffusion\_params control the diffusion process.
+For example, all \textit{model\_params} specify different relevant aspects for instantiating the model, and \textit{diffusion\_params} control the diffusion process.
 Noteworthy are the train.T and eval.T parameters, which define how preprocessing is done at the beginning of training and evaluation, respectively.
 This configuration structure allows to efficiently perform a variety of experiments with different parameters by simply changing the configuration file and inputting it into the next experiment run.
 
@@ -264,7 +264,7 @@ X\_[cat|num]\_[train|val|test].npy and for the target y\_[train|val|test].npy
 
 Additionally, a \textit{info.json} file is provided, containing the necessary information for handling the data.
 In \autoref{lst:info}, one can see how such an info-file contains the information on how the splits mentioned above have been done and what kind of task this dataset usually has (it is differentiated between binary classification (binclass), multiclass classification (multiclass) and regression (regression)).
-\begin{lstlisting}[label={lst:info},caption={Example data info file}]
+\begin{lstlisting}[label={lst:info},caption={Example Data-info File}]
     {
     "name": "Adult",
     "id": "adult--default",
@@ -281,15 +281,15 @@ Inside the code of TabDDPM \cite{akim2023TabDDPMModellingTabular}, a custom data
 \section{Proposed Concept}
 \label{ch:conceptualDesign-changes}
 
-Changes to the current architecture have been made to answer the research questions specified in \auotref{ch:intro-goals}.
-\autoref{fig:Overall_changed} shows that the overall synthesisation process does not deviate much from \autoref{fig:Overall_original}.
+Changes to the current architecture have been made to answer the research questions specified in \autoref{ch:intro-goals}.
+\autoref{fig:Overall_changed} shows that the overall synthesisation process does not deviate much from \autoref{fig:overall_original}.
 Changes are highlighted in green and affect each step in the diffusion process, the training, sampling, and evaluation step.
-For a detailed overview of how each individual scripts changed, please refer to \auotref{A:activity_diagrams}.
+For a detailed overview of how each individual scripts changed, please refer to \autoref{A:activity_diagrams}.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/Overall_changed.png}
-    \caption{Overview of proposed synthetic data generation process changes (highlighted in green)}
+    \caption[Overview Software Changes]{Overview of proposed synthetic data generation process changes (highlighted in green)}
     \label{fig:Overall_changed}
 \end{figure}
 
