@@ -42,7 +42,7 @@ TGAN deals with continuous variables through a mode-specific normalization throu
 Their architecture includes \gls{lstm} cells with attention that generate the data column-wise \cite{xu2018SynthesizingTabularData}.
 
 The authors of TGAN follow up on their own work and introduce a new architecture named CTGAN \cite{xu2019ModelingTabularData}.
-They first identified the biggest challenges in tabular data generation, namely "mixed data types", "Non-Gaussian distributions", "Multinomial distributions", "learning form sparse one-hot encoded vectors" and "highly imbalanced categorical columns" \cite[p. 3]{xu2019ModelingTabularData}.
+They first identified the biggest challenges in tabular data generation, namely "mixed data types", "Non-Gaussian distributions", "Multinomial distributions", "learning form sparse \gls{oh} encoded vectors" and "highly imbalanced categorical columns" \cite[p. 3]{xu2019ModelingTabularData}.
 To address some of these issues, they improve their preprocessing and their architecture.
 Firstly, instead of using a \gls{gmm}, they use a \gls{vgm} \cite{xu2019ModelingTabularData}.
 Secondly, they introduce the possibility of conditioning the \gls{gan} to produce certain column values by employing a conditional vector during training \cite{xu2019ModelingTabularData}.
@@ -188,7 +188,7 @@ Instead, the diffusion model receives a splitted version of the input, one part 
 The goal of the model is, given the unnoised observed part and the noised version of the unobserved part, to return the denoised unobserved part of the next timestep, 
 \ie $p_\theta(x^{ta}_{t-1}|x^{ta}_{t},x^{co}_{0})$ \cite{zheng2022DiffusionModelsMissing}.
 Categorical entries are converted in three different ways to handle them in conjunction with numerical values.
-Categorical values are either one-hot encoded, analog-bits encoded (also called binary encoded), or embedded through a feature tokenization approach proposed by \cite{gorishniy2021RevisitingDeepLearning}.
+Categorical values are either \gls{oh} encoded, analog-bits encoded (also called binary encoded), or embedded through a feature tokenization approach proposed by \cite{gorishniy2021RevisitingDeepLearning}.
 In the embedding encoding approach, numerical values are encoded as well. 
 However, during training, neither the categorical nor the numerical embeddings are learned \cite{zheng2023DiffusionModelsMissing}
 The authors observed that diffusion achieves the best metric result for the task of missing imputation for the tested datasets \cite{zheng2022DiffusionModelsMissing}.
@@ -206,7 +206,7 @@ Since the TabDDPM approach will be the base for this thesis, it will be explaine
 However, TabDDPM takes a different approach than the CSDI model, using two different diffusion processes.
 The classical gaussian diffusion process \cite{ho2020DenoisingDiffusionProbabilistic} for numerical columns and multinomial diffusion \cite{hoogeboom2021ArgmaxFlowsMultinomial} (\autoref{ch:multinomial}) for categorical/binary columns \cite{zheng2022DiffusionModelsMissing}.
 Firstly, the feature columns are preprocessed.
-Numerical features are transformed using the gaussian quantile transform (\autoref{sec:dataNormalization}), and categorical features are one-hot encoded (\autoref{sec:dataTransformation}) \cite{kotelnikov2022TabDDPMModellingTabular}.
+Numerical features are transformed using the gaussian quantile transform (\autoref{sec:dataNormalization}), and categorical features are \gls{oh} encoded (\autoref{sec:dataTransformation}) \cite{kotelnikov2022TabDDPMModellingTabular}.
 The objective function is defined as:
 
 \begin{equation}

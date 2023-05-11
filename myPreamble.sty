@@ -10,6 +10,15 @@
 % \usepackage{abstract}
 \usepackage{blindtext}
 \usepackage{amsmath}
+\usepackage[
+	pdfstartview=FitH,   
+	pdffitwindow=true,
+	colorlinks,
+	linkcolor=black,
+	anchorcolor=black,
+	citecolor=black,
+	urlcolor=black
+	]{hyperref}
 % Neue packages
 \usepackage[toc, acronym]{glossaries}
 %\usepackage[toc, acronym]{glossaries}
@@ -21,7 +30,8 @@
 \usepackage[backend=biber, style=alphabetic]{biblatex}
 \addbibresource{Masterarbeit-bibliography.bib}
 \usepackage{csquotes}
-\usepackage{amsmath}
+\usepackage{\amsmath}
+\usepackage[justification=centering]{caption}
 \usepackage{subcaption}
 \usepackage{algorithm}
 \newcommand{\algorithmautorefname}{Algorithm}
@@ -60,15 +70,7 @@
 % pdfbookmarks 
 % (generiert für PDF auch gleich 
 % ein Inhaltsverzeichnis und Links)
-\usepackage[
-	pdfstartview=FitH,   
-	pdffitwindow=true,
-	colorlinks,
-	linkcolor=black,
-	anchorcolor=black,
-	citecolor=black,
-	urlcolor=black
-	]{hyperref}
+
 
  % Linien in Kopf- und Fußzeilen einschalten
 \usepackage[headsepline,footsepline]{scrlayer-scrpage}

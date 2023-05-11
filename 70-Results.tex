@@ -21,14 +21,14 @@ Finally, the trained CatBoost and trained sampling model were used in the evalua
 	\centering
 	\begin{tabular}{lccr}
 		\toprule
-		\textbf{Model}     & \textbf{Reproduction} & \textbf{Original} & \textbf{Difference} \\ 
+		\textbf{Model}     & \textbf{Reproduction} & \textbf{Original} & \textbf{Difference} \\
 		\midrule
-		Real               & 0.815                 & 0.815             & 0                   \\ 
-		TVAE$^{ml}$        & 0.780                 & 0.781             & -0.001              \\ 
-		CTABGAN$^{ml}$     & 0.775                 & 0.783             & -0.008              \\ 
-		CTABGAN+$^{ml}$    & 0.775                 & 0.772             & +0.003              \\ 
-		SMOTE$^{ml}$       & 0.791                 & 0.791             & 0                   \\ 
-		TabDDPM$^{ml}_{q}$ & 0.794                 & 0.795             & -0.001              \\ 
+		Real               & 0.815                 & 0.815             & 0                   \\
+		TVAE$^{ml}$        & 0.780                 & 0.781             & -0.001              \\
+		CTABGAN$^{ml}$     & 0.775                 & 0.783             & -0.008              \\
+		CTABGAN+$^{ml}$    & 0.775                 & 0.772             & +0.003              \\
+		SMOTE$^{ml}$       & 0.791                 & 0.791             & 0                   \\
+		TabDDPM$^{ml}_{q}$ & 0.794                 & 0.795             & -0.001              \\
 		\bottomrule
 	\end{tabular}
 	\caption[Reproduction Original Results]{Comparison of the CatBoost F1-score on synthetic datasets created by different sampling models.
@@ -58,14 +58,14 @@ their performance is additionally evaluated using the similarity evaluation as p
 	\centering
 	\begin{tabular}{lccr}
 		\toprule
-		\textbf{Model}     & \textbf{Accurarcy} & \textbf{F1}    & \textbf{ROC-AUC} \\ 
+		\textbf{Model}     & \textbf{Accurarcy} & \textbf{F1}    & \textbf{ROC-AUC} \\
 		\midrule
-		Real               & 0.874              & 0.815          & 0.928            \\ 
-		TVAE$^{ml}$        & 0.845              & 0.781          & 0.900            \\ 
-		CTABGAN$^{ml}$     & 0.850              & 0.775          & 0.900            \\ 
-		CTABGAN+$^{ml}$    & 0.855              & 0.775          & 0.907            \\ 
-		SMOTE$^{ml}$       & 0.858              & 0.791          & 0.910            \\ 
-		TabDDPM$^{ml}_{q}$ & \textbf{0.860}     & \textbf{0.794} & \textbf{0.913}   \\ 
+		Real               & 0.874              & 0.815          & 0.928            \\
+		TVAE$^{ml}$        & 0.845              & 0.781          & 0.900            \\
+		CTABGAN$^{ml}$     & 0.850              & 0.775          & 0.900            \\
+		CTABGAN+$^{ml}$    & 0.855              & 0.775          & 0.907            \\
+		SMOTE$^{ml}$       & 0.858              & 0.791          & 0.910            \\
+		TabDDPM$^{ml}_{q}$ & \textbf{0.860}     & \textbf{0.794} & \textbf{0.913}   \\
 		\bottomrule
 	\end{tabular}
 	\caption[ML-efficacy Baseline]{Machine learning efficacy (CatBoost) baseline results. The best results are highlighted in bold.}
@@ -121,7 +121,7 @@ The results of the machine learning efficacy and TabSynDex metric results can be
 		TabDDPM-FT$^{ml}_{q}$  & 0.785              & 0.552          & 0.821            \\
 		\bottomrule
 	\end{tabular}
-	\caption[Experiment 1 ML-Efficacy]{CatBoost Machine learning efficacy scores for different tabular processing techniques.}
+	\caption[Experiment 1 ML-Efficacy]{CatBoost machine learning efficacy scores for different tabular processing techniques.}
 	\label{tab:exp1-ml}
 \end{table}
 
@@ -160,7 +160,7 @@ the models' hyperparameters are tuned after the TabSynDex similarity score.
 
 The machine learning efficacy and TabSynDex metric results can be found in \autoref{tab:exp2-ml} and \autoref{tab:exp2-sim}, respectively.
 
-TODO ctabgan+simTUne
+
 
 \begin{table}[h]
 	\centering
@@ -173,10 +173,11 @@ TODO ctabgan+simTUne
 		TabDDPM-BGM$^{s}_{q}$ & \textbf{0.859}     & \textbf{0.792} & \textbf{0.911}   \\
 		TabDDPM-FT$^{s}_{q}$  & 0.767              & 0.450          & 0.712            \\
 		CTABGAN$^{s}$         & 0.850              & 0.776          & 0.900            \\
+		CTABGAN+$^{s}$        & 0.851              & 0.768          & 0.902            \\
 		TVAE$^{s}$            & 0.845              & 0.780          & 0.900            \\
 		\bottomrule
 	\end{tabular}
-	\caption[Experiment 2 ML-Efficacy]{CatBoost Machine learning efficacy scores for different tabular processing techniques, which hyperparameter have been tuned towards the TabSynDex similarity score.}
+	\caption[Experiment 2 ML-Efficacy]{CatBoost machine learning efficacy scores for different tabular processing techniques, which hyperparameter have been tuned towards the TabSynDex similarity score.}
 	\label{tab:exp2-ml}
 \end{table}
 
@@ -191,6 +192,7 @@ TODO ctabgan+simTUne
 		TabDDPM-BGM$^{s}_{q}$ & \textbf{0.857}            & \textbf{0.982} & 0.858                & \textbf{0.991} & 0.920            & \textbf{0.532} \\
 		TabDDPM-FT$^{s}_{q}$  & 0.589                     & 0.513          & 0.620                & 0.819          & \textbf{0.992}   & 0.000          \\
 		CTABGAN$^{s}$         & 0.740                     & 0.938          & 0.833                & 0.984          & 0.947            & 0.000          \\
+		CTABGAN+$^{s}$        & 0.784                     & 0.970          & 0.888                & 0.987          & 0.908            & 0.167          \\
 		TVAE$^{s}$            & 0.658                     & 0.856          & 0.815                & 0.962          & 0.656            & 0.000          \\
 		\bottomrule
 	\end{tabular}
@@ -201,17 +203,18 @@ TODO ctabgan+simTUne
 The results show that TabDDPM-BGM outperforms all other models in terms of the CatBoost machine learning efficacy and is on par with TabDDPM in the TabSynDex ML-efficacy score.
 TabDDPM-BGM also has the highest overall Similarity Score and achieves the highest Basic and \gls{pmse} scores.
 However, The simpler TabDDPM outperforms its \gls{bgm} counterpart regarding Correlation and Support score.
-Overall, TabDDPM achieves comparable performance to TabDDPM-BGM on all metrics, with the biggest difference in the \gls{pmse} score of -11\%-points.
+Overall, TabDDPM achieves comparable performance to TabDDPM-BGM on all metrics, with the biggest difference in the \gls{pmse} score of -0.11\%-points.
 TabDDPM-FT performance is significantly worse than all other TabDDPM variants in all metrics except the support score.
 On the one hand, it seems to be the case that hyperparameter tuning after the similarity score does have a big influence on the TabDDPM and TabDDPM-BGM models \gls{pmse} score.
-On the other hand, this hyperparameter tuning did not affect the \gls{pmse} score of the other tested model, the CTABGAN, TVAE, or the TabDDPM-FT.
+On the other hand, this hyperparameter tuning did not affect the \gls{pmse} score of the other tested model, the CTABGAN, TVAE, or the TabDDPM-FT, all having zero \gls{pmse} score.
+The CTABGAN+$^{s}$ model is the only non-diffusion model that achieves a non-zero \gls{pmse} score of 0.167\%, which is still noticeably smaller than the score of TabDDPM$^{s}_{q}$ or TabDDPM-BGM$^{s}_{q}$.
 
 \subsection{Experiment 3: Exchanging the Normalization}
 \label{ch:Experiment-3}
 
 So far, all TabDDPM models received data normalized according to the quantile transform function (applied after tabular processing), as proposed in \cite{kotelnikov2022TabDDPMModellingTabular}.
 A third experiment will investigate how the models perform when their quantile transform function is replaced by a simpler min-max scaler, as explained in \autoref{sec:dataNormalization}.
-Based upon the performance of the model variants so far, only the plain TabDDPM and TabDDPM-BGM, tuned after the similarity score will be investigated since the performance of 
+Based upon the performance of the model variants so far, only the plain TabDDPM and TabDDPM-BGM, tuned after the similarity score will be investigated since the performance of
 TabDDPM-FT was noticeably worse.
 
 
@@ -224,6 +227,7 @@ TabDDPM-FT was noticeably worse.
 		Real                  & 0.874              & 0.815          & 0.928            \\
 		TabDDPM$^{s}_{m}$     & 0.856              & 0.778          & \textbf{0.910}   \\
 		TabDDPM-BGM$^{s}_{m}$ & \textbf{0.857}     & \textbf{0.787} & 0.909            \\
+		TabDDPM-BGM$^{s}_{n}$ & 0.855              & 0.784          & 0.907            \\
 		\bottomrule
 	\end{tabular}
 	\caption[Experiment 3 ML-Efficacy]{CatBoost Machine learning efficacy scores for different tabular processing techniques which hyperparameter have been tuned towards the TabSynDex similarity score
@@ -240,6 +244,7 @@ TabDDPM-FT was noticeably worse.
 		Real                  & 0.960                     & 0.992          & 0.943                & 0.998          & 0.984            & 0.882          \\
 		TabDDPM$^{s}_{m}$     & \textbf{0.869}            & 0.938          & \textbf{0.930}       & 0.990          & \textbf{0.928}   & \textbf{0.558} \\
 		TabDDPM-BGM$^{s}_{m}$ & 0.856                     & \textbf{0.981} & 0.913                & \textbf{0.992} & 0.915            & 0.476          \\
+		TabDDPM-BGM$^{s}_{n}$ & 0.833                     & 0.975          & 0.916                & \textbf{0.992} & 0.915            & 0.369          \\
 		\bottomrule
 	\end{tabular}
 	\caption[Experiment 3 TabSynDex]{TabSynDex evaluation metric scores for different tabular processing techniques which hyperparameter have been tuned towards the TabSynDex similarity score
@@ -249,6 +254,7 @@ TabDDPM-FT was noticeably worse.
 
 Given the results in \autoref{tab:exp3-ml} and \autoref{tab:exp3-sim}, it seems to be the case that TabDDPM-BGM outperforms TabDDPM in terms of the ML and the Basic score, but only by a slight margin.
 TabDDPM, on the other hand, achieves a higher overall similarity score, mainly due to the superior performance in the Correlation, Support, and \gls{pmse}-score.
+Additionally, not having any transformation after the tabular processing (TabDDPM-BGM$^{s}_{n}$) results in an overall slightly worse similarity score compared to applying a min-max transformation.
 
 
 \section{Visual Results}
@@ -520,8 +526,18 @@ The same is valid for changing to the min-max scaling since it only affects cont
 	\end{subfigure}
 	\begin{subfigure}{0.23\textwidth}
 		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm-simTune.jpg}
+		\caption{TabDDPM-BGM$^{s}_q$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm-simTune-minmax.jpg}
 		\caption{TabDDPM-BGM$^{s}_m$}
+	\end{subfigure}
+	\begin{subfigure}{0.23\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm-simTune-none.jpg}
+		\caption{TabDDPM-BGM$^{s}_n$}
 	\end{subfigure}
 	\caption[Distribution Plots Continuous]{\textit{Age} column for selected model versions. Please note that the Y-axis range may vary due to the range of the synthetic data.}
 	\label{fig:age}
@@ -531,10 +547,18 @@ The same is valid for changing to the min-max scaling since it only affects cont
 Across the baseline models, CTABGAN+$^{ml}$ and TabDDPM$^{ml}_q$ are again best able to reproduce the original data distribution of the example column.
 All TabDDPM-BGM models produce distributions that are comparable to those produced by the baseline TabDDPM.
 Again, TabDDPM-FT, fails to replicate the target distributions at all.
-Interestingly, the similarity score hyperparameter optimization did not affect the TabDDPM distributions to any visible extend.
+Interestingly, the similarity score hyperparameter optimization did not affect the TabDDPM distributions to any visible extent.
 However, the Minmax scaling reduced the TabDDPM capability to create a realistic distribution, whose probability distributions rather follows a Gaussian distribution, failing to replicate the detailed peaks of the original dataset.
-This behavior was not present in the \gls{bgm} version with Minmax scaling.
+This behavior was not present in the \gls{bgm} version with min-max scaling.
 
+Comparing all \gls{bgm} versions reveals interesting observations about the effect of applying normalizations after the tabular processing mechanisms.
+Having no transformation or min-max transformation results in similar plots that can capture the overall distribution but deviate in some cases quite a lot (in the area of x=17 to 28 years).
+Quantile transformation (TabDDPM-BGM$^{s}_q$) reduces the difference in this area, but an oversampling of entries with an age of 90 occurred.
+Interestingly, out of all \gls{bgm} variations, the model tuned after the machine learning efficacy (TabDDPM-BGM$^{ml}_q$) was best able to capture the distribution.
+Looking at its \texit{age} distribution plot, it can be observed that big differences from the real data are few.
+Nevertheless, undersampling of certain ages is present in the synthetic data.
+However, one can observe that this is usually compensated with an oversampling of an age value close to it
+(\eg undersampling of age x=17-18 is compensated by an oversampling of age x=19-20).
 
 \subsection{Cumulative distribution function}
 All \gls{cdf} plots can be found in \autoref{A:cumsum}.
@@ -587,7 +611,7 @@ This phenomenon was not present in the TabDDPM-BGM version with Minmax scaling.
 \newpage
 \section{Discussion}
 \label{ch:results-discussion}
-The goal of this thesis is to investigate the performance of adding the tabular processing mechanisms to the TabDDPM model (\gls{rq}1) and 
+The goal of this thesis is to investigate the performance of adding the tabular processing mechanisms to the TabDDPM model (\gls{rq}1) and
 to expand upon the already existing machine learning efficacy evaluation performed by \cite{kotelnikov2022TabDDPMModellingTabular} through the similarity score metrics proposed by \cite{chundawat2022UniversalMetricRobust}.
 
 \subsection*{Analysis of Visual and Numerical Results}
@@ -596,23 +620,25 @@ to expand upon the already existing machine learning efficacy evaluation perform
 	\centering
 	\begin{tabular}{lrrr}
 		\toprule
-		\textbf{Model}       & \textbf{Accurarcy} & \textbf{F1}     & \textbf{ROC-AUC} \\
+		\textbf{Model}        & \textbf{Accurarcy} & \textbf{F1}    & \textbf{ROC-AUC} \\
 		\midrule
-		Real                 & 0.874              & 0.815           & 0.928            \\
-		TVAE$^{ml}$          & 0.845              & 0.780           & 0.900            \\
-		SMOTE                & 0.858              & 0.791           & 0.910            \\
-		CTABGAN$^{ml}$       & 0.850              & 0.775           & 0.900            \\
-		CTABGAN+$^{ml}$      & 0.855              & 0.775           & 0.907            \\
-		TabDDPM$^{ml}_q$     & 0.860              & 0.794           & 0.913            \\
-		TabDDPM-BGM$^{ml}_q$ & \textbf{0.863}     & \textbf{0.798} & \textbf{0.916}   \\
-		TabDDPM-FT$^{ml}_q$  & 0.785              & 0.552           & 0.821            \\
-		CTABGAN$^{s}_q$      & 0.850              & 0.776           & 0.900            \\
-		TVAE$^{s}$           & 0.845              & 0.780           & 0.900            \\
-		TabDDPM$^{s}_q$      & 0.856              & 0.782           & 0.908            \\
-		TabDDPM-BGM$^{s}_q$  & 0.859              & 0.792           & 0.911            \\
-		TabDDPM-FT$^{s}_q$   & 0.766              & 0.451           & 0.712            \\
-		TabDDPM$^{s}_m$      & 0.856              & 0.778           & 0.910            \\
-		TabDDPM-BGM$^{s}_m$  & 0.857              & 0.787           & 0.909            \\
+		Real                  & 0.874              & 0.815          & 0.928            \\
+		TVAE$^{ml}$           & 0.845              & 0.780          & 0.900            \\
+		SMOTE                 & 0.858              & 0.791          & 0.910            \\
+		CTABGAN$^{ml}$        & 0.850              & 0.775          & 0.900            \\
+		CTABGAN+$^{ml}$       & 0.855              & 0.775          & 0.907            \\
+		TabDDPM$^{ml}_q$      & 0.860              & 0.794          & 0.913            \\
+		TabDDPM-BGM$^{ml}_q$  & \textbf{0.863}     & \textbf{0.798} & \textbf{0.916}   \\
+		TabDDPM-FT$^{ml}_q$   & 0.785              & 0.552          & 0.821            \\
+		CTABGAN$^{s}_q$       & 0.850              & 0.776          & 0.900            \\
+		CTABGAN+$^{s}$        & 0.851              & 0.768          & 0.902            \\
+		TVAE$^{s}$            & 0.845              & 0.780          & 0.900            \\
+		TabDDPM$^{s}_q$       & 0.856              & 0.782          & 0.908            \\
+		TabDDPM-BGM$^{s}_q$   & 0.859              & 0.792          & 0.911            \\
+		TabDDPM-FT$^{s}_q$    & 0.766              & 0.451          & 0.712            \\
+		TabDDPM$^{s}_m$       & 0.856              & 0.778          & 0.910            \\
+		TabDDPM-BGM$^{s}_m$   & 0.857              & 0.787          & 0.909            \\
+		TabDDPM-BGM$^{s}_{n}$ & 0.855              & 0.784          & 0.907            \\
 		\bottomrule
 	\end{tabular}
 	\caption[Overview all ML-Efficacy results]{Overview of all CatBoost machine learning efficacy results for all tested model versions.}
@@ -624,31 +650,33 @@ to expand upon the already existing machine learning efficacy evaluation perform
 	\centering
 	\begin{tabular}{lrrrrrr}
 		\toprule
-		\textbf{Model}       & \textbf{Similarity Score} & \textbf{Basic} & \textbf{Correlation} & \textbf{ML}    & \textbf{Support} & \textbf{pMSE}  \\
+		\textbf{Model}        & \textbf{Similarity Score} & \textbf{Basic} & \textbf{Correlation} & \textbf{ML}    & \textbf{Support} & \textbf{pMSE}  \\
 		\midrule
-		Real                 & 0.960                     & 0.992          & 0.943                & 0.998          & 0.984            & 0.882          \\
-		TVAE$^{ml}$          & 0.658                     & 0.854          & 0.814                & 0.962          & 0.657            & 0.000          \\
-		SMOTE                & 0.723                     & 0.953          & 0.865                & 0.992          & 0.804            & 0.000          \\
-		CTABGAN$^{ml}$       & 0.741                     & 0.940          & 0.832                & 0.984          & 0.947            & 0.000          \\
-		CTABGAN+$^{ml}$      & 0.750                     & 0.969          & 0.882                & 0.990          & 0.892            & 0.019          \\
-		TabDDPM$^{ml}_q$     & 0.759                     & 0.973          & 0.919                & 0.992          & 0.874            & 0.035          \\
-		TabDDPM-BGM$^{ml}_q$ & 0.742                     & 0.964          & 0.918                & \textbf{0.996} & 0.831            & 0.000          \\
-		TabDDPM-FT$^{ml}_q$  & 0.595                     & 0.495          & 0.648                & 0.869          & 0.963            & 0.000          \\
-		CTABGAN$^{s}_q$      & 0.740                     & 0.938          & 0.833                & 0.984          & 0.947            & 0.000          \\
-		TVAE$^{s}$           & 0.658                     & 0.856          & 0.815                & 0.962          & 0.656            & 0.000          \\
-		TabDDPM$^{s}_q$      & 0.852                     & 0.976          & 0.921                & 0.991          & 0.952            & 0.420          \\
-		TabDDPM-BGM$^{s}_q$  & 0.857                     & \textbf{0.982} & 0.858                & 0.991          & 0.920            & 0.532          \\
-		TabDDPM-FT$^{s}_q$   & 0.588                     & 0.512          & 0.619                & 0.818          & \textbf{0.992}   & 0.000          \\
-		TabDDPM$^{s}_m$      & \textbf{0.869}            & 0.938          & \textbf{0.930}       & 0.990          & 0.928            & \textbf{0.558} \\
-		TabDDPM-BGM$^{s}_m$  & 0.856                     & 0.981          & 0.913                & 0.992          & 0.915            & 0.476          \\
+		Real                  & 0.960                     & 0.992          & 0.943                & 0.998          & 0.984            & 0.882          \\
+		TVAE$^{ml}$           & 0.658                     & 0.854          & 0.814                & 0.962          & 0.657            & 0.000          \\
+		SMOTE                 & 0.723                     & 0.953          & 0.865                & 0.992          & 0.804            & 0.000          \\
+		CTABGAN$^{ml}$        & 0.741                     & 0.940          & 0.832                & 0.984          & 0.947            & 0.000          \\
+		CTABGAN+$^{ml}$       & 0.750                     & 0.969          & 0.882                & 0.990          & 0.892            & 0.019          \\
+		TabDDPM$^{ml}_q$      & 0.759                     & 0.973          & 0.919                & 0.992          & 0.874            & 0.035          \\
+		TabDDPM-BGM$^{ml}_q$  & 0.742                     & 0.964          & 0.918                & \textbf{0.996} & 0.831            & 0.000          \\
+		TabDDPM-FT$^{ml}_q$   & 0.595                     & 0.495          & 0.648                & 0.869          & 0.963            & 0.000          \\
+		CTABGAN$^{s}$         & 0.740                     & 0.938          & 0.833                & 0.984          & 0.947            & 0.000          \\
+		CTABGAN+$^{s}$        & 0.784                     & 0.970          & 0.888                & 0.987          & 0.908            & 0.167          \\
+		TVAE$^{s}$            & 0.658                     & 0.856          & 0.815                & 0.962          & 0.656            & 0.000          \\
+		TabDDPM$^{s}_q$       & 0.852                     & 0.976          & 0.921                & 0.991          & 0.952            & 0.420          \\
+		TabDDPM-BGM$^{s}_q$   & 0.857                     & \textbf{0.982} & 0.858                & 0.991          & 0.920            & 0.532          \\
+		TabDDPM-FT$^{s}_q$    & 0.588                     & 0.512          & 0.619                & 0.818          & \textbf{0.992}   & 0.000          \\
+		TabDDPM$^{s}_m$       & \textbf{0.869}            & 0.938          & \textbf{0.930}       & 0.990          & 0.928            & \textbf{0.558} \\
+		TabDDPM-BGM$^{s}_m$   & 0.856                     & 0.981          & 0.913                & 0.992          & 0.915            & 0.476          \\
+		TabDDPM-BGM$^{s}_{n}$ & 0.833                     & 0.975          & 0.916                & 0.992          & 0.915            & 0.369          \\
 		\bottomrule
 	\end{tabular}
 	\caption[Overview all TabSynDex results]{Overview of all TabSynDex score results for all tested model versions.}
 	\label{tab:sim-all}
 \end{table}
-%[TODO: Tune ctabgan+]
 
-Based on the obtained results, it is evident that the processing mechanism for \gls{ft} has failed and is not advisable. 
+
+Based on the obtained results, it is evident that the processing mechanism for \gls{ft} has failed and is not advisable.
 Despite having the highest overall support score, all other measurements and visual representations indicate that the model could not generate synthetic data that closely resembles the original dataset.
 The reason why the \gls{ft} processing does not work well even though it performed well in the cell imputation task \cite{zheng2022DiffusionModelsMissing} remains unclear.
 As a consequence, the TabDDPM-FT variations will not be further discussed or analyzed.
@@ -660,13 +688,15 @@ Overall, models with hyperparameters tuned towards machine learning efficacy out
 The results of the non-diffusion baseline models show that the SMOTE approach is a reliable sampling technique when the synthetic data will be used in a machine-learning scenario.
 Its machine learning efficacy results are superior to the other non-diffusion baseline models, while the model is overall less complex.
 For other scenarios, CTABGAN+ achieves the best overall performance in terms of numerical and visual results for non-diffusion-based models.
-Nevertheless, the best-found CTABGAN+ version is inferior to the best-found diffusion model [TODO: Check after sim tune of ctabgan+].
+Nevertheless, the best-found CTABGAN+ version is inferior to the best-found diffusion model.
 
 Changing the tuning strategy to the similarity score allowed several observations to be made.
-Firstly, the non-diffusion models' metric results had no significant effects on the baseline models.
-All of their metric scores stayed roughly the same.
-Diffusion models, on the other hand, showed several changes in the numerical results.
-Overall, diffusion models with a similarity score tuning show reduced machine learning efficacy metric scores compared to their machine learning efficacy counterpart.
+Firstly for the non-diffusion models', metric results had not significantly changed after switching to similarity score tuning.
+All of their metric scores stayed roughly the same, with the exception of CTABGAN+.
+Only for the CTABGAN+ model, a similarity tuning resulted in a noteworthy metric increase, especially for its \gls{pmse} score, which increased by +0.14\%-points.
+
+Diffusion models, on the other hand, showed more noteworthy changes in their numerical metric results.
+Overall, diffusion models with a similarity score tuning show reduced machine learning efficacy metric scores compared to their machine learning efficacy counterparts.
 While this reduction is relatively small, the similarity metrics have increased significantly.
 Especially the \gls{pmse} score was increased (+0.4-0.5\%-points), thanks to the similarity tuning.
 % Sim Tune - pmse
@@ -675,7 +705,7 @@ Previously, all non-diffusion baseline models failed to produce data that is non
 This confirms the observation made by the authors of \cite{chundawat2022UniversalMetricRobust}, who also observe that all of their tested models (mainly \gls{gan}-based) achieve a \gls{pmse} of 0.
 \cite{chundawat2022UniversalMetricRobust} experiments only identified one model, a \gls{gan} model with gradient penalty and Wasserstein distance, which was able to achieve a peak \gls{pmse} score of 0.4 (scores are not comparable, since a different dataset was used).
 Tuning the hyperparameter towards the similarity score, which includes the \gls{pmse} score, allows increasing the \gls{pmse} score to values between $0.42$ and $0.55$ for diffusion models TabDDPM and TabDDPM-BGM.
-The same tuning strategy did not affect the \gls{pmse} score of baseline models like TVAE or CTABGAN. 
+The same tuning strategy did not affect the \gls{pmse} score of baseline models like TVAE or CTABGAN; only CTABGAN+ was affected but at a lower amplitude compared to diffusion models.
 This indicates that diffusion-based models are better able to produce synthetic data that is harder to differentiate from its real counterpart.
 
 In addition to the increase of the \gls{pmse} score, the other metrics that make up the similarity score have also increased, but on a smaller scale.
@@ -688,7 +718,7 @@ It scored highest in both correlation and \gls{pmse}, leading to a high overall 
 According to \cite{scikit-learndevelopers2023QuantileTransformer}, the quantile transform function is a non-linear transformation that may distort correlations between variables.
 This is also observable in the correlation metric score, where TabDDPM$^{s}_q$ and TabDDPM-BGM$^{s}_q$ have a lower correlation score than their min-max scaling counterpart.
 However, it is essential to also take into consideration the visual results.
-Although the correlation difference plot of TabDDPM$^{s}_m$ appears satisfactory, the distribution and \gls{cdf} plot of continuous columns look worse when compared to those of other models. 
+Although the correlation difference plot of TabDDPM$^{s}_m$ appears satisfactory, the distribution and \gls{cdf} plot of continuous columns look worse when compared to those of other models.
 The continuous plots of TabDDPM$^{s}_m$ lack details and rather approximate the original distribution.
 The model's quantile transform counterpart TabDDPM$^{s}_q$ does not show this behavior, producing overall more realistic plots.
 This indicates that the min-max scaling, which is applied to the numerical columns, causes this kind of behavior.
@@ -696,10 +726,10 @@ Since min-max scaling scales the data according to the minimum and maximum value
 This results in a bad normalization if even one value in the column is unusually large or small.
 The \gls{bgm} processor also makes use of a form of min-max encoding in their "general transform" \cite[p. 7]{zhao2022CTABGANEnhancingTabular} (compare \autoref{ch:BGMProcessor}).
 However, Zhao \etal \cite{zhao2022CTABGANEnhancingTabular} emphasizes as well that this encoding should only be applied to simple continuous distributions like a single-mode Gaussian distribution.
-TabDDPM-BGM$^{s}_m$ does not show this behavior even though min-max scaling is applied. 
+TabDDPM-BGM$^{s}_m$ does not show this behavior even though min-max scaling is applied.
 However, for TabDDPM-BGM, after the min-max is inverted, the tabular processing mechanism is also inverted, which involves the mode-specific normalization in the case of the \gls{bgm}-Processor.
 This indicates that applying min-max scaling to the data before sending it through TabDDPM reduces the data quality so that TabDDPM struggles to replicate the continuous columns.
-However, this issue does not arise for TabDDPM-BGM, as the \gls{bgm} mechanisms preprocess the data before apllying min-max normalization.
+However, this issue does not arise for TabDDPM-BGM, as the \gls{bgm} mechanisms preprocess the data before applying min-max normalization.
 During this procedure, continuous columns appear to be transformed into a format that is less impacted by min-max scaling than if it were not processed.
 
 To summarize, the following observations could be made:
@@ -709,7 +739,7 @@ To summarize, the following observations could be made:
 	\item The \gls{bgm} processor produced good numerical and visual results.
 	\item TabDDPM-BGM$^{ml}_q$ shows the best machine learning efficacy performance across all tested metrics.
 	\item Out of the baseline models, SMOTE is a reliable sampling technique for non-diffusion baseline models in machine learning scenarios.
-	In other scenarios, CTABGAN+ is the preferred non-diffusion model.
+	      In other scenarios, CTABGAN+$^{s}$ is the preferred non-diffusion model.
 	\item Diffusion models outperform non-diffusion models in tabular data synthesis.
 	\item Diffusion models with similarity score tuning led to models with a non-zero \gls{pmse} score.
 	\item Hyperparameter tuning is more important for diffusion models in tabular data synthesis, as their tuning strategy significantly affects metric outcomes.
@@ -747,10 +777,10 @@ Hence, the results suggest that introducing a tabular processor to the synthetis
 In this thesis, TabSynDex evaluation metric \cite{chundawat2022UniversalMetricRobust}, in addition to a CatBoost machine learning efficacy, was performed.
 This evaluation revealed new insights into the performance of diffusion-based models compared to other model types in tabular data synthesis.
 Overall, it could be observed that the superior performance of TabDDPM compared to the non-diffusion models found in \cite{kotelnikov2022TabDDPMModellingTabular}
-could not only be confirmed with the results of this thesis, but it could be shown that the superior performance also extends to the other tested metrics (basic statistics, correlations, ml, support).
+could not only be confirmed with the results of this thesis, but it could be shown that the superior performance also extends to the other tested metrics (basic statistics, correlations, ml, support, \gls{pmse}).
 
 Furthermore, the evaluation also highlights the importance of hyperparameter tuning for diffusion models in tabular data synthesis.
-While a change in the hyperparameter tuning strategy hardly affected non-diffusion models, it greatly affected the TabDDPM approach.  
+While a change in the hyperparameter tuning strategy hardly affected non-diffusion models, it greatly affected the TabDDPM approach.
 If hyperparameters are tuned towards the TabSynDex Similarity score, diffusion models outperform all other models, including \gls{vae} and \gls{gan}-based approaches,
 in all tested metrics.
 The most significant effect was visible in the \gls{pmse} score, indicating the differentiability of the synthetic data from the real data.
@@ -763,8 +793,8 @@ Additionally, the visual inspection revealed the effects of changing the hyperpa
 For example, TabDDPM$^{s}_m$ metrics result suggest that it produces the best model overall to produce synthetic data, as it has the highest overall similarity score.
 However, its plots show a reduced capability to recreate continuous columns accurately.
 
-In summary, the evaluation performed in the thesis showed that TabDDPM and its \gls{bgm} variant outperform other generative models, 
-including \gls{vae} and \gls{gan}-based approaches, in an extended similarity evaluation based on the TabSynDex metric, 
+In summary, the evaluation performed in the thesis showed that TabDDPM and its \gls{bgm} variant outperform other generative models,
+including \gls{vae} and \gls{gan}-based approaches, in an extended similarity evaluation based on the TabSynDex metric,
 machine learning efficacy and a visualization analysis.
 Hyperparameter tuning greatly affected the performance of diffusion models, and visualizations revealed that diffusion models produce synthetic data that more closely resemble the original data than non-diffusion models.
 Ultimately, this thesis showed the importance of an elaborate evaluation of synthetic data, as new insights on the behavior of diffusion models for tabular data synthesis could be gained,
@@ -775,17 +805,17 @@ Additionally, such an extended evaluation allows for a holistic view of the prod
 \label{ch:results-limitations}
 %-------------------------------------------------------------------------
 
-This study has some limitations that need to be acknowledged. 
-The most significant limitation is that only one real dataset (the adult dataset \cite{Dua:2019}) has been used to evaluate the performance of different models. 
-Therefore, it is possible that some model versions may perform better or worse on other datasets with different characteristics such as size, dimensionality, or complexity. 
+This study has some limitations that need to be acknowledged.
+The most significant limitation is that only one real dataset (the adult dataset \cite{Dua:2019}) has been used to evaluate the performance of different models.
+Therefore, it is possible that some model versions may perform better or worse on other datasets with different characteristics such as size, dimensionality, or complexity.
 The reason for this was the limited access to computing resources.
 Consequently, all observations and results made in this thesis only hold for the adult dataset and should not be generalized until they can be confirmed on multiple datasets.
 
-A second limitation is that only a fixed set of hyperparameters were tested during hyperparameter tuning. 
+A second limitation is that only a fixed set of hyperparameters were tested during hyperparameter tuning.
 Therefore, it is possible that some methods may benefit from further optimization or customization.
 
 Furthermore, although the set of evaluation metrics has been larger compared to the original authors \cite{kotelnikov2022TabDDPMModellingTabular},
-an additional, even more extensive evaluation should be considered. 
+an additional, even more extensive evaluation should be considered.
 In particular, this experiment did not consider privacy- and model-complexity-related metrics that would likely reveal new valuable insights.
 
 Lastly, diffusion models, like most other deep neural networks, suffer from a lack of interpretability, as they are considered a black-box model \cite{benitez1997AreArtificialNeural}.
@@ -797,7 +827,7 @@ As implementing diffusion models for synthesizing tabular data represents a rela
 Firstly, to overcome limitations presented in \autoref{ch:results-limitations}, a more extensive set of datasets is required to confirm the results observed in this thesis.
 More datasets with diverse characteristics to generalize the findings and identify potential sources of variation or bias
 
-Moreover, incorporating a variety of metrics with diverse perspectives is essential for evaluating the performance and trade-offs of distinct tabular data generation methods. 
+Moreover, incorporating a variety of metrics with diverse perspectives is essential for evaluating the performance and trade-offs of distinct tabular data generation methods.
 This is particularly relevant for privacy-related metrics, as recent research suggests that diffusion models may not effectively protect privacy and allow to extract training data samples \cite{carlini2023ExtractingTrainingData}.
 
 Moreover, it is likely that diffusion models can be further improved through several changes.

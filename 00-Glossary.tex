@@ -21,7 +21,7 @@
         Latent variable models are a type of probabilistic model that use latent or hidden variables to explain the observed data. 
         They model the relationship between the observed data and the latent variables through a set of conditional probability distributions.
         The goal is often to use this joint distribution to make predictions or perform inferences about the data, which typically involves marginalizing over the latent variables. 
-        This means integrating over all possible values of the latent variables to obtain the probability distribution of the observed data. \cite{skrondal2007LatentVariableModelling}
+        This means integrating over all possible values of the latent variables to obtain the probability distribution of the observed data \cite{skrondal2007LatentVariableModelling}
         \cite{bishop1998latent}
     },
     plural={latent variable models}
@@ -34,6 +34,28 @@
     exclusively by the outcome of the preceding event in a series of potential occurrences \cite{gagniuc2017MarkovChainsTheory}
     },
     plural={Markov chains}
+}
+
+\newglossaryentry{oh}{
+    name={one-hot},
+    description={A one-hot vector is a binary vector used to represent categorical data in machine learning and deep learning algorithms.
+    It is characterized by having exactly one element set to 1 (the "hot" element) and all other elements set to 0. 
+    Suppose a dataset contains a "color" feature with three distinct categories: red, green, and blue. 
+    Using one-hot encoding, a unique one-hot vector for each color would look like the following:\\
+    Red: [1, 0, 0]\\
+    Green: [0, 1, 0]\\
+    Blue: [0, 0, 1]
+    },
+    plural={one-hot}
+}
+
+\newglossaryentry{pd}{
+    name={pandas},
+    description={
+        Pandas \cite{mckinney-proc-scipy-2010} is an open-source Python library that provides high-performance, easy-to-use data structures, and data analysis tools. 
+        It is designed to facilitate data manipulation, cleaning, analysis, and visualization in Python
+    },
+    plural={pandas}
 }
 
 % Akkronyme
@@ -54,7 +76,7 @@
 \newacronym{mse}{MSE}{Mean-Squared Error}
 \newacronym{pcd}{PCD}{Pairwise Correlation Difference}
 \newacronym{dp}{DP}{Differential Privacy}
-\newacronym{pmse}{pMSE}{Propensity Mean Squared Error}
+\newacronym{pmse}{pMSE}{propensity Mean Squared Error}
 \newacronym{rmse}{RMSE}{Root Mean Squared Error}
 \newacronym{gmm}{GMM}{Gaussian Mixture Model}
 \newacronym{nlp}{NLP}{Natural Language Processing}

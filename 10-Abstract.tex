@@ -4,5 +4,26 @@
 \begin{center}
 	\textbf{\LARGE Abstract}
 \end{center}
-	In this paper, we present a new approach for solving a long-standing problem in the field of X.
-\cleardoublepage
+The growing demand for data in machine learning and deep learning applications, combined with the difficulties in acquiring and gathering real-world data, has fueled the development of synthetic data generation techniques.
+Synthetic data, which is artificially generated but modeled on real data, can address privacy constraints and provide a cost-effective alternative for various use-cases.
+With diffusion models, a newly emerged data generation technique, the quality of synthetic images increased and outperformed state-of-the-art \gls{gan}-based solutions. 
+Recently, TabDDPM, a generative diffusion model, outperformed \glspl{gan} on tabular data synthesis as well.
+Synthesizing tabular data presents unique challenges due to the complexity of the underlying joint distributions between variables and the need to capture intricate relationships among features.
+While \gls{gan} based solutions have been heavily explored in the literature, diffusion-based solutions are relatively new and unexplored.
+
+
+This thesis investigates whether adapting different tabular processing mechanisms from the literature positively affects the diffusion model's generative capability by encoding the tabular data into a different data format that specifically addresses known challenges of tabular data.
+By extending the existing tabular data generation pipeline of TabDDPM, various tabular encoding and decoding strategies are implemented.
+It focuses on two tabular processing mechanisms that encode the data before training and revert it back after sampling synthetic data: a static embedding technique named \gls{ft} and a mode-specific-normalization encoding technique that makes use of a \gls{bgm}.
+In addition to that, this study touches upon the effects of normalization and hyperparameter optimization on diffusion models for tabular data synthesis.
+The extended pipeline was evaluated using a CatBoost-based machine learning efficacy evaluation, a similarity metric TabSynDex, covering multiple similarity factors, and an analysis of visualization of the synthetic data.
+
+
+The results demonstrate the superiority of diffusion models over other generative techniques, such as \Glspl{gan} and \gls{vae}, in generating synthetic tabular data.
+The addition of a \gls{bgm}-based processing mechanism improves the TabDDPM model's performance in machine learning scenarios, while the \gls{ft} approach fails to produce meaningful data. 
+The importance of hyperparameter tuning and data normalization strategies is highlighted, as well as the need for visual evaluation to accurately assess synthetic data quality. 
+The effect of tuning the hyperparameters toward the TabSynDex similarity metric is bigger on diffusion models than on non-diffusion models.
+This indicates the diffusion models' flexibility to generate synthetic data to cater to the specific requirements of the intended use case.
+Lastly, diffusion models were capable of producing synthetic data that is more non-differentiable from the real data compared to non-diffusion models, which was indicated by a non-zero \gls{pmse} score. 
+
+\cleardoublepage 

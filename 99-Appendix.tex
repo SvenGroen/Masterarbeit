@@ -140,23 +140,27 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 	\centering
 	\begin{subfigure}{0.3\textwidth}
 		\includegraphics[width=\textwidth]{images/correlation_difference/ctabgan_simTune.jpg}
-		\caption{CTABGAN$^s_q$}
-
+		\caption{CTABGAN$^s$}
+	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\textwidth]{images/correlation_difference/ctabgan+_simTune.jpg}
+		\caption{CTABGAN+$^s$}
 	\end{subfigure}
     \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{images/correlation_difference/tvae_simTune.jpg}
         \caption{TVAE$^s$}
-
     \end{subfigure}
 	\begin{subfigure}{0.3\textwidth}
 		\includegraphics[width=\textwidth]{images/correlation_difference/tab-ddpm-bgm-simTune.jpg}
 		\caption{TabDDPM-BGM$^{s}_q$}
-
 	\end{subfigure}
     \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{images/correlation_difference/tab-ddpm-bgm-simTune-minmax.jpg}
         \caption{TabDDPM-BGM$^{s}_m$}
-
+    \end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{images/correlation_difference/tab-ddpm-bgm-simTune-none.jpg}
+        \caption{TabDDPM-BGM$^{s}_n$}
     \end{subfigure}
 	\begin{subfigure}{0.3\textwidth}
 		\includegraphics[width=\textwidth]{images/correlation_difference/tab-ddpm-ft-simTune.jpg}
@@ -176,6 +180,10 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 		\includegraphics[width=\textwidth]{images/pca/ctabgan_simTune.jpg}
 		\caption{CTABGAN$^s$}
 	\end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\textwidth]{images/pca/ctabgan+_simTune.jpg}
+		\caption{CTABGAN+$^s$}
+	\end{subfigure}
     \begin{subfigure}{0.3\textwidth}
         \includegraphics[width=\textwidth]{images/pca/tvae_simTune.jpg}
         \caption{TVAE$^s$}
@@ -192,6 +200,10 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 		\includegraphics[width=\textwidth]{images/pca/tab-ddpm-bgm-simTune-minmax.jpg}
 		\caption{TabDDPM-BGM$^{s}_m$}
 		\label{fig_a:pca_TabDDPMBM}
+    \end{subfigure}
+	\begin{subfigure}{0.3\textwidth}
+		\includegraphics[width=\textwidth]{images/pca/tab-ddpm-bgm-simTune-none.jpg}
+		\caption{TabDDPM-BGM$^{s}_n$}
     \end{subfigure}
     \caption[PCA plots Experiment Models]{Principle Component Analysis for different model versions}
     \label{fig_a:pca_diff}
@@ -214,17 +226,22 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 	\begin{figure}[h]
 		\centering
 		\hfill
-		\begin{subfigure}{0.45\linewidth}
+		\begin{subfigure}{0.3\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/ctabgan.jpg}
 			\caption{CTABGAN$^{ml}$}
 		\end{subfigure}
 		\hfill
-		\begin{subfigure}{0.45\linewidth}
+		\begin{subfigure}{0.3\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/ctabgan_simTune.jpg}
 			\caption{CTABGAN$^s$}
 		\end{subfigure}	
 		\hfill
-		\caption[Distribution plots CTABGAN Models]{Distribution plots for CTABGAN$^{ml}$ and CTABGAN$^s$}
+		\begin{subfigure}{0.3\linewidth}
+			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/ctabgan+_simTune.jpg}
+			\caption{CTABGAN+$^s$}
+		\end{subfigure}	
+		\hfill
+		\caption[Distribution plots CTABGAN Models]{Distribution plots for CTABGAN$^{ml}$, CTABGAN$^s$ and CTABGAN+$^s$}
 		\label{fig_a:dist_1}
 	\end{figure}
 \end{landscape}
@@ -307,16 +324,21 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 	\begin{figure}[h]
 		\centering
 		\hfill
-		\begin{subfigure}{0.4\linewidth}
+		\begin{subfigure}{0.3\linewidth}
+			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/tab-ddpm-bgm-simTune-none.jpg}
+			\caption{TabDDPM-BGM$^{s}_n$}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.3\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/tab-ddpm-ft.jpg}
 			\caption{TabDDPM-FT$^{ml}_q$}
 		\end{subfigure}
 		\hfill
-		\begin{subfigure}{0.4\linewidth}
+		\begin{subfigure}{0.3\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/tab-ddpm-ft-simTune.jpg}
 			\caption{TabDDPM-FT$^{ml}_q$}
 		\end{subfigure}
-		\caption[Distribution plots TabDDPM-FT Models]{Distribution plots for TabDDPM-FT variations}
+		\caption[Distribution plots TabDDPM-FT and -BGM Models]{Distribution plots for TabDDPM-FT variations}
 		\label{fig_a:dist_5}
 	\end{figure}
 \end{landscape}
@@ -343,17 +365,22 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 	\begin{figure}[h]
 		\centering
 		\hfill
-		\begin{subfigure}{0.45\linewidth}
+		\begin{subfigure}{0.3\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/ctabgan.jpg}
 			\caption{CTABGAN$^{ml}$}
 		\end{subfigure}
 		\hfill
-		\begin{subfigure}{0.45\linewidth}
+		\begin{subfigure}{0.3\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/ctabgan_simTune.jpg}
 			\caption{CTABGAN$^s$}
 		\end{subfigure}	
 		\hfill
-		\caption[Cumulative Distribution plots CTABGAN Models]{Cumulative Distribution plots for CTABGAN$^{ml}$ and CTABGAN$^s$}
+		\begin{subfigure}{0.3\linewidth}
+			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/ctabgan+_simTune.jpg}
+			\caption{CTABGAN+$^s$}
+		\end{subfigure}	
+		\hfill
+		\caption[Cumulative Distribution plots CTABGAN Models]{Cumulative Distribution plots for CTABGAN$^{ml}$, CTABGAN$^s$ and CTABGAN+$^s$}
 		\label{fig_a:cumsum_1}
 	\end{figure}
 \end{landscape}
@@ -436,12 +463,17 @@ executed after the previous evaluation script (compare \autoref{fig:a_pipeline_c
 	\begin{figure}[h]
 		\centering
 		\hfill
-		\begin{subfigure}{0.4\linewidth}
+		\begin{subfigure}{0.3\linewidth}
+			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/tab-ddpm-bgm-simTune-none.jpg}
+			\caption{TabDDPM-BGM$^{s}_n$}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}{0.3\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/tab-ddpm-ft.jpg}
 			\caption{TabDDPM-FT$^{ml}_q$}
 		\end{subfigure}
 		\hfill
-		\begin{subfigure}{0.4\linewidth}
+		\begin{subfigure}{0.3\linewidth}
 			\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/cumsums/tab-ddpm-ft-simTune.jpg}
 			\caption{TabDDPM-FT$^{ml}_q$}
 		\end{subfigure}

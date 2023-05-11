@@ -22,6 +22,7 @@ This has shown that changing the tabular data format greatly affects the diffusi
 Furthermore, the importance of hyperparameter tuning for diffusion models was highlighted.
 Diffusion models tuned towards the TabSynDex similarity score greatly improved several of the TabSynDex metrics.
 In the performed experiments, diffusion models have been the first models to achieve a non-zero \gls{pmse} score, which other current state-of-art models have not been capable of.
+Hence, diffusion models are better at producing synthetic data that is more non-differentiable from the real data \cite{chundawat2022UniversalMetricRobust} compared to tested non-diffusion models.
 Further experiments showed how changing the data normalization strategy can, on the one hand, increase metric results but, on the other hand, worsen visual results.
 This insight underlines the importance of a visual evaluation of synthetic data to estimate the quality of the produced synthetic data properly.
 From all performed experiments, it can be concluded that diffusion-based tabular data synthesis is superior to the synthesis of other model types, such as \gls{gan} or \gls{vae}.

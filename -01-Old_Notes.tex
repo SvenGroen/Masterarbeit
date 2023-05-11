@@ -49,7 +49,7 @@
 %         - inductive bias not present --> cnns unsuited? %LOOKUP MEANING IN SOURCE
 %     3. dependency on preprocessing
 %         - performance depends strongly on preprocessing strategy \cite{gorishniy2022EmbeddingsNumericalFeatures}
-%         - categorical preprocess especially challenge --> sparse feature matrix (one-hot) or synthetic ordering of unordered values (label enc) \cite{borisov2022DeepNeuralNetworks}
+%         - categorical preprocess especially challenge --> sparse feature matrix (\gls{oh}) or synthetic ordering of unordered values (label enc) \cite{borisov2022DeepNeuralNetworks}
 %         - information loss during (//due to the conversions?) \cite{fitkov-norris2012EvaluatingImpactCategorical}
 %     4. Importance of single feature
 %         - images class change only if several pixel change, tabular data 1 cell entity is sufficient for prediciton flip
@@ -58,7 +58,7 @@
 % \cite{borisov2022DeepNeuralNetworks} provides a taxonomy for data learning for tabular data with "data transformation methods" into "single dim encodings" and "multi dim encodings" 
 % two dimensions:\cite{borisov2022DeepNeuralNetworks}
 %     1. single dimensional encoding
-%         - categorical encoding (ordinal, label, one-hot, binary encoding, leave-one-out-encoding, hash bashed) %Explanation for each in the paper
+%         - categorical encoding (ordinal, label, \gls{oh}, binary encoding, leave-one-out-encoding, hash bashed) %Explanation for each in the paper
 %     2. multi-dimensional encoding 
 %         - vime trains encoder learns a representations of cat and num features into homogeneous representation
 %         - Supertml transforms tabular data into image format
@@ -70,7 +70,7 @@
 % "the embedding step has a substantial impact on the model effectiveness, and its proper design can be a game-changer in tabular DL"
 % categorical:
 % - ordinal encoding -> assign int to each category
-% - one-hot -> binary vector for each category
+% - \gls{oh} -> binary vector for each category
 
 
 
