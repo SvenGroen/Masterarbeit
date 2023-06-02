@@ -94,7 +94,7 @@ This general transformation is mapping the values into a range of [-1, 1], which
 Mathematically, the encoded datapoint $x^t_i$ can be computed using the original datapoint $x_i$ in column $x$ through the following formula:
 \begin{equation}
 	\begin{align*}
-		x^t_i=2* \frac{x_i-\min(x)}{\max(x)}-\min(x)-1
+		x^t_i=2* \frac{x_i-\min(x)}{\max(x)-\min(x)}-1
 	\end{align*}
 \end{equation}
 Which can easily be reversed in the following way:

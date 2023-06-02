@@ -20,7 +20,15 @@
 	urlcolor=black
 	]{hyperref}
 % Neue packages
+% \usepackage[toc, acronym]{glossaries}
 \usepackage[toc, acronym]{glossaries}
+
+% adds "Pages" before the page numbers in the glossary
+\renewcommand*{\glossaryentrynumbers}[1]{
+	{\\Pages: #1}
+}
+
+% \usepackage{natbib}
 %\usepackage[toc, acronym]{glossaries}
 \usepackage{pdfpages}
 \usepackage{float}

@@ -58,7 +58,7 @@ their performance is additionally evaluated using the similarity evaluation as p
 	\centering
 	\begin{tabular}{lccr}
 		\toprule
-		\textbf{Model}     & \textbf{Accurarcy} & \textbf{F1}    & \textbf{ROC-AUC} \\
+		\textbf{Model}     & \textbf{Accuracy} & \textbf{F1}    & \textbf{ROC-AUC} \\
 		\midrule
 		Real               & 0.874              & 0.815          & 0.928            \\
 		TVAE$^{ml}$        & 0.845              & 0.781          & 0.900            \\
@@ -113,7 +113,7 @@ The results of the machine learning efficacy and TabSynDex metric results can be
 	\centering
 	\begin{tabular}{lrrr}
 		\toprule
-		\textbf{Model}         & \textbf{Accurarcy} & \textbf{F1}    & \textbf{ROC-AUC} \\
+		\textbf{Model}         & \textbf{Accuracy} & \textbf{F1}    & \textbf{ROC-AUC} \\
 		\midrule
 		Real                   & 0.874              & 0.815          & 0.928            \\
 		TabDDPM$^{ml}_{q}$     & 0.860              & 0.794          & 0.913            \\
@@ -166,7 +166,7 @@ The machine learning efficacy and TabSynDex metric results can be found in \auto
 	\centering
 	\begin{tabular}{lrrr}
 		\toprule
-		\textbf{Model}        & \textbf{Accurarcy} & \textbf{F1}    & \textbf{ROC-AUC} \\
+		\textbf{Model}        & \textbf{Accuracy} & \textbf{F1}    & \textbf{ROC-AUC} \\
 		\midrule
 		Real                  & 0.874              & 0.815          & 0.928            \\
 		TabDDPM$^{s}_{q}$     & 0.856              & 0.782          & 0.908            \\
@@ -222,7 +222,7 @@ TabDDPM-FT was noticeably worse.
 	\centering
 	\begin{tabular}{lrrr}
 		\toprule
-		\textbf{Model}        & \textbf{Accurarcy} & \textbf{F1}    & \textbf{ROC-AUC} \\
+		\textbf{Model}        & \textbf{Accuracy} & \textbf{F1}    & \textbf{ROC-AUC} \\
 		\midrule
 		Real                  & 0.874              & 0.815          & 0.928            \\
 		TabDDPM$^{s}_{m}$     & 0.856              & 0.778          & \textbf{0.910}   \\
@@ -620,7 +620,7 @@ to expand upon the already existing machine learning efficacy evaluation perform
 	\centering
 	\begin{tabular}{lrrr}
 		\toprule
-		\textbf{Model}        & \textbf{Accurarcy} & \textbf{F1}    & \textbf{ROC-AUC} \\
+		\textbf{Model}        & \textbf{Accuracy} & \textbf{F1}    & \textbf{ROC-AUC} \\
 		\midrule
 		Real                  & 0.874              & 0.815          & 0.928            \\
 		TVAE$^{ml}$           & 0.845              & 0.780          & 0.900            \\
@@ -682,7 +682,7 @@ The reason why the \gls{ft} processing does not work well even though it perform
 As a consequence, the TabDDPM-FT variations will not be further discussed or analyzed.
 
 The \gls{bgm} processor variant was able to produce not only good numerical but also visual results.
-In terms of machine learning efficacy, the TabDDPM-BGM$^{ml}_q$ version shows the best machine learning efficacy performance across all tested metrics (\autoref{tab:ml-all}: Accurarcy, F1 and AUC-ROC and \autoref{tab:sim-all}: ML).
+In terms of machine learning efficacy, the TabDDPM-BGM$^{ml}_q$ version shows the best machine learning efficacy performance across all tested metrics (\autoref{tab:ml-all}: Accuracy, F1 and AUC-ROC and \autoref{tab:sim-all}: ML).
 However, the advantage over its simpler counterpart TabDDPM$^{ml}_q$ is only marginal (+0.003\%-points).
 Overall, models with hyperparameters tuned towards machine learning efficacy outperform models with hyperparameters tuned towards similarity score in the machine learning efficacy scores, as one would expect.
 The results of the non-diffusion baseline models show that the SMOTE approach is a reliable sampling technique when the synthetic data will be used in a machine-learning scenario.

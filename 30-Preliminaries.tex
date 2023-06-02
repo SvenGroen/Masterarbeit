@@ -35,6 +35,13 @@ These random variables follow an unknown joint distribution $\mathbb{P}(Q_{1:N_q
 One row $r_j = \{q_{1,j}, \dots, q_{N_q,j}, p_{1,j}, \dots, p_{N_p,j}\}$, $j \in \{1, \dots, n\}$, is one observation from the joint distribution.
 \end{displayquote}
 
+The term "table" as described in this definition aligns with the concept of a single "table" or "relation" as described in the classical relational model \cite{codd1970RelationalModelData} commonly used in modern relational databases \cite{w.eembley2009RelationalModel}.
+Essentially, this definition takes a probabilistic view of the table in a relational database.
+Rather than viewing the data within the table as static or independent values, it perceives them as elements derived from an unseen, underlying probability distribution.
+This is an important perspective for statistical analysis and machine learning tasks on database content.
+
+\cite{codd1970RelationalModelData}
+
 For consistency and simplicity, this thesis will further refer to qualitative columns as \textit{categorical} and to quantitative columns as \textit{continuous} or \textit{numerical}. 
 Discrete values are not separately mentioned but should be considered included in \textit{continuous}/\textit{numerical} columns.
 
@@ -195,7 +202,7 @@ This transformation preserves the rank order of the values but distorts correlat
 Synthetic data can be defined as "(...) artificially generated data, that are modeled on real data, with the same structure and properties as the original data (...)" \cite[p. 2]{kaloskampis2020SyntheticDataCivil} 
 but without containing any actual specific information or entries of the actual real data. 
 While first synthetic data approaches \cite{gelman1992InferenceIterativeSimulation} focused on imputation techniques to generate synthetic data, the advent of deep learning has led to the topic gaining importance \cite{kowalczyk2022TaxonomyUseSynthetic, kaloskampis2020SyntheticDataCivil}.
-Acquiring and collecting real data can be costly \cite{panova2022HowSyntheticData} or may simply not be possible due to the sensitivity of the data (\eg medical records) \cite{esteban2017RealvaluedMedicalTimea} or due to regulatory restrictions, such as the \gls{gdpr} \cite{european_commission_regulation_2016}.
+Acquiring and collecting real data can be costly \cite{panova2022HowSyntheticData} or may simply not be possible due to the sensitivity of the data (\eg medical records) \cite{esteban2017RealvaluedMedicalTimea} or due to regulatory restrictions, such as the \gls{gdpr} \glsadd{gdpraccr} \cite{european_commission_regulation_2016}.
 Synthetic data on the other hand is, compared to real data, cheap to generate \cite{leminh2021AirGenGANbasedSynthetica}, fulfils regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular} and can substitute real data in software development for testing \cite{whiting2008CreatingRealisticScenariobased} or machine learning training \cite{panova2022HowSyntheticData}.
 Hence, synthetic data could be used as an alternative to real data in various use cases.
 Access to data is still one of the biggest bottlenecks when developing machine learning or deep learning models \cite{fan2020RelationalDataSynthesisa}.
@@ -293,12 +300,12 @@ A simple \gls{mlp} is already able to learn almost any function, which is why th
 
 
 \begin{figure}
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.8\textwidth}
       \includegraphics[width=\linewidth]{images/perceptron.png}
       \caption[Perceptron]{Perceptron} \label{fig:perceptron}
     \end{subfigure}%
     \hspace*{\fill}   % maximize separation between the subfigures
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.8\textwidth}
       \includegraphics[width=\linewidth]{images/mlp.png}
       \caption[Multilayer Perceptron]{multilayer perceptron} \label{fig:mlp}
     \end{subfigure}%
@@ -315,9 +322,13 @@ In a typical convolutional network, a layer starts by performing multiple convol
 The linear activations that are produced by the convolutions are sent through a non-linear activation function (usually a \gls{relu}).
 Lastly, a pooling function is applied to the output of the activation function \cite{aggarwal2018NeuralNetworksDeep}.
 A pooling function reduces the spatial size of the created feature maps while retaining their essential features \cite{Goodfellow-et-al-2016, aggarwal2018NeuralNetworksDeep}.
-Goodfellow \etal also describes it as a type of "summary statistic of the nearby outputs" \cite[p. 335]{Goodfellow-et-al-2016}.
+Goodfellow \etal also describe it as a type of "summary statistic of the nearby outputs" \cite[p. 335]{Goodfellow-et-al-2016}.
 Pooling allows the features extracted by the \gls{cnn} to be less sensitive to changes in the position of the input data.
 This property is known as translation invariance and is one of the reasons why \glspl{cnn} perform so well with data formats that have local spatial dependencies \cite{Goodfellow-et-al-2016, aggarwal2018NeuralNetworksDeep}.
+Another way to reduce the dimensionality is to increase the convolution stride.
+A stride refers to the step size or the number of pixels by which the filter, also known as the convolutional kernel, moves across the input feature map during the convolution operation \cite{aggarwal2018NeuralNetworksDeep}.
+The effect of using a stride greater than 1 is that it reduces the spatial dimensions of the output feature map. 
+Specifically, the height and width of the output are determined by the formula $(L_q - F_q)/S_q + 1$, where $L_q$ is the height (or width) of the input, $F_q$ is the size of the filter, and $S_q$ is the stride in layer $q$ \cite[p. 324]{aggarwal2018NeuralNetworksDeep}.
 
 In feed-forward neural networks, information flows forward through the network from input to output node, hence, there are no internal connections that allow
 the output of the model to be fed back into the network as inputs \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
@@ -343,19 +354,19 @@ This way, even a very small gradient can flow more easily back through the netwo
 The decision of which layers to skip is learned by the model itself during the training through the backpropagation algorithm \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
 
 \begin{figure}
-    \begin{subfigure}{0.31\textwidth}
+    \begin{subfigure}{0.7\textwidth}
       \includegraphics[width=\linewidth]{images/cnns.png}
       \captionsetup{justification=centering}
       \caption{Convolution \\(adapted from \cite{rosebrock2021ConvolutionalNeuralNetworks})} \label{fig:cnns}
     \end{subfigure}%
     \hspace*{\fill}   % maximize separation between the subfigures
-    \begin{subfigure}{0.31\textwidth}
+    \begin{subfigure}{0.7\textwidth}
       \includegraphics[width=\linewidth]{images/rnns.png}
       \captionsetup{justification=centering}
       \caption{\Gls{rnn} \\(adapted from \cite{radhakrishnan2017IntroductionRecurrentNeural})} \label{fig:rnns}
     \end{subfigure}%
     \hspace*{\fill}   % maximizeseparation between the subfigures
-    \begin{subfigure}{0.31\textwidth}
+    \begin{subfigure}{0.7\textwidth}
         \includegraphics[width=\linewidth]{images/resnet.png}
         \captionsetup{justification=centering}
         \caption{Residual Connection \\(adapted from \cite{hassan2019ResNet3450})} \label{fig:resnet}
@@ -459,12 +470,12 @@ Hence, the final loss function that is minimized during the training of the \gls
 \end{equation}
 
 \begin{figure}[H]
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.8\textwidth}
       \includegraphics[width=\linewidth]{images/ae.png}
       \caption{Autoencoder} \label{fig:ae}
     \end{subfigure}%
     \hspace*{\fill}   % maximize separation between the subfigures
-    \begin{subfigure}{0.45\textwidth}
+    \begin{subfigure}{0.8\textwidth}
       \includegraphics[width=\linewidth]{images/vae.png}
       \caption{Variational Autoencoder} \label{fig:vae}
     \end{subfigure}%
@@ -963,7 +974,7 @@ A set of classification models (for example decision trees, regression models, n
 \cite{goncalves2020GenerationEvaluationSynthetic} argues that the former is useful to evaluate if statistical properties are similar between real and synthetic datasets
 and that the latter allows confirming whether "scientific conclusions drawn from (...) models trained on synthetic datasets can safely be applied to real datasets" \cite[p. 7]{goncalves2020GenerationEvaluationSynthetic}
 The performance of the classification models itself is based on commonly used metrics for classification/regression tasks, such as the f1-score or \gls{rmse}-score \cite{bourou2021ReviewTabularData, chundawat2022UniversalMetricRobust}.
-It is important to mention that there is no universally excepted way to perform this machine learning efficacy, yet, as it is implemented differently throughout the literature.
+It is important to mention that there is no universally accepted way to perform this machine learning efficacy, yet, as it is implemented differently throughout the literature.
 For example, \cite{zhao2022CTABGANEnhancingTabular} makes use of five models and calculates five different metrics, 
 \cite{ge2021KaminoConstraintawareDifferentially} on the other hand, uses nine different models but calculates only three different metric scores.
 Moreover, \cite{kunar2021DTGANDifferentialPrivatea} uses four models with four metrics, and \cite{kim2021OCTGANNeuralODEbased} uses three models on only one metric.
@@ -973,7 +984,7 @@ For example, \cite{kunar2021DTGANDifferentialPrivatea} uses the default hyperpar
 Lastly, the different generation models might use different datasets to compute their machine learning efficacy scores.
 Even though most of the generation approaches have adopted the \textit{CrCl-SR}\cite{goncalves2020GenerationEvaluationSynthetic} method to calculate the machine learning efficacy score,
 the aforementioned variabilities in terms of metrics- and model-choice make it hard to compare the performance across the different generative models using the machine learning efficacy.
-[TODO: ACC, F1 und ROC-AUC erklären? oder eher im concept part?]
+%[TODO: ACC, F1 und ROC-AUC erklären? oder eher im concept part?]
 
 \subsection{Privacy Evaluation}
 \label{ch:preliminaries-evaluationOfSyntheticTabularData-privacyEvaluation}
@@ -1017,7 +1028,7 @@ For example, this type of visual evaluation was performed in the works \cite{li2
 \subsection{Similarity Score}
 \label{ch:preliminaries-similarityScore}
 Given the previous sections, one can see that various evaluation techniques exist.
-This variety is problematic for comparing the approaches to generate synthetic data, as there is no universally excepted metric or benchmark to compare the techniques \cite{hernandez2022SyntheticDataGeneration, chundawat2022UniversalMetricRobust}.
+This variety is problematic for comparing the approaches to generate synthetic data, as there is no universally accepted metric or benchmark to compare the techniques \cite{hernandez2022SyntheticDataGeneration, chundawat2022UniversalMetricRobust}.
 Brenninkmeijer \etal proposes a similarity score to address this issue by providing a single score that aggregates different matrices used throughout the literature \cite{brenninkmeijer2019GenerationEvaluationTabular} . 
 It consists of the average of five different similarity metrics that cover different aspects of the data. These are:
 \begin{itemize}

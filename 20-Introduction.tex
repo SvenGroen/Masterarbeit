@@ -4,12 +4,12 @@
 \section{Problem Statement and Motivation}
 \label{ch:intro-problemStatement}
 
-Tabular data is an essential tool in our society due to its ability to organize and present data in a structured manner
+Tabular data is essential in our society due to its ability to organize and present data in a structured manner
 that can be easily analyzed and interpreted by humans and machines alike.
 This makes it an indispensable tool for decision-making in many fields, including finance, medical research, etc.
 In the era of deep learning and big data, the need for accurate and reliable data in high quantities is paramount.
 Training data is essential for machine and deep learning \glspl{model} to perform any desired inference.
-Gathering and accumulating real-world data is still expensive \cite{borisov2022DeepNeuralNetworks} and restricted through regulations like GDPR \cite{european_commission_regulation_2016}.
+Gathering and accumulating real-world data is still expensive \cite{borisov2022DeepNeuralNetworks} and restricted through privacy regulations like \gls{gdpr} \glsadd{gdpraccr} \cite{european_commission_regulation_2016}.
 In recent years, generative modeling approaches have addressed these issues by creating a synthetic copy of the original tabular dataset.
 This synthetic data version should maintain the important statistical properties and correlations while not disclosing any information from the real original dataset \cite{goodfellow2020GenerativeAdversarialNetworks, mottini2018AirlinePassengerName}.
 While generative models in the image domain already show a human-like capability to produce highly realistic images \cite{dhariwal2021DiffusionModelsBeat},
@@ -32,21 +32,21 @@ However, applying diffusion models to tabular data is still a novel approach, an
 This thesis aims to further investigate how diffusion models can be successfully applied to tabular data synthesis.
 This work will build upon the work of Kotelnikov, Baranchuk, Rubachev, and Babenko \cite{kotelnikov2022TabDDPMModellingTabular} and will explore how the existing approach called TabDDPM can be further improved by adapting
 already existing tabular processing mechanisms from previous tabular data synthesis solutions.
-Furthermore, the evaluation and comparison of the diffusion model to various other generative modeling techniques performed by Kotelnikov \etal \cite{kotelnikov2022TabDDPMModellingTabular} will be extended through the usage and analysis
-of multiple similarity metrics as proposed by Chundawat, Tarun, Mandal, Lahoti, and Narang \cite{chundawat2022UniversalMetricRobust}.
+Furthermore, the evaluation and comparison of the diffusion model to various other generative modeling techniques performed by \textcite{kotelnikov2022TabDDPMModellingTabular} will be extended through the usage and analysis
+of multiple similarity metrics as proposed by \textcite{chundawat2022UniversalMetricRobust}.
 This extended evaluation aims to uncover potential unknown modeling properties of diffusion models that may not have been discovered in previous works.
 
 To summarize, this thesis will investigate the following \glspl{rq}:
 
 \begin{description}
 	\item[\gls{rq}1:] What are the effects on the generative capability of the tabular data synthesis model TabDDPM by adding additional tabular data processing mechanisms to the existing generation pipeline?
-	\item[\gls{rq}2:] How does TabDDPM (and its variants, produced to answer \gls{rq}1) compare to other generative models in an extended similarity evaluation, based on the metrics of \cite{chundawat2022UniversalMetricRobust}?
+	\item[\gls{rq}2:] How does TabDDPM (and its variants, produced to answer \gls{rq}1) compare to other generative models in an extended similarity evaluation, based on the metrics of \textcite{chundawat2022UniversalMetricRobust}?
 \end{description}
 
-Answering the above questions contributes to the overall research domain by showing possible strengths and weaknesses of diffusion models
+Answering the above questions contributes to the overall research area by showing possible strengths and weaknesses of diffusion models
 as a new approach in the tabular data synthesis domain.
 
-\section{Proceeding}
+\section{Procedure Overview}
 \label{ch:intro-proceeding}
 In order to answer the above-stated \glspl{rq}, the following steps have been taken:
 Prior to any experiments, a literature search has been performed about different possible approaches to processing tabular data, tabular data synthesis, and how to evaluate synthetic data.

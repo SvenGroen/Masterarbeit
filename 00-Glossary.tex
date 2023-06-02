@@ -1,17 +1,12 @@
 % Glossar Einträge:
-\newglossaryentry{tst}{
-    name=Test,
-    description={TESTTESTTEST},
-    plural=TESTS
-}
 
 \newglossaryentry{model}{
     name={Model},
     description={A model in machine learning or deep learning is a mathematical representation that captures the relationship between inputs and outputs in data.
     It is used to make predictions about new, unseen data by applying mathematical operations to the inputs.
     Deep learning models are a subset of parametric models in which the parameters are represented as weights in a neural network and are changed during training to reduce the discrepancy between expected and actual outcomes.
-    Machine learning models include decision trees, logistic regression, random forests, and linear regression.
-    Convolutional neural networks (CNNs), recurrent neural networks (RNNs), and autoencoders are a few examples of deep learning models.} \cite{parsons2021WhatMachineLearning},
+    Machine learning models include but are not limited to decision trees, logistic regression, random forests, and linear regression.
+    Convolutional neural networks (CNNs), recurrent neural networks (RNNs), and autoencoders are a few examples of deep learning models \cite{parsons2021WhatMachineLearning}},
     plural={models}
 }
 
@@ -21,8 +16,7 @@
         Latent variable models are a type of probabilistic model that use latent or hidden variables to explain the observed data. 
         They model the relationship between the observed data and the latent variables through a set of conditional probability distributions.
         The goal is often to use this joint distribution to make predictions or perform inferences about the data, which typically involves marginalizing over the latent variables. 
-        This means integrating over all possible values of the latent variables to obtain the probability distribution of the observed data \cite{skrondal2007LatentVariableModelling}
-        \cite{bishop1998latent}
+        This means integrating over all possible values of the latent variables to obtain the probability distribution of the observed data \cite{skrondal2007LatentVariableModelling, bishop1998latent}
     },
     plural={latent variable models}
 }
@@ -58,13 +52,30 @@
     plural={pandas}
 }
 
+\newglossaryentry{gdpr}{
+    name={GDPR}, 
+    description={The General Data Protection Regulation (GDPR) \cite{european_commission_regulation_2016} is a data privacy and security law passed by the European Union, which imposes standards and potential penalties on organizations worldwide that handle data related to people within the European Union
+    },
+    % first={General Data Protection Regulation (GDPR)\glsadd{gdprg}}, 
+    % plural={GDPR}
+}
+
+\newglossaryentry{gdpraccr}{
+    type=\acronymtype, 
+    name={GDPR}, 
+    description={General Data Protection Regulation},
+    first={General Data Protection Regulation (GDPR)\glsadd{gdpr}}, 
+    see=[Glossary:]{gdpr}
+}
+
+
 % Akkronyme
 \newacronym{vgm}{VGM}{Variational Gaussian Mixture model}
 \newacronym{cnn}{CNN}{Convolutional Neural Network}
 \newacronym{rnn}{RNN}{Recurrent Neural Network}
 \newacronym{lstm}{LSTM}{Long Short-Term Memory}
 \newacronym{gru}{GRU}{Gated Recurrent Unit}
-\newacronym{gdpr}{GDPR}{General Data Protection Regulation}
+% \newacronym{gdpr}{GDPR}{General Data Protection Regulation}
 \newacronym{vae}{VAE}{Variational Autoencoders}
 \newacronym{pca}{PCA}{Principal Component Analysis}
 \newacronym{kl}{KL}{Kullback-Leibler}

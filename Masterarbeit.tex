@@ -3,8 +3,8 @@
 % Import von Paketen und Optionen die das gesamte Dokument betreffen
 % sind in myPreamble.sty ausgelagert.
 \usepackage{myPreamble}
-\include{00-Glossary}
 \makeglossaries
+\include{00-Glossary}
 
 \begin{document}
 % --- TITELSEITE ---
@@ -77,9 +77,9 @@
 %\include{kapitel6}x
 % --- Anhang ---
 \backmatter
-\pagenumbering{roman}% resets `page` counter to 1
-\setcounter{page}{7}
-\renewcommand*{\thepage}{\roman{page}}
+% \pagenumbering{roman}% resets `page` counter to 1
+% \setcounter{page}{7}
+% \renewcommand*{\thepage}{\roman{page}}
 \cleardoublepage
 \include{99-Appendix}
 \cleardoublepage
