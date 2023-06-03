@@ -17,9 +17,9 @@ The categories are usually non-numerical and consist of words or labels, such as
 
 Quantitative variables can be further subdivided into continuous or discrete variables.
 Continuous variables can take on an infinite number of values within a specific range. 
-These variables are often measured on a continuous scale, can have decimal or fractional parts, and are stored as a numerical data type \cite{lane2003IntroductionStatistics, lederrey2022DATGANIntegratingExperta}
-Discrete variables are numeric as well; however, they can only take on a finite number of distinct values within a given range. 
-These variables are often measured in whole numbers and are used when counting or enumerating items \cite{lane2003IntroductionStatistics}.
+These variables are often measured on a continuous scale, can have decimal or fractional parts, and are stored as a numerical data type \cite{lane2003IntroductionStatistics, lederrey2022DATGANIntegratingExperta}.
+Discrete variables are also numbers, but they can only have a specific and limited number of unique values within a certain range. 
+They are usually expressed as whole natural numbers (or integers) and are commonly used for counting or listing items. \cite{lane2003IntroductionStatistics}.
 
 Qualitative variables are often called categorical values and can be further classified into binary or nominal types \cite{lane2003IntroductionStatistics}.
 Binary variables have only two possible outcomes (\eg booleans with \textit{True} or \textit{False}), while nominal variables consist of at least three distinct values that do not follow a specific order \cite{lederrey2022DATGANIntegratingExperta, lane2003IntroductionStatistics}.
@@ -45,17 +45,17 @@ This is an important perspective for statistical analysis and machine learning t
 For consistency and simplicity, this thesis will further refer to qualitative columns as \textit{categorical} and to quantitative columns as \textit{continuous} or \textit{numerical}. 
 Discrete values are not separately mentioned but should be considered included in \textit{continuous}/\textit{numerical} columns.
 
-It is also possible that tabular data contains other particular data types like dates or timestamps, which often includes information on the specific time a datapoint was recorded \cite{hernandez2022SyntheticDataGeneration}.
+It is also possible that tabular data contains other particular data types like dates or timestamps, which often include information on the specific time a datapoint was recorded \cite{hernandez2022SyntheticDataGeneration}.
 This kind of tabular data can be considered dynamic tabular data, where individual records, \ie rows, can be dependent on each other, also known as a multivariate time series \cite{padhi2021TabularTransformersModeling}.
 In static tabular data, on the other hand, the individual rows are independent \cite{padhi2021TabularTransformersModeling}.
 Hence, the order of rows and columns does not carry any meaning \cite{somepalli2021SAINTImprovedNeural}.
-However, the individual values in one cell may vary well depend on the values of another cell \cite{lederrey2022DATGANIntegratingExperta}.
+However, the individual values in one cell may vary well depending on the values of another cell \cite{lederrey2022DATGANIntegratingExperta}.
 An example of such an interdependency could occur in a demographics table, where an individual's legal status may depend on their age, 
-for instance, a person under 18 years of age, for instance, is considered a minor and has different legal rights and responsibilities than an adult.
+for example, a person under 18 years of age could be considered a minor and has different legal rights and responsibilities than an adult.
 
 The authors of \cite{borisov2022DeepNeuralNetworks} identify four possible challenges when working with tabular data in a learning context.
 The first challenge identified is the "low-quality" of the data \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
-\cite{borisov2022DeepNeuralNetworks} identified common quality data quality issues from the literature, which include missing values, data noise, extreme data points, inconsistencies, class imbalances, or high dimensionality of the data after preprocessing.
+\textcite{borisov2022DeepNeuralNetworks} identified common data quality issues from the literature, which include missing values, data noise, extreme data points, inconsistencies, class imbalances, or high dimensionality of the data after preprocessing.
 
 Secondly the "missing or complex irregular spatial dependencies" of tabular data \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
 Other common data formats like images or audio are homogeneous, meaning that they consist of only one feature type \cite{borisov2022DeepNeuralNetworks}.
@@ -63,9 +63,9 @@ Since tabular data consists of multiple features made up of a mixture of categor
 This format presents particular challenges for neural networks when working with tabular data, as the correlations between features are often weaker due to the absence of spatial or semantic relationships commonly found in image or text data \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}.
 
 The third challenge is the "dependency on preprocessing" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
-\cite{borisov2022DeepNeuralNetworks} highlights the importance of a preprocessing and explicit feature construction step that is necessary when working with tabular data in a deep learning context.
+\cite{borisov2022DeepNeuralNetworks} highlights the importance of a preprocessing and an explicit feature construction step that is necessary when working with tabular data in a deep learning context.
 This preprocessing step is crucial since it not only strongly influences the performance of deep learning models \cite{gorishniy2022EmbeddingsNumericalFeatures}, it also introduces new challenges. 
-Depending on the preprocessing strategy (\autoref{sec:preprocessing}), it is possible to create a very sparse feature matrix, construct a synthetic ordinal ordering of a nominal variable or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
+Depending on the preprocessing strategy (\autoref{sec:preprocessing}), it is possible to create a very sparse feature matrix, construct a synthetic ordinal ordering of a nominal variable, or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
 
 The last and fourth challenge concerns the "importance of single features" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
 In homogeneous data, multiple features need to change in order for the class of the data to be changed. 
@@ -97,11 +97,13 @@ The goal is to transform the different values a column can take and transform th
 Single-Dimensional encoding techniques encode each cell independently \cite{borisov2022DeepNeuralNetworks}.
 The following approaches are common techniques to encode a categorical column entry, usually in a text format, into a numerical format.
 In ordinal- (or label-) encoding, a simple mapping from each category to a numeric value occurs. 
-While this introduces a synthetic ordering of potentially unordered categories, \gls{oh}} encoding overcomes this issue by introducing a new vector with the length of all possible values a categorical column can take.
+While this introduces a synthetic ordering of potentially unordered categories, \gls{oh} encoding overcomes this issue by introducing a new vector with the length of all possible values a categorical column can take.
 All values in this vector are assigned to zero except one entry which represents the category that should be encoded, which is set to one.
 However, this approach can lead to high-dimensionality feature vectors if the cardinality of the unique categories in categorical columns is large.
 Binary encoding tries to reduce the dimensionality by setting the vector length to a maximum of $log(c)$ for $c$ unique categorical values in a column \cite{borisov2022DeepNeuralNetworks}.
 Each possible value is mapped to a number like in ordinal-encoding, starting at 0, but the number is represented as a binary vector.
+As an example, the categorical values \{\textit{Germany}, \textit{USA}, \textit{France}\} would be represented as binary values \{(0,1), (1,0), (1,1)\}. 
+While representing \textit{France} in a one-hot-encoding creates the vector (0,0,1) of length three, binary encoding encodes the same information into the vector (1,1) of length two, reducing the overall dimensionality of produces encodings.
 The leave-one-out encoding technique is an approach to encode a categorical column based on the target column in a machine learning scenario \cite{borisov2022DeepNeuralNetworks}. 
 A categorical entry is replaced by the mean of the target variable of all rows where the same category is present, excluding the target value of the to be encoded value.
 Lastly, a hash-based approach is worth mentioning, where a deterministic hash function transforms each category into a numerical form \cite{borisov2022DeepNeuralNetworks}.
@@ -109,19 +111,19 @@ Lastly, a hash-based approach is worth mentioning, where a deterministic hash fu
 Numerical data, such as integers or floating point numbers, can often be used directly in deep learning models without undergoing a special encoding process. 
 This is because deep learning algorithms are designed to handle numerical data and can learn patterns and relationships within the data without the need for additional encoding.
 However, \cite{gorishniy2022EmbeddingsNumericalFeatures} has shown that in some cases, encoding numerical data can improve the performance of deep learning models. 
-Encoding numerical data can be achieved through various methods such as normalization (see \autoref{sec:dataNormalization}), discretization, or using embeddings.
+Encoding numerical data can be achieved through various methods such as normalization, discretization, or using embeddings.
 
 %Die beiden abschnitte auslagern in eigenen abschnitt? (GGF nur embeddings auslagern?)
 Discretization techniques transform numerical features to categorical features, hence, quantitative data into qualitative data \cite{garcia2016BigDataPreprocessing}. 
-\cite{dougherty1995SupervisedUnsupervisedDiscretization} gives an overview of classical discretization techniques, such as equal interval width binning, where the continues values are divided and assign to certain amount of bins.
-A modern approach by researchers from NVIDIA \cite{dong2022GeneratingSyntheticData} invented a tokenizer specifically for tabular data with float numbers. 
+\cite{dougherty1995SupervisedUnsupervisedDiscretization} gives an overview of classical discretization techniques, such as equal interval width binning, where the continuous values are divided and assigned to a certain amount of bins.
+Researchers from NVIDIA \cite{dong2022GeneratingSyntheticData} have recently put forth a new method, introducing a tokenizer designed specifically for handling tabular data with floating-point numbers.
 This tokenizer converts float numbers into a sequence of token IDs \cite{dong2022GeneratingSyntheticData}.
 
 In embedding techniques, values that should be encoded (\eg words or tabular cell entries) are mapped into a vector representation. 
 This vector of real numbers tries to capture "semantic regularities in vector spaces" \cite[p. 2]{pilaluisa2022ContextualWordEmbeddings}.
 The goal of embeddings is to create a vector space, in which semantically similar values are also numerically similar \cite{pilaluisa2022ContextualWordEmbeddings}.
 It can be differentiated between static embeddings and contextualized embeddings. 
-While the former embedding technique always provides the identical numerical representation for an input value, the latter embedding technique changes the vector representation of value based on its surrounding context \cite{pilaluisa2022ContextualWordEmbeddings}.
+While the former embedding technique always provides the identical numerical representation for an input value, the latter embedding technique changes the vector representation of a value based on its surrounding context \cite{pilaluisa2022ContextualWordEmbeddings}.
 This is especially important in the \gls{nlp} domain, where contextual embeddings have led to state-of-the-art improvements \cite{pilaluisa2022ContextualWordEmbeddings}.
 Homonyms or polysemic words like \textit{bat} or \textit{second} are words that carry multiple different meanings and their semantic meaning therefore can change with the context they are used in.
 Hence, the contextualized embedding vector of the word \textit{second} in the context of \textit{Time} (\eg \textit{"it took me 3 seconds"}) should be different from the one where \textit{second} is used in the context of \textit{Competition} (\eg \textit{"he achieved the second place}").
@@ -151,33 +153,36 @@ Normalization allows to scale each column a similar range (usually 0 to 1, or -1
 Standardization on the hand rescales the data so it follows a normal distribution with mean 0 and standard deviation 1 \cite{scikit-learndevelopers2023PreprocessingData}.
 Standardization and Normalization of values is especially important if the data will be used in a machine learning context, where machine learning models might behave unexpectedly if 
 the features do not look similar to a Gaussian distribution or are not ranged between 0 and 1 \cite{scikit-learn, scikit-learndevelopers2023PreprocessingData}.
-Through this data rescaling, the sensitivity of model to large values is reduced and the generalizability is increased \cite{izonin2022TwoStepDataNormalization}.
+Through this data rescaling, the sensitivity of models to large values is reduced and the generalizability is increased \cite{izonin2022TwoStepDataNormalization}.
 Two popular standardization and normalization approaches are the standard and the min-max scaler, respectively.
 The standard scaler standardizes a feature value $x_i$ according to the mean and standard distribution of the feature column so that it follows a normal distribution \cite{garcia2016BigDataPreprocessing, izonin2022TwoStepDataNormalization}.
 It can be defined as $x' = \frac{x_i-mean(x)}{std(x)}$, with $x'$ as the standardized $x_i$ value \cite{izonin2022TwoStepDataNormalization}.
-The min-max scaler on the other hand makes use of the maximum and minimum of each feature column and scales the values accordingly.
+The min-max scaler is a normalization technique that makes use of the maximum and minimum of each feature column and scales the values accordingly.
 It is defined as $x' = \frac{x_i - min(x)}{max(x) - min(x)}$ \cite{izonin2022TwoStepDataNormalization}.
 While the standard scaler is usually used for data that follows a Gaussian normal distribution, the min-max scaler is better suited for arbitrary distributions, however, it is quite affected by outliers \cite{choudhury2020FeatureScalingEffect}.
 A more complex normalization technique addresses the problem that numeric values in tabular data can follow distributions in a more complex way than just a simple Gaussian normal distribution \cite{zhao2022CTABGANEnhancingTabular, xu2019ModelingTabularData}.
-\cite{xu2019ModelingTabularData} introduces mode-specific normalization which models complex distributions with multiple simple Gaussian distributions.
-\cite[p. 3-4]{xu2019ModelingTabularData} defines the mode-specific normalization technique in following way:
+\textcite{xu2019ModelingTabularData} introduces mode-specific normalization which models complex distributions with multiple simple Gaussian distributions.
+The authors define the mode-specific normalization technique in following way \cite[p. 3-4]{xu2019ModelingTabularData}:
 
 \begin{enumerate}
     \item For each continuos column $C_i$, estimate the number of modes $m_i$ by using a \gls{vgm} \cite{bishop2006PatternRecognitionMachine}. 
-    For example, in \autoref{fig:mode-specific-normalization} the \gls{vgm} estimates $m_i=3$, $\eta_1$, $\eta_2$ and $\eta_3$. 
+    For example, in \autoref{fig:mode-specific-normalization} the \gls{vgm} estimates $m_i=3$, referred to as $\eta_1$, $\eta_2$ and $\eta_3$. 
     The learned Gaussian mixture is  
     $\mathbb{P}_{C_i}(c_{i,j})=\sum_{k=1}^{3}\mu_k\mathcal{N}(c_{i,j};\eta_k, \sigma_k)$
-    with $\mu_k$ and $\sigma_k$ as weight and standard deviation of a mode respectively.
+    with $\mu_k$ and $\sigma_k$ as the weight and the standard deviation of a mode respectively.
+    $\mu_k$ can also be understood as the proportion of the overall data that comes from the $kth$ mode, essentially measuring the likelihood, a randomly selected datapoint from the overall dataset comes from the $kth$ determined gaussian distribution.
     \item For each $c_{i,j}$ the probability is calculated of $c_{i,j}$ coming from each mode. 
     In \autoref{fig:mode-specific-normalization}, $p_1$, $p_2$ and $p_3$ denote the probability densities, calculated as $p_k=\mu_k\mathcal{N}(c_{i,j};\eta_k;\sigma_k)$.
-    \item Given $p_1$, $p_2$ and $p_3$ for $c_{i,j}$ sample one mode and use it to normalize the value. 
+    \item Given $p_1$, $p_2$ and $p_3$ for $c_{i,j}$ one mode is sampled and used to normalize the value. 
     In the example of \autoref{fig:mode-specific-normalization}, $p_3$ is most likely and is sampled.
-    The mode selection for $c_{i,j}$ is represented as a \gls{oh}} vector $\beta_{i,j}=[0,0,1]$ indicating that the third mode has been sampled.
+    The mode selection for $c_{i,j}$ is represented as a \gls{oh} vector $\beta_{i,j}=[0,0,1]$ indicating that the third mode has been sampled.
     The actual value $c_{i,j}$ is normalized as $\alpha_{i,j}=\frac{c_{i,j}-\eta_3}{4\sigma_3}$, according to the mean and standard deviation of $p_3$. 
 \end{enumerate}
 
 The normalized representation $r$ of $c_{i,j}$ will be the concatenation of $\alpha_{i,j}$ and $\beta_{i,j}$: 
 $$r=\alpha_{i,j}\oplus\beta_{i,j}$$
+
+For example, given $\alpha_{i,j}=0.4$ and $\beta_{i,j}=[0,0,1]$, the normalized representation would be $r=[0.4,0,0,1]$
 
 % include image from paper
 \begin{figure}[h]
@@ -187,7 +192,7 @@ $$r=\alpha_{i,j}\oplus\beta_{i,j}$$
     \label{fig:mode-specific-normalization}
 \end{figure}
 
-Another approach to standardize the range of a column between 0 and 1 is a Quantile-Transformation, which is a non-linear transformation \cite{scikit-learndevelopers2023PreprocessingData, kotelnikov2022TabDDPMModellingTabular}.
+Another approach to standardize the range of a column between 0 and 1 is a Quantile-transformation, which is a non-linear transformation \cite{scikit-learndevelopers2023PreprocessingData, kotelnikov2022TabDDPMModellingTabular}.
 The Quantile-transformation allows the mapping of all values of a random variable into a desired output distribution, such as the uniform or normal distribution, 
 using the quantile function on the inverse cumulative distribution of the random variable. 
 This transformation preserves the rank order of the values but distorts correlations and distances within and across features \cite{scikit-learndevelopers2023PreprocessingData}.
@@ -869,7 +874,7 @@ As a response, Hoogeboom \etal \cite{hoogeboom2021ArgmaxFlowsMultinomial} introd
 \end{equation}
 
 With $\beta_t$ reflecting the probability of replacing a current category value with a new category, samples from a categorical uniform distribution ultimately control the amount of noise added \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
-Furthermore, $\mathcal{C}$ denotes a categorical distribution and $x_t$ in a \gls{oh}} encoded categorical vector format with $K$ different classes, $x_t\in\{0,1\}^K$ \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
+Furthermore, $\mathcal{C}$ denotes a categorical distribution and $x_t$ in a \gls{oh} encoded categorical vector format with $K$ different classes, $x_t\in\{0,1\}^K$ \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
 
 The noising step from $x_0$ to any noised version $x_t$ can be expressed as:
 
