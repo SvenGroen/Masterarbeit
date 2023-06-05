@@ -132,7 +132,7 @@ This section will explain what kind of software was already provided by \cite{ko
 An overview of how the overall process in this synthetic data generation approach is done can be seen in \autoref{fig:overall_original}.
 The whole software process can be roughly summarized into three parts, the training, the sampling, and the evaluation.
 In the training, real training data is taken from the original dataset.
-This training data is preprocessed, according to a predefined preprocessing strategy that may vary from dataset to dataset (compare \auotref{sec:preprocessing}).
+This training data is preprocessed, according to a predefined preprocessing strategy that may vary from dataset to dataset (compare \autoref{sec:preprocessing}).
 After preprocessing, the diffusion model is initialized and trained to learn the underlying joint distribution of the training data.
 Once the training is finished, the sampling of new synthetic data can be executed.
 The previously trained model is loaded and synthetic data will be produced by denoising previously sampled noise.
@@ -140,7 +140,7 @@ The synthetic data will be in the same format as the training data after it has 
 Hence, the synthetic data will be postprocessed by inverting the preprocessing, such that the synthetic data will be in the same format as the raw training data.
 As a last step, the synthetic data will be evaluated. 
 For this, the held-back real test set will be loaded.
-With the real test set and the synthetic dataset sharing the same data format, a machine learning efficacy evaluation (compare \auotref{ch:preliminaries-machineLearningEfficiency}) is performed to compare the two datasets.
+With the real test set and the synthetic dataset sharing the same data format, a machine learning efficacy evaluation (compare \autoref{ch:preliminaries-machineLearningEfficacy}) is performed to compare the two datasets.
 Ultimately, the results of this evaluation are saved and can be interpreted by the user.
 
 \subsubsection[]{Scripts}

@@ -231,7 +231,7 @@ Eight of the datasets have numerical and categorical features, and seven only co
 The overall number of features in the datasets varies heavily. 
 For a complete list of all datasets, please refer to "Table 2" in \cite[p. 5]{kotelnikov2022TabDDPMModellingTabular}.
 
-The primary evaluation metric chosen by the authors is the machine learning efficiency (\autoref{ch:preliminaries-machineLearningEfficiency}).
+The primary evaluation metric chosen by the authors is the machine learning efficiency (\autoref{ch:preliminaries-machineLearningEfficacy}).
 \cite{kotelnikov2022TabDDPMModellingTabular} realizes this in three different ways, firstly, by using a set of machine and deep learning models\footnote[1]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}} and combining their performance,
 secondly, using a CatBoost model \cite{prokhorenkova2018CatBoostUnbiasedBoosting}, a state-of-the-art model on tabular tasks \cite{kotelnikov2022TabDDPMModellingTabular} and thirdly, a \gls{mlp} architecture proposed by \cite{gorishniy2021RevisitingDeepLearning}.
 In the latter, the models are previously tuned on the real dataset so that the best hyperparameters can be found for each dataset, which will be used during the evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
