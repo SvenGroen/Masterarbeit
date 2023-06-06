@@ -269,7 +269,7 @@ Correlation matrices have been computed to get an intuition on how well correlat
 The correlation matrix for the synthetic dataset has been subtracted from the correlation matrix of the real dataset in order to produce a correlation difference matrix.
 The smaller the difference, the more similar the correlations within the synthetic dataset are to the correlations within the real dataset.
 
-Looking at the correlations matrix differences in \autoref{fig:corr_base} for the baseline models that are not diffusion-based, one can see that the CTABGAN+$^{ml}$ and SMOTE approaches have the smallest
+Looking at the correlations matrix differences in \autoref{fig:corr_base} for the baseline models that are not diffusion-based, one can see that the CTABGAN+$^{ml}$ and\gls{smote}approaches have the smallest
 correlation matrix difference.
 However, the diffusion model TabDDPM$^{ml}$ produces the matrix with the smallest overall differences.
 
@@ -685,7 +685,7 @@ The \gls{bgm} processor variant was able to produce not only good numerical but 
 In terms of machine learning efficacy, the TabDDPM-BGM$^{ml}_q$ version shows the best machine learning efficacy performance across all tested metrics (\autoref{tab:ml-all}: Accuracy, F1 and AUC-ROC and \autoref{tab:sim-all}: ML).
 However, the advantage over its simpler counterpart TabDDPM$^{ml}_q$ is only marginal (+0.003\%-points).
 Overall, models with hyperparameters tuned towards machine learning efficacy outperform models with hyperparameters tuned towards similarity score in the machine learning efficacy scores, as one would expect.
-The results of the non-diffusion baseline models show that the SMOTE approach is a reliable sampling technique when the synthetic data will be used in a machine-learning scenario.
+The results of the non-diffusion baseline models show that the\gls{smote}approach is a reliable sampling technique when the synthetic data will be used in a machine-learning scenario.
 Its machine learning efficacy results are superior to the other non-diffusion baseline models, while the model is overall less complex.
 For other scenarios, CTABGAN+ achieves the best overall performance in terms of numerical and visual results for non-diffusion-based models.
 Nevertheless, the best-found CTABGAN+ version is inferior to the best-found diffusion model.
@@ -738,7 +738,7 @@ To summarize, the following observations could be made:
 	\item The processing mechanism for \gls{ft} has failed and is not advisable, as it could not generate synthetic data that closely resembles the original dataset.
 	\item The \gls{bgm} processor produced good numerical and visual results.
 	\item TabDDPM-BGM$^{ml}_q$ shows the best machine learning efficacy performance across all tested metrics.
-	\item Out of the baseline models, SMOTE is a reliable sampling technique for non-diffusion baseline models in machine learning scenarios.
+	\item Out of the baseline models,\gls{smote}is a reliable sampling technique for non-diffusion baseline models in machine learning scenarios.
 	      In other scenarios, CTABGAN+$^{s}$ is the preferred non-diffusion model.
 	\item Diffusion models outperform non-diffusion models in tabular data synthesis.
 	\item Diffusion models with similarity score tuning led to models with a non-zero \gls{pmse} score.

@@ -1132,6 +1132,7 @@ As a consequence, they propose the following similarity metrices:
 
   \item[Propensity Mean Squared Error:]
   Is used to "robustly discriminate between real and synthetic data" \cite[p. 3]{chundawat2022UniversalMetricRobust}.
+  It is based upon the work of \textcite{snoke2018GeneralSpecificUtility}, who propose the use of the \gls{pmse} in the context of synthetic data generation.
   The \gls{pmse} is computed by combining a set of samples from the real and synthetic dataset and adding a label $Y$ to each entry, 
   indicating whether the given sample stems from the real or the synthetic dataset.
   A logistic regression model is trained to predict probabilities $\hat{p}_i$ for each sample $i$ for it being a synthetic data sample.
@@ -1140,8 +1141,12 @@ As a consequence, they propose the following similarity metrices:
 
   with $c=N_{syn}/(N_{real}+N_{syn})$ indicating the proportion of synthetic samples.
   
-  For a similarity score, \cite{chundawat2022UniversalMetricRobust} also computes the expected value of \gls{pmse} when the real and synthetic data are indistinguishable 
-  using the $pMSE_0$ score, calculated as \cite{snoke2018GeneralSpecificUtility,chundawat2022UniversalMetricRobust}:
+  For a similarity score, \textcite{chundawat2022UniversalMetricRobust} ultimately uses the \gls{pmse}-ratio as a final measure.
+  For this, the so-called null distribution of \gls{pmse} is required \cite[p. 668]{snoke2018GeneralSpecificUtility}.
+  This null distribution is essentially derived under the assumption of perfect synthesis, where the synthetic data are generated from the same model that produced the original data. 
+  This creates a baseline for comparing the quality of synthetic data, serving as a reference point to evaluate the effectiveness of different synthetic data generation methods \cite{snoke2018GeneralSpecificUtility}.
+  Essentially, it computes the expected value of \gls{pmse} when the real and synthetic data are indistinguishable.
+  It is calculated as \cite{snoke2018GeneralSpecificUtility,chundawat2022UniversalMetricRobust}:
   $$\mathbb{E}(pMSE_0) = \frac{(k-1)(1-c)^2c}{N}$$
   with the logistic regression model having $k$ parameters (including bias) \cite{chundawat2022UniversalMetricRobust}.
   \cite{chundawat2022UniversalMetricRobust} improves the original metric as introduced in \cite{snoke2018GeneralSpecificUtility} further through the introduction
@@ -1168,7 +1173,7 @@ As a consequence, they propose the following similarity metrices:
   $$ s_{cr} = \frac{1}{n_{cat}} \sum_{i=1}^{n_{cat}} \frac{n^s_i}{n^r_i} \cdot scaling~factor $$
 
   Where $n_{cat}$ is the number of categories for a variable, $n^s_i$ is the number of samples in that category in the synthetic data, $n^r_i$ is the corresponding number of samples in the real data, and the scaling factor is $N_{real}/N_{syn}$ \cite{chundawat2022UniversalMetricRobust}.
-  The authors limit the score to a predefined $\beta$ value (the authors' default is set to $\beta=2$), to account for the potential for $s_{cr}$ to become very sensitive to $n^s_i$, if $n^r_i$ is very small \cite{chundawat2022UniversalMetricRobust}.
+  The authors limit the $S_{cr}$ score to a predefined $\beta$ value (the authors' default is set to $\beta=2$), to account for the potential for $s_{cr}$ to become very sensitive to $n^s_i$, if $n^r_i$ is very small \cite{chundawat2022UniversalMetricRobust}.
 
   The final $S_{cr}$ score is calculated as the average of the score for each column \cite{chundawat2022UniversalMetricRobust}:
 
@@ -1187,7 +1192,7 @@ As a consequence, they propose the following similarity metrices:
   if the dataset contains a classification or regression target.
   The models include \textit{Random Forest-}, \textit{Lasso-}, \textit{Ridge-} and \textit{ElasticNet-Regression} for regression tasks and \textit{Logistic Regression-}, \textit{Random Forest-},  \textit{Decision Tree-} and an \textit{\gls{mlp}-classifier} for classification tasks \cite{brenninkmeijer2019GenerationEvaluationTabular, chundawat2022UniversalMetricRobust}.
   For each model, two versions are trained, one trained on synthetic and one trained on real training data.
-  Their performance is tested on the real and synthetic targets using the F1-score or \gls{rmse}-score.
+  Their performance is tested on both the real and synthetic targets using the F1-score or \gls{rmse}-score.
   For each model, the relative error (\autoref{eqn:rel_err}) is calculated between the metric results of the model that was trained on real data and the model that was trained on synthetic data.
   The final score is the average performance error for all four models:
 
