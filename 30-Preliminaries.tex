@@ -170,7 +170,7 @@ The authors define the mode-specific normalization technique in following way \c
     The learned Gaussian mixture is  
     $\mathbb{P}_{C_i}(c_{i,j})=\sum_{k=1}^{3}\mu_k\mathcal{N}(c_{i,j};\eta_k, \sigma_k)$
     with $\mu_k$ and $\sigma_k$ as the weight and the standard deviation of a mode respectively.
-    $\mu_k$ can also be understood as the proportion of the overall data that comes from the $kth$ mode, essentially measuring the likelihood, a randomly selected datapoint from the overall dataset comes from the $kth$ determined gaussian distribution.
+    $\mu_k$ can also be understood as the proportion of the overall data that comes from the $kth$ mode, essentially measuring the likelihood, a randomly selected datapoint from the overall dataset comes from the $kth$ determined Gaussian distribution.
     \item For each $c_{i,j}$ the probability is calculated of $c_{i,j}$ coming from each mode. 
     In \autoref{fig:mode-specific-normalization}, $p_1$, $p_2$ and $p_3$ denote the probability densities, calculated as $p_k=\mu_k\mathcal{N}(c_{i,j};\eta_k;\sigma_k)$.
     \item Given $p_1$, $p_2$ and $p_3$ for $c_{i,j}$ one mode is sampled and used to normalize the value. 
@@ -975,7 +975,7 @@ Hence, it is realized by privacy measures that capture how much information of t
 This section will present different ways to evaluate synthetic tabular data, each focusing on a different evaluation aspect.
 \cite{elemam2020SevenWaysEvaluate} identifies seven ways to evaluate synthetic data's utility aspect.
 However, in the literature and in practice, only a few approaches are used and will be presented in greater detail.
-Firstly, statistical similarity (data utility) will be presented, followed by machine learning efficiency (data utility) and privacy evaluation methods (information disclosure).
+Firstly, statistical similarity (data utility) will be presented, followed by machine learning efficacy (data utility) and privacy evaluation methods (information disclosure).
 Lastly, additional evaluation methods are shortly listed, and a proposed "similarity score" as a unified metric is presented.
 
 \subsection{Statistical Evaluation}

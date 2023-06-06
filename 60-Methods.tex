@@ -104,7 +104,7 @@ Which can easily be reversed in the following way:
 	\end{align*}
 \end{equation}
 Categorical values are label encoded before applying the normalization \cite{zhao2022CTABGANEnhancingTabular}.
-The authors observe that this simplistic general transformation for continuous values only works well for simple distributions (\eg single-mode gaussian) and not for complex distributions, for which the mode-specific normalization is preferred \cite{zhao2022CTABGANEnhancingTabular}.
+The authors observe that this simplistic general transformation for continuous values only works well for simple distributions (\eg single-mode Gaussian) and not for complex distributions, for which the mode-specific normalization is preferred \cite{zhao2022CTABGANEnhancingTabular}.
 For categorical values, the general transformation should only be applied if the number of categories a column can take is very high and would lead to very sparse vectors that make computation complex \cite{zhao2022CTABGANEnhancingTabular}.
 Lastly, the authors log-transform columns that suffer from very long tails (see \autoref{sec: synthetic tabular data generation}) because \Glspl{bgm} seem to have difficulties encoding values towards the tail \cite{zhao2022CTABGANEnhancingTabular}.
 The log-transformation of each value $\tau$ in the column will be compressed to $\tau^e$, given a lower bound $l$ using:
