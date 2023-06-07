@@ -4,7 +4,7 @@
 \section{Requirements}
 \label{ch:requirements}
 
-Firstly, the requirements for the synthetic data generation system will be first established.
+In this chapter, the requirements for the synthetic data generation system will be first established.
 The goal is to gather a systematic collection of requirements on which the success of the developed system can be measured.
 Firstly, non-functional requirements will be explained before continuing with the functional requirements.
 
@@ -13,21 +13,21 @@ Firstly, non-functional requirements will be explained before continuing with th
 
 Non-functional requirements (or qualitative requirements) describe requirements and constraints on a system that governs how the functions specified in the functional requirements are to be performed \cite{broy2021EinfuehrungSoftwaretechnik}.
 They focus on the question of how a system's functional requirements should be realized \cite{broy2021EinfuehrungSoftwaretechnik}.
-The ISO-Norm 25010 \cite{iso/iecSystemsSoftwareEngineering} defined the base characteristics relevant for a software systems quality \cite{haoues2017GuidelineSoftwareArchitecture}.
-The key elements of software architecture include functional suitability, reliability, performance efficiency, compatibility, usability, security, maintainability, and portability \cite{haoues2017GuidelineSoftwareArchitecture}.
+The ISO-Norm 25010 \cite{iso/iecSystemsSoftwareEngineering} defines the base characteristics relevant for a software system's quality \cite{haoues2017GuidelineSoftwareArchitecture}.
+The key elements of software architectures include functional suitability, reliability, performance efficiency, compatibility, usability, security, maintainability, and portability \cite{haoues2017GuidelineSoftwareArchitecture}.
 Each of these is of different importance for each software system.
 Additionally, \cite{vogelsang2019RequirementsEngineeringMachine} highlights that additional quality requirements might be necessary in the context of machine learning tasks, for which a standard has yet to be defined.
-These could include (but are not limited to) quantitative targets, explainability, freedom from discrimination, legal and regulatory requirements, and data requirements.
+These could include (but are not limited to) quantitative targets (\ie measurable results), explainability, freedom from discrimination, legal and regulatory requirements, and data requirements.
 
 This thesis focuses on a research prototype rather than a fully developed software system.
-Therefore, only a subset of the abovementioned requirements are prioritized during development.
-The following requirements R1 - RN5 are the non-functional requirements for the software developed in this thesis:
+Therefore, only a subset of the aforementioned requirements are prioritized during development.
+The following requirements R1 - R5 are the non-functional requirements for the software developed in this thesis:
 
 %[TODO: GANZER ABSCHNITT AM ENDE AUF INHALTLICHE RICHTIGKEIT KORRIGIEREN]
 \begin{description}
 	\item[R1 - Functional Suitability:]
 		Functional Suitability refers to "the degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions" \cite[p. 219]{bass2013SoftwareArchitecturePractice}.
-		In the context of this thesis, the system needs to be able to show how different tabular processing techniques influence the performance of an existing data synthesisation approach.
+		In the context of this thesis, the system needs to be able to show how different tabular processing techniques influence the performance of an existing data synthesis approach.
 		This performance should be measured across different similarity measures.
 
 	\item[R2 - Maintainability:]
@@ -38,7 +38,7 @@ The following requirements R1 - RN5 are the non-functional requirements for the 
 		but also for future researchers who might build upon the work of this thesis.
 
 	\item[R3 - Performance efficiency:]
-		In the context of deep learning, the program's performance is always essential since training, hyperparameter search and inference usually demand a lot of computation time by nature.
+		In the context of deep learning, the program's performance is always essential since training, hyperparameter search, and inference usually demand a lot of computation time by nature.
 		Consequently, the developed software should reduce unnecessary computations as much as possible.
 
 	\item[R4 - Portability/Reproducibility:]
@@ -46,7 +46,7 @@ The following requirements R1 - RN5 are the non-functional requirements for the 
 		or other operational or usage environment to another" \cite[p. 220]{bass2013SoftwareArchitecturePractice}.
 		Since this thesis should encourage other researchers to reproduce and extend the developed codebase, the software should be able to run on other machines running a different operating system given a specified development environment,
 		including packages used and their version numbers.
-		In general, it is required that all results should be fully reproducible, given the parameters and the configuration of the experiment setups
+		In general, it is required that all results should be fully reproducible, given the parameters and the configuration of the experimental setups
 
 	\item[R5 - Quantitative Targets:]
 		It is required that the different model versions produced in the thesis are compared using metrics that are commonly used in the domain of tabular data synthesis.
@@ -67,37 +67,37 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 
 	\item[FR2 - Tabular Processing:]
 		The software shall support tabular data processing techniques that are able to encode and decode tabular data.
-		An \textit{IdentiyProcessor} that has no effect is required to be implemented to test models without any tabular processing mechanism.
+		An \textit{IdentityProcessor} that has no effect is required to be implemented to test models without any tabular processing mechanism.
 		Additional data transformation techniques proposed by \cite{kotelnikov2022TabDDPMModellingTabular}, including normalization or categorical encoding, shall still be supported as intended by the authors.
-		Adding new Tabular orocessing mechanisms shall not effect other Tabular processing mechanisms.
+		Adding new tabular processing mechanisms shall not affect other existing tabular processing mechanisms. This requirement implies several sub-requirements: 
 
-		\item[FR2.1 - Tabular processing fit]:
-		If necessary, a Tabular processing mechanism should be able to be fitted.
+		\item[FR2.1 - Tabular Processing Fit:]
+		If necessary, a Tabular processing mechanism should be able to be fitted according to the data.
 		However, it is required that the tabular processing mechanism only receives training data and does not have access to the test data.
 
-		\item[FR2.2 - Tabular processing transform]:
+		\item[FR2.2 - Tabular Processing Transform:]
 		Each Tabular processing mechanism needs to transform the raw data into a specified format.
 
-		\item[FR2.3 - Tabular processing inverse transform]:
-		Each Tabular processing mechanism needs to able to inverse transformed data back into its original form.
+		\item[FR2.3 - Tabular Processing Inverse Transform:]
+		Each Tabular processing mechanism needs to be able to inversely transform data back into its original form.
 
-		\item[FR3 - Diffusion Process Configuration]:
+		\item[FR3 - Diffusion Process Configuration:]
 		Several experiments with different model configurations will be tested.
-		The software shall allow users to configure the diffusion process by specifying parameters such as the number of iterations, batch size, sampling size, and other relevant parameters.
+		The software shall allow users to configure the diffusion process by specifying parameters such as the number of iterations, batch size, sampling size, and others.
 
-		\item[FR4 - Training, Tuning, Sampling, Evaluation]:
+		\item[FR4 - Training, Tuning, Sampling, Evaluation:]
 		The software shall support the training of various model versions, including the TabDDPM diffusion model, variations of TabDDPM and other non-diffusion baseline models.
-		The module shall allow finding suitable hyperparameters in a specified hyperparameter search space.
+		The software shall allow finding of suitable hyperparameters in a specified hyperparameter search space.
 		During training, relevant metrics and loss values shall be saved.
 		The software shall generate synthetic samples from the trained diffusion model during the sampling process, where the user specifies the number of synthetic samples to be generated.
 		The software shall handle the evaluation of synthetic data in multiple ways.
 		Firstly, the existing evaluation framework of \cite{kotelnikov2022TabDDPMModellingTabular} shall remain.
 		Additionally, a similarity evaluation shall be implemented according to \cite{chundawat2022UniversalMetricRobust}.
-		Lastly, the software should also produce visualizations of the synthetic data to allow a visual comparison with the real data.
+		Lastly, the software should also produce visualizations of certain properties of the synthetic data to allow a visual comparison with the same properties of the real data, for example, to allow for a comparison of distributions of columns.
 
-	\item[FR5 - Separation of components:]
+	\item[FR5 - Modularity:]
 		The individual software components (tabular data processing, training, sampling, evaluation) shall be implemented in such a way,
-		that they are easy replaceable by alternatives (for tabular data processing) or shall be executed individually (training, sampling, evaluation).
+		that they are easily replaceable by alternatives (for tabular data processing) or shall be executed individually (training, sampling, evaluation).
 		For example, sampling synthetic data shall be separated from the training so that not every sampling process requires training a model from the start.
 \end{description}
 
@@ -106,7 +106,7 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 \label{ch:conceptualDesign-existingCodeBase}
 
 The code \cite{akim2023TabDDPMModellingTabular} used in this experiment is based upon the work of \cite{kotelnikov2022TabDDPMModellingTabular}.
-It is changed and modified according to the needs of the experiment.
+It is changed and modified according to the needs of the experiments.
 This section will first explain the architecture of the existing code base before introducing the proposed adaptations in the next section.
 
 
@@ -146,8 +146,8 @@ Ultimately, the results of this evaluation are saved and can be interpreted by t
 \subsubsection[]{Scripts}
 \label{ch:scripts}
 
-The implementation \cite{kotelnikov2022TabDDPMModellingTabular} already provides necessary scripts that allow for an
-easy training, sampling, evaluation, and hyperparameter tuning for their proposed TabDDPM model
+The implementation \cite{akim2023TabDDPMModellingTabular} already provides the necessary scripts that allow for an
+easy training, sampling, evaluation, and hyperparameter tuning for their proposed TabDDPM model.
 Additional non-diffusion baseline models the TabDDPM is compared against are supported as well.
 The functionality of the most important scripts can be summarized in the following way:
 
@@ -166,24 +166,25 @@ The functionality of the most important scripts can be summarized in the followi
 		The new samples are transformed according to the inverse of the preprocessing specified in the configuration.
 		After transformation, the generated samples are saved.
 
-		\item[eval\_[catboost|mlp|simple].py:]
+	% \item[eval\_[catboost|mlp|simple].py:]	
+	\item[\text{eval\_[catboost\textbar mlp\textbar simple].py:}]
 		Evaluates a synthetic dataset using machine learning efficacy.
 		A machine learning model (specified by the user) is trained on real or synthetic data, specified in the configuration.
 		The performance of the model is evaluated on the real test set and metric scores are calculated.
 
 	\item[pipeline\_*.py\footnotemark:]
-		Defines the complete pipeline, consisting of training, sampling and evaluation.
+		Defines the complete pipeline, consisting of training, sampling, and evaluation.
 		Handles that each function of the pipeline receives the correct attributes from the configuration.
 		Allows to execute only specified parts of the pipeline individually.
-		\footnotetext[1]{Each implemented baseline model (SMOTE, TVAE, CTABGAN, CTABGAN+) has its own implemention as pipeline\_\textit{modelName}.py}
+		\footnotetext[1]{Each implemented baseline model (SMOTE, TVAE, CTABGAN, CTABGAN+) has its own implementation as pipeline\_\textit{modelName}.py}
 
 	\item[tune\_*.py\footnotemark:]
 		Responsible for the hyperparameter tuning process.
-		Starts by defining a hyperparameter search space (see \cite[Table 1, p. 4]{kotelnikov2022TabDDPMModellingTabular} and \cite[Table 7-11, p. 13 f.]{kotelnikov2022TabDDPMModellingTabular})
+		Starts by defining a hyperparameter search space (see \cite[Table 1, p. 4]{kotelnikov2022TabDDPMModellingTabular} and \cite[Table 7-11, p. 13 f.]{kotelnikov2022TabDDPMModellingTabular}).
 		Next, an objective function is defined that is maximized for 50 trials through the Optuna framework \cite{optuna_2019}.
 		Within the objective function, a set of hyperparameters is selected from the search space.
 		With this set of hyperparameters, \textit{pipeline.py} is called to train the model.
-		Afterward, for five different random initializations, \textit{pipeline.py} is called to sample and evaluate the model, creating and assessing five different synthetic dataset versions.
+		Afterward, for five different random initializations, \textit{pipeline.py} is called to sample and evaluate the model, creating, and assessing five different synthetic dataset versions.
 		In each training, sampling, and evaluation, the training and validation set are redistributed and shuffled to implement some form of cross-validation \cite{kohavi2001StudyCrossValidationBootstrap}.
 		The average evaluation score (machine learning efficacy based) of the five synthetic dataset versions is returned as the objective that Optuna tries to maximize.
 		After optimization, the best hyperparameter configuration is saved.
@@ -191,18 +192,18 @@ The functionality of the most important scripts can be summarized in the followi
 		\footnotetext[2]{Each implemented baseline model has its own implementation as tune\_\textit{modelName}.py}
 	\item[eval\_seeds.py:]
 		Performs an extensive evaluation, given a trained model.
-		Starts by loading a pre-trained sampling model \\([TabDDPM|SMOTE|CTABGAN|CTABGAN+|TVAE]).
+		Starts by loading the pre-trained sampling model \\([TabDDPM|SMOTE|CTABGAN|CTABGAN+|TVAE]).
 		The script will produce $n\_datasets$ synthetic datasets depending on the specified evaluation parameters by calling the sampling script in the respective \textit{pipeline\_*.py} script.
 		For each produced dataset, evaluation is performed using a predefined evaluation model ([Catboost|MLP]) for a predefined number of random initializations.
-		Ultimately, the average metrics is calculated over all performed runs, reported, and saved.
+		Ultimately, the average metrics are calculated over all performed runs, reported, and saved.
 \end{description}
 
-Hence, to get a fully optimized diffusion model with an extensive evaluation, the user just has to run the \textit{tune\_ddpm.py} script with the \textit{- - eval\_seeds} flag.
-A detailed activity diagram for each script can be found at \autoref{A:activity_diagrams}.
+In summary, to get a fully optimized diffusion model with an extensive evaluation, the user just has to run the \textit{tune\_ddpm.py} script with the \textit{- - eval\_seeds} flag.
+A detailed activity diagram for each script can be found in the appendix \ref{A:activity_diagrams}.
 
 \subsubsection[]{Configuration}
 
-In order to start one of the above scripts, a configuration file has to be specified, specifying the most important parameters for training, sampling, and evaluation.
+In order to start one of the above scripts, a configuration file has to be specified, detailing the most important parameters for training, sampling, and evaluation.
 For example, \autoref{lst:configuration} shows how such a configuration file could look like and which parameters need to be specified
 
 \begin{lstlisting}[label={lst:configuration}, caption={Example Configuration File}]
@@ -264,11 +265,11 @@ For example, \autoref{lst:configuration} shows how such a configuration file cou
 \end{lstlisting}
 
 
-\textit{model\_type} refers to the model that should approximate the noise in the reverse noising process.
+The variable \textit{model\_type} refers to the model that should approximate the noise in the reverse noising process.
 Most parameters are self-explanatory, controlling one specific part of the pipeline.
 For example, all \textit{model\_params} specify different relevant aspects for instantiating the model, and \textit{diffusion\_params} control the diffusion process.
 Noteworthy are the train.T and eval.T parameters, which define how preprocessing is done at the beginning of training and evaluation, respectively.
-This configuration structure allows to efficiently perform a variety of experiments with different parameters by simply changing the configuration file and inputting it into the next experiment run.
+This configuration structure allows to efficiently perform a variety of experiments with different parameters by simply changing the configuration file and inputting it into the next experimental run.
 
 \subsubsection[]{Data format}
 \label{sec:data_format}
@@ -276,11 +277,11 @@ The authors provide access to 12 different datasets, which have been cleaned and
 Each dataset contains data separated into multiple subparts.
 Firstly, the columns are split into categorical, numerical, and target ("y") columns.
 Secondly, the datasets are distributed into a training, validation, and testing set.
-Therefore, each dataset is separated into nine parts, following the following naming convention:
+Therefore, each dataset is separated into nine parts, conforming to the subsequent naming convention:
 X\_[cat|num]\_[train|val|test].npy and for the target y\_[train|val|test].npy
 
 Additionally, a \textit{info.json} file is provided, containing the necessary information for handling the data.
-In \autoref{lst:info}, one can see how such an info-file contains the information on how the splits mentioned above have been done and what kind of task this dataset usually has (it is differentiated between binary classification (binclass), multiclass classification (multiclass) and regression (regression)).
+In \autoref{lst:info}, one can see how such an info-file contains the information on how the splits mentioned above have been done and what kind of task this dataset usually has (it is differentiated between binary classification (binclass), multiclass classification (multiclass), and regression (regression)).
 \begin{lstlisting}[label={lst:info},caption={Example Data-info File}]
     {
     "name": "Adult",
@@ -299,9 +300,9 @@ Inside the code of TabDDPM \cite{akim2023TabDDPMModellingTabular}, a custom data
 \label{ch:conceptualDesign-changes}
 
 Changes to the current architecture have been made to answer the research questions specified in \autoref{ch:intro-goals}.
-\autoref{fig:Overall_changed} shows that the overall synthesisation process does not deviate much from \autoref{fig:overall_original}.
-Changes are highlighted in green and affect each step in the diffusion process, the training, sampling, and evaluation step.
-For a detailed overview of how each individual scripts changed, please refer to \autoref{A:activity_diagrams}.
+\autoref{fig:Overall_changed} shows that the overall synthesis process does not deviate much from \autoref{fig:overall_original}.
+Changes are highlighted in green and affect each step in the diffusion process: the training, sampling, and evaluation step.
+For a detailed overview of how each individual scripts changed, please refer to appendix \ref{A:activity_diagrams}.
 
 \begin{figure}[h]
 	\centering
@@ -317,10 +318,10 @@ For a detailed overview of how each individual scripts changed, please refer to 
 		that the remaining pipeline remains functional and keeps changes to the original code minimal.
 	\item[C2-Inverse Tabular Processing:] Similar to the data preprocessing, which requires an inverse data postprocessing, to turn the data back into its original format and scale, the same is necessary for the tabular processing.
 		Since the model is trained on data that has been transformed according to the tabular processing mechanism, the diffusion model will produce data in the same format.
-		Consequently, the synthetic data must be transformed by an inverse function of the tabular processing mechanism before the evaluation.
+		Consequently, the synthetic data must be transformed back by an inverse function of the tabular processing mechanism before it is evaluated.
 	\item[C3-Similarity Evaluation:] Lastly, an extended evaluation of the synthetic data's similarity to the real data should be performed.
 		For this, the original machine learning efficacy evaluation remained unchanged.
-		However, the evaluation pipeline is extended by a similarity Evaluation that does not only calculate a unified score, TabSynDex \cite{chundawat2022UniversalMetricRobust}, but also reports other metric results that are of interest.
+		However, the evaluation pipeline is extended by a similarity evaluation that does not only calculate a unified score, TabSynDex \cite{chundawat2022UniversalMetricRobust}, but also reports other metric results that are of interest.
 		Hyperparameters of the generation models can also be tuned towards the TabSynDex score.
 		In addition to the numeric metric results, several visualizations comparing real and synthetic data will be generated.
 \end{description}
@@ -329,22 +330,19 @@ For a detailed overview of how each individual scripts changed, please refer to 
 \subsection{Tabular Processing Criteria}
 \label{ch:Concept-criteria}
 
-The main source for finding the processing mechanisms should be academic literature, where said mechanism has been applied to a related problem successful
+The main source for finding the processing mechanisms should be academic literature, where said mechanism has been successfully applied to a related problem.
 The selection of which tabular processing mechanisms are realized heavily depends on the requirements defined in \autoref{sec:func_requirements}.
 
 For a tabular processing mechanism to be used, the following conditions must be met:
 
-\begin{enumerate}
-	\item reversibility: the tabular processing mechanism must not only transform the data into a different format, but it also must be able to revert the transformation
+\begin{description}
+	\item[1. Reversibility:] the tabular processing mechanism must not only transform the data into a different format, but it also must be able to revert the transformation
 	      such that the data can be transformed back into its original form.
-	\item compatibility: the data must be able to be separated into numerical and categorical parts after the transformation
+	\item[2. Compatibility:] the data must be able to be separated into numerical and categorical parts after the transformation
 	      since the remaining code expects data in this format, as specified in \autoref{sec:data_format}.
-	\item complexity: the time it takes to transform the data should be within a reasonable timeframe. They shall not add too much computation time to the already extensive model-tuning process.
-	\item availability: due to the limited time frame of this thesis, the code for the mechanisms should be publicly available (or could be implemented within a reasonable timeframe).
-\end{enumerate}
-
-Based on the criteria mentioned above, tabular processing mechanisms should be selected.
-
+	\item[3. Complexity:] the time it takes to transform the data should be within a reasonable timeframe. They shall not add too much computation time to the already extensive model-tuning process.
+	\item[4. Availability:] due to the limited time frame of this thesis, the code for the mechanisms should be publicly available (or could be implemented within a reasonable timeframe).
+\end{description}
 
 \subsection[]{Evaluation}
 \label{ch:conceptualDesign-Evaluation}
@@ -358,7 +356,7 @@ Machine learning efficacy that is based upon an \gls{mlp} or using a set of clas
 \end{enumerate}
 Consequently, machine learning efficacy will be evaluated twice in each evaluation, once based on CatBoost and once inside the TabSynDex metric using a set of standard machine learning models.
 
-Lastly, for a visual evaluation, several plots indicating the similarity of the synthetic data to the real data shall be generated using the implementation of \cite{brenninkmeijer2019GenerationEvaluationTabular}.
+Lastly, for a visual evaluation, several plots indicating the similarity of the synthetic data to the real data shall be generated using the implementation of \textcite{brenninkmeijer2019GenerationEvaluationTabular}.
 If necessary, modifications to the plots may be required.
 
 % ''TODO:
