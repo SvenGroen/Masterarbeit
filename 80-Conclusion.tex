@@ -1,19 +1,19 @@
-\chapter{Conclusion}
+\chapter{Conclusion and Future Work}
 \label{ch:conclusion}
 
-\section*{Conclusion}
+\section{Conclusion}
 \label{ch:conclusion_}
 
 This thesis investigates the effect of different tabular processing mechanisms on diffusion-based tabular data synthesis.
 An already existing tabular data generation pipeline has been extended to implement different tabular encoding and decoding strategies easily.
-With this, the existing pipeline of TabDDPM \cite{kotelnikov2022TabDDPMModellingTabular} was extended by two tabular processing mechanisms that encode the tabular data before the training and revert the data back after sampling synthetic data.
+The pipeline of TabDDPM \cite{kotelnikov2022TabDDPMModellingTabular} was extended by two tabular processing mechanisms that encode the tabular data before the training and revert the data back after sampling synthetic data.
 The extended pipeline was evaluated using a CatBoost-based machine learning efficacy evaluation, a TabSynDex metric, and visualization of the synthetic data.
 The TabSynDex metric comprises five sub-metrics that capture different similarity aspects of the synthetic data.
 Several observations could be made in a set of experiments.
-Firstly, the results in terms of machine learning efficacy performance of the authors of the TabDDPM pipeline could be reproduced \cite{kotelnikov2022TabDDPMModellingTabular}.
+Firstly, the results in terms of machine learning efficacy stated by the authors of the TabDDPM pipeline could be reproduced \cite{kotelnikov2022TabDDPMModellingTabular}.
 Thanks to the addition of the TabSynDex metrics, it has been shown that TabDDPM superior performance against a set of non-diffusion baseline models also extends to the TabSynDex similarity metrics.
 
-While adding a Feature Tokenization (\gls{ft}) processing mechanism into the TabDDPM generation pipeline transforms the tabular data in such a way,
+Adding a Feature Tokenization (\gls{ft}) processing mechanism into the TabDDPM generation pipeline transforms the tabular data in such a way,
 that the diffusion model was not able to generate any meaningful data, which could be seen in the visual result.
 Adopting a more complex encoding/decoding strategy from \cite{zhao2022CTABGANEnhancingTabular}, which uses a Bayesian-Gaussian-Mixture model (\gls{bgm}),
 improved TabDDPM's generative capabilities in producing synthetic data that is useful in machine-learning scenarios.
@@ -25,8 +25,51 @@ In the performed experiments, diffusion models have been the first models to ach
 Hence, diffusion models are better at producing synthetic data that is more non-differentiable from the real data \cite{chundawat2022UniversalMetricRobust} compared to tested non-diffusion models.
 Further experiments showed how changing the data normalization strategy can, on the one hand, increase metric results but, on the other hand, worsen visual results.
 This insight underlines the importance of a visual evaluation of synthetic data to estimate the quality of the produced synthetic data properly.
-From all performed experiments, it can be concluded that diffusion-based tabular data synthesis is superior to the synthesis of other model types, such as \gls{gan} or \gls{vae}.
-Diffusion models have not only shown overall better metric and visual results, but they are also more flexible, as a hyperparameter tuning already affects the outcome of the metrics greatly.
+From all performed experiments, it can be concluded that diffusion-based tabular data synthesis is superior to the synthesis of other model types, such as \glspl{gan} or \glspl{vae}.
+Moreover, diffusion models have not only shown overall better metric and visual results, but they are also more flexible, as a hyperparameter tuning already affects the outcome of the metrics greatly.
 Out of all models, TabDDPM-BGM$^{s}$ models showed the best overall performance.
-However, potential users should alter the model pipelines design depending on the use case of the synthetic data, with TabDDPM-BGM$^{s}_m$ producing the best correlation score, TabDDPM-BGM$^{ml}_q$ best machine learning efficacy scores and TabDDPM-BGM$^{s}_q$ best basic statistical values and \gls{pmse} results.
+However, potential users should alter the model pipeline design depending on the use case of the synthetic data, since TabDDPM-BGM$^{s}_m$ produced the best correlation score, TabDDPM-BGM$^{ml}_q$ the best machine learning efficacy scores and TabDDPM-BGM$^{s}_q$ the best basic statistical values and \gls{pmse} results, while also producing good visual results.
 
+
+\section{Future Work}
+\label{ch:results-futureWork}
+
+As implementing diffusion models for synthesizing tabular data represents a relatively innovative approach with limited research to date, numerous promising pathways for future investigations exist.
+Firstly, to overcome the limitations presented in \autoref{ch:results-limitations}, a more extensive set of datasets is required to confirm the results observed in this thesis.
+More datasets with diverse characteristics to generalize the findings and identify potential sources of variation or bias.
+
+Moreover, incorporating a variety of metrics with diverse perspectives is essential for evaluating the performance and trade-offs of distinct tabular data generation methods.
+This is particularly relevant for privacy-related metrics, as recent research suggests that diffusion models may not effectively protect privacy and allow to extract training data samples \cite{carlini2023ExtractingTrainingData}.
+
+Moreover, it is likely that diffusion models can be further improved through several changes.
+First, the hyperparameter search space could be broader, such that more hyperparameter variations are explored.
+Second, the neural network itself could be replaced by a more sophisticated one.
+The proposed network by \cite{kotelnikov2022TabDDPMModellingTabular}, which predicts the noise in the reverse process, follows a simple architecture.
+In the image generation domain, a more complex U-Net \cite{ronneberger2015UNetConvolutionalNetworks} architecture with attention mechanisms at different layers was proposed \cite{dhariwal2021DiffusionModelsBeat}.
+\cite{dhariwal2021DiffusionModelsBeat} showed that such changes led to a better generation quality.
+Hence, it is possible that similar changes to the model's architecture would lead to better generative capabilities.
+Other changes could be made towards further improving the loss function.
+It might be worth investigating whether some adversarial loss could be implemented, similar to \gls{gan} models.
+For example, an adversarial network could be tasked to tell apart which noise (the noise that will be removed from the noised image) was predicted by the neural network and which was the actual noise.
+This information could be used to further enhance the capability of the diffusion network to remove noise from $x_{t}$ to get to $x_{t-1}$.
+Lastly, depending on the results of a detailed privacy evaluation, introducing differential privacy \cite{dwork2011DifferentialPrivacy} into the diffusion model might be worth investigating, which has been done extensively in the \gls{gan} domain \cite{jordon2018PATEGANGeneratingSynthetic,9054559, kunar2021DTGANDifferentialPrivatea, torfi2022DifferentiallyPrivateSynthetic}.
+
+Regarding the tabular processor mechanism, several changes and different techniques could be implemented to improve the overall generation pipeline.
+Currently, the tabular processor mechanism is fully separated from the diffusion processes.
+Fully incorporating the tabular processor into the neural network architecture for some mechanisms would allow a gradient flow through the processing mechanism.
+This would be especially interesting for embedding mechanisms, as they could learn in this way to create a meaningful representation of the data.
+Alternatively, a pre-training mechanism for the tabular processor could be possible so that embedding layers can learn meaningful representations before the actual tabular data synthesis starts.
+
+There exist several different tabular processor techniques that could be worth investigating.
+For example, the models TABBIE \cite{iida2021TABBIEPretrainedRepresentations} and TURL \cite{deng2021TURLTableUnderstanding} show different ways to create
+meaningful-context aware representations of tabular data.
+Future researchers could adapt their work and use the pretrained embeddings created by these models to encode the tabular data before processing it in the diffusion pipeline.
+One of the biggest challenges here is to correctly revert the data back into its original data format after it has been synthesized.
+A possible solution for this could be training a decoder module, as in \cite{rombach2022HighResolutionImageSynthesis}, adapting an encoder-decoder architecture.
+This decoder could be trained explicitly towards reverting the previously encoded data back into its human-readable format.
+In this solution, the tabular processing inverse function is not implemented directly by the developer, but it is learned through a neural network.
+
+As one can see, many possible research directions exist for diffusion-based tabular data synthesis.
+Future research should first focus on removing the possible limitations of this thesis through a more elaborate experimental setup with more datasets.
+Here, potential privacy issues are required to be investigated.
+Depending on the results, architectural changes and additional tabular processing mechanisms are worth investigating.
