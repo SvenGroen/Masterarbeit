@@ -1,4 +1,6 @@
-/OUT
+/OUT/*
+!/OUT/Masterarbeit.pdf
+
 *.docx
 *.pptx
 EXPERIMENTE_ERGEBNISSE/
