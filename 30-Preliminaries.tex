@@ -11,7 +11,7 @@ This format is the most common way to maintain massive databases \cite{esmaeilpo
 Tabular data consists of multiple attribute types, such as categorical or continuous data types \cite{borisov2022DeepNeuralNetworks}.
 From a statistical perspective, quantitative and qualitative variables are to be differentiated \cite{lane2003IntroductionStatistics}.
 Quantitative variables are variables that can be measured numerically and express a specific quantity or amount. 
-Qualitative variables cannot be measured numerically but describe qualities or characteristics that do not have any ordering  \cite{lane2003IntroductionStatistics}. 
+Qualitative variables cannot be measured numerically but describe qualities or characteristics that do not have any ordering \cite{lane2003IntroductionStatistics}. 
 These variables are divided into categories or groups based on shared attributes. 
 The categories are usually non-numerical and consist of words or labels, such as gender (\textit{male}, \textit{female}) or hair color (\textit{blonde}, \textit{brunette}, \textit{red}, etc.) and may be assigned to numbers.
 
@@ -35,12 +35,7 @@ These random variables follow an unknown joint distribution $\mathbb{P}(Q_{1:N_q
 One row $r_j = \{q_{1,j}, \dots, q_{N_q,j}, p_{1,j}, \dots, p_{N_p,j}\}$, $j \in \{1, \dots, n\}$, is one observation from the joint distribution.
 \end{displayquote}
 
-The term "table" as described in this definition aligns with the concept of a single "table" or "relation" as described in the classical relational model \cite{codd1970RelationalModelData} commonly used in modern relational databases \cite{w.eembley2009RelationalModel}.
-Essentially, this definition takes a probabilistic view of the table in a relational database.
-Rather than viewing the data within the table as static or independent values, it perceives them as elements derived from an unseen, underlying probability distribution.
-This is an important perspective for statistical analysis and machine learning tasks on database content.
-
-\cite{codd1970RelationalModelData}
+The term "table" as described in this definition aligns with the concept of a single "table" or "relation" as defined in the classical relational data model \cite{codd1970RelationalModelData} and used in SQL databases \cite{w.eembley2009RelationalModel}.
 
 For consistency and simplicity, this thesis will further refer to qualitative columns as \textit{categorical} and to quantitative columns as \textit{continuous} or \textit{numerical}. 
 Discrete values are not separately mentioned but should be considered included in \textit{continuous}/\textit{numerical} columns.
@@ -141,7 +136,7 @@ The VIME framework \cite{yoon2020VIMEExtendingSuccess} uses a multilayer percept
 similar to the encoder of famous (variational-) auto-encoders \cite{kingma2013AutoEncodingVariationalBayes} architectures.
 This latent representation is, like in embeddings, a learned representation that is learned through self-supervised learning tasks, feature vector estimation and mask vector estimation \cite{yoon2020VIMEExtendingSuccess}.
 \cite{borisov2022DeepNeuralNetworks} also lists other multi-dimensional encoding techniques, such as the works of \cite{zhu2021ConvertingTabularData} and \cite{sun2019supertml}.
-Both architectures transform tabular data into an image-like format in order to make use of \glspl{cnn}.
+Both architectures transform tabular data into a two-dimensional structure (\eg the format of images) to enable the effective use of \glspl{cnn}.
 
 
 \subsubsection{Data Normalization and Standardization}
@@ -169,20 +164,20 @@ The authors define the mode-specific normalization technique in following way \c
     For example, in \autoref{fig:mode-specific-normalization} the \gls{vgm} estimates $m_i=3$, referred to as $\eta_1$, $\eta_2$ and $\eta_3$. 
     The learned Gaussian mixture is  
     $\mathbb{P}_{C_i}(c_{i,j})=\sum_{k=1}^{3}\mu_k\mathcal{N}(c_{i,j};\eta_k, \sigma_k)$
-    with $\mu_k$ and $\sigma_k$ as the weight and the standard deviation of a mode respectively.
+    with $\mu_k$ and $\sigma_k$ as the weight and the standard deviation of a mode respectively and normal distribution $\mathcal{N}$.
     $\mu_k$ can also be understood as the proportion of the overall data that comes from the $kth$ mode, essentially measuring the likelihood, a randomly selected datapoint from the overall dataset comes from the $kth$ determined Gaussian distribution.
     \item For each $c_{i,j}$ the probability is calculated of $c_{i,j}$ coming from each mode. 
-    In \autoref{fig:mode-specific-normalization}, $p_1$, $p_2$ and $p_3$ denote the probability densities, calculated as $p_k=\mu_k\mathcal{N}(c_{i,j};\eta_k;\sigma_k)$.
-    \item Given $p_1$, $p_2$ and $p_3$ for $c_{i,j}$ one mode is sampled and used to normalize the value. 
-    In the example of \autoref{fig:mode-specific-normalization}, $p_3$ is most likely and is sampled.
+    In \autoref{fig:mode-specific-normalization}, $\rho_1$, $\rho_2$ and $\rho_3$ denote the probability densities, calculated as $\rho_k=\mu_k\mathcal{N}(c_{i,j};\eta_k;\sigma_k)$.
+    \item Given $\rho_1$, $\rho_2$ and $\rho_3$ for $c_{i,j}$ one mode is sampled and used to normalize the value. 
+    In the example of \autoref{fig:mode-specific-normalization}, $\rho_3$ is most likely and is sampled.
     The mode selection for $c_{i,j}$ is represented as a \gls{oh} vector $\beta_{i,j}=[0,0,1]$ indicating that the third mode has been sampled.
-    The actual value $c_{i,j}$ is normalized as $\alpha_{i,j}=\frac{c_{i,j}-\eta_3}{4\sigma_3}$, according to the mean and standard deviation of $p_3$. 
+    The actual value $c_{i,j}$ is normalized as $\alpha_{i,j}=\frac{c_{i,j}-\eta_3}{4\sigma_3}$, according to the mean and standard deviation of $\rho_3$. 
 \end{enumerate}
 
 The normalized representation $r$ of $c_{i,j}$ will be the concatenation of $\alpha_{i,j}$ and $\beta_{i,j}$: 
 $$r=\alpha_{i,j}\oplus\beta_{i,j}$$
 
-For example, given $\alpha_{i,j}=0.4$ and $\beta_{i,j}=[0,0,1]$, the normalized representation would be $r=[0.4,0,0,1]$
+For example, given $\alpha_{i,j}=0.4$ and $\beta_{i,j}=[0,0,1]$, the normalized representation would be $$r=[0.4,0,0,1]$$
 
 % include image from paper
 \begin{figure}[h]
@@ -211,9 +206,9 @@ Acquiring and collecting real data can be costly \cite{panova2022HowSyntheticDat
 Synthetic data on the other hand is, compared to real data, cheap to generate \cite{leminh2021AirGenGANbasedSynthetica}, fulfils regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular} and can substitute real data in software development for testing \cite{whiting2008CreatingRealisticScenariobased} or machine learning training \cite{panova2022HowSyntheticData}.
 Hence, synthetic data could be used as an alternative to real data in various use cases.
 Access to data is still one of the biggest bottlenecks when developing machine learning or deep learning models \cite{fan2020RelationalDataSynthesisa}.
-Synthetic data could be used to increase the data quality, by rebalancing skewed dataset \cite{zhao2022CTABGANEnhancingTabular} 
+Synthetic data could be used to increase the data quality, by rebalancing skewed datasets \cite{zhao2022CTABGANEnhancingTabular} 
 or increasing the dataset size as additional training data or in combination with the real data \cite{leminh2021AirGenGANbasedSynthetica, kim2021OCTGANNeuralODEbased}.
-Synthetic data can also be used in situations where working with the real data is not possible, due to privacy or availability reasons \cite{9034117, whiting2008CreatingRealisticScenariobased}.
+An example, where working with real data is sometimes not possible, due to privacy or availability reasons could be software development \cite{9034117, whiting2008CreatingRealisticScenariobased}.
 In software development, high-quality test data is crucial for development but challenging and time-consuming to generate \cite{whiting2008CreatingRealisticScenariobased}.
 Developers' time to create such datasets is usually scarce and it might be the case that developers do not even have permission to see the data, due to its sensitivity \cite{whiting2008CreatingRealisticScenariobased}.
 A synthetic data generation model would possibly allow developers to generate test data with predefined characteristics without it being restricted in any form.
@@ -256,19 +251,19 @@ Lastly, machine learning and deep learning algorithms can be used to learn the u
 %challanges
 Compared to other data types, the synthesis of tabular data is especially challenging due to its heterogeneity, potential weak correlations among features and the dependency on preprocessing \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess, gorishniy2022EmbeddingsNumericalFeatures}.
 To create a realistic synthetic dataset, interdependencies that may exist between variables must be captured and 
-it is possible that the model overfits on the training data and generalizes relationships between features that are only present in training but not in the test data \cite{lederrey2022DATGANIntegratingExperta}.
+it is possible that the model overfits the training data and generalizes relationships between features that are only present in training but not in the test data \cite{lederrey2022DATGANIntegratingExperta}.
 In addition to that, tabular data columns can follow complex distributions, which makes the synthesis challenging.
-\textcite{zhao2022CTABGANEnhancingTabular} identified the following four properties of tabular data, one should consider when trying to synthesize tabular data:
+\textcite{zhao2022CTABGANEnhancingTabular} categorized the following four distribution types a tabular data column might display, which one should consider when trying to synthesize tabular data:
 
 \begin{enumerate}
-    \item \textbf{Single Gaussian variables}: Data where its distribution follows a Gaussian distribution \cite{zhao2022CTABGANEnhancingTabular}.
+    \item \textbf{Single Gaussian variables}: Data whose distribution follows a Gaussian distribution \cite{zhao2022CTABGANEnhancingTabular}.
     \item \textbf{Mixed data type variables}: A single column can contain a mix of continuous and categorical values. 
     For instance, a \textit{Loan} column could hold information about the size of an individual's loan.
     The values in this column are mostly positive float values but can also take the value \textit{$-1$} which indicates that this person did not get approved for a loan.
     Such a special categorical value in an otherwise purely numerical column needs to be considered when working with this column \cite{zhao2022CTABGANEnhancingTabular}.
-    \item \textbf{Long tail distributions}: In real-world data, most data points may occur "near the initial value of a distribution and rare cases towards the end" \cite[p. 3]{zhao2022CTABGANEnhancingTabular}.
-    This results in a tail-like distribution.
-    The phenomenon of long-tail distribution is seen across a variety of applications including object detection, scene parsing, document processing, and item recommendation \cite{zhou2018DeepSuperclassLearning}.
+    \item \textbf{Long tail distributions}: In real-world data, the class distribution is often imbalanced, where a few classes of a column occur much more frequently than most other classes \cite{zhang2023DeepLongTailedLearning}.
+    When plotting the number of samples per class in a descending manner, the resulting plot shows a large "head", where a few classes have a high number of samples, and a "tail", where the remaining classes are the majority but are each represented only very limited in the dataset \cite[p. 2]{zhang2023DeepLongTailedLearning}.
+    This results in a short "head" but long "tail" distribution, giving the distribution its name.
     Capturing these long-tail distributions correctly during the synthesis is important, not only because they represent unique or rare scenarios that could be crucial for certain analysis tasks, but also because the minority classes in the tail collectively constitute a significant portion of the entire dataset \cite{zhou2018DeepSuperclassLearning}. 
     \item \textbf{Skewed multi-mode continuous variables}: Complex numerical distributions do not necessarily follow a single Gaussian distribution.
     It is possible for their distribution to consist of multiple unknown distributions that are potentially skewed as well. 
@@ -300,7 +295,7 @@ The sum of all input-weights' multiplication serves as the input to an activatio
 The output is the prediction of the perceptron which is compared to the actual result, the label, and an error is calculated.
 This error is later used to update the individual nodes' weights via backpropagation \cite{aggarwal2018NeuralNetworksDeep}.
 The output of one node can also serve as the input to another node, so multiple layers of nodes are created.
-This is referred to as a \gls{mlp} or feed-forward neural network as presented in \autoref{fig:mlp}, 
+This is referred to as a \gls{mlp} or feed-forward neural network (as presented in \autoref{fig:mlp}), 
 because the information flows forward from input through the multiple layers in the middle (also called hidden layers) to the output \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
 An \gls{mlp} tries to approximate some function $f^*$ by defining a mapping $y=f(x;\theta)$ and learning the values of the parameters $\theta$ (\ie the weights) that best approximate $f^*$ \cite{Goodfellow-et-al-2016}.
 A simple \gls{mlp} is already able to learn almost any function, which is why they are also considered to be universal function approximators \cite{aggarwal2018NeuralNetworksDeep, hornik1989MultilayerFeedforwardNetworks}.
@@ -351,7 +346,7 @@ In \glspl{cnn}, the learned parameters are shared by using the same convolution 
 As a result, a succession of output values is produced, each of which is dependent on a few close input values. 
 \glspl{rnn} share parameters differently since each output value depends on its predecessors' output. 
 This enables parameter sharing via a deep computational graph by allowing the same update algorithm to be applied to all outputs.
-When processing a sequence, \eg a sentence, a \gls{rnn} receives one datapoint, \eg a word, at each timestep.
+When processing a sequence, \eg a sentence, an \gls{rnn} receives one datapoint, \eg a word, at each timestep.
 The network itself has a so-called \textit{hidden state} that is kept throughout all timesteps and changes with each timestep.
 This, however, means that the output $y_3$ of the input at $x_{t=3}$ depends on the hidden states $h_0$ through $h_3$ and input $x_0$ through $x_3$.
 As a result, the computational graph on which the backpropagation is performed on increases as well \cite{aggarwal2018NeuralNetworksDeep}.
@@ -389,10 +384,9 @@ The decision of which layers to skip is learned by the model itself during the t
 \end{figure}
 
 Lastly, inspired by the human cognitive capabilities to focus on specific parts of an input, attention mechanisms have been introduced \cite{niu2021ReviewAttentionMechanism, aggarwal2018NeuralNetworksDeep}.
-The implementation of attention in neural networks tries to address the problem of information overload and is supposed to enable the network to allocate its resources \cite{niu2021ReviewAttentionMechanism}.
-Information overload in the context of deep learning typically refers to issues that arise when a model is fed with too much data, that can hinder the model to capture the relevant information.
+The implementation of attention in neural networks tries to address the problem of information overload\footnote{Information overload in the context of deep learning typically refers to issues that arise when a model is fed with too much data, that can hinder the model to capture the relevant information.
 Issues during training may arise if the input data contains too much noise, that is of no relevance or might cause the model to rather learn to predict the noise, than the actual target.
-With this, the model may overfit the training data and perform poorly on the test data. 
+With this, the model may overfit the training data and perform poorly on the test data. } and is supposed to enhance the network's ability to focus on relevant portions of the input data \cite{niu2021ReviewAttentionMechanism}.
 An attention mechanism has been successfully applied to various tasks in different domains, such as computer vision or \gls{nlp} \cite{niu2021ReviewAttentionMechanism}.
 The architectural realization of attention is realized differently, depending on the task at hand \cite{aggarwal2018NeuralNetworksDeep}.
 The attention mechanism in computer vision involves weighting different regions of the image based on their relevance to the task \cite{aggarwal2018NeuralNetworksDeep}. 
@@ -403,13 +397,14 @@ For instance, this has been achieved through the introduction of a context vecto
 \section{Deep Generative Models}
 \label{ch:preliminaries-generativeMlgorithms}
 
-Deep generative models have revolutionized the field of artificial intelligence and machine learning by generating new and original data based on existing patterns and structures. 
+Deep generative models have revolutionized the field of artificial intelligence and machine learning by generating new and original data based on existing patterns and structures.
+For example, deep generative models have been able to generate new images \cite{ho2020DenoisingDiffusionProbabilistic}, videos \cite{ho2022VideoDiffusionModels}, text \cite{openai2022ChatGPTOptimizingLanguage}, or music \cite{agostinelli2023MusicLMGeneratingMusic}, based on previously learned data. 
 Generative models try to learn a joint distribution over all the available variables in a dataset \cite{kingma2019IntroductionVariationalAutoencoders}, which is also called the \textit{generative modeling problem} \cite{goodfellow2020GenerativeAdversarialNetworks}.
 Formally, in generative modeling training examples $x$ are drawn from an unknown distribution $p_{data}(x)$ and a generative modeling algorithm is trained to learn a distribution density function $p_{model}(x;\theta)$ that approximates the true probability density function $p_{data}(x)$ as closely as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
-$\theta$ are the models parameters that determine the models output, they are usually learned by searching for best $\theta$ values that result in $p_{model}$ to be as similar to $p_{data}$ as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
-
+In the generative modeling process, model parameters denoted by $\theta$ are essential as they shape the output of the model. 
+These parameters are typically fine-tuned through an optimization process that seeks the most suitable $\theta$ values, aiming to enhance the resemblance between $p_{model}$ and $p_{data}$ \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
 Several powerful generative modeling approaches with different architectures have emerged, each with its strengths and weaknesses. 
-This section will explore four of the most popular approaches: \glspl{vae} (\autoref{ch:preliminaries-variationalAutoencoders}), \glspl{gan} (\autoref{ch:preliminaries-generativeAdversarialNetworks}), transformers (\autoref{ch:preliminaries-transformers}), and diffusion models (\autoref{ch:preliminaries-diffusionProbabilisticModels}). 
+This section will explore four of the most popular approaches: \acrfull{vae} (\autoref{ch:preliminaries-variationalAutoencoders}), \acrfull{gan} (\autoref{ch:preliminaries-generativeAdversarialNetworks}), transformers (\autoref{ch:preliminaries-transformers}), and diffusion models (\autoref{ch:preliminaries-diffusionProbabilisticModels}). 
 
 \subsection{Variational Autoencoders}
 \label{ch:preliminaries-variationalAutoencoders} 
@@ -430,13 +425,14 @@ The latent representation of a complete linear autoencoder without any non-linea
 Further variations of autoencoders have emerged.
 Deep autoencoders expand the neural network from one hidden layer to multiple layers with non-linear activation functions, increasing the representation power \cite{aggarwal2018NeuralNetworksDeep}.
 Other variants include denoising autoencoders, convolutional autoencoders, or sparse autoencoders \cite{maheshwari2022AutoencoderIssuesChallenges, Goodfellow-et-al-2016}.
-However, vanilla autoencoders lack regularity in the latent space which means they struggle with interpolation for datapoints that have not been present in the input sequence \cite{razghandi2022VariationalAutoencoderGenerativea}.
-
-
-
+However, vanilla autoencoders suffer from a lack of regularity in the latent space \cite{razghandi2022VariationalAutoencoderGenerativea}.
+This means that it is possible, that the encoder may produce a latent space that is not well structured.
+In other words, similar inputs are not necessarily mapped to similar points in the latent space.
+The consequence of this irregular latent space is, that points from the latent space may, once decoded, result in a meaningless output \cite{rocca2019UnderstandingVariationalAutoencoders}.
+Hence, the autoencoder struggles with interpolation for datapoints that have not been present in the input sequence, since the latent space lacks a meaningful structure \cite{razghandi2022VariationalAutoencoderGenerativea}.
 
 \glspl{vae} increase the reconstruction robustness by letting the decoder sample from continuous distributions \cite{kingma2013AutoEncodingVariationalBayes}.
-% \glspl{vae} are, as the name suggests, making use of stochastic variational inference, where the goal is to approximate complex distributions (like the posterior) by simpler ones (like the Gaussian distribution in this case), enabling efficient computation and handling of uncertainty.
+By forcing the latent space into a continuous distribution, a regularised latent space is obtained \cite{rocca2019UnderstandingVariationalAutoencoders}.
 This is achieved by introducing the \gls{kl} divergence (see \autoref{eqn:kl-divergence}) to ensure that the latent space representation follows a standard Gaussian distribution (zero mean and unit variance) \cite{razghandi2022VariationalAutoencoderGenerativea, aggarwal2018NeuralNetworksDeep}.
 Instead of the encoder mapping the input into a fixed vector $z$, it is mapped into a distribution by generating two vectors representing the mean $\mu$ and standard deviation $\sigma$ of the distribution (see \autoref{fig:vae}) \cite{razghandi2022VariationalAutoencoderGenerativea, aggarwal2018NeuralNetworksDeep}.
 Constraining the hidden representation $z$ to a Gaussian distribution allows the decoder to generate new data by simply feeding samples from the standard normal distribution \cite{aggarwal2018NeuralNetworksDeep}.
@@ -483,7 +479,7 @@ Additionally, a reconstruction loss is computed based on the negative log-likeli
 \end{equation}
 with $E_{q(z|x)}$ denoting the expectation with respect to the encoder distribution.
 
-Hence, the final loss function that is minimized during the training of the \gls{vae} is the combination both loss functions\footnote{The loss components in the original work \cite{kingma2013AutoEncodingVariationalBayes} are formulated as a maximization objective. In practice, a loss that can be minimized during training is required. Hence, we convert the maximization objective to a minimization objective by multiplying it with -1}:
+Hence, the final loss function that is minimized during the training of the \gls{vae} is the combination of both loss functions\footnote{The loss components in the original work \cite{kingma2013AutoEncodingVariationalBayes} are formulated as a maximization objective. In practice, a loss that can be minimized during training is required. Hence, we convert the maximization objective to a minimization objective by multiplying it with -1}:
 
 \begin{equation}
     \label{eqn:vae_loss}
@@ -554,6 +550,7 @@ This seems to be caused by the fact that the discriminator is able to reject the
 The proposed solution for this is to change the objective function for the generator from the minimization function \autoref{eqn:generator} to a maximization of $logD(G(z))$.
 Thus, instead of minimizing the discriminator being correct, the new objective is to maximize the discriminator being wrong \cite{NIPS2014_5ca3e9b1}. 
 \textcite[p. 3]{NIPS2014_5ca3e9b1} observes, that this change "provides much stronger gradients early in learning" and therefore allows for an overall better model learning.
+This heuristic means that the problem is technically no longer a minimax optimization problem, but is usually favored as it enhances the training process \cite[p. 442]{aggarwal2018NeuralNetworksDeep}.
 The two loss functions $L_G$ and $L_D$ that are minimized during training of the generator and discriminator, respectively, are defined as:
 
 \begin{equation}
@@ -566,7 +563,7 @@ The two loss functions $L_G$ and $L_D$ that are minimized during training of the
 
 
 In practice, the discriminator is trained for $k$ steps for each generator training step \cite{aggarwal2018NeuralNetworksDeep}.
-This process is repeated iteratively until a nash equilibrium is reached, at which point the discriminator in unable to tell real and fake samples apart ($p_{model}\approx p_{data}$) \cite{NIPS2014_5ca3e9b1, aggarwal2018NeuralNetworksDeep}.
+This process is repeated iteratively until a Nash-equilibrium is reached, at which point the discriminator is unable to tell real and fake samples apart ($p_{model}\approx p_{data}$) \cite{NIPS2014_5ca3e9b1, aggarwal2018NeuralNetworksDeep}.
 
 \subsection{Transformers}
 \label{ch:preliminaries-transformers}
@@ -580,7 +577,9 @@ This is achieved through the combination of several mechanisms, namely, self-att
 
 The transformer model follows an encoder-decoder structure (see \autoref{fig:transformer}).
 The encoder maps an input sequence to an abstract continuous representation that encapsulates all the learned information from the input.
-The decoder, in turn, utilizes this representation to generate outputs while also incorporating the previously produced output \cite{vaswani2017AttentionAllYou}.
+The decoder, in turn, utilizes this representation to generate outputs while also incorporating the previously produced output.
+The output of the decoder is a probability score for each possible token.
+These probabilities are then used to determine the next token, as the token with the highest probability is the next token \cite{vaswani2017AttentionAllYou}. 
 
 The first step in the transformer architecture is the transformation of the raw input through an embedding layer (see \autoref{sec:dataTransformation}).
 This embedding allows the transformation of input tokens into vectors of dimension $d_{model}$ \cite{vaswani2017AttentionAllYou}.
@@ -603,8 +602,8 @@ This attention mechanism is realized using a scaled Dot-Product on query, key, a
 All three vectors are created by sending the input through different linear layers.
 The dot product multiplication of the query and key matrixes creates a score matrix that indicates how much focus an individual word should have on the other words, \ie how much the network should attend to it \cite{vaswani2017AttentionAllYou}.
 The created attention matrix is scaled (according to the key dimensionality $d_k$) and multiplied with the value vector to generate the output probabilities.
-The multi-head attention refers to the fact that input is split into multiple parts before being processed by different self-attention blocks.
-Outputs of the different self-attention blocks are ultimately concatenated back together afterward \cite{vaswani2017AttentionAllYou}.
+Multi-head attention refers to the fact that input is processed simultaneously by different attention heads, \ie with multiple $Q$, $K$, and $V$ matrices as described above \cite{vaswani2017AttentionAllYou}.
+The Outputs of the multiple self-attention heads are ultimately concatenated back together \cite{vaswani2017AttentionAllYou}.
 The attention mechanism can be defined as \cite[p.4]{vaswani2017AttentionAllYou}:
 
 \begin{equation}
@@ -616,7 +615,9 @@ To summarize, the transformer model employs an encoder-decoder structure for seq
 The encoder receives an input sequence and transforms it into an abstract continuous representation via an embedding layer, which includes positional encodings. 
 This encoded input, containing the attention information from the input, is passed to the decoder. 
 The decoder operates in an autoregressive manner, incorporating both the encoded input and a sequence of previously generated outputs in its process. 
-The decoder subsequently generates output tokens until it produces an ending token.
+The output of the decoder is a probability vector, with each element representing the probability of a specific possible token.
+The token corresponding to the highest probability value is then chosen as the next output token.
+Ultimately, the decoder is subsequently used to generate output tokens until it produces an ending token.
 Both the encoder and decoder utilize self-attention mechanisms, allowing for context-dependent concentration on different parts of the input sequence.
 
 
@@ -699,23 +700,37 @@ $p_{\theta}(x_{0:T})$ is a \gls{mc}, defined in \autoref{eqn:reverse_1}, with th
     
 While the mean $\mu_{\theta}(x_t, t)$ is learned by the neural network, the variance $\Sigma_{\theta}(x_t, t)$ stayed fixed in the initial work by \cite{ho2020DenoisingDiffusionProbabilistic} 
 but was later in \textcite{nichol2021ImprovedDenoisingDiffusion} work a learnable parameter as well \cite{zbinden2022ImplementingExperimentingDiffusion}.
+%---
 
-Like in \glspl{vae} (\autoref{ch:preliminaries-variationalAutoencoders}), the model is trained by minimizing its negative log-likelihood (= maximizing the log-likelihood) $-log(p_\theta(x_0))$.
+Like in \glspl{vae} (\autoref{ch:preliminaries-variationalAutoencoders}), the goal is to maximize the log-likelihood $log(p_\theta(x_0))$.
 $p_\theta(x_0)$ depends on all timesteps before $x_0$ and is, therefore, not tractable in practice \cite{zbinden2022ImplementingExperimentingDiffusion}.
-As a solution, the variational lower bound on the negative log-likelihood can be computed \autoref{eqn:vlb}: %(ELBO)
+As a solution, the variational lower bound on the log-likelihood can be computed as illustrated in as the objective function \autoref{eqn:vlb}: %(ELBO)
 
 \begin{equation}
   \label{eqn:vlb}
+  \begin{align*}
+    log(p_\theta(x_0)) \geq log(p_\theta(x_0)) - KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))
+  \end{align*}
+\end{equation}
+
+The right-hand side of the inequation is increased by decreasing the \gls{kl}-divergence (\autoref{eqn:kl-divergence}), as the \gls{kl}-divergence is a non-negative measure of dissimilarity between two probability distributions. 
+In this case, for the \gls{kl}-divergence to be small, the approximated distribution $p_\theta(x_{1:T}|x_0)$ needs to be similar to the true posterior distribution $q(x_{t-1}|x_t)$.
+As the inequation has to hold, maximizing the right-hand side means that the left-hand side will automatically be maximized as well.
+This implies that the objective function provides a lower bound on the log-likelihood and any improvement in minimizing the \gls{kl}-divergence will ultimately lead to a maximization in this lower bound, which in turn will maximize the initial objective, the log-likelihood.
+
+For the deep learning model to learn, a loss function that will be minimized during training needs to be defined.
+The maximization problem can easily be transformed into a minimization problem since maximizing the log-likelihood is equivalent to minimizing the negative log-likelihood\footnote{Also transforming the lower-bound from the maximization to an upper-bound for the minimization}.
+This also changes the signs since the whole inequation is multiplied by $-1$:
+
+\begin{equation}
+  \label{eqn:vlb_b}
   \begin{align*}
     -log(p_\theta(x_0)) \leq -log(p_\theta(x_0)) + KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))
   \end{align*}
 \end{equation}
 
-The \gls{kl}-divergence (\autoref{eqn:kl-divergence}) is a non-negative measure of dissimilarity between two probability distributions. 
-The right-hand side is reduced by minimizing the \gls{kl}-divergence as the objective function in the given inequality, leading to a smaller or equal left-hand side. 
-Consequently, minimizing the \gls{kl}-divergence can only decrease the negative log-likelihood term on the left-hand side of the inequality. 
-This implies that the objective function provides a lower bound on the log-likelihood and any improvement in minimizing the \gls{kl}-divergence will ultimately lead to an enhancement in this lower bound.
-Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{1:T}|x_0)})$ and some reformulations (see \autoref{eqn:vlb2_appendix}) using bayes-rule results in \autoref{eqn:vlb2} leads to the following inequation \cite{ho2020DenoisingDiffusionProbabilistic}:
+
+Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{1:T}|x_0)})$ and some reformulations (see \autoref{eqn:vlb2_appendix}) using bayes-rule results in \autoref{eqn:vlb2} leads to the following inequation \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
   \label{eqn:vlb2}
@@ -726,6 +741,8 @@ Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x
 
 \autoref{eqn:vlb2} is the variational lower bound that is minimized during training to optimize $-log(p_\theta(x_0))$.
 With additional reformulations (see \autoref{eqn:vlb3_appendix}), the loss function can be derived as \cite{ho2020DenoisingDiffusionProbabilistic}:
+
+%---
 
 \begin{equation}
   \label{eqn:vlb3}
