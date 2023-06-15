@@ -357,7 +357,7 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\midrule
 		\# classif. layers      & UniformInt[1,6]                  \\
 		Classif. layer size     & Int\{62, 128, 256, 512\}         \\
-		Training itertations    & Cat\{5000, 20000, 30000\}        \\
+		Training iterations    & Cat\{5000, 20000, 30000\}        \\
 		Batch size              & Cat\{456,4096\}                  \\
 		Embedding dim.          & Int\{16,32,64,128,256,512,1024\} \\
 		Loss factor             & LogUniform[0.01, 10]             \\
@@ -379,7 +379,7 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\midrule
 		\# classif. layers      & UniformInt[1,4]                \\
 		Classif. layer size     & Int\{62, 128, 256\}            \\
-		Training itertations    & Cat\{1000, 5000, 7500\}        \\
+		Training iterations    & Cat\{1000, 5000, 7500\}        \\
 		Batch size              & Int\{512,1024,2048\}           \\
 		random dim.             & Int\{16,32,64,128\}            \\
 		\# Channels             & Int\{16, 32, 64\}              \\
@@ -387,8 +387,9 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\midrule
 		Number of tuning trials & 30                             \\
 		\bottomrule
+		\multicolumn{2}{c}{}\\[-0.2em] % Testen
 	\end{tabular}
-	\caption[CTAGBAG(+) Hyperparameter Search Space]{CTAGBAG/CTABGAN+ model hyperparameter tuning search space. Training iterations and the number of tuning trails were reduced compared to the original \cite{kotelnikov2022TabDDPMModellingTabular}, to reduce computation time.}
+	\caption[CTABGAN(+) Hyperparameter Search Space]{CTABGAN/CTABGAN+ model hyperparameter tuning search space. Training iterations and the number of tuning trails were reduced compared to the original \cite{kotelnikov2022TabDDPMModellingTabular}, to reduce computation time.}
 	\label{tab:ctabgan_tune}
 \end{table}
 

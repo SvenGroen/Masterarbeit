@@ -27,7 +27,7 @@ The following requirements R1 - R5 are the non-functional requirements for the s
 \begin{description}
 	\item[R1 - Functional Suitability:]
 		Functional Suitability refers to "the degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions" \cite[p. 219]{bass2013SoftwareArchitecturePractice}.
-		In the context of this thesis, the system needs to be able to show how different tabular processing techniques influence the performance of an existing data synthesis approach.
+		In the context of this thesis, the system first needs to be able to generate synthetic data and needs to be able to show how different tabular processing techniques influence the performance of the overall synthesis approach.
 		This performance should be measured across different similarity measures.
 
 	\item[R2 - Maintainability:]
@@ -61,9 +61,11 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 
 \begin{description}
 	\item[FR1 - Data Import and Export:]
-		The software shall support importing tabular data in the same format as specified in \cite{kotelnikov2022TabDDPMModellingTabular},
-		where a dataset is separated into numerical, categorical, and target columns, each saved in a NumPy \cite{harris2020array} array.
-		Synthetic data produced by models shall be saved in the same data format.
+		The software shall support importing tabular data in the same format as specified in \cite{kotelnikov2022TabDDPMModellingTabular}.
+		\textcite{kotelnikov2022TabDDPMModellingTabular} makes use of datasets, that are already separated into numerical, categorical, and target columns, each saved in a NumPy \cite{harris2020array} array.
+		Additionally, the datasets that will be imported have to be separated into training, validation, and testing sets.
+		For the NumPy arrays to be imported, they need to be of file type ".npy".
+		Synthetic data produced by models shall be saved in the same data format as the imported data.
 
 	\item[FR2 - Tabular Processing:]
 		The software shall support tabular data processing techniques that are able to encode and decode tabular data.
@@ -73,7 +75,7 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 
 		\item[FR2.1 - Tabular Processing Fit:]
 		If necessary, a Tabular processing mechanism should be able to be fitted according to the data.
-		However, it is required that the tabular processing mechanism only receives training data and does not have access to the test data.
+		However, it is required that the tabular processing mechanism only receives training and validation data and does not have access to the test data.
 
 		\item[FR2.2 - Tabular Processing Transform:]
 		Each Tabular processing mechanism needs to transform the raw data into a specified format.
@@ -108,8 +110,6 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 The code \cite{akim2023TabDDPMModellingTabular} used in this experiment is based upon the work of \cite{kotelnikov2022TabDDPMModellingTabular}.
 It is changed and modified according to the needs of the experiments.
 This section will first explain the architecture of the existing code base before introducing the proposed adaptations in the next section.
-
-
 
 \begin{figure}[h]
 	\centering
@@ -153,47 +153,48 @@ The functionality of the most important scripts can be summarized in the followi
 
 \begin{description}
 	\item[train.py:]
-		Does the training of the diffusion model.
-		Receives configuration parameters for the training.
-		It starts by loading the selected dataset and performs preprocessing according to the configuration.
-		Afterward, it initializes the required class instances and starts the training loop.
-		After the training loop has finished, the trained model and its loss history are saved.
+		The script "train.py" is responsible for the training of the diffusion model. 
+		It accepts configuration parameters that guide the training process. 
+		Initially, it loads the designated dataset and carries out preprocessing as per the given configuration. 
+		Subsequently, it initializes the necessary class instances and starts the training loop. 
+		Once the training loop is finished, the script saves the trained model along with its loss history.
 
 	\item[sample.py:]
-		Samples from a pre-trained diffusion model.
-		Receives configuration parameters for the sampling process.
-		Loads a pre-trained model and samples from the model.
-		The new samples are transformed according to the inverse of the preprocessing specified in the configuration.
-		After transformation, the generated samples are saved.
+		The script "sample.py" carries out the task of sampling from a pre-trained diffusion model. 
+		It takes in specific configuration parameters that are used during the sampling procedure. 
+		This script starts by loading a pre-trained model and generating samples from it. 
+		These new samples are then modified in accordance with the inverse of the preprocessing defined in the configuration.
+		Once the transformation is complete, the resulting samples are saved.
 
 	% \item[eval\_[catboost|mlp|simple].py:]	
 	\item[\text{eval\_[catboost\textbar mlp\textbar simple].py:}]
-		Evaluates a synthetic dataset using machine learning efficacy.
-		A machine learning model (specified by the user) is trained on real or synthetic data, specified in the configuration.
-		The performance of the model is evaluated on the real test set and metric scores are calculated.
+		The scripts "eval_catboost.py", "eval_mlp.py", and "eval_simple.py" evaluate a synthetic dataset based on machine learning efficacy. 
+		In this process, a machine learning model, chosen by the user, is trained on either real or synthetic data, as specified in the configuration. 
+		The model's performance is then assessed on the real test set by computing a set of metric scores.
 
 	\item[pipeline\_*.py\footnotemark:]
-		Defines the complete pipeline, consisting of training, sampling, and evaluation.
-		Handles that each function of the pipeline receives the correct attributes from the configuration.
-		Allows to execute only specified parts of the pipeline individually.
+		The scripts, denoted as "pipeline_*.py", define the full processing pipeline, which includes the processes of training, sampling, and evaluation. 
+		They ensure that each function within the pipeline correctly receives its necessary attributes from the configuration. 
+		These scripts also provide the flexibility to execute specific portions of the pipeline individually.
 		\footnotetext[1]{Each implemented baseline model (SMOTE, TVAE, CTABGAN, CTABGAN+) has its own implementation as pipeline\_\textit{modelName}.py}
 
 	\item[tune\_*.py\footnotemark:]
-		Responsible for the hyperparameter tuning process.
-		Starts by defining a hyperparameter search space (see \cite[Table 1, p. 4]{kotelnikov2022TabDDPMModellingTabular} and \cite[Table 7-11, p. 13 f.]{kotelnikov2022TabDDPMModellingTabular}).
+		The "tune\_*.py" scripts are generally responsible for the hyperparameter tuning process.
+		It starts by defining a hyperparameter search space (see \cite[Table 1, p. 4]{kotelnikov2022TabDDPMModellingTabular} and \cite[Table 7-11, p. 13 f.]{kotelnikov2022TabDDPMModellingTabular}).
 		Next, an objective function is defined that is maximized for 50 trials through the Optuna framework \cite{optuna_2019}.
 		Within the objective function, a set of hyperparameters is selected from the search space.
-		With this set of hyperparameters, \textit{pipeline.py} is called to train the model.
+		These selected hyperparameters are used to invoke \textit{pipeline.py}, which initiates the model training
 		Afterward, for five different random initializations, \textit{pipeline.py} is called to sample and evaluate the model, creating, and assessing five different synthetic dataset versions.
 		In each training, sampling, and evaluation, the training and validation set are redistributed and shuffled to implement some form of cross-validation \cite{kohavi2001StudyCrossValidationBootstrap}.
 		The average evaluation score (machine learning efficacy based) of the five synthetic dataset versions is returned as the objective that Optuna tries to maximize.
 		After optimization, the best hyperparameter configuration is saved.
-		If specified, a final evaluation of the best-found model can be started by calling \textit{eval\_seeds.py}.
+		If the user has set an \textit{- - eval\_seeds} flag, a final evaluation of the best-found model will be started by calling \textit{eval\_seeds.py}.
 		\footnotetext[2]{Each implemented baseline model has its own implementation as tune\_\textit{modelName}.py}
+		
 	\item[eval\_seeds.py:]
-		Performs an extensive evaluation, given a trained model.
-		Starts by loading the pre-trained sampling model \\([TabDDPM|SMOTE|CTABGAN|CTABGAN+|TVAE]).
-		The script will produce $n\_datasets$ synthetic datasets depending on the specified evaluation parameters by calling the sampling script in the respective \textit{pipeline\_*.py} script.
+		The "eval\_seeds.py" script's purpose is to perform an extensive evaluation, given a trained model.
+		The script starts by loading the pre-trained sampling model \\([TabDDPM|SMOTE|CTABGAN|CTABGAN+|TVAE]).
+		Given the sampling model, $n\_datasets$ synthetic datasets will be produced depending on the specified evaluation parameters by calling the sampling script in the respective \textit{pipeline\_*.py} script.
 		For each produced dataset, evaluation is performed using a predefined evaluation model ([Catboost|MLP]) for a predefined number of random initializations.
 		Ultimately, the average metrics are calculated over all performed runs, reported, and saved.
 \end{description}

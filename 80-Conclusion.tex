@@ -41,6 +41,13 @@ More datasets with diverse characteristics to generalize the findings and identi
 Moreover, incorporating a variety of metrics with diverse perspectives is essential for evaluating the performance and trade-offs of distinct tabular data generation methods.
 This is particularly relevant for privacy-related metrics, as recent research suggests that diffusion models may not effectively protect privacy and allow to extract training data samples \cite{carlini2023ExtractingTrainingData}.
 
+Furthermore, as the definition of synthetic tabular data generation in \Autoref{sec: synthetic tabular data generation} stated, the synthetic data $T_{syn}$ is usually created by training the generator on $T_{train}$ and comparing $T_{syn}$ with $T_{test}$.
+The quality of $T_{syn}$ naturally depends on the quality of $T_{train}$ and, most importantly, how representative the $T_{train}$-split is from the overall joint distribution (the combination of $T_{train}$ and $T_{test}$).
+Hence, future research could investigate the impact different train-test-splits potentially have on the quality of $T_{syn}$.
+This could be achieved by testing different train-test-splits of the same dataset and comparing the quality of the generated $T_{syn}$ across the different splits.
+Additionally, most evaluation techniques heavily rely on the comparison of $T_{syn}$ with $T_{test}$.
+In this context, the comparison of $T_{syn}$ with $T_{train}$ might provide valuable insights as well.
+
 Moreover, it is likely that diffusion models can be further improved through several changes.
 First, the hyperparameter search space could be broader, such that more hyperparameter variations are explored.
 Second, the neural network itself could be replaced by a more sophisticated one.

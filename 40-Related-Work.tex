@@ -20,9 +20,10 @@ Over the last years, several improvements have been made to account for their sh
 
 The authors of medGAN \cite{choi2017GeneratingMultilabelDiscrete} showed how \glspl{gan} can be used in the medical domain to generate synthetic patient records.
 Their medGAN is able to work with discrete data and includes an autoencoder in their architecture.
+In the medGAN architecture, the autoencoder translates the generator's continuous outputs into discrete synthetic patient records.
 
 TableGAN proposed by \cite{park2018DataSynthesisBased} takes a different approach towards preprocessing the tabular data compared to other research.
-They use a simplistic min-max scaling for continuous columns and label encode categorical values.
+They use a simplistic min-max scaling for continuous columns and label-encode categorical values.
 The authors' most significant change is converting the tabular 1-dimensional data into a 2-dimensional matrix form.
 The authors give an example how such a conversion could look like:
 A record of 24 values will be converted into a 5x5 square matrix, where zeros fill the remaining entries \cite[p-4]{park2018DataSynthesisBased}.
@@ -34,23 +35,31 @@ PATE-GAN integrates this framework into the \gls{gan} architecture and demonstra
 
 The TGAN \cite{xu2018SynthesizingTabularData} model is able to generate discrete and continuous data simultaneously.
 TGAN deals with continuous variables through a mode-specific normalization with \glspl{gmm} \cite[p. 3]{xu2018SynthesizingTabularData}.
-Their architecture includes \gls{lstm} cells with attention that generate the data column-wise \cite{xu2018SynthesizingTabularData}.
+Their architecture includes \gls{lstm} cells with attention that generate the data column-wise instead of record-wise, as done in other works \cite{xu2018SynthesizingTabularData}.
 
 The authors of TGAN follow up on their own work and introduce a new architecture named CTGAN \cite{xu2019ModelingTabularData}.
 They first identified the biggest challenges in tabular data generation, namely "mixed data types", "Non-Gaussian distributions", "Multinomial distributions", "learning form sparse \gls{oh} encoded vectors" and "highly imbalanced categorical columns" \cite[p. 3]{xu2019ModelingTabularData}.
 To address some of these issues, they improve their preprocessing and their architecture.
-Firstly, instead of using a \gls{gmm}, they use a \gls{vgm} \cite{xu2019ModelingTabularData}.
+Firstly, instead of using a \acrfull{gmm}, they use a \acrfull{vgm} \cite{xu2019ModelingTabularData}.
 Secondly, they introduce the possibility of conditioning the \gls{gan} to produce certain column values by employing a conditional vector during training \cite{xu2019ModelingTabularData}.
 Lastly, they changed their model architecture by removing the \gls{lstm} cells for better computation time, added batch normalization, 
 and adopted a \gls{gan} architecture that uses Wasserstein-distance and gradient penalty \cite{gulrajani2017ImprovedTrainingWasserstein}.
 
 Additional research towards improving the CTGAN has been made by Zhao, Kunar, Chen, and Birke that introduced CTAB-GAN \cite{zhao2021CTABGANEffectiveTablea} and their successor CTAB-GAN+ \cite{zhao2022CTABGANEnhancingTabular}.
-The CTAB-GAN architecture explicitly addresses the most significant challenges when working with tabular data:
 The authors criticize that other works do not account for mixed data types \cite{zhao2022CTABGANEnhancingTabular}.
 As a result, they introduce a mixed-data type encoding (see \autoref{ch:BGMProcessor}) that allows encoding a column that contains both categorical and numerical data.
 This is achieved in conjunction with the mode-specific normalization, which was also used by \textcite{xu2018SynthesizingTabularData, xu2019ModelingTabularData}.
-Additionally, CTAB-GAN introduces an additional auxiliary classifier to provide "additional supervision to improve its [CTAB-GANs] utility for ML applications" \cite[p. 2]{zhao2021CTABGANEffectiveTablea}.
-The authors newest version of CTAB-GAN, called CTAB-GAN+ \cite{zhao2022CTABGANEnhancingTabular}, achieves state-of-the-art performance on synthetic data generation.
+Furthermore, they specifically address the problem of imbalanced training datasets and the treatment of long tails in data (compare \autoref{sec: synthetic tabular data generation}).
+To counter imbalanced training datasets, the authors perform a training-by-sampling, meaning they adjust the probability of each data class being selected as a training sample using a logarithmic function.
+This gives rare classes a higher chance of being selected during the training process, thereby rebalancing the data distribution and helping the model better understand underrepresented categories.
+In order to treat long tails, they propose a preprocessing technique that uses logarithmic transformation for variables with long-tailed distributions. 
+This helps handle outliers and extreme data points in these distributions effectively.
+Additionally, CTAB-GAN introduces an auxiliary (pre-trained) classifier to provide "additional supervision to improve its [CTAB-GANs] utility for ML applications" \cite[p. 2]{zhao2021CTABGANEffectiveTablea}.
+The auxiliary classifier is used to enhance the realism and semantic integrity of the synthetic data generated by the \gls{gan} model. 
+It does this by taking the synthesized record and trying to predict the target class of the synthetic record.
+The predicted target class and the synthesized target class created by the generator are then compared.
+The discrepancy between the prediction of the classifier and the synthesized target class is transformed into a classification loss and also used to update the weights of the generator.
+The authors' newest version of CTAB-GAN, called CTAB-GAN+ \cite{zhao2022CTABGANEnhancingTabular}, achieves state-of-the-art performance on synthetic data generation.
 Changes compared to the first CTAB-GAN version include new feature encoding, adopting Wasserstein distance and gradient penalty, the auxiliary classifier can be exchanged for an auxiliary regression model,
 and using differential privacy stochastic gradient decent \cite{abadi2016DeepLearningDifferential} for discriminator training (adopted from \cite{jordon2018PATEGANGeneratingSynthetic}) \cite{zhao2022CTABGANEnhancingTabular}.
 
@@ -77,8 +86,9 @@ In \cite{xu2019ModelingTabularData}, the authors do not only introduce CTGAN, th
 Recently, transformer models, which have been heavily used in the \gls{nlp} domain, have also been applied to tabular data.
 The authors of \cite{huang2020TabTransformerTabularData} introduce TabTransformer, which learns contextual embeddings and can be applied to tabular data for (semi-) supervised learning scenarios.
 In terms of synthetic data generation, \textcite{padhi2021TabularTransformersModeling} are able to generate synthetic tabular time-series data using their TabGPT model and a tokenization of the tabular entries.
-
-
+Another approach for synthetic data generation was proposed by \textcite{ge2021KaminoConstraintawareDifferentially} with their Kamino model.
+Kamino ensures the preservation of the data's original structure and correlations while also maintaining differential privacy. 
+Kamino uses the input database's schema to create a synthetic dataset that maintains the usefulness of the original data for further tasks such as model training and answering questions, while also ensuring privacy \cite{ge2021KaminoConstraintawareDifferentially}.
 
 %<-------------------------------------------------------------------------
 \section{Diffusion Models}
@@ -151,18 +161,17 @@ Additionally, their model can be controlled in terms of diversity or fidelity th
 Since classifier guidance, as presented above, requires training of an additional classifier and thus, increasing the time for computation, \cite{ho2022ClassifierFreeDiffusionGuidance}
 introduced a mechanism to achieve a guidance mechanism without an additional classifier.  
 Their guidance mechanism is based on the idea of jointly training a conditional diffusion and an unconditional diffusion model and interpolating between their gradients to control the amount of guidance for the output \cite{ho2022ClassifierFreeDiffusionGuidance}.
-% The model achieves a trade-off between diversity and fidelity through the adjustments of weights that control the mixing of two metric score estimates of the unconditional and conditioning diffusion model, controling \cite{ho2022ClassifierFreeDiffusionGuidance}.
 
 All the above models apply the diffusion process on the pixel space, resulting in large tensors that require more computation time and require large \glspl{gpu} for computation \cite{rombach2022HighResolutionImageSynthesis}.
 \cite{rombach2022HighResolutionImageSynthesis} addresses this issue by moving the diffusion process from the pixel to a latent space.
 In the first step, the encoder part of an autoencoder (see \autoref{ch:preliminaries-variationalAutoencoders}) is trained to learn a latent representation with smaller dimensionality of the input image \cite{rombach2022HighResolutionImageSynthesis}.
 Given the encoded latent representation, a decoder is tasked to reconstruct the original input.
 \autoref{fig:latent-diff} shows the architecture of the overall latent diffusion model \cite[Figure 3, p.4]{rombach2022HighResolutionImageSynthesis}.
-The raw input $x$ is encoded into a latent vector $z$ through the pre-trained encoder \cite{rombach2022HighResolutionImageSynthesis}.
+The raw input $x$ is encoded into a latent vector $z$ through the pre-trained encoder $\mathcal{E}$ \cite{rombach2022HighResolutionImageSynthesis}.
 Inside this latent space, the diffusion with forward and reverse noising process is performed \cite{rombach2022HighResolutionImageSynthesis}.
 Additional conditioning information can be added by transforming the conditioning input into the latent space as well ($\tau_\theta$) \cite{rombach2022HighResolutionImageSynthesis}.
 The denoising model is changed compared to previous approaches through the addition of cross-attention blocks to further enhance the generation quality \cite{rombach2022HighResolutionImageSynthesis}.
-After the denoising is completed, the pre-trained decoder moves the latent diffusion model output back into the pixel space, generating an image \cite{rombach2022HighResolutionImageSynthesis}.
+After the denoising is completed, the pre-trained decoder $\mathcal{D}$ moves the latent diffusion model output back into the pixel space, generating an image $\tilde{x}$ \cite{rombach2022HighResolutionImageSynthesis}.
 
 \begin{figure}[h]
     \centering
@@ -194,7 +203,7 @@ Categorical entries are converted in three different ways to handle them in conj
 Categorical values are either \gls{oh} encoded, analog-bits encoded (also called binary encoded), or embedded through a feature tokenization approach proposed by \cite{gorishniy2021RevisitingDeepLearning}.
 In the embedding encoding approach, numerical values are encoded as well. 
 However, during training, neither the categorical nor the numerical embeddings are learned and remain static and fixed \cite{zheng2023DiffusionModelsMissing}
-The authors observed that diffusion achieves the best evaluation metric result for the task of missing value imputation for the tested datasets \cite{zheng2022DiffusionModelsMissing}.
+The authors observed that diffusion achieves competitive results across several datasets for the given evaluation metrics for the task of missing value imputation\footnote{The authors used the \gls{rmse} as well as the error rate as evaluation metric \cite[p. 2]{zheng2023DiffusionModelsMissing}} \cite{zheng2022DiffusionModelsMissing}.
 The different encoding techniques perform comparably well, with the embedding technique outperforming the other two techniques by a slight margin \cite{zheng2022DiffusionModelsMissing}.
 
 
@@ -219,7 +228,7 @@ The objective function is defined as:
     \end{align*}
 \end{equation}
 
-where $L^{simple}_t$ is equivalent to \autoref{eqn:l_simple} and $L^i_{t}$ being the \gls{kl}-divergence for each multinomial diffusion term ($L_{t-1}$ in \autoref{eqn:vlb3}) divided by the number of categorical features $C$ \cite{kotelnikov2022TabDDPMModellingTabular}.
+where $L^{simple}_t$ is equivalent to \autoref{eqn:l_simple}, the simplified loss function from \textcite{ho2020DenoisingDiffusionProbabilistic} and $L^i_{t}$ being the \gls{kl}-divergence for each multinomial diffusion term ($L_{t-1}$ in \autoref{eqn:vlb3}) divided by the number of categorical features $C$ \cite{kotelnikov2022TabDDPMModellingTabular}.
 
 The neural network used to predict the noise in the reverse process is a simple \gls{mlp} based upon the works of \cite{gorishniy2021RevisitingDeepLearning}.
 The architecture consists of several identical \gls{mlp}-blocks comprising a Linear layer, followed by an activation layer (\gls{relu}), and a final dropout layer. 
@@ -235,7 +244,7 @@ The overall number of features in the datasets varies heavily.
 For a complete list of all datasets, please refer to "Table 2" in \cite[p. 5]{kotelnikov2022TabDDPMModellingTabular}.
 
 The primary evaluation metric chosen by the authors is the machine learning efficacy (see \autoref{ch:preliminaries-machineLearningEfficacy}).
-\textcite{kotelnikov2022TabDDPMModellingTabular} realizes this in three different ways, firstly, by using a set of machine and deep learning models\footnote[1]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}} and averaging their performance,
+\textcite{kotelnikov2022TabDDPMModellingTabular} realizes this in three different ways, firstly, by using a set of machine and deep learning models\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}} and averaging their performance,
 secondly, using a CatBoost model \cite{prokhorenkova2018CatBoostUnbiasedBoosting}(a state-of-the-art model on tabular tasks) \cite{kotelnikov2022TabDDPMModellingTabular}, and thirdly, an \gls{mlp} architecture proposed by \cite{gorishniy2021RevisitingDeepLearning}.
 In the latter case, the models are previously tuned on the real dataset so that the best hyperparameters can be found for each dataset, which will be used during the evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
 To account for other random factors that could influence the results, the authors compute the machine learning efficacy metric scores by generating five different synthetic datasets and train the evaluation models for ten random initializations.
@@ -246,8 +255,8 @@ The authors summarize three major findings \cite{kotelnikov2022TabDDPMModellingT
     \item The classical approach\gls{smote}shows surprisingly competitive performance.
     \item The authors contend that the second evaluation protocol, which employs a state-of-the-art model such as CatBoost, is more suitable for calculating the machine learning efficacy, 
     despite the prevalent use of the first protocol in prior works. 
-    The firstly mentioned set of models shows overall lower metric scores compared to the CatBoost model.
-    Thus, the authors argue their performance values are uninformative.
+    The firstly mentioned set of models\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}} shows overall lower metric scores compared to the CatBoost model.
+    Thus, the authors argue the set of other models'\footnotemark[5] performance values are of lower relevance for practitioners, who, in real-world scenarios, are rather interested in using state-of-the-art models rather than suboptimal models.
     Additionally, for the set of models, the models trained on synthetic data outperformed the models trained on actual real data, indicating that the 
     synthetic data is "more valuable than the real" data, which should not be the case \cite[p. 8]{kotelnikov2022TabDDPMModellingTabular}.
     This behavior cannot be observed if tuned \gls{mlp} or CatBoost models are used for evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
@@ -258,7 +267,8 @@ In their comparison, they show that the produced feature distribution plots by T
 to the real distributions, compared to plots produced by CTABGAN+ or TVAE \cite{kotelnikov2022TabDDPMModellingTabular}.
 The authors argue that this observation is consistent for numerical, categorical, and mixed data type columns \cite{kotelnikov2022TabDDPMModellingTabular}.
 The pairwise correlation matrices difference plots (performed similarly to in \cite{brenninkmeijer2019GenerationEvaluationTabular}) show a smaller difference between the synthetic and real data for the TabDDPM model compared to CTABGAN+ and TVAE.
-The authors assert that the illustrations provided demonstrate that their TabDDPM model exhibits greater flexibility than other alternatives and generates synthetic data of higher quality \cite{kotelnikov2022TabDDPMModellingTabular}.
+Since the TabDDPM model show more realistic correlation difference plots for multiple datasets, 
+the authors assert that this demonstrates that their TabDDPM model exhibits greater flexibility than other alternatives and generates synthetic data of higher quality \cite{kotelnikov2022TabDDPMModellingTabular}.
 
 Lastly, \cite{kotelnikov2022TabDDPMModellingTabular} performs a privacy evaluation against the\gls{smote}approach.
 The median \gls{dcr} is, which calculates the minimum Euclidean distance to real data points for each synthetic sample \cite{zhao2021CTABGANEffectiveTable}.
@@ -267,7 +277,7 @@ The results presented by the authors show a higher \gls{dcr} score for TabDDPM f
 
 To summarize, the TabDDPM approach is a novel way to generate synthetic data of high utility using Gaussian and multinomial diffusion.
 TabDDPM outperforms other state-of-the-art baseline models in terms of machine learning efficacy on multiple datasets.
-Moreover, distributions and correlations produced from synthetic data by TabDDPM look more similar to the real data than synthetic data produced by other models.
+Moreover, distributions and correlations produced from synthetic data by TabDDPM look more similar to those of the real data than synthetic data produced by other models.
 
 
 

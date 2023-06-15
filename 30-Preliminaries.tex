@@ -760,7 +760,7 @@ To $L_{0}$ can also be referred to as a "reconstruction term" \cite[p. 10]{luo20
 However, ultimately the authors decide to remove the term in favor of a simpler loss term, which leads to a simpler implementation and better quality \cite{ho2020DenoisingDiffusionProbabilistic}.
 
 Inside $L_{t-1}$, one compares the target denoising step $q(x_{t-1}|x_t,x_0)$ that is also conditioned on the input $x_0$ with the approximated denoising step $p_\theta(x_{t-1}|x_t)$. %%%
-Both terms have a closed-form solution (meaning they can be computed within a finite amount of standard computations) thanks to the conditioning on $x_0$ \cite{ho2020DenoisingDiffusionProbabilistic}:
+Both terms have a closed-form solution\footnote{meaning they can be computed within a finite amount of standard computations \cite{borwein2013ClosedFormsWhat}} thanks to the conditioning on $x_0$ \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
   \label{eqn:lt-1_1}
@@ -1045,8 +1045,8 @@ While the former is concerned with whether an individual from the original datas
 To measure the \textit{membership disclosure}, \cite{goncalves2020GenerationEvaluationSynthetic} proposes calculating the distance of synthetic datapoints to real datapoints.
 If this distance is smaller than a specific value, the synthetic datapoint is considered to be present in the original dataset.
 The distance measure used by \cite{goncalves2020GenerationEvaluationSynthetic} was the \textit{Hamming-distance}, but this could be replaced with a similarity measure of choice, depending on the data.
-\textit{Attribute disclosure} could be measured by testing if a potential attacker could infer unknown attributes, given a subset of known attributes by using a k-nearest neighbors algorithm \cite{goncalves2020GenerationEvaluationSynthetic}.
-These privacy measures are especially prominent and essential in the context of medical data, that usually has sensitive information \cite{goncalves2020GenerationEvaluationSynthetic, choi2017GeneratingMultilabelDiscrete}.
+\textit{Attribute disclosure} could be measured by testing if a potential attacker could infer unknown values of attributes of an individual, given a subset of known attributes and their values by using a k-nearest neighbors algorithm \cite{goncalves2020GenerationEvaluationSynthetic}.
+These privacy measures are especially prominent and essential in the context of medical data, which usually contain sensitive information \cite{goncalves2020GenerationEvaluationSynthetic, choi2017GeneratingMultilabelDiscrete}.
 
 To ensure privacy is granted, research towards including \gls{dp} \cite{dwork2008DifferentialPrivacySurvey} in the model has been made, \eg in \cite{xie2018DifferentiallyPrivateGenerative, jordon2018PATEGANGeneratingSynthetic, torfi2022DifferentiallyPrivateSynthetic}.
 \gls{dp} is a concept in the field of data privacy that aims to protect the privacy of individuals while still allowing useful information to be extracted from data \cite{dwork2008DifferentialPrivacySurvey}. 
@@ -1056,23 +1056,33 @@ It provides a mathematical framework for measuring the privacy risk associated w
 \subsection{Additional Evaluation Methods}
 \label{ch:preliminaries-evaluationOfSyntheticTabularData-otherMetrics}
 
-There are several other ways to evaluate synthetic data that do not fall directly into the categories above but are worth mentioning.
-\cite{elemam2020SevenWaysEvaluate} mentioned that the quality of synthetic data can be determined by a domain expert, 
+There are several other ways to evaluate synthetic data that do not fall directly into the categories above but are worth mentioning:
+
+\subsubsection{Expert Evaluation}  
+\textcite{elemam2020SevenWaysEvaluate} mentioned that the quality of synthetic data can be determined by a domain expert, 
 who is familiar with how data in the given domain should look.
 The expert could be asked to differentiate a set of synthetic data samples from a set of real data samples, and the accuracy could be measured.
 However, this metric is not only highly dependent on the individual expert it is also very time-consuming and hardly viable in practice.
+A possible way to automate this approach is to use a classification model.
+\textcite{elemam2020SevenWaysEvaluate} proposes to train such a classification model to distinguish between real and synthetic data.
+If such a model is not able to reliably distinguish between real and synthetic data, the synthetic data resemblance to the real data is high \textcite[p. 57]{elemam2020SevenWaysEvaluate}.
+This technique was employed in the work of \textcite{alzantot2017SenseGenDeepLearning}, who deployed an \gls{lstm}-based model as a discriminator, whose task was to discriminate between real and synthetic time-series records.
 
+\subsubsection{Comparative Assessment}
 Another measure proposed by \cite{elemam2020SevenWaysEvaluate} is to compute aggregations and statistics of the synthetic data and compare it to publicly available known statistics and aggregations that are about the same topic.
 If the synthetic is good, it would "tell the same story as the public data" \cite[p. 58]{elemam2020SevenWaysEvaluate}.
-
-To determine the stability of the generative model, \cite{elemam2020SevenWaysEvaluate} proposes that the model could be used to generate not a single synthetic dataset but multiple.
+To determine the stability of the generative model, \textcite{elemam2020SevenWaysEvaluate} proposes that the model could be used to generate not a single synthetic dataset but multiple.
 Evaluation (\eg using a statistical measure such as in \autoref{ch:preliminaries-statisticalEvaluation}) is then performed on all synthetic datasets, and averages are calculated.
-This repetition should highlight if the generative model has learned any form of bias or instability, which is not desirable \cite{elemam2020SevenWaysEvaluate}.
+Comparing the individual synthetic datasets statistical measures with the average over multiple datasets could highlight if certain synthetic datasets are biased in any form.
+Measures like the variance could also highlight if the generation process is overall stable (small variance), meaning the generation model tends to produce synthetic datasets with similar statistical properties, 
+or unstable (high variance), meaning the generation model tends to produce synthetic datasets with different statistical properties. 
+Hence, this synthesis of multiple datasets should highlight if the generative model has learned any form of bias or instability, which is not desirable \cite{elemam2020SevenWaysEvaluate}.
 
+\subsubsection{Resemblance Techniques}
 Lastly, \cite{hernandez2022SyntheticDataGeneration} proposes a set of resemblance techniques to measure the similarity of the synthetic data to the real data.
 Most of \cite{hernandez2022SyntheticDataGeneration} proposed methods have already been mentioned and fall into one of the categories above, such as "consultation with [...] experts" or computing "correlation coefficients" \cite{hernandez2022SyntheticDataGeneration}.
-Another viable way to quickly get an indication of how well the similarity is, is through visualization techniques.
-\cite{hernandez2022SyntheticDataGeneration} proposes dimensionality reduction techniques like \gls{pca}, histograms of attributes, and correlation matrices can be computed and visualized.
+Another viable way to quickly get an indication of how well the similarity is is through visualization techniques.
+\textcite{hernandez2022SyntheticDataGeneration} proposes dimensionality reduction techniques like \gls{pca}, histograms of attributes, and correlation matrices can be computed and visualized.
 With this visualization, a human can quickly determine, if the visualizations produced by the synthetic data resemble those of the real data.
 For example, this type of visual evaluation was performed in the works \textcite{li2022TTSGANTransformerbasedTimeSeries, leminh2021AirGenGANbasedSynthetica, mckeever2020SynthesisingTabularDatasets}.
 
@@ -1153,12 +1163,12 @@ As a consequence, they propose the following similarity metrices:
   The \gls{pmse} is computed by combining a set of samples from the real and synthetic dataset and adding a label $Y$ to each entry, 
   indicating whether the given sample stems from the real or the synthetic dataset.
   A logistic regression model is trained to predict probabilities $\hat{p}_i$ for each sample $i$ for it being a synthetic data sample.
-  The \gls{pmse} is calculated as:
-  $$pMSE = 1-\frac{1}{N} \sum_{i=1}^{n}(\hat{p}_i-c)^2$$
+  With $N=N_{real}+N_{syn}$, the \gls{pmse} is calculated as:
+  $$pMSE = 1-\frac{1}{N} \sum_{i=1}^{N}(\hat{p}_i-c)^2$$
 
   with $c=N_{syn}/(N_{real}+N_{syn})$ indicating the proportion of synthetic samples.
   
-  For a similarity score, \textcite{chundawat2022UniversalMetricRobust} ultimately uses the \gls{pmse}-ratio as a final measure.
+  For a similarity score, \textcite{snoke2018GeneralSpecificUtility} ultimately proposes the \gls{pmse}-ratio as a measure.
   For this, the so-called null distribution of \gls{pmse} is required \cite[p. 668]{snoke2018GeneralSpecificUtility}.
   This null distribution is essentially derived under the assumption of perfect synthesis, where the synthetic data are generated from the same model that produced the original data. 
   This creates a baseline for comparing the quality of synthetic data, serving as a reference point to evaluate the effectiveness of different synthetic data generation methods \cite{snoke2018GeneralSpecificUtility}.
@@ -1172,10 +1182,10 @@ As a consequence, they propose the following similarity metrices:
   \begin{equation}
     \begin{align*}
       \label{eqn:s_pmse}
-      S_{pMSE} = \alpha^{|1-\frac{pMSE}{\mathbb{E}(pMSE_0)}|}
+      S_{pMSE} = \alpha^{-|1-\frac{pMSE}{\mathbb{E}(pMSE_0)}|}
       \end{align*}
   \end{equation}
-  that calculates the ration of $pMSE$ and $pMSE_0$.
+  that calculates the ration of \gls{pmse} and \gls{pmse}$_0$.
   Hence, the closer the ratio is to 1, the more indistinguishable the synthetic data is from the real data \cite{chundawat2022UniversalMetricRobust}.
   
 
@@ -1209,7 +1219,7 @@ As a consequence, they propose the following similarity metrices:
   if the dataset contains a classification or regression target.
   The models include \textit{Random Forest-}, \textit{Lasso-}, \textit{Ridge-} and \textit{ElasticNet-Regression} for regression tasks and \textit{Logistic Regression-}, \textit{Random Forest-},  \textit{Decision Tree-} and an \textit{\gls{mlp}-classifier} for classification tasks \cite{brenninkmeijer2019GenerationEvaluationTabular, chundawat2022UniversalMetricRobust}.
   For each model, two versions are trained, one trained on synthetic and one trained on real training data.
-  Their performance is tested on both the real and synthetic targets using the F1-score or \gls{rmse}-score.
+  Their performance is tested on both the real and synthetic targets using the F1-score or \gls{rmse}-score for classification and regression tasks respectively.
   For each model, the relative error (\autoref{eqn:rel_err}) is calculated between the metric results of the model that was trained on real data and the model that was trained on synthetic data.
   The final score is the average performance error for all four models:
 
@@ -1222,12 +1232,14 @@ As a consequence, they propose the following similarity metrices:
   where $e_{mi}$ is the error for the $i^{th}$ model \cite{chundawat2022UniversalMetricRobust}.
 \end{description}
 
-\item[Similarity Score:]
-The final unified metric, named TabSynDex, is the average of all scores mentioned above and is described in \autoref{eqn:tabsyndex} \cite{chundawat2022UniversalMetricRobust}:
+  \item[Similarity Score:]
+  The final unified metric, named TabSynDex, is the average of all scores mentioned above and is described in \autoref{eqn:tabsyndex} \cite{chundawat2022UniversalMetricRobust}:
 
-\begin{equation}
-  \begin{align*}
-    \label{eqn:tabsyndex}
-    TabSynDex = \frac{S_{basic}+S_{corrl}+S_{pMSE}+S_{cr}+S_{ml}}{5}
-    \end{align*}
-\end{equation}
+  \begin{equation}
+    \begin{align*}
+      \label{eqn:tabsyndex}
+      TabSynDex = \frac{S_{basic}+S_{corrl}+S_{pMSE}+S_{cr}+S_{ml}}{5}
+      \end{align*}
+  \end{equation}
+
+
