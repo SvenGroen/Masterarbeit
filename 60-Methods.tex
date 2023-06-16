@@ -57,14 +57,16 @@ Therefore, new tabular processing mechanisms can be easily added by just impleme
 Furthermore, the tabular processing mechanism can be exchanged easily since they share the same functions.
 This is handled in the \textit{TabularDataController} class, which is equivalent to the \textit{Context} of the \textit{strategy design} pattern.
 The \textit{TabularDataController} handles all relevant aspects to use the tabular processing mechanisms, including but not limited to the instantiation, fitting, saving, and loading of \textit{TabularProcessor} instances.
-The data, whose columns are separated into categorical, numerical, and target as numpy arrays \cite{harris2020array}, needs to be provided to instantiate a tabular processor.
+The data, whose columns are segmented into categorical, numerical, and target as numpy arrays \cite{harris2020array}, needs to be provided to instantiate a tabular processor.
 Target refers to the column of the dataset that a model tries to predict or estimate in a classification or regression scenario.
 The first step in using the tabular processor is fitting it to the data.
 Additional information required for the fitting process can be provided through meta-data in the form of a dictionary, which may change for different realizations.
 Note that this fit function might not be necessary, depending on the processing mechanism, but it is required to be implemented anyways.
-Only after fitting the transform function can be called transforming the data and returning the transformed data in the same structure, \ie separated into categorical, numerical and target arrays.
+Only after fitting the transform function can be called transforming the data format and returning the transformed data in the same data segmentation structure, \ie separated into categorical, numerical and target arrays.
 The inverse transformation works similarly, reversing transformed data back to its original format.
-
+For clarity, please note the difference between the terms "data format" and "data segmentation" in this thesis.
+The term "data segmentation" refers to the separation of columns into categorical, numerical, and target segments.
+On the other hand, the term "data format" refers to the modification of the data values achieved through the encoding and decoding processes of the \textit{TabularProcessor}, specifically via their "transform" and "inverse transform" functions.
 
 \subsection{Tabular Processor Implementations}
 \label{ch:architecture-tabularProcessor-implementations}
@@ -181,7 +183,7 @@ Lastly, a bias term $b$ is added to both categorical and numerical columns.
 	\label{fig:ft}
 \end{figure}
 
-To revert the data that the diffusion model produces to the original data format, the numerical and categorical columns need to be handled differently.
+To revert the synthetic data that the diffusion model produces to the original data format, the numerical and categorical columns need to be handled differently.
 The corresponding embedding weights divide the numerical output element-wise, and the average value is computed as the final output \cite{zheng2022DiffusionModelsMissing}.
 This transforms output having the same dimensionality as the embedding ($d$) back into a single value \cite{zheng2022DiffusionModelsMissing}.
 For categorical output, the closest categorical embedding is determined by computing the Euclidean distance between the produced output and every categorical embedding \cite{zheng2022DiffusionModelsMissing}.
@@ -208,12 +210,12 @@ An additional visualization of the process of the scripts can be found in append
 		It receives context information on which tabular processing mechanisms and which properties the dataset has through the configuration file and handles the
 		instantiation, fitting, and transformation of the raw data.
 		Despite the addition of the \textit{TabularDataController}, the actual training remained untouched.
-		Hence, introducing a \textit{TabularProcesser} only changes the data format the diffusion model will receive and does not change the actual training loop.
+		Hence, introducing a \textit{TabularProcesser} only changes the data format (and maintains the segmented data structure) the diffusion model will receive and does not change the actual training loop.
 
 	\item[sample.py:]
 		A TabularDataController is instantiated at the beginning and loads a previously fit \textit{TabularProcesser} instance.
 		If there is no previous \textit{TabularProcesser} instance to be loaded, it will call the fit function again.
-		After the sampling is finished, the \textit{TabularProcesser}'s inverse transform function is called to bring the synthetic data in the original data format.
+		After the sampling is finished, the \textit{TabularProcesser}'s inverse transform function is called to bring the synthetic data into the original data format.
 
 	\item[eval\_similarity.py:]
 		This script does not replace the previous evaluation script.

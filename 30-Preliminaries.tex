@@ -53,7 +53,7 @@ The first challenge identified is the "low-quality" of the data \cite[p. 4]{bori
 \textcite{borisov2022DeepNeuralNetworks} identified common data quality issues from the literature, which include missing values, data noise, extreme data points, inconsistencies, class imbalances, or high dimensionality of the data after preprocessing.
 
 Secondly the "missing or complex irregular spatial dependencies" of tabular data \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
-Other common data formats like images or audio are homogeneous, meaning that they consist of only one feature type \cite{borisov2022DeepNeuralNetworks}.
+Other common data types like images or audio are homogeneous, meaning that they consist of only one feature type \cite{borisov2022DeepNeuralNetworks}.
 Since tabular data consists of multiple features made up of a mixture of categorical and numerical values, it is a heterogeneous data format with data points as rows and features as columns \cite{borisov2022DeepNeuralNetworks}.
 This format presents particular challenges for neural networks when working with tabular data, as the correlations between features are often weaker due to the absence of spatial or semantic relationships commonly found in image or text data \cite{borisov2022DeepNeuralNetworks, yoon2020VIMEExtendingSuccess}.
 
@@ -217,7 +217,7 @@ A synthetic data generation model would possibly allow developers to generate te
 \subsection{Synthetic Tabular Data Generation}
 \label{sec: synthetic tabular data generation}
 
-Generative models have recently received a lot of attention, thanks to their impressive results in generating a variety of data formats, 
+Generative models have recently received a lot of attention, thanks to their impressive results in generating a variety of data types, 
 such as images \cite{ho2020DenoisingDiffusionProbabilistic, dhariwal2021DiffusionModelsBeat, rombach2022HighResolutionImageSynthesis}, videos \cite{ho2022VideoDiffusionModels, runwayGen1Runway}, text \cite{radfordImprovingLanguageUnderstanding, openai2022ChatGPTOptimizingLanguage}, or music \cite{agostinelli2023MusicLMGeneratingMusic, Forsgren_Martiros_2022}.
 
 While synthetic data generation can be applied to various types of data, generating synthetic tabular data is challenging due to the complexity of the underlying joint distributions between variables \cite{borisov2022DeepNeuralNetworks}.
@@ -332,7 +332,7 @@ Lastly, a pooling function is applied to the output of the activation function \
 A pooling function reduces the spatial size of the created feature maps while retaining their essential features \cite{Goodfellow-et-al-2016, aggarwal2018NeuralNetworksDeep}.
 \textcite[p. 335]{Goodfellow-et-al-2016} also describe it as a type of "summary statistic of the nearby outputs".
 Pooling allows the features extracted by the \gls{cnn} to be less sensitive to changes in the position of the input data.
-This property is known as translation invariance and is one of the reasons why \glspl{cnn} perform so well with data formats that have local spatial dependencies \cite{Goodfellow-et-al-2016, aggarwal2018NeuralNetworksDeep}.
+This property is known as translation invariance and is one of the reasons why \glspl{cnn} perform so well with data types, whose format has local spatial dependencies \cite{Goodfellow-et-al-2016, aggarwal2018NeuralNetworksDeep}.
 Another way to reduce the dimensionality is to increase the convolution stride.
 A stride refers to the step size or the number of pixels by which the filter, also known as the convolutional kernel, moves across the input feature map during the convolution operation \cite{aggarwal2018NeuralNetworksDeep}.
 The effect of using a stride greater than 1 is that it reduces the spatial dimensions of the output feature map. 

@@ -65,7 +65,7 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 		\textcite{kotelnikov2022TabDDPMModellingTabular} makes use of datasets, that are already separated into numerical, categorical, and target columns, each saved in a NumPy \cite{harris2020array} array.
 		Additionally, the datasets that will be imported have to be separated into training, validation, and testing sets.
 		For the NumPy arrays to be imported, they need to be of file type ".npy".
-		Synthetic data produced by models shall be saved in the same data format as the imported data.
+		Synthetic data produced by models shall be saved in the same data segmentation format as the imported data.
 
 	\item[FR2 - Tabular Processing:]
 		The software shall support tabular data processing techniques that are able to encode and decode tabular data.
@@ -281,12 +281,15 @@ This setting allows the creation of baseline metric scores against which synthet
 As this is usually done only once per dataset, \textit{eval\_type} is usually set to "synthetic" to calculate metric scores for the newly created synthetic data.
 This configuration structure allows to efficiently perform a variety of experiments with different parameters by simply changing the configuration file and inputting it into the next experimental run.
 
-\subsubsection[]{Data format}
+\subsubsection[]{Dataset Segmentation}
 \label{sec:data_format}
-The authors provide access to 12 different datasets, which have been cleaned and formatted by a program provided by \cite{gorishniy2023EmbeddingsNumericalFeatures}.
-Each dataset contains data separated into multiple subparts.
-Firstly, the columns are split into categorical, numerical, and target ("y") columns.
-Secondly, the datasets are distributed into a training, validation, and testing set.
+The authors provide access to 12 different datasets, which have already been cleaned and formatted by a program provided by \textcite{gorishniy2023EmbeddingsNumericalFeatures}.
+In order to use and process the data, the software of \cite{kotelnikov2022TabDDPMModellingTabular} is built towards processing the data that was segmented as specified by \textcite{gorishniy2023EmbeddingsNumericalFeatures}.
+For the purpose of clarity in this thesis, any future reference to "data segmentation" will refer to the separation of a dataset into multiple parts, detailed as follows:
+
+Each dataset contains data separated into multiple subcomponents, saved as individual files.
+To create these subcomponents, the columns of the dataset are manually classified into categorical, numerical, ("X") and target ("y") columns.
+Secondly, the dataset records are distributed into a training, validation, and testing set.
 Therefore, each dataset is separated into nine parts, conforming to the subsequent naming convention:
 X\_[cat|num]\_[train|val|test].npy and for the target y\_[train|val|test].npy
 
