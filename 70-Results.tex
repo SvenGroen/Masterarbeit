@@ -454,39 +454,43 @@ with CTABGAN+$^{ml}$ and TabDDPM$^{ml}_q$ replicating the original distribution 
 The \gls{bgm} tabular processing model also reproduced the categorical distributions in a comparable way to the TabDDPM counterpart.
 On the other hand, the \gls{ft} tabular processing model could not reproduce the original distribution at all and failed to mimic the real data.
 
-\begin{figure}[h]
+\begin{figure}[t]
 	\centering
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_education/tvae.jpg}
 		\caption{TVAE$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_education/ctabgan.jpg}
 		\caption{CTABGAN$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_education/ctabgan+.jpg}
 		\caption{CTABGAN+$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+
+
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_education/SMOTE.jpg}
 		\caption{SMOTE}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_education/tab-ddpm.jpg}
 		\caption{TabDDPM$^{ml}_q$}
-	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\end{subfigure}  
+
+
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_education/tab-ddpm-bgm.jpg}
 		\caption{TabDDPM-BGM$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_education/tab-ddpm-ft.jpg}
 		\caption{TabDDPM-FT$^{ml}_q$}
@@ -501,62 +505,68 @@ The same is valid for changing to the min-max scaling since it only affects cont
 
 \begin{figure}[h]
 	\centering
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tvae.jpg}
 		\caption{TVAE$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/ctabgan.jpg}
 		\caption{CTABGAN$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/ctabgan+.jpg}
 		\caption{CTABGAN+$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+
+
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/SMOTE.jpg}
 		\caption{SMOTE}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm.jpg}
 		\caption{TabDDPM$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-simTune.jpg}
 		\caption{TabDDPM$^{s}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+
+
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-simTune-minmax.jpg}
 		\caption{TabDDPM$^{s}_m$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-ft.jpg}
 		\caption{TabDDPM-FT$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm.jpg}
 		\caption{TabDDPM-BGM$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+
+
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm-simTune.jpg}
 		\caption{TabDDPM-BGM$^{s}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm-simTune-minmax.jpg}
 		\caption{TabDDPM-BGM$^{s}_m$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/dist_age/tab-ddpm-bgm-simTune-none.jpg}
 		\caption{TabDDPM-BGM$^{s}_n$}
@@ -596,42 +606,46 @@ This phenomenon was not present in the TabDDPM-BGM version with Minmax scaling.
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf/tvae.jpg}
 		\caption{TVAE$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf/ctabgan+.jpg}
 		\caption{CTABGAN+$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm-bgm.jpg}
 		\caption{TabDDPM-BGM$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+
+
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm-bgm-simTune.jpg}
 		\caption{TabDDPM-BGM$^{s}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm-ft.jpg}
 		\caption{TabDDPM-FT$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm.jpg}
 		\caption{TabDDPM$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+
+
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm-simTune-minmax.jpg}
 		\caption{TabDDPM$^{s}_m$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf/tab-ddpm-bgm-simTune-minmax.jpg}
 		\caption{TabDDPM-BGM$^{s}_m$}
@@ -645,42 +659,46 @@ This phenomenon was not present in the TabDDPM-BGM version with Minmax scaling.
 
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf_hpw/tvae.jpg}
 		\caption{TVAE$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf_hpw/ctabgan+.jpg}
 		\caption{CTABGAN+$^{ml}$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf_hpw/tab-ddpm-bgm.jpg}
 		\caption{TabDDPM-BGM$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+
+
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf_hpw/tab-ddpm-bgm-simTune.jpg}
 		\caption{TabDDPM-BGM$^{s}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf_hpw/tab-ddpm-ft.jpg}
 		\caption{TabDDPM-FT$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf_hpw/tab-ddpm.jpg}
 		\caption{TabDDPM$^{ml}_q$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+
+
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf_hpw/tab-ddpm-simTune-minmax.jpg}
 		\caption{TabDDPM$^{s}_m$}
 	\end{subfigure}
-	\begin{subfigure}{0.23\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/cdf_hpw/tab-ddpm-bgm-simTune-minmax.jpg}
 		\caption{TabDDPM-BGM$^{s}_m$}
@@ -775,7 +793,7 @@ Nevertheless, the best-found CTABGAN+ version is inferior to the best-found diff
 Changing the tuning strategy to the similarity score allowed several observations to be made.
 Firstly for the non-diffusion models', metric results had not significantly changed after switching to similarity score tuning.
 All of their metric scores stayed roughly the same, with the exception of CTABGAN+.
-Only for the CTABGAN+ model, a similarity tuning resulted in a noteworthy metric increase, especially for its \gls{pmse} score, which increased by +0.14\%-points.
+Only for the this model, a similarity tuning resulted in a noteworthy metric increase, especially for its \gls{pmse} score, which increased by +0.14\%-points.
 
 Diffusion models, on the other hand, showed more noteworthy changes in their numerical metric results.
 Overall, diffusion models with a similarity score tuning show reduced machine learning efficacy metric scores compared to their machine learning efficacy counterparts.
@@ -883,7 +901,7 @@ including \gls{vae} and \gls{gan}-based approaches, in an extended similarity ev
 machine learning efficacy, and a visualization analysis.
 Hyperparameter tuning greatly affected the performance of diffusion models, and visualizations revealed that diffusion models produce synthetic data that more closely resemble the original data than non-diffusion models.
 Ultimately, this thesis showed the importance of an elaborate evaluation of synthetic data, as new insights on the behavior of diffusion models for tabular data synthesis could be gained,
-which are of benefit for potential future diffusion-based models.
+which are of benefit for the development of potential future diffusion-based models.
 Additionally, such an extended evaluation allows for a holistic view of the produced synthetic data, uncovering strengths and weaknesses from different perspectives.
 
 \section{Limitations}
