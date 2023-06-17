@@ -441,12 +441,12 @@ These scatter outliers can be observed less frequently at the SMOTE \gls{pca} pl
 Out of the extended versions of TabDDPM, only the \gls{bgm} tabular processing mechanism seems to be able to produce a realistic \gls{pca}-plot (compare \autoref{fig:pca_diffusion}).
 Additionally, the min-max scaling seems to negatively affect the \gls{pca}-plot for the TabDDPM model.
 However, this did not occur for the TabDDPM-BGM model that used min-max scaling (\autoref{fig_a:pca_TabDDPMBM}).
-This \gls{pca}-plot and the remaining model versions plots can be found in appendix \ref{A:pca}.
+This \gls{pca}-plot and the remaining model versions plots can be found in Appendix \ref{A:pca}.
 
 \subsection{Distribution Plot}
 \label{ch:results-Distr}
 
-For each model version, distribution plots for each column can be found at appendix \ref{A:distributions}, comparing the distributions of the synthetic data with the real data.
+For each model version, distribution plots for each column can be found at Appendix \ref{A:distributions}, comparing the distributions of the synthetic data with the real data.
 This section will highlight some interesting plots for selected models.
 
 In terms of categorical distributions (\autoref{fig:education} displays the education column distributions as an example), all baseline models can reproduce the original distributions,
@@ -913,7 +913,6 @@ The most significant limitation is that only one real dataset (the adult dataset
 Therefore, it is possible that some model versions may perform better or worse on other datasets with different characteristics such as size, dimensionality, or complexity.
 The reason for this was the limited access to computing resources.
 Consequently, all observations and results made in this thesis only hold for the adult dataset and should not be generalized until they can be confirmed on multiple datasets.
-Nevertheless, as the adult dataset provides a good mixture of numerical, categorical, and mixed data type columns, similar results for other datasets are likely.
 
 A second limitation is that only a fixed set of hyperparameters were tested during hyperparameter tuning.
 Therefore, it is possible that some methods may benefit from further optimization or customization.

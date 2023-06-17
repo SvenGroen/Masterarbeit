@@ -166,7 +166,6 @@ The functionality of the most important scripts can be summarized in the followi
 		These new samples are then modified in accordance with the inverse of the preprocessing defined in the configuration.
 		Once the transformation is complete, the resulting samples are saved.
 
-	% \item[eval\_[catboost|mlp|simple].py:]	7725
 	\item[\text{eval\_[catboost\textbar mlp\textbar simple].py:}]
 		The scripts "eval_catboost.py", "eval_mlp.py", and "eval_simple.py" evaluate a synthetic dataset based on machine learning efficacy. 
 		In this process, a machine learning model, chosen by the user, is trained on either real or synthetic data, as specified in the configuration. 
@@ -200,12 +199,14 @@ The functionality of the most important scripts can be summarized in the followi
 \end{description}
 
 In summary, to get a fully optimized diffusion model with an extensive evaluation, the user just has to run the \textit{tune\_ddpm.py} script with the \textit{- - eval\_seeds} flag.
-A detailed activity diagram for each script can be found in the appendix \ref{A:activity_diagrams}.
+A detailed activity diagram for each script can be found in the Appendix \ref{A:activity_diagrams}.
 
 \subsubsection[]{Configuration}
 
 In order to start one of the above scripts, a configuration file has to be specified, detailing the most important parameters for training, sampling, and evaluation.
-For example, \autoref{lst:configuration} shows how such a configuration file could look like and which parameters need to be specified
+For example, \autoref{lst:configuration} shows how such a configuration file could look like and which parameters need to be specified.
+The file is stored as a \gls{toml} \glsadd{tomlaccr} file (short for "Tom's Obvious, Minimal Language") \cite{werner2021TOMLTomObvious}, which contains sections, indicated by squared brackets. 
+Within these sections, key-value pairs define configuration options.
 
 \begin{lstlisting}[label={lst:configuration}, caption={Example Configuration File}]
     parent_dir = "exp/adult/check"
@@ -266,20 +267,20 @@ For example, \autoref{lst:configuration} shows how such a configuration file cou
 \end{lstlisting}
 
 
-The variable \textit{model\_type} refers to the model that should approximate the noise in the reverse noising process.
+The key \textit{model\_type} refers to the model that should approximate the noise in the reverse noising process.
 Most parameters are self-explanatory, controlling one specific part of the pipeline.
 For example, all \textit{model\_params} specify different relevant aspects for instantiating the model.
-Inside \textit{model\_params}, \textit{num\_classes} indicates the number of possible target classes the given dataset has, and \textit{is\_y\_cond} indicates if the dataset is a classification (=\textit{True}) or regression dataset (=\textit{False}).
+Inside the \textit{model\_params} section, the \textit{num\_classes} key indicates the number of possible target classes the given dataset has, and \textit{is\_y\_cond} indicates if the dataset is a classification (=\textit{True}) or regression dataset (=\textit{False}).
 The \textit{model\_params.rtdl\_params}\footnote{rtdl is an abbreviation for the python library \cite{gorishniy2021RevisitingDeepLearning} from which the \gls{mlp} model architecture was used.} specify the \glp{mlp} architecture, by controlling the number of layers and the amount of dropout.
-As the name suggests, the \textit{diffusion\_params} control the diffusion process.
-Noteworthy are the \textit{train.T} and \textit{eval.T} parameters, which define how preprocessing is done at the beginning of training and evaluation, respectively.
-The \textit{eval.type} parameters are useful to further specify the kind of evaluation that will be executed.
-The machine learning efficacy model is determined by the \textit{eval\_model} parameter and is, in this example, set to the catboost model.
-To control what kind of data will be evaluated, the \textit{eval\_type} parameter can be set to either "real" or "synthetic".
-If set to "real", the real training data is loaded and compared to the real test data, as if it was synthetic data.
+As the name suggests, the keys inside the \textit{diffusion\_params} section control the diffusion process.
+Noteworthy are the \textit{train.T} and \textit{eval.T} sections, whose keys define how preprocessing is done at the beginning of training and evaluation, respectively.
+The \textit{eval.type} section keys are useful to further specify the kind of evaluation that will be executed.
+The machine learning efficacy model is determined by the \textit{eval\_model} key and is, in this example, set to the catboost model.
+To control what kind of data will be evaluated, the \textit{eval\_type} key can be set to either "real" or "synthetic".
+If the value is set to "real", the real training data is loaded and compared to the real test data, as if it was synthetic data.
 This setting allows the creation of baseline metric scores against which synthetic values are compared.
 As this is usually done only once per dataset, \textit{eval\_type} is usually set to "synthetic" to calculate metric scores for the newly created synthetic data.
-This configuration structure allows to efficiently perform a variety of experiments with different parameters by simply changing the configuration file and inputting it into the next experimental run.
+This configuration structure allows to efficiently perform a variety of experiments with different key configurations by simply changing the configuration file and inputting it into the next experimental run.
 
 \subsubsection[]{Dataset Segmentation}
 \label{sec:data_format}
@@ -315,7 +316,7 @@ Inside the code of TabDDPM \cite{akim2023TabDDPMModellingTabular}, a custom data
 Changes to the current architecture have been made to answer the research questions specified in \autoref{ch:intro-goals}.
 \autoref{fig:Overall_changed} shows that the overall synthesis process does not deviate much from \autoref{fig:overall_original}.
 Changes are highlighted in green and affect each step in the diffusion process: the training, sampling, and evaluation step.
-For a detailed overview of how each individual scripts changed, please refer to appendix \ref{A:activity_diagrams}.
+For a detailed overview of how each individual scripts changed, please refer to Appendix \ref{A:activity_diagrams}.
 
 \begin{figure}[h]
 	\centering

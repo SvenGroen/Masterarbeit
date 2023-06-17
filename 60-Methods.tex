@@ -201,7 +201,7 @@ To achieve the update of weights, the tokenizer would need to be fully integrate
 \label{ch:methods-changes}
 The changes made to the existing software (\autoref{ch:conceptualDesign-existingCodeBase}) are various and include multiple major changes as well as a lot of small changes.
 Below, the major changes to the individual scripts are listed.
-An additional visualization of the process of the scripts can be found in appendix \ref{A:activity_diagrams}
+An additional visualization of the process of the scripts can be found in Appendix \ref{A:activity_diagrams}
 
 \begin{description}
 	\item[train.py:]
@@ -238,6 +238,10 @@ An additional visualization of the process of the scripts can be found in append
 		The basic eval\_seeds script did not change a lot.
 		Again, the TabSynDex metric will be called after the default machine learning efficacy.
 \end{description}
+
+In order to easily change the \textit{TabularProcesser} type that should be executed in an experiment, the experiment configuration displayed as \autoref{lst:configuration} was extended.
+The additional configuration section \textit{tabular\_processor} has been added, containing a \textit{type} key.
+The \textit{type} key can be either set to "identity", "ft" or "bgm" to indicate, which \textit{TabularProcesser} type should be used.
 
 \section{Experimental Setup}
 \label{ch:methods-experimentalSetup}
