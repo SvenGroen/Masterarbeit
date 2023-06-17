@@ -39,6 +39,7 @@ Finally, the trained CatBoost and trained sampling model were used in the evalua
 		SMOTE$^{ml}$       & 0.791                 & 0.791             & 0                   \\
 		TabDDPM$^{ml}_{q}$ & 0.794                 & 0.795             & -0.001              \\
 		\bottomrule
+		\multicolumn{4}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[Reproduction Original Results]{Comparison of the CatBoost F1-score on synthetic datasets created by different sampling models.
 		F1-Scores of the reproduction experiments are compared against the results reported by the original authors \cite[Table 4, p. 8]{kotelnikov2022TabDDPMModellingTabular}.}
@@ -84,6 +85,7 @@ their performance is additionally evaluated using the similarity evaluation as p
 		SMOTE$^{ml}$       & 0.858              & 0.791          & 0.910            \\
 		TabDDPM$^{ml}_{q}$ & \textbf{0.860}     & \textbf{0.794} & \textbf{0.913}   \\
 		\bottomrule
+		\multicolumn{4}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[ML-efficacy Baseline]{Machine learning efficacy (CatBoost) baseline results. The best results are highlighted in bold (excluding the real data).}
 	\label{tab:ml_baseline}
@@ -105,6 +107,7 @@ In addition to the machine learning efficacy scores, the similarity scores of th
 		SMOTE$^{ml}$       & 0.723                     & 0.953          & 0.865                & \textbf{0.992} & 0.804            & 0.000          \\
 		TabDDPM$^{ml}_{q}$ & \textbf{0.759}            & \textbf{0.973} & \textbf{0.919}       & \textbf{0.992} & 0.874            & \textbf{0.035} \\
 		\bottomrule
+		\multicolumn{7}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[TabSynDex Baseline]{Similarity baseline results using the TabSynDex metrics. The \textit{Similarity Score} is the average of the other five scores. The best results are highlighted in bold.}
 	\label{tab:sim_baseline}
@@ -137,6 +140,7 @@ The results of the machine learning efficacy and TabSynDex metric results can be
 		TabDDPM-BGM$^{ml}_{q}$ & \textbf{0.863}     & \textbf{0.798} & \textbf{0.916}   \\
 		TabDDPM-FT$^{ml}_{q}$  & 0.785              & 0.552          & 0.821            \\
 		\bottomrule
+		\multicolumn{4}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[Experiment 1 ML-Efficacy]{CatBoost machine learning efficacy scores for different tabular processing techniques.}
 	\label{tab:exp1-ml}
@@ -153,6 +157,7 @@ The results of the machine learning efficacy and TabSynDex metric results can be
 		TabDDPM-BGM$^{ml}_{q}$ & 0.742                     & 0.964          & 0.918                & \textbf{0.996} & 0.831            & 0.000          \\
 		TabDDPM-FT$^{ml}_{q}$  & 0.595                     & 0.495          & 0.648                & 0.869          & \textbf{0.963}   & 0.000          \\
 		\bottomrule
+		\multicolumn{7}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[Experiment 1 TabSynDex]{TabSynDex evaluation metric scores for different tabular processing techniques.}
 	\label{tab:exp1-sim}
@@ -193,6 +198,7 @@ The machine learning efficacy and TabSynDex metric results can be found in \auto
 		CTABGAN+$^{s}$        & 0.851              & 0.768          & 0.902            \\
 		TVAE$^{s}$            & 0.845              & 0.780          & 0.900            \\
 		\bottomrule
+		\multicolumn{4}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[Experiment 2 ML-Efficacy]{CatBoost machine learning efficacy scores for different tabular processing techniques, whose hyperparameters have been tuned towards the TabSynDex similarity score.}
 	\label{tab:exp2-ml}
@@ -212,6 +218,7 @@ The machine learning efficacy and TabSynDex metric results can be found in \auto
 		CTABGAN+$^{s}$        & 0.784                     & 0.970          & 0.888                & 0.987          & 0.908            & 0.167          \\
 		TVAE$^{s}$            & 0.658                     & 0.856          & 0.815                & 0.962          & 0.656            & 0.000          \\
 		\bottomrule
+		\multicolumn{7}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[Experiment 2 TabSynDex]{TabSynDex evaluation metric scores for different tabular processing techniques, whose hyperparameters have been tuned towards the TabSynDex similarity score.}
 	\label{tab:exp2-sim}
@@ -246,6 +253,7 @@ TabDDPM-FT was noticeably worse.
 		TabDDPM-BGM$^{s}_{m}$ & \textbf{0.857}     & \textbf{0.787} & 0.909            \\
 		TabDDPM-BGM$^{s}_{n}$ & 0.855              & 0.784          & 0.907            \\
 		\bottomrule
+		\multicolumn{4}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[Experiment 3 ML-Efficacy]{CatBoost Machine learning efficacy scores for different tabular processing techniques whose hyperparameters have been tuned towards the TabSynDex similarity score
 		and the data was transformed according to a min-max-scaler.}
@@ -263,6 +271,7 @@ TabDDPM-FT was noticeably worse.
 		TabDDPM-BGM$^{s}_{m}$ & 0.856                     & \textbf{0.981} & 0.913                & \textbf{0.992} & 0.915            & 0.476          \\
 		TabDDPM-BGM$^{s}_{n}$ & 0.833                     & 0.975          & 0.916                & \textbf{0.992} & 0.915            & 0.369          \\
 		\bottomrule
+		\multicolumn{7}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[Experiment 3 TabSynDex]{TabSynDex evaluation metric scores for different tabular processing techniques whose hyperparameters have been tuned towards the TabSynDex similarity score
 		and the data was transformed according to a min-max-scaler.}
@@ -740,6 +749,7 @@ to expand upon the already existing machine learning efficacy evaluation perform
 		TabDDPM-BGM$^{s}_m$   & 0.857              & 0.787          & 0.909            \\
 		TabDDPM-BGM$^{s}_{n}$ & 0.855              & 0.784          & 0.907            \\
 		\bottomrule
+		\multicolumn{4}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[Overview all ML-Efficacy results]{Overview of all CatBoost machine learning efficacy results for all tested model versions.}
 	\label{tab:ml-all}
@@ -770,6 +780,7 @@ to expand upon the already existing machine learning efficacy evaluation perform
 		TabDDPM-BGM$^{s}_m$   & 0.856                     & 0.981          & 0.913                & 0.992          & 0.915            & 0.476          \\
 		TabDDPM-BGM$^{s}_{n}$ & 0.833                     & 0.975          & 0.916                & 0.992          & 0.915            & 0.369          \\
 		\bottomrule
+		\multicolumn{7}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[Overview all TabSynDex results]{Overview of all TabSynDex score results for all tested model versions.}
 	\label{tab:sim-all}

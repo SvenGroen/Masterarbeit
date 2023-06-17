@@ -203,7 +203,7 @@ Categorical entries are converted in three different ways to handle them in conj
 Categorical values are either \gls{oh} encoded, analog-bits encoded (also called binary encoded), or embedded through a feature tokenization approach proposed by \cite{gorishniy2021RevisitingDeepLearning}.
 In the embedding encoding approach, numerical values are encoded as well. 
 However, during training, neither the categorical nor the numerical embeddings are learned and remain static and fixed \cite{zheng2023DiffusionModelsMissing}
-The authors observed that diffusion achieves competitive results across several datasets for the given evaluation metrics for the task of missing value imputation\footnote{The authors used the \gls{rmse} as well as the error rate as evaluation metric \cite[p. 2]{zheng2023DiffusionModelsMissing}} \cite{zheng2022DiffusionModelsMissing}.
+The authors observed that diffusion achieves competitive results across several datasets for the given evaluation metrics for the task of missing value imputation\footnote{The authors used the \gls{rmse} as well as the error rate as evaluation metric \cite[p. 2]{zheng2023DiffusionModelsMissing}.} \cite{zheng2022DiffusionModelsMissing}.
 The different encoding techniques perform comparably well, with the embedding technique outperforming the other two techniques by a slight margin \cite{zheng2022DiffusionModelsMissing}.
 
 
@@ -232,7 +232,7 @@ where $L^{simple}_t$ is equivalent to \autoref{eqn:l_simple}, the simplified los
 
 The neural network used to predict the noise in the reverse process is a simple \gls{mlp} based upon the works of \cite{gorishniy2021RevisitingDeepLearning}.
 The architecture consists of several identical \gls{mlp}-blocks comprising a Linear layer, followed by an activation layer (\gls{relu}), and a final dropout layer. 
-As in \cite{nichol2021ImprovedDenoisingDiffusion, dhariwal2021DiffusionModelsBeat}, the authors combine the input $x_{in}$ with a sinusoidal temporal embedding\footnote{An encoding of the current timestemp in the diffusion process, computed using the mathematical sine function} and a class label embedding.
+As in \cite{nichol2021ImprovedDenoisingDiffusion, dhariwal2021DiffusionModelsBeat}, the authors combine the input $x_{in}$ with a sinusoidal temporal embedding\footnote{An encoding of the current timestemp in the diffusion process, computed using the mathematical sine function.} and a class label embedding.
 Firstly, the input is sent through a linear layer and combined with the temporal and class label embeddings.
 The output of that process is sent through a specified number of identical \gls{mlp}-blocks specified above before passing a last linear layer \cite{kotelnikov2022TabDDPMModellingTabular}.
 
@@ -244,7 +244,7 @@ The overall number of features in the datasets varies heavily.
 For a complete list of all datasets, please refer to "Table 2" in \cite[p. 5]{kotelnikov2022TabDDPMModellingTabular}.
 
 The primary evaluation metric chosen by the authors is the machine learning efficacy (see \autoref{ch:preliminaries-machineLearningEfficacy}).
-\textcite{kotelnikov2022TabDDPMModellingTabular} realizes this in three different ways, firstly, by using a set of machine and deep learning models\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}} and averaging their performance,
+\textcite{kotelnikov2022TabDDPMModellingTabular} realizes this in three different ways, firstly, by using a set of machine and deep learning models\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}.} and averaging their performance,
 secondly, using a CatBoost model \cite{prokhorenkova2018CatBoostUnbiasedBoosting}(a state-of-the-art model on tabular tasks) \cite{kotelnikov2022TabDDPMModellingTabular}, and thirdly, an \gls{mlp} architecture proposed by \cite{gorishniy2021RevisitingDeepLearning}.
 In the latter case, the models are previously tuned on the real dataset so that the best hyperparameters can be found for each dataset, which will be used during the evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
 To account for other random factors that could influence the results, the authors compute the machine learning efficacy metric scores by generating five different synthetic datasets and train the evaluation models for ten random initializations.
@@ -255,7 +255,7 @@ The authors summarize three major findings \cite{kotelnikov2022TabDDPMModellingT
     \item The classical approach\gls{smote}shows surprisingly competitive performance.
     \item The authors contend that the second evaluation protocol, which employs a state-of-the-art model such as CatBoost, is more suitable for calculating the machine learning efficacy, 
     despite the prevalent use of the first protocol in prior works. 
-    The firstly mentioned set of models\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}} shows overall lower metric scores compared to the CatBoost model.
+    The firstly mentioned set of models\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}.} shows overall lower metric scores compared to the CatBoost model.
     Thus, the authors argue the set of other models'\footnotemark[5] performance values are of lower relevance for practitioners, who, in real-world scenarios, are rather interested in using state-of-the-art models rather than suboptimal models.
     Additionally, for the set of models, the models trained on synthetic data outperformed the models trained on actual real data, indicating that the 
     synthetic data is "more valuable than the real" data, which should not be the case \cite[p. 8]{kotelnikov2022TabDDPMModellingTabular}.

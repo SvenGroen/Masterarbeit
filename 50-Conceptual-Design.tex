@@ -167,15 +167,15 @@ The functionality of the most important scripts can be summarized in the followi
 		Once the transformation is complete, the resulting samples are saved.
 
 	\item[\text{eval\_[catboost\textbar mlp\textbar simple].py:}]
-		The scripts "eval_catboost.py", "eval_mlp.py", and "eval_simple.py" evaluate a synthetic dataset based on machine learning efficacy. 
+		The scripts "eval\_catboost.py", "eval\_mlp.py", and \\"eval\_simple.py" evaluate a synthetic dataset based on machine learning efficacy. 
 		In this process, a machine learning model, chosen by the user, is trained on either real or synthetic data, as specified in the configuration. 
 		The model's performance is then assessed on the real test set by computing a set of metric scores.
 
 	\item[pipeline\_*.py\footnotemark:]
-		The scripts, denoted as "pipeline_*.py", define the full processing pipeline, which includes the processes of training, sampling, and evaluation. 
+		The scripts, denoted as "pipeline\_*.py", define the full processing pipeline, which includes the processes of training, sampling, and evaluation. 
 		They ensure that each function within the pipeline correctly receives its necessary attributes from the configuration. 
 		These scripts also provide the flexibility to execute specific portions of the pipeline individually.
-		\footnotetext[1]{Each implemented baseline model (SMOTE, TVAE, CTABGAN, CTABGAN+) has its own implementation as pipeline\_\textit{modelName}.py}
+		\footnotetext[1]{Each implemented baseline model (SMOTE, TVAE, CTABGAN, CTABGAN+) has its own implementation as pipeline\_\textit{modelName}.py.}
 
 	\item[tune\_*.py\footnotemark:]
 		The "tune\_*.py" scripts are generally responsible for the hyperparameter tuning process.
@@ -188,7 +188,7 @@ The functionality of the most important scripts can be summarized in the followi
 		The average evaluation score (machine learning efficacy based) of the five synthetic dataset versions is returned as the objective that Optuna tries to maximize.
 		After optimization, the best hyperparameter configuration is saved.
 		If the user has set an \textit{- - eval\_seeds} flag, a final evaluation of the best-found model will be started by calling \textit{eval\_seeds.py}.
-		\footnotetext[2]{Each implemented baseline model has its own implementation as tune\_\textit{modelName}.py}
+		\footnotetext[2]{Each implemented baseline model has its own implementation as tune\_\textit{modelName}.py.}
 		
 	\item[eval\_seeds.py:]
 		The "eval\_seeds.py" script's purpose is to perform an extensive evaluation, given a trained model.
@@ -205,7 +205,7 @@ A detailed activity diagram for each script can be found in the Appendix \ref{A:
 
 In order to start one of the above scripts, a configuration file has to be specified, detailing the most important parameters for training, sampling, and evaluation.
 For example, \autoref{lst:configuration} shows how such a configuration file could look like and which parameters need to be specified.
-The file is stored as a \gls{toml} \glsadd{tomlaccr} file (short for "Tom's Obvious, Minimal Language") \cite{werner2021TOMLTomObvious}, which contains sections, indicated by squared brackets. 
+The file is stored as a \gls{toml} \glsadd{tomlaccr} file (short for "Tom's Obvious, Minimal Language") \cite{preston-werner2021TOMLTomObviousa}, which contains sections, indicated by squared brackets. 
 Within these sections, key-value pairs define configuration options.
 
 \begin{lstlisting}[label={lst:configuration}, caption={Example Configuration File}]
@@ -275,7 +275,7 @@ The \textit{model\_params.rtdl\_params}\footnote{rtdl is an abbreviation for the
 As the name suggests, the keys inside the \textit{diffusion\_params} section control the diffusion process.
 Noteworthy are the \textit{train.T} and \textit{eval.T} sections, whose keys define how preprocessing is done at the beginning of training and evaluation, respectively.
 The \textit{eval.type} section keys are useful to further specify the kind of evaluation that will be executed.
-The machine learning efficacy model is determined by the \textit{eval\_model} key and is, in this example, set to the catboost model.
+The machine learning efficacy model is determined by the \textit{eval\_model} key and is, in this example, set to the CatBoost model.
 To control what kind of data will be evaluated, the \textit{eval\_type} key can be set to either "real" or "synthetic".
 If the value is set to "real", the real training data is loaded and compared to the real test data, as if it was synthetic data.
 This setting allows the creation of baseline metric scores against which synthetic values are compared.

@@ -157,7 +157,7 @@ It is defined as $x' = \frac{x_i - min(x)}{max(x) - min(x)}$ \cite{izonin2022Two
 While the standard scaler is usually used for data that follows a Gaussian normal distribution, the min-max scaler is better suited for arbitrary distributions, however, it is quite affected by outliers \cite{choudhury2020FeatureScalingEffect}.
 A more complex normalization technique addresses the problem that numeric values in tabular data can follow distributions in a more complex way than just a simple Gaussian normal distribution \cite{zhao2022CTABGANEnhancingTabular, xu2019ModelingTabularData}.
 \textcite{xu2019ModelingTabularData} introduces mode-specific normalization which models complex distributions with multiple simple Gaussian distributions.
-The authors define the mode-specific normalization technique in following way \cite[p. 3-4]{xu2019ModelingTabularData}:
+The authors define mode-specific normalization in the following way \cite[p. 3-4]{xu2019ModelingTabularData}:
 
 \begin{enumerate}
     \item For each continuos column $C_i$, estimate the number of modes $m_i$ by using a \gls{vgm} \cite{bishop2006PatternRecognitionMachine}. 
@@ -282,10 +282,30 @@ These architectures have enabled the creation of highly accurate and efficient m
 
 In recent years, this development of new deep-learning architectures has been a key area of research, leading to the creation of such powerful models.
 This section will start with a high-level introduction into a neural network's most important architectural building blocks.
-Afterwards, the most important deep learning model architectures for generating data are presented.
+Subsequently, the most important deep learning model architectures for generating data are presented.
 
 \subsection{Neural Networks}
 \label{ch:preliminaries-deepLearningArchitectures-neuralNetworks}
+
+\begin{figure}[t]
+  \hspace*{-0.8cm}
+  \centering
+  \begin{subfigure}{0.65\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/perceptron.png}
+    \caption[Perceptron]{Perceptron} \label{fig:perceptron}
+  \end{subfigure}
+
+  \vspace{0.5cm}
+
+  \begin{subfigure}{0.7\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/mlp.png}
+    \caption[Multilayer Perceptron]{\acrfull{mlp}} \label{fig:mlp}
+  \end{subfigure}
+
+\caption[Overview Perceptron]{Overview Perceptron} \label{fig:NN_Overview}
+\end{figure}
 
 The most basic neural network is called a perceptron \autoref{fig:perceptron} \cite{rosenblatt1958PerceptronProbabilisticModel}.
 It consists of a single input layer that is connected to an output node.
@@ -299,21 +319,6 @@ This is referred to as a \gls{mlp} or feed-forward neural network (as presented 
 because the information flows forward from input through the multiple layers in the middle (also called hidden layers) to the output \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
 An \gls{mlp} tries to approximate some function $f^*$ by defining a mapping $y=f(x;\theta)$ and learning the values of the parameters $\theta$ (\ie the weights) that best approximate $f^*$ \cite{Goodfellow-et-al-2016}.
 A simple \gls{mlp} is already able to learn almost any function, which is why they are also considered to be universal function approximators \cite{aggarwal2018NeuralNetworksDeep, hornik1989MultilayerFeedforwardNetworks}.
-
-
-\begin{figure}
-    \begin{subfigure}{0.8\textwidth}
-      \includegraphics[width=\linewidth]{images/perceptron.png}
-      \caption[Perceptron]{Perceptron} \label{fig:perceptron}
-    \end{subfigure}%
-    \hspace*{\fill}   % maximize separation between the subfigures
-    \begin{subfigure}{0.8\textwidth}
-      \includegraphics[width=\linewidth]{images/mlp.png}
-      \caption[Multilayer Perceptron]{multilayer perceptron} \label{fig:mlp}
-    \end{subfigure}%
-    \hspace*{\fill}   % maximizeseparation between the subfigures
-  \caption[Overview Perceptron]{Overview Perceptron} \label{fig:NN_Overview}
-\end{figure}
 
 Convolutional networks, or \glspl{cnn} \cite{lecun1998GradientbasedLearningApplied}, are a specialized type of neural network.
 As their name indicates, they perform convolutions on the data as illustrated in \autoref{fig:cnns}.
@@ -361,32 +366,40 @@ This is achieved by adding the output of one layer directly to the output of a l
 This way, even a very small gradient can flow more easily back through the network during backpropagation of the gradient, alleviating the vanishing gradient problem and enabling better learning capabilities \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
 The decision of which layers to skip is learned by the model itself during the training through the backpropagation algorithm \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
 
-\begin{figure}
-    \begin{subfigure}{0.7\textwidth}
-      \includegraphics[width=\linewidth]{images/cnns.png}
-      \captionsetup{justification=centering}
-      \caption{Convolution \\(adapted from \cite{rosebrock2021ConvolutionalNeuralNetworks})} \label{fig:cnns}
-    \end{subfigure}%
-    \hspace*{\fill}   % maximize separation between the subfigures
-    \begin{subfigure}{0.7\textwidth}
-      \includegraphics[width=\linewidth]{images/rnns.png}
-      \captionsetup{justification=centering}
-      \caption{\Gls{rnn} \\(adapted from \cite{radhakrishnan2017IntroductionRecurrentNeural})} \label{fig:rnns}
-    \end{subfigure}%
-    \hspace*{\fill}   % maximizeseparation between the subfigures
-    \begin{subfigure}{0.7\textwidth}
-        \includegraphics[width=\linewidth]{images/resnet.png}
-        \captionsetup{justification=centering}
-        \caption{Residual Connection \\(adapted from \cite{hassan2019ResNet3450})} \label{fig:resnet}
-      \end{subfigure}%
-    \hspace*{\fill}   % maximizeseparation between the subfigures
-  \caption[Overview Neural Network Architectures]{Overview Neural Network Architectures} \label{fig:NN_architectures_Overview}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.6\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/cnns.png}
+    \captionsetup{justification=centering}
+    \caption{Convolution \\(adapted from \cite{rosebrock2021ConvolutionalNeuralNetworks})} \label{fig:cnns}
+  \end{subfigure}
+
+  \vspace{0.5cm}
+
+  \begin{subfigure}{0.6\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/rnns.png}
+    \captionsetup{justification=centering}
+    \caption{\Gls{rnn} \\(adapted from \cite{radhakrishnan2017IntroductionRecurrentNeural})} \label{fig:rnns}
+  \end{subfigure}
+
+  \vspace{0.5cm}
+
+  \begin{subfigure}{0.6\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images/resnet.png}
+    \captionsetup{justification=centering}
+    \caption{Residual Connection \\(adapted from \cite{hassan2019ResNet3450})} \label{fig:resnet}
+  \end{subfigure}
+\caption[Overview Neural Network Architectures]{Overview Neural Network Architectures} \label{fig:NN_architectures_Overview}
 \end{figure}
+
 
 Lastly, inspired by the human cognitive capabilities to focus on specific parts of an input, attention mechanisms have been introduced \cite{niu2021ReviewAttentionMechanism, aggarwal2018NeuralNetworksDeep}.
 The implementation of attention in neural networks tries to address the problem of information overload\footnote{Information overload in the context of deep learning typically refers to issues that arise when a model is fed with too much data, that can hinder the model to capture the relevant information.
 Issues during training may arise if the input data contains too much noise, that is of no relevance or might cause the model to rather learn to predict the noise, than the actual target.
-With this, the model may overfit the training data and perform poorly on the test data. } and is supposed to enhance the network's ability to focus on relevant portions of the input data \cite{niu2021ReviewAttentionMechanism}.
+With this, the model may overfit the training data and perform poorly on the test data.} and is supposed to enhance the network's ability to focus on relevant portions of the input data \cite{niu2021ReviewAttentionMechanism}.
 An attention mechanism has been successfully applied to various tasks in different domains, such as computer vision or \gls{nlp} \cite{niu2021ReviewAttentionMechanism}.
 The architectural realization of attention is realized differently, depending on the task at hand \cite{aggarwal2018NeuralNetworksDeep}.
 The attention mechanism in computer vision involves weighting different regions of the image based on their relevance to the task \cite{aggarwal2018NeuralNetworksDeep}. 
@@ -454,7 +467,8 @@ Since $z$ is normally distributed ($z\sim N(\mu,\sigma^2)$) it can be rewritten 
 This transformation moves the stochastic sampling process to the fixed $\epsilon$ variable. 
 It allows $\mu$ and $\sigma$ to be differentiable variables, which enables the gradient to flow and the neural network to learn \cite{kingma2013AutoEncodingVariationalBayes}.
 In order for the model to learn that $z$ should be close to a normal distribution, a regularization loss is introduced using the \gls{kl}-divergence.
-The \gls{kl}-divergence is defined as:
+
+\noindent The \gls{kl}-divergence is defined as:
 
 \begin{equation}
     \label{eqn:kl-divergence}
@@ -471,7 +485,7 @@ with distributions $p$ and $q$:
 The \gls{kl}-divergence measures how diverged two probability distributions are from one another.
 With $p(z)$ as a prior defined standard Gaussian distribution, minimizing this function means optimizing the encoders ($q(z|x)$) parameters of $\mu$ and $\sigma$ towards resembling the distributions it is compared to.
 
-Additionally, a reconstruction loss is computed based on the negative log-likelihood that measures the error between the input and output:
+\noindent Additionally, a reconstruction loss is computed based on the negative log-likelihood that measures the error between the input and output:
 % This reconstruction loss is minimized:
 \begin{equation}
     \label{eqn:reconstruction_loss}
@@ -479,7 +493,7 @@ Additionally, a reconstruction loss is computed based on the negative log-likeli
 \end{equation}
 with $E_{q(z|x)}$ denoting the expectation with respect to the encoder distribution.
 
-Hence, the final loss function that is minimized during the training of the \gls{vae} is the combination of both loss functions\footnote{The loss components in the original work \cite{kingma2013AutoEncodingVariationalBayes} are formulated as a maximization objective. In practice, a loss that can be minimized during training is required. Hence, we convert the maximization objective to a minimization objective by multiplying it with -1}:
+Hence, the final loss function that is minimized during the training of the \gls{vae} is the combination of both loss functions\footnote{The loss components in the original work \cite{kingma2013AutoEncodingVariationalBayes} are formulated as a maximization objective. In practice, a loss that can be minimized during training is required. Hence, we convert the maximization objective to a minimization objective by multiplying it with -1.}:
 
 \begin{equation}
     \label{eqn:vae_loss}
@@ -499,11 +513,11 @@ Hence, the final loss function that is minimized during the training of the \gls
     \caption{Variational Autoencoder} \label{fig:vae}
   \end{subfigure}
 \captionsetup{justification=centering}
-\caption[Autoencoders]{Architecture of Autoencoder and Variational Autoencoder (adapted from \cite{weng2018AutoencoderBetaVAE})} \label{fig:vae_overview}
+\caption[Autoencoders]{Architecture of Autoencoder and Variational Autoencoder \\(adapted from \cite{weng2018AutoencoderBetaVAE})} \label{fig:vae_overview}
 \end{figure}
 
 
-
+\newpage %FINAL FORMATTING
 \subsection{Generative Adversarial Networks}
 \label{ch:preliminaries-generativeAdversarialNetworks}
 
@@ -537,6 +551,7 @@ Its objective function $J_G$ is defined as \cite{aggarwal2018NeuralNetworksDeep}
     Minimize_GJ_G= \sum_{x\in p_{model}}^{} log [1-D(x)] = \sum_{x\in p_z}^{} log [1-D(G(z))]
 \end{equation}
 
+\newpage %FINAL FORMATTING
 Ultimately, the generator and the discriminator are playing a two-player minimax game with the following value function:
 
 \begin{equation}
@@ -604,6 +619,12 @@ The dot product multiplication of the query and key matrixes creates a score mat
 The created attention matrix is scaled (according to the key dimensionality $d_k$) and multiplied with the value vector to generate the output probabilities.
 Multi-head attention refers to the fact that input is processed simultaneously by different attention heads, \ie with multiple $Q$, $K$, and $V$ matrices as described above \cite{vaswani2017AttentionAllYou}.
 The Outputs of the multiple self-attention heads are ultimately concatenated back together \cite{vaswani2017AttentionAllYou}.
+\newpage %FINAL FORMATTING
+\begin{figure}[t]
+  \includegraphics[width=0.8\linewidth]{images/transformer.png}
+\caption[Transformers]{Transformer Architecture \cite[Figure 1, p. 3]{lin2022SurveyTransformers}} \label{fig:transformer}
+\end{figure}
+
 The attention mechanism can be defined as \cite[p.4]{vaswani2017AttentionAllYou}:
 
 \begin{equation}
@@ -621,10 +642,6 @@ Ultimately, the decoder is subsequently used to generate output tokens until it 
 Both the encoder and decoder utilize self-attention mechanisms, allowing for context-dependent concentration on different parts of the input sequence.
 
 
-\begin{figure}
-  \includegraphics[width=0.8\linewidth]{images/transformer.png}
-\caption[Transformers]{Transformer Architecture \cite[Figure 1, p. 3]{lin2022SurveyTransformers}} \label{fig:transformer}
-\end{figure}
 
 
 \subsection{Diffusion Probabilistic Models}
@@ -677,6 +694,7 @@ the forward diffusion process from an unnoised input $x_0$ to a noised version a
 \end{equation}
 
 \autoref{eqn:forwards_2} \cite{ho2020DenoisingDiffusionProbabilistic} allows computing the forward noising from $x_0$ to any timestep $t$ within one computation step instead of iteratively applying noise over and over again.
+\newline
 
 During the reverse process, the goal is to learn the reverse distribution from noised data $x_t$ to slightly less noised data $x_{t-1}$, $q(x_{t-1}|x_t)$.
 With bayes-theorem we can see that $q(x_{t-1}|x_t) = \frac{p(x_{t-1},x_t)}{p(x_t)}$, which means $q(x_{t-1}|x_t)$ depends on the marginal distribution of $x_t$, denoted as $p(x_t)$.
@@ -729,8 +747,7 @@ This also changes the signs since the whole inequation is multiplied by $-1$:
   \end{align*}
 \end{equation}
 
-
-Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{1:T}|x_0)})$ and some reformulations (see \autoref{eqn:vlb2_appendix}) using bayes-rule results in \autoref{eqn:vlb2} leads to the following inequation \cite{ho2020DenoisingDiffusionProbabilistic}:
+\noindent Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{1:T}|x_0)})$ and some further reformulations (see \autoref{eqn:vlb2_appendix}) using bayes-rule results in \autoref{eqn:vlb2} leads to the following inequation \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
   \label{eqn:vlb2}
@@ -739,10 +756,8 @@ Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x
   \end{align*}
 \end{equation}
 
-\autoref{eqn:vlb2} is the variational lower bound that is minimized during training to optimize $-log(p_\theta(x_0))$.
+\noindent \autoref{eqn:vlb2} is the variational lower bound that is minimized during training to optimize $-log(p_\theta(x_0))$.
 With additional reformulations (see \autoref{eqn:vlb3_appendix}), the loss function can be derived as \cite{ho2020DenoisingDiffusionProbabilistic}:
-
-%---
 
 \begin{equation}
   \label{eqn:vlb3}
@@ -760,7 +775,7 @@ To $L_{0}$ can also be referred to as a "reconstruction term" \cite[p. 10]{luo20
 However, ultimately the authors decide to remove the term in favor of a simpler loss term, which leads to a simpler implementation and better quality \cite{ho2020DenoisingDiffusionProbabilistic}.
 
 Inside $L_{t-1}$, one compares the target denoising step $q(x_{t-1}|x_t,x_0)$ that is also conditioned on the input $x_0$ with the approximated denoising step $p_\theta(x_{t-1}|x_t)$. %%%
-Both terms have a closed-form solution\footnote{meaning they can be computed within a finite amount of standard computations \cite{borwein2013ClosedFormsWhat}} thanks to the conditioning on $x_0$ \cite{ho2020DenoisingDiffusionProbabilistic}:
+Both terms have a closed-form solution\footnote{Meaning they can be computed within a finite amount of standard computations \cite{borwein2013ClosedFormsWhat}.} thanks to the conditioning on $x_0$ \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
   \label{eqn:lt-1_1}
@@ -772,22 +787,34 @@ Both terms have a closed-form solution\footnote{meaning they can be computed wit
 q(x_{t-1}|x_t,x_0) = \mathcal{N}(x_{t-1};\tilde{\mu_t}(x_t,x_0), \tilde{\beta_t}\textbf{I})
 \end{equation}
 
-\autoref{eqn:lt-1_2} can be further simplified, considering that:
+\noindent The $\tilde{\mu_t}$ and $\tilde{\beta_t}$ of \autoref{eqn:lt-1_2} are defined as:
+
 \begin{equation}
   \begin{align}
-    &\tilde{\mu_t}(x_t, x_0) := \frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t}{1 - \alpha_{\bar{t}}}x_0 +   \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1})}{1 - \bar{\alpha}_{t}}x_t \quad \textrm{and }
-    \tilde{\beta_t}:=\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta_t \nonumber\\
-  \end{align}
-\end{equation}
-    
-\begin{equation}
-  \begin{align}
-    &x_t = \sqrt{\bar{\alpha}_{t}}x_0+\sqrt[]{1-\bar{\alpha}_t}\epsilon \quad\textrm{and }
-    x_0 = \frac{1}{\sqrt{\bar{\alpha}_t}}(x_t-\sqrt[]{1-\bar{\alpha}_t}\epsilon) \nonumber\\
+    \label{eqn:lt-1_21}
+    &\tilde{\mu_t}(x_t, x_0) = \frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t}{1 - \alpha_{\bar{t}}}x_0 +   \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1})}{1 - \bar{\alpha}_{t}}x_t \quad \textrm{and }
+    \tilde{\beta_t} =\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta_t \\
   \end{align}
 \end{equation}
 
-with $\beta$ being fixed by \cite{ho2020DenoisingDiffusionProbabilistic} and the mean $\tilde{\mu_t}$ is being further simplified to \autoref{eqn:lt-1_3} \cite{ho2020DenoisingDiffusionProbabilistic}:
+\noindent To further simplify $\tilde{\mu_t}$, the formula to create a noised input $x_t$ in a single step from the unnoised input $x_0$ is used.
+$x_t$ can be written in a closed-form solution as:
+\begin{equation}
+  \begin{align}
+    \label{eqn:lt-1_22}
+    x_t = \sqrt{\bar{\alpha}_{t}}x_0+\sqrt[]{1-\bar{\alpha}_t}\epsilon
+  \end{align}
+\end{equation}
+
+\noindent which in turn can be rewritten in terms of $x_0$ as:
+\begin{equation}
+  \begin{align}
+    \label{eqn:lt-1_23}
+    x_0 = \frac{1}{\sqrt{\bar{\alpha}_t}}(x_t-\sqrt[]{1-\bar{\alpha}_t}\epsilon) \\
+  \end{align}
+\end{equation}
+
+\noindent Given that $\beta$ was fixed by \textcite{ho2020DenoisingDiffusionProbabilistic}, $x_0$ as in \autoref{eqn:lt-1_23}, the mean $\tilde{\mu_t}$ (\autoref{eqn:lt-1_21}) can be further simplified to:
 
 \begin{equation}
   \begin{align}
@@ -796,9 +823,9 @@ with $\beta$ being fixed by \cite{ho2020DenoisingDiffusionProbabilistic} and the
   \end{align}
 \end{equation}
 
-which is just scaled random noise that is subtracted from $x_t$, the fully noised data.
+\noindent which is just scaled random noise that is subtracted from $x_t$, the fully noised data \cite{ho2020DenoisingDiffusionProbabilistic}.
 
-Hence, the \gls{kl}-divergence in $L_{t-1}$ in \autoref{eqn:vlb2} ultimately measures the difference between the actual noise that was added ($\tilde{\mu_t}$ in \autoref{eqn:lt-1_3}) and the predicted noise from the neural network ($\mu_\theta$ in \autoref{eqn:lt-1_1}).
+Hence, the \gls{kl}-divergence in $L_{t-1}$ in \autoref{eqn:vlb3} ultimately measures the difference between the actual noise that was added ($\tilde{\mu_t}$ in \autoref{eqn:lt-1_3}) and the predicted noise from the neural network ($\mu_\theta$ in \autoref{eqn:lt-1_1}).
 \textcite{ho2020DenoisingDiffusionProbabilistic} proposes the \gls{mse} between $\tilde{\mu_t}$ and $\mu_\theta$ as a loss function:
 
 \begin{equation}
@@ -808,7 +835,7 @@ Hence, the \gls{kl}-divergence in $L_{t-1}$ in \autoref{eqn:vlb2} ultimately mea
   \end{align}
 \end{equation}
 
-The constant $C$ will be removed during training, as it does not depend on $\theta$ \cite{ho2020DenoisingDiffusionProbabilistic}.
+\noindent The constant $C$ will be removed during training, as it does not depend on $\theta$ \cite{ho2020DenoisingDiffusionProbabilistic}.
 By applying the same reparameterization that was done in \glspl{vae} (see \autoref{eqn:reparameterization}) to $\mu_\theta$, it can be reformulated in the following way:
 
 \begin{equation}
@@ -832,8 +859,8 @@ Ultimately, during sampling $x_{t-1}$ can be calculated by:
   \end{align*}
 \end{equation}
 
-Where $z\sim\mathcal{N}(0,\textbf{I})$ is a random component that is added during the reverse process (except for $t=1$) to ensure the generation of diverse samples.
-
+\noindent $z\sim\mathcal{N}(0,\textbf{I})$ is a random component that is added during the reverse process (except for $t=1$) to ensure the generation of diverse samples.
+\newpage
 Substituting $\tilde{\mu_t}$ as in \autoref{eqn:lt-1_3} and $\mu_\theta$ as in \autoref{eqn:mse_loss_2} with some further simplification leads to:
 
 \begin{equation}
@@ -843,7 +870,6 @@ Substituting $\tilde{\mu_t}$ as in \autoref{eqn:lt-1_3} and $\mu_\theta$ as in \
     &= \mathbb{E}_{x_0,\epsilon} \left[  \frac{\beta^2_t}{2\sigma_t^2 \alpha_t (1-\bar{\alpha}_t)} ||\epsilon - \epsilon_\theta( \underbrace{\sqrt{\bar{\alpha}_t} x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon}_{x_t}, t)||^2 \right]
   \end{align*}
 \end{equation}
-
 
 Ultimately, \textcite[p. 5]{ho2020DenoisingDiffusionProbabilistic} discovered that simplifying the loss term even further improves not only the sample quality but is also easier to implement.
 \autoref{eqn:l_simple} shows the final simplified loss function $L_{simple}$:
@@ -862,7 +888,18 @@ Therefore the model can focus more on the large $t$'s, where the denoising is mo
 \autoref{alg:training} shows the full training algorithm, which will be realized by firstly randomly sampling a datapoint $x_0 \sim q(x_0)$ from the dataset, a timestep $t\sim Uniform(\{1, ..., T\})$ and some random Gaussian noise $\epsilon \sim \mathcal{N}(0, \textbf{I})$.
 Afterward, the gradient step will then be performed according to \autoref{eqn:l_simple} using gradient descent.
 
-\begin{algorithm}[T]
+Sampling, on the other hand, follows \autoref{alg:sampling}, starting with sampling Gaussian noise $x_T$.
+The Gaussian noise is then denoised in an iterative manner for $T$ timesteps according to \autoref{eqn:xt-1} until a new, noise-free datapoint $x_0$ is generated.
+
+In summary, \cite{ho2020DenoisingDiffusionProbabilistic} introduced \gls{ddpm} based on the work of \cite{sohl-dickstein2015DeepUnsupervisedLearning}.
+Their diffusion model is based on a \gls{mc} and consists of the forward noising and the backward denoising part.
+During the forward process, a timestep $t$ is sampled and the raw input data $x_0$ is noised accordingly using \autoref{eqn:forwards_2}.
+A function approximator (usually a neural network) with learnable parameters $\theta$ tries to remove the noise by predicting the noise that was added during the forward process.
+This difference between the actual noise $\epsilon$ and the predicted noise $\epsilon_{\theta}$ is used as a loss function (\autoref{eqn:l_simple}) to perform gradient descent.
+Once the training is finished, and the model converges, new synthetic data can be generated during sampling.
+In the sampling process, Gaussian noise can be sampled, and the model progressively denoises the sample for $T$ timesteps until a new, denoised datapoint $x_0$, is generated.
+
+\begin{algorithm}[H]
   \caption[Training algorithm]{Training \cite[p. 4]{ho2020DenoisingDiffusionProbabilistic}}
   \label{alg:training}
   \begin{algorithmic}
@@ -876,12 +913,8 @@ Afterward, the gradient step will then be performed according to \autoref{eqn:l_
   \end{algorithmic}
 \end{algorithm}
 
-
-Sampling, on the other hand, follows \autoref{alg:sampling}, starting with sampling Gaussian noise $x_T$.
-The Gaussian noise is then denoised in an iterative manner for $T$ timesteps according to \autoref{eqn:xt-1} until a new, noise-free datapoint $x_0$ is generated.
-
 \begin{algorithm}[H]
-\caption[Sampling algorithm]{Sampling algorithm \cite[p. 4]{ho2020DenoisingDiffusionProbabilistic}}
+  \caption[Sampling algorithm]{Sampling algorithm \cite[p. 4]{ho2020DenoisingDiffusionProbabilistic}}
   \label{alg:sampling}
   \begin{algorithmic}
   \State $x_T \sim \mathcal{N}(0, \mathbf{I})$
@@ -892,14 +925,6 @@ The Gaussian noise is then denoised in an iterative manner for $T$ timesteps acc
   \State \Return $x_0$
   \end{algorithmic}
 \end{algorithm}
-
-In summary, \cite{ho2020DenoisingDiffusionProbabilistic} introduced \gls{ddpm} based on the work of \cite{sohl-dickstein2015DeepUnsupervisedLearning}.
-Their diffusion model is based on a \gls{mc} and consists of the forward noising and the backward denoising part.
-During the forward process, a timestep $t$ is sampled and the raw input data $x_0$ is noised accordingly using \autoref{eqn:forwards_2}.
-A function approximator (usually a neural network) with learnable parameters $\theta$ tries to remove the noise by predicting the noise that was added during the forward process.
-This difference between the actual noise $\epsilon$ and the predicted noise $\epsilon_{\theta}$ is used as a loss function (\autoref{eqn:l_simple}) to perform gradient descent.
-Once the training is finished, and the model converges, new synthetic data can be generated during sampling.
-In the sampling process, Gaussian noise can be sampled, and the model progressively denoises the sample for $T$ timesteps until a new, denoised datapoint $x_0$, is generated.
 
 
 \subsection{Multinomial Diffusion}
@@ -1031,7 +1056,7 @@ For example, \cite{zhao2022CTABGANEnhancingTabular} makes use of five models and
 \cite{ge2021KaminoConstraintawareDifferentially} on the other hand, uses nine different models but calculates only three different metric scores.
 Moreover, \cite{kunar2021DTGANDifferentialPrivatea} uses four models with four metrics, and \cite{kim2021OCTGANNeuralODEbased} uses three models on only one metric.
 In addition to the various models and metric scores used, each model can have different hyperparameters.
-For example, \cite{kunar2021DTGANDifferentialPrivatea} uses the default hyperparameters\footnote{from the scikit library \cite{scikit-learn}} for all models and 
+For example, \cite{kunar2021DTGANDifferentialPrivatea} uses the default hyperparameters\footnote{From the scikit library \cite{scikit-learn}.} for all models and 
 \cite{kim2021OCTGANNeuralODEbased} chooses the hyperparameters that show the best performance in a cross-validation hyperparameter tuning.
 Lastly, the different synthetic data generation models might use different datasets to compute their machine learning efficacy scores.
 Even though most of the generation approaches have adopted the \textit{CrCl-SR} \cite{goncalves2020GenerationEvaluationSynthetic} method to calculate the machine learning efficacy score,
@@ -1111,10 +1136,11 @@ It consists of the average of five different similarity metrics that cover diffe
 
 \textcite{chundawat2022UniversalMetricRobust} propose TabSynDex, a single similarity score based upon combining multiple scores covering different aspects of data similarity like in the works of \cite{brenninkmeijer2019GenerationEvaluationTabular}.
 In their work, they point out weaknesses of the similarity score proposed by \textcite{brenninkmeijer2019GenerationEvaluationTabular}.
-For example, they criticized the usage of correlations as a primary similarity metric for basic statistical measures.
-The issue with this is, that even if real and synthetic data's statistics are close but don't follow the same pattern, they don't correlate and their similarity will be considered to be very low.
-As a result, even when comparing two parts of the same dataset, the similarity can appear low, which is contradictory since they come from the same distribution.
-As a consequence, they propose the following similarity metrices:
+For example, they criticized the overreliance on the correlation coefficient as a primary similarity metric, which is not affected by the scale of the variables that are compared.
+\textcite{chundawat2022UniversalMetricRobust} argue that this is problematic since even when the statistics of real and synthetic data closely align but fail to follow the same pattern, they do not correlate. 
+Consequently, the perceived similarity between the datasets is underestimated.
+The authors further argue that due to the reliance on correlation, even when comparing two segments of the same dataset, their measured similarity may seem low, which is contradictory since they originate from the same distribution.
+As a consequence, they propose the following similarity metrics:
 
 \begin{description}
   \item[Basic statistical measure:]

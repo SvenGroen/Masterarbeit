@@ -323,6 +323,7 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\midrule
 		Number of tuning trials   & 100                 \\
 		\bottomrule
+		\multicolumn{2}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[CatBoost Hyperparameter Search Space]{CatBoost evaluation model hyperparameter tuning search space (proposed by \cite{gorishniy2021RevisitingDeepLearning})}
 	\label{tab:catboost_tune}
@@ -350,6 +351,7 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\midrule
 		Number of tuning trials & 100                                \\
 		\bottomrule
+		\multicolumn{2}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[TabDDPM Hyperparameter Search Space]{TabDDPM model hyperparameter tuning search space}
 	\label{tab:diff_tune}
@@ -373,6 +375,7 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\midrule
 		Number of tuning trials & 100                              \\
 		\bottomrule
+		\multicolumn{2}{c}{}\\[-0.6em]
 	\end{tabular}
 	\caption[TVAE Hyperparameter Search Space]{TVAE model hyperparameter tuning search space}
 	\label{tab:tvae_tune}
@@ -395,7 +398,8 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\midrule
 		Number of tuning trials & 30                             \\
 		\bottomrule
-		\multicolumn{2}{c}{}\\[-0.2em] % Testen
+		\multicolumn{2}{c}{}\\[-0.6em]
+		\multicolumn{2}{c}{}\\[-0.6em] % Testen
 	\end{tabular}
 	\caption[CTABGAN(+) Hyperparameter Search Space]{CTABGAN/CTABGAN+ model hyperparameter tuning search space. Training iterations and the number of tuning trails were reduced compared to the original \cite{kotelnikov2022TabDDPMModellingTabular}, to reduce computation time.}
 	\label{tab:ctabgan_tune}
@@ -409,35 +413,13 @@ The dataset was constructed through an extraction from a 1994 census database \c
 Overall, the dataset has 15 columns, of which nine are categorical and six are numerical.
 In total, the dataset consists of 48842 rows.
 
-The numerical columns are: \textit{age}, \textit{fnlwgt}\footnote{short for "final weight", a sampling weight}, \textit{education-num}, \textit{capital-gain}, \textit{capital-loss} and \textit{hours-per-week}
+The numerical columns are: \textit{age}, \textit{fnlwgt}\footnote{Short for "final weight", a sampling weight.}, \textit{education-num}, \textit{capital-gain}, \textit{capital-loss} and \textit{hours-per-week}
 
 And the categorical columns are: \textit{workclass}, \textit{education}, \textit{marital-status}, \textit{occupation}, \textit{relationship}, \textit{race}, \textit{sex}, \textit{native-country}, and \textit{income} (target column)
 
 The dataset was created for binary classification, where the model should predict the column value of the income column (either \textit{>50K} or \textit{<=50K}).
 
 \autoref{tab:adult} shows five entries of the dataset:
-
-
-% \begin{table}[h]
-% 	\centering
-% 	\resizebox{\columnwidth}{!}{
-% 		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-% 			\toprule
-% 			\textbf{age} & \textbf{workclass} & \textbf{fnlwgt} & \textbf{education} & \textbf{education-num} & \textbf{marital-status} & \textbf{occupation} & \textbf{relationship} & \textbf{race} & \textbf{sex} & \textbf{capital-gain} & \textbf{capital-loss} & \textbf{hours-per-week} & \textbf{native-country} & \textbf{income} \\
-% 			\midrule
-% 			39.0         & State-gov          & 77516.0         & Bachelors          & 13.0                   & Never-married           & Adm-clerical        & Not-in-family         & White         & Male         & 2174.0                & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\
-% 			50.0         & Self-emp-not-inc   & 83311.0         & Bachelors          & 13.0                   & Married-civ-spouse      & Exec-managerial     & Husband               & White         & Male         & 0.0                   & 0.0                   & 13.0                    & United-States           & $\leq$50K       \\
-% 			38.0         & Private            & 215646.0        & HS-grad            & 9.0                    & Divorced                & Handlers-cleaners   & Not-in-family         & White         & Male         & 0.0                   & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\
-% 			53.0         & Private            & 234721.0        & 11th               & 7.0                    & Married-civ-spouse      & Handlers-cleaners   & Husband               & Black         & Male         & 0.0                   & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\
-% 			28.0         & Private            & 338409.0        & Bachelors          & 13.0                   & Married-civ-spouse      & Prof-specialty      & Wife                  & Black         & Female       & 0.0                   & 0.0                   & 40.0                    & Cuba                    & $\leq$50K       \\
-% 			\bottomrule
-% 		\end{tabular}
-% 	}
-% 	\caption[Example Adult Dataset]{Adult income dataset with five exemplary entries}
-% 	\label{tab:adult}
-% \end{table}
-
-
 
 \begin{table}[h]
 	\centering
@@ -454,6 +436,7 @@ The dataset was created for binary classification, where the model should predic
                 53.0         & Private            & 234721.0        & 11th               & 7.0                    & Married-civ-spouse      & Handlers-cleaners   & Husband               \\
                 28.0         & Private            & 338409.0        & Bachelors          & 13.0                   & Married-civ-spouse      & Prof-specialty      & Wife                  \\
                 \bottomrule
+				\multicolumn{7}{c}{}\\[-0.6em]
             \end{tabular}
         }
         \caption{First eight columns of Adult income dataset}
@@ -473,6 +456,7 @@ The dataset was created for binary classification, where the model should predic
                 Black         & Male         & 0.0                   & 0.0                   & 40.0                    & United-States           & $\leq$50K       \\
                 Black         & Female       & 0.0                   & 0.0                   & 40.0                    & Cuba                    & $\leq$50K       \\
                 \bottomrule
+				\multicolumn{7}{c}{}\\[-0.6em]
             \end{tabular}
         }
         \caption{Second seven columns of Adult income dataset, including the dataset target column "income"}
