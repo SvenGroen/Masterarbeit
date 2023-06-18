@@ -962,7 +962,7 @@ Uniform noise is added over the $K$ classes in each timestep.
 If $(1-\beta_t)$ is large, the model is likely to retain the previous category from $x_{t-1}$. 
 Likewise, if $(1-\beta_t)$ is small, the model will rely more on sampling a random category from a uniform distribution over all categorical values for the variable.
 
-\cite{hoogeboom2021ArgmaxFlowsMultinomial} derives from \autoref{eqn:mul_diff1} and \autoref{eqn:mul_diff2} the categorical posterior:
+\textcite{hoogeboom2021ArgmaxFlowsMultinomial} derives from \autoref{eqn:mul_diff1} and \autoref{eqn:mul_diff2} the categorical posterior:
 
 \begin{equation}
   \begin{gathered}
@@ -972,8 +972,8 @@ Likewise, if $(1-\beta_t)$ is small, the model will rely more on sampling a rand
   \end{gathered}
 \end{equation}
 
-\cite{hoogeboom2021ArgmaxFlowsMultinomial} argues, that predicting the added noise, as in \cite{ho2020DenoisingDiffusionProbabilistic},
-is difficult, and instead the authors predict a probability vector for $\hat{x_0}$ from $x_t$.
+They further argue, that predicting the added noise, as in \cite{ho2020DenoisingDiffusionProbabilistic},
+is difficult, and instead the authors predict a probability vector for $\hat{x_0}$ from $x_t$ \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
 The reverse distribution $p_\theta(x_{t-1}|x_t)$ is realized in the form of $q(x_{t-1}|x_t,\hat{x_0})$ where $\hat{x_0}=\mu(x_t, t)$ is predicted by the model and tries to approximate $x_0$ \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
 Hence:
 
@@ -998,7 +998,6 @@ The loss function in terms of \gls{kl}-divergence (\autoref{eqn:vlb3}) can be co
 \end{equation}
 
 Like in \cite{ho2020DenoisingDiffusionProbabilistic}, $L_{t}$ has no learnable parameters and will be omitted.
-
 
 %-------------------------------------------------------------------------
 \section{Evaluation of Synthetic Tabular Data}
@@ -1042,15 +1041,16 @@ More specifically, it assesses the similarity or identity between the range of p
 The machine learning efficacy (also referred to as "machine learning utility" \cite{zhang2021GANBLRTabularData} or "cross classification" \cite{goncalves2020GenerationEvaluationSynthetic}) is an approach that measures the utility of synthetic data. 
 It has been used in a variety of works \cite{zhao2022CTABGANEnhancingTabular, xu2019ModelingTabularData, zhang2021GANBLRTabularData, bourou2021ReviewTabularData, ge2021KaminoConstraintawareDifferentially}.
 This metric investigates whether "it is possible to replace the real with generated data to solve problems using Machine Leaning models" \cite[p. 7]{bourou2021ReviewTabularData}.
-A set of classification models (for example decision trees, regression models, neural networks and more) are evaluated in a classification or regression task.
-\cite[p. 7]{goncalves2020GenerationEvaluationSynthetic} highlights two distinct ways to perform the machine learning efficacy:
+A set of classification models (for example decision trees, regression models, neural networks, and more) are evaluated in a classification or regression task.
+\newpage
+\textcite[p. 7]{goncalves2020GenerationEvaluationSynthetic} highlights two distinct ways to perform the machine learning efficacy:
 \begin{enumerate}
   \item "CrCl-RS": train a model on real data and test it on hold-out data (test set) from both real and synthetic datasets.
   \item "CrCl-SR": train a model on synthetic data and test it on hold-out data from both real and synthetic datasets.
 \end{enumerate}
-\cite{goncalves2020GenerationEvaluationSynthetic} argues that the former is useful to evaluate if statistical properties are similar between real and synthetic datasets
+The authors argue, that the former is useful to evaluate if statistical properties are similar between real and synthetic datasets
 and that the latter allows confirming whether "scientific conclusions drawn from (...) models trained on synthetic datasets can safely be applied to real datasets" \cite[p. 7]{goncalves2020GenerationEvaluationSynthetic}.
-The performance of the classification models itself is based on commonly used metrics for classification/regression tasks, such as the f1-score or \gls{rmse}-score \cite{bourou2021ReviewTabularData, chundawat2022UniversalMetricRobust}.
+The performance of the classification models itself is based on commonly used metrics for classification/regression tasks, such as the f1 score or \gls{rmse} score \cite{bourou2021ReviewTabularData, chundawat2022UniversalMetricRobust}.
 It is important to mention that there is no universally accepted way to perform this machine learning efficacy, yet, as it is implemented differently throughout the literature.
 For example, \cite{zhao2022CTABGANEnhancingTabular} makes use of five models and calculates five different metrics, 
 \cite{ge2021KaminoConstraintawareDifferentially} on the other hand, uses nine different models but calculates only three different metric scores.

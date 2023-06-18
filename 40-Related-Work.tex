@@ -249,7 +249,8 @@ secondly, using a CatBoost model \cite{prokhorenkova2018CatBoostUnbiasedBoosting
 In the latter case, the models are previously tuned on the real dataset so that the best hyperparameters can be found for each dataset, which will be used during the evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
 To account for other random factors that could influence the results, the authors compute the machine learning efficacy metric scores by generating five different synthetic datasets and train the evaluation models for ten random initializations.
 The average over all these 50 variations is reported (\cite[Table 3, 4, p. 8]{kotelnikov2022TabDDPMModellingTabular}) including the standard deviation across the metric results \cite{kotelnikov2022TabDDPMModellingTabular}.
-The authors summarize three major findings \cite{kotelnikov2022TabDDPMModellingTabular}:
+\newpage
+\noindent The authors summarize three major findings \cite{kotelnikov2022TabDDPMModellingTabular}:
 \begin{itemize}
     \item TabDDPM outperforms TVAE and CTABGAN+ on most datasets.
     \item The classical approach\gls{smote}shows surprisingly competitive performance.
