@@ -10,15 +10,7 @@
 % \usepackage{abstract}
 \usepackage{blindtext}
 \usepackage{amsmath}
-\usepackage[
-	pdfstartview=FitH,   
-	pdffitwindow=true,
-	colorlinks,
-	linkcolor=black,
-	anchorcolor=black,
-	citecolor=black,
-	urlcolor=black
-	]{hyperref}
+
 % Neue packages
 % \usepackage[toc, acronym]{glossaries}
 \usepackage[toc, acronym]{glossaries}
@@ -37,7 +29,7 @@
 \usepackage{pdflscape}
 \usepackage{tabularx}
 \usepackage{enumitem}
-\usepackage[backend=biber, style=alphabetic]{biblatex}
+\usepackage[backend=biber, style=alphabetic, url=false]{biblatex}
 \addbibresource{Masterarbeit-bibliography.bib}
 \usepackage{csquotes}
 \usepackage{\amsmath}
@@ -84,6 +76,18 @@
 
  % Linien in Kopf- und Fußzeilen einschalten
 \usepackage[headsepline,footsepline]{scrlayer-scrpage}
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[
+	pdfstartview=FitH,   
+	pdffitwindow=true,
+	colorlinks,
+	linkcolor=black,
+	anchorcolor=black,
+	citecolor=black,
+	urlcolor=black
+	]{hyperref}
+
+\emergencystretch=1em
 
 % Seitenstil setzen
 \pagestyle{scrheadings}
@@ -117,7 +121,7 @@
 	pdftitle     = {Titel},
 	pdfsubject   = {Universität Hamburg / FB18 / VSIS / Art des Artikels},
 	pdfauthor    = {Sven Groen},
-	pdfkeywords  = {Keywords},
+	pdfkeywords  = {Diffusion, Synthesis, Tabular-Data, Deep-Learning},
 	plainpages   = false, pdfpagelabels
 	}
   
@@ -140,8 +144,6 @@
 \KOMAoptions{captions=tableheading}      
 
 % make sure that all autoref names are uppercase:
-
-
 \makeatletter
 
 

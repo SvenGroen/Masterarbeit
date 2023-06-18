@@ -218,7 +218,7 @@ A synthetic data generation model would possibly allow developers to generate te
 \label{sec: synthetic tabular data generation}
 
 Generative models have recently received a lot of attention, thanks to their impressive results in generating a variety of data types, 
-such as images \cite{ho2020DenoisingDiffusionProbabilistic, dhariwal2021DiffusionModelsBeat, rombach2022HighResolutionImageSynthesis}, videos \cite{ho2022VideoDiffusionModels, runwayGen1Runway}, text \cite{radfordImprovingLanguageUnderstanding, openai2022ChatGPTOptimizingLanguage}, or music \cite{agostinelli2023MusicLMGeneratingMusic, Forsgren_Martiros_2022}.
+such as images \cite{ho2020DenoisingDiffusionProbabilistic, dhariwal2021DiffusionModelsBeat, rombach2022HighResolutionImageSynthesis}, videos \cite{ho2022VideoDiffusionModels, runwayGen1Runway}, text \cite{radford2018ImprovingLanguageUnderstanding, openai2022ChatGPTOptimizingLanguage}, or music \cite{agostinelli2023MusicLMGeneratingMusic, Forsgren_Martiros_2022}.
 
 While synthetic data generation can be applied to various types of data, generating synthetic tabular data is challenging due to the complexity of the underlying joint distributions between variables \cite{borisov2022DeepNeuralNetworks}.
 This works formal definition of the tabular data generation is adapted from \cite[p. 2]{xu2019ModelingTabularData} and expands the definition of a table from \Autoref{ch:preliminaries-dataSynthesis-tabularData}:
@@ -1198,7 +1198,7 @@ As a consequence, they propose the following similarity metrics:
   For this, the so-called null distribution of \gls{pmse} is required \cite[p. 668]{snoke2018GeneralSpecificUtility}.
   This null distribution is essentially derived under the assumption of perfect synthesis, where the synthetic data are generated from the same model that produced the original data. 
   This creates a baseline for comparing the quality of synthetic data, serving as a reference point to evaluate the effectiveness of different synthetic data generation methods \cite{snoke2018GeneralSpecificUtility}.
-  Essentially, it computes the expected value of \gls{pmse} when the real and synthetic data are indistinguishable.
+  Essentially, it computes the expected value of \gls{pmse} when the real and synthetic data are indistinguishable.\\
   It is calculated as \cite{snoke2018GeneralSpecificUtility,chundawat2022UniversalMetricRobust}:
   $$\mathbb{E}(pMSE_0) = \frac{(k-1)(1-c)^2c}{N}$$
   with the logistic regression model having $k$ parameters (including bias) \cite{chundawat2022UniversalMetricRobust}.

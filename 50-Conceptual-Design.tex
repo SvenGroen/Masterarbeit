@@ -184,7 +184,7 @@ The functionality of the most important scripts can be summarized in the followi
 		Within the objective function, a set of hyperparameters is selected from the search space.
 		These selected hyperparameters are used to invoke \textit{pipeline.py}, which initiates the model training
 		Afterward, for five different random initializations, \textit{pipeline.py} is called to sample and evaluate the model, creating, and assessing five different synthetic dataset versions.
-		In each training, sampling, and evaluation, the training and validation set are redistributed and shuffled to implement some form of cross-validation \cite{kohavi2001StudyCrossValidationBootstrap}.
+		In each training, sampling, and evaluation, the training and validation set are redistributed and shuffled to implement some form of cross-validation \cite{kohavi1995StudyCrossvalidationBootstrap}.
 		The average evaluation score (machine learning efficacy based) of the five synthetic dataset versions is returned as the objective that Optuna tries to maximize.
 		After optimization, the best hyperparameter configuration is saved.
 		If the user has set an \textit{- - eval\_seeds} flag, a final evaluation of the best-found model will be started by calling \textit{eval\_seeds.py}.

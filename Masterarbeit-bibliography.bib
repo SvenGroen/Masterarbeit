@@ -2258,6 +2258,20 @@
   langid = {ngerman}
 }
 
+@inproceedings{kohavi1995StudyCrossvalidationBootstrap,
+  title = {A Study of Cross-Validation and Bootstrap for Accuracy Estimation and Model Selection},
+  booktitle = {Proceedings of the 14th International Joint Conference on {{Artificial}} Intelligence - {{Volume}} 2},
+  author = {Kohavi, Ron},
+  date = {1995-08-20},
+  series = {{{IJCAI}}'95},
+  pages = {1137--1143},
+  publisher = {{Morgan Kaufmann Publishers Inc.}},
+  location = {{San Francisco, CA, USA}},
+  abstract = {We review accuracy estimation methods and compare the two most common methods crossvalidation and bootstrap. Recent experimental results on artificial data and theoretical re cults in restricted settings have shown that for selecting a good classifier from a set of classifiers (model selection), ten-fold cross-validation may be better than the more expensive leaveone-out cross-validation. We report on a largescale experiment--over half a million runs of C4.5 and a Naive-Bayes algorithm--to estimate the effects of different parameters on these algrithms on real-world datasets. For crossvalidation we vary the number of folds and whether the folds are stratified or not, for bootstrap, we vary the number of bootstrap samples. Our results indicate that for real-word datasets similar to ours, The best method to use for model selection is ten fold stratified cross validation even if computation power allows using more folds.},
+  isbn = {978-1-55860-363-9},
+  file = {C\:\\Users\\SvenG\\Zotero\\storage\\JXGV9IBN\\Kohavi_2001_A Study of Cross-Validation and Bootstrap for Accuracy Estimation and Model.pdf}
+}
+
 @inproceedings{kohavi1996ScalingAccuracyNaiveBayes,
   title = {Scaling {{Up}} the {{Accuracy}} of {{Naive-Bayes Classifiers}}: {{A Decision-Tree Hybrid}}},
   shorttitle = {Scaling {{Up}} the {{Accuracy}} of {{Naive-Bayes Classifiers}}},
@@ -2267,15 +2281,6 @@
   urldate = {2023-03-13},
   abstract = {Naive-Bayes induction algorithms were previously shown to be surprisingly accurate on many classification tasks even when the conditional independence assumption on which they are based is violated. However, most studies were done on small databases. We show that in some larger databases, the accuracy of Naive-Bayes does not scale up as well as decision trees. We then propose a new algorithm, NBTree, which induces a hybrid of decision-tree classifiers and Naive-Bayes classifiers: the decision-tree nodes contain univariate splits as regular decision-trees, but the leaves contain Naive-Bayesian classifiers. The approach retains the interpretability of Naive-Bayes and decision trees, while resulting in classifiers that frequently outperform both constituents, especially in the larger databases tested.},
   eventtitle = {Knowledge {{Discovery}} and {{Data Mining}}}
-}
-
-@article{kohavi2001StudyCrossValidationBootstrap,
-  title = {A {{Study}} of {{Cross-Validation}} and {{Bootstrap}} for {{Accuracy Estimation}} and {{Model Selection}}},
-  author = {Kohavi, Ron},
-  date = {2001-03-03},
-  volume = {14},
-  abstract = {We review accuracy estimation methods and compare the two most common methods: crossvalidation and bootstrap. Recent experimental results on artificial data and theoretical results in restricted settings have shown that for selecting a good classifier from a set of classifiers (model selection), ten-fold cross-validation may be better than the more expensiveleaveone -out cross-validation. We report on a largescale experiment---over half a million runs of C4.5 and a Naive-Bayes algorithm---to estimate the effects of different parameters on these algorithms on real-world datasets. For crossvalidation, wevary the number of folds and whether the folds are stratified or not\# for bootstrap, wevary the number of bootstrap samples. Our results indicate that for real-word datasets similar to ours, the best method to use for model selection is ten-fold stratified cross validation, even if computation power allows using more folds. 1 Introduction It can not be emphasized eno...},
-  file = {C\:\\Users\\SvenG\\Zotero\\storage\\JXGV9IBN\\Kohavi_2001_A Study of Cross-Validation and Bootstrap for Accuracy Estimation and Model.pdf}
 }
 
 @article{kosinka2015WatertightConversionTrimmed,
@@ -2573,7 +2578,7 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\7YIGMM5I\\Lin et al_2022_A survey of transformers.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\LX5HKVQV\\S2666651022000146.html}
 }
 
-@inproceedings{little2021GenerativeAdversarialNetworksa,
+@online{little2021GenerativeAdversarialNetworksa,
   title = {Generative {{Adversarial Networks}} for {{Synthetic Data Generation}}: {{A Comparative Study}}},
   shorttitle = {Generative {{Adversarial Networks}} for {{Synthetic Data Generation}}},
   author = {Little, Claire and Elliot, Mark and Allmendinger, Richard and Samani, Sahel Shariati},
@@ -2581,11 +2586,11 @@
   eprint = {2112.01925},
   eprinttype = {arxiv},
   eprintclass = {cs},
-  publisher = {{arXiv}},
   doi = {10.48550/arXiv.2112.01925},
   url = {http://arxiv.org/abs/2112.01925},
   urldate = {2022-07-10},
   abstract = {Generative Adversarial Networks (GANs) are gaining increasing attention as a means for synthesising data. So far much of this work has been applied to use cases outside of the data confidentiality domain with a common application being the production of artificial images. Here we consider the potential application of GANs for the purpose of generating synthetic census microdata. We employ a battery of utility metrics and a disclosure risk metric (the Targeted Correct Attribution Probability) to compare the data produced by tabular GANs with those produced using orthodox data synthesis methods.},
+  pubstate = {preprint},
   keywords = {01,Computer Science - Machine Learning,gan,microdata},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\U8JVFTK3\\Little et al_2021_Generative Adversarial Networks for Synthetic Data Generation.pdf}
 }
@@ -3203,15 +3208,29 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\LPZJM5WM\\Pinceti et al_2021_Synthetic Time-Series Load Data via Conditional Generative Adversarial Networks.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\Q9Z95BYP\\2107.html}
 }
 
-@article{plaut2018PrincipalSubspacesPrincipal,
+@online{plaut2018PrincipalSubspacesPrincipal,
   title = {From {{Principal Subspaces}} to {{Principal Components}} with {{Linear Autoencoders}}},
   author = {Plaut, E.},
   date = {2018-04-26},
-  journaltitle = {ArXiv},
   url = {https://www.semanticscholar.org/paper/From-Principal-Subspaces-to-Principal-Components-Plaut/3d4dc879166e902ede476a079684b9f5b5143e13},
   urldate = {2023-02-16},
   abstract = {The autoencoder is an effective unsupervised learning model which is widely used in deep learning. It is well known that an autoencoder with a single fully-connected hidden layer, a linear activation function and a squared error cost function trains weights that span the same subspace as the one spanned by the principal component loading vectors, but that they are not identical to the loading vectors. In this paper, we show how to recover the loading vectors from the autoencoder weights.},
+  pubstate = {preprint},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\3I63QMCJ\\Plaut_2018_From Principal Subspaces to Principal Components with Linear Autoencoders.pdf}
+}
+
+@inproceedings{pmlr-v157-zhao21a,
+  title = {{{CTAB-GAN}}: {{Effective}} Table Data Synthesizing},
+  booktitle = {Proceedings of the 13th Asian Conference on Machine Learning},
+  author = {Zhao, Zilong and Kunar, Aditya and Birke, Robert and Chen, Lydia Y.},
+  editor = {Balasubramanian, Vineeth N. and Tsang, Ivor},
+  date = {2021-11-17/2021-11-19},
+  series = {Proceedings of Machine Learning Research},
+  volume = {157},
+  pages = {97--112},
+  publisher = {{PMLR}},
+  url = {https://proceedings.mlr.press/v157/zhao21a.html},
+  abstract = {While data sharing is crucial for knowledge development, privacy concerns and strict regulation (e.g., European General Data Protection Regulation (GDPR)) unfortunately limit its full effectiveness. Synthetic tabular data emerges as an alternative to enable data sharing while fulfilling regulatory and privacy constraints. The state-of-the-art tabular data synthesizers draw methodologies from Generative Adversarial Networks (GAN) and address two main data types in industry, i.e., continuous and categorical. In this paper, we develop CTAB-GAN, a novel conditional table GAN architecture that can effectively model diverse data types, including a mix of continuous and categorical variables. Moreover, we address data imbalance and long tail issues, i.e., certain variables have drastic frequency differences across large values. To achieve those aims, we first introduce the information loss, classification loss and generator loss to the conditional GAN. Secondly, we design a novel conditional vector, which efficiently encodes the mixed data type and skewed distribution of data variable. We extensively evaluate CTAB-GAN with the state of the art GANs that generate synthetic tables, in terms of data similarity and analysis utility. The results on five datasets show that the synthetic data of CTAB-GAN remarkably resembles the real data for all three types of variables and results into higher accuracy for five machine learning algorithms, by up to 17\%.}
 }
 
 @article{pollman2014MercuryBioaccumulationFactors,
@@ -3261,11 +3280,13 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\XNRME22L\\torch.nn.Embedding.html}
 }
 
-@article{radfordImprovingLanguageUnderstanding,
+@online{radford2018ImprovingLanguageUnderstanding,
   title = {Improving {{Language Understanding}} by {{Generative Pre-Training}}},
   author = {Radford, Alec and Narasimhan, Karthik and Salimans, Tim and Sutskever, Ilya},
+  date = {2018},
   abstract = {Natural language understanding comprises a wide range of diverse tasks such as textual entailment, question answering, semantic similarity assessment, and document classification. Although large unlabeled text corpora are abundant, labeled data for learning these specific tasks is scarce, making it challenging for discriminatively trained models to perform adequately. We demonstrate that large gains on these tasks can be realized by generative pre-training of a language model on a diverse corpus of unlabeled text, followed by discriminative fine-tuning on each specific task. In contrast to previous approaches, we make use of task-aware input transformations during fine-tuning to achieve effective transfer while requiring minimal changes to the model architecture. We demonstrate the effectiveness of our approach on a wide range of benchmarks for natural language understanding. Our general task-agnostic model outperforms discriminatively trained models that use architectures specifically crafted for each task, significantly improving upon the state of the art in 9 out of the 12 tasks studied. For instance, we achieve absolute improvements of 8.9\% on commonsense reasoning (Stories Cloze Test), 5.7\% on question answering (RACE), and 1.5\% on textual entailment (MultiNLI).},
   langid = {english},
+  pubstate = {preprint},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\HCL63R74\\Radford et al. - Improving Language Understanding by Generative Pre.pdf}
 }
 
@@ -3277,7 +3298,7 @@
   urldate = {2023-04-17},
   abstract = {There are many deep learning models specialized in solving many tasks. Here we discuss the capability of deep learning models to handle…},
   langid = {english},
-  organization = {{Towards Data Scoemce}},
+  organization = {{Towards Data Science}},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\22JY3LCK\\introduction-to-recurrent-neural-network-27202c3945f3.html}
 }
 
@@ -3815,7 +3836,7 @@
   booktitle = {Proceedings of the {{IEEE}}/{{CVF}} Conference on Computer Vision and Pattern Recognition Workshops},
   author = {Sun, Baohua and Yang, Lin and Zhang, Wenhan and Lin, Michael and Dong, Patrick and Young, Charles and Dong, Jason},
   date = {2019},
-  pages = {0--0},
+  pages = {2973--2981},
   added-at = {2021-04-25T01:24:46.000+0200},
   biburl = {https://www.bibsonomy.org/bibtex/29a03c0ecaacef712ea9d439084c2db40/becker},
   interhash = {58f776475c9d7d2c174aa0efb9943ec4},
@@ -4671,7 +4692,7 @@
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\AMNG2WFE\\Zhao et al_2021_CTAB-GAN.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\W8WGVG7I\\Zhao et al_2022_CTAB-GAN+.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\UMNCTSEE\\2102.html}
 }
 
-@inproceedings{zhao2022CTABGANEnhancingTabular,
+@online{zhao2022CTABGANEnhancingTabular,
   title = {{{CTAB-GAN}}+: {{Enhancing Tabular Data Synthesis}}},
   shorttitle = {{{CTAB-GAN}}+},
   author = {Zhao, Zilong and Kunar, Aditya and Birke, Robert and Chen, Lydia Y.},
@@ -4679,10 +4700,10 @@
   eprint = {2204.00401},
   eprinttype = {arxiv},
   eprintclass = {cs},
-  publisher = {{arXiv}},
   url = {http://arxiv.org/abs/2204.00401},
   urldate = {2022-07-04},
   abstract = {While data sharing is crucial for knowledge development, privacy concerns and strict regulation (e.g., European General Data Protection Regulation (GDPR)) limit its full effectiveness. Synthetic tabular data emerges as alternative to enable data sharing while fulfilling regulatory and privacy constraints. State-of-the-art tabular data synthesizers draw methodologies from Generative Adversarial Networks (GAN). As GANs improve the synthesized data increasingly resemble the real data risking to leak privacy. Differential privacy (DP) provides theoretical guarantees on privacy loss but degrades data utility. Striking the best trade-off remains yet a challenging research question. We propose CTAB-GAN+ a novel conditional tabular GAN. CTAB-GAN+ improves upon state-of-the-art by (i) adding downstream losses to conditional GANs for higher utility synthetic data in both classification and regression domains; (ii) using Wasserstein loss with gradient penalty for better training convergence; (iii) introducing novel encoders targeting mixed continuous-categorical variables and variables with unbalanced or skewed data; and (iv) training with DP stochastic gradient descent to impose strict privacy guarantees. We extensively evaluate CTAB-GAN+ on data similarity and analysis utility against state-of-the-art tabular GANs. The results show that CTAB-GAN+ synthesizes privacy-preserving data with at least 48.16\% higher utility across multiple datasets and learning tasks under different privacy budgets.},
+  pubstate = {preprint},
   keywords = {Computer Science - Machine Learning},
   file = {C\:\\Users\\SvenG\\Zotero\\storage\\II2SXQQU\\Zhao et al_2022_CTAB-GAN+.pdf;C\:\\Users\\SvenG\\Zotero\\storage\\8HXP4S8N\\2204.html}
 }

@@ -10,6 +10,7 @@
 \label{A:derivations}
 
 \subsection[]{Diffusion propabilistic models}
+\label{A:diffusion_prob}
 Several derivations have been presented in a short format for better readability.
 This section will cover left-out derivations.
 For a more detailed explanation \cite{weng2021WhatAreDiffusion, outlier2022DiffusionModelsPaper} is recommended.
@@ -32,7 +33,7 @@ and
     p_\theta(x_{1:T}|x_0) &= \frac{p_\theta(x_0|x_{1:T})p_\theta(x_{1:T})}{p_\theta(x_0)} && \textrm{using bayes rule}\\
 	&= \frac{p_\theta(x_0,x_{1:T})}{p_\theta(x_{0})} && \textrm{summarize to joint probability}\\
 	&= \frac{p_\theta(x_{0:T})}{p_\theta(x_{0})} && \textrm{summarize to joint probability}\\
-\end{align}
+	\end{align}
 \end{equation}
 
 Derivation:
@@ -79,7 +80,7 @@ Derivation to get from \Autoref{eqn:vlb2} to \Autoref{eqn:vlb3}:
 
 The following section will display the procedures of different scripts.
 Firstly, the scripts' most important processes are displayed as implemented by \cite{kotelnikov2022TabDDPMModellingTabular}. 
-The process of the scripts with the implemented changes are displayed afterward.
+The processes of the scripts with the implemented changes are displayed afterward.
 
 \subsection[]{Original Implementation}
 \label{A:Original_implementation}
@@ -113,6 +114,7 @@ The process of the scripts with the implemented changes are displayed afterward.
 
 \subsection[]{Changed Implementation}
 \label{A:Changed_implementation}
+
 Several changes have been made to the different scripts.
 The following figures will display the most important changes, highlighted in green.
 Please note that not all changes to the original implementation can be included, and minor modifications or bug fixes are not displayed.
@@ -121,7 +123,7 @@ Please note that not all changes to the original implementation can be included,
 	\centering
 	\includegraphics[width=0.6\textwidth]{images/pipeline-CHANGED.png}
 	\caption[Pipeline Script Changes]{simplified visualization of the changed pipeline\_\*.py script}
-	\label{fig:a_pipeline_changed}.
+	\label{fig:a_pipeline_changed}
 \end{figure}
 
 The basic pipeline script hardly changed.
@@ -151,6 +153,7 @@ executed after the previous evaluation script (compare \Autoref{fig:a_pipeline_c
 
 \section{Visual Results}
 \label{A:Visual_results}
+
 \subsection[]{Correlation Difference Matrix}
 \label{A:corr_matrix}
 
@@ -232,10 +235,12 @@ executed after the previous evaluation script (compare \Autoref{fig:a_pipeline_c
 \label{A:distributions}
 \begin{figure}[h]
 	\centering
-	\begin{subfigure}{0.6\linewidth}
-		\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/distributions_full/ctabgan+.jpg}
+	\begin{subfigure}{0.6\textwidth}
+		\includegraphics[width=\linewidth]{images/distributions_full/ctabgan+.jpg}
 		\caption{CTABGAN+$^{ml}$}
 	\end{subfigure}
+	\caption[Distribution plots CTABGAN+ Models]{Distribution plots for CTABGAN+$^{ml}$}
+	\label{fig_a:dist_0}
 \end{figure}
 
 
