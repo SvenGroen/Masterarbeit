@@ -28,17 +28,17 @@ This insight underlines the importance of a visual evaluation of synthetic data 
 From all performed experiments, it can be concluded that diffusion-based tabular data synthesis is superior to the synthesis of other model types, such as \glspl{gan} or \glspl{vae}.
 Moreover, diffusion models have not only shown overall better metric and visual results, but they are also more flexible, as a hyperparameter tuning already affects the outcome of the metrics greatly.
 Even though TabDDPM$^{s}_{m}$ achieved the highest overall similarity score, it is not able to reproduce the underlying characteristics of the real data, which could be seen in the several of the comparative visualizations presented in this thesis.
-TabDDPM$^{s}_{m}$ lacks the ability to properly recreate important characteristics of the real data, such as column distributions (\autoref{fig:age}) or the real datasets principal components (\autoref{fig:pca_diffusion}).
+TabDDPM$^{s}_{m}$ lacks the ability to properly recreate important characteristics of the real data, such as column distributions (\Autoref{fig:age}) or the real datasets principal components (\Autoref{fig:pca_diffusion}).
 This was not the case for TabDDPM-BGM$^{s}_{[q|m]}$ models, which achieved only slightly worse similarity scores but better capture the underlying characteristics of the real data, as indicated by the visual plots in this thesis.
 As a consequence, the TabDDPM-BGM$^{s}_{[q|m]}$ variants should be considered as the best overall models of this thesis.
 Nevertheless, potential users should alter the model pipeline design depending on the use case of the synthetic data, since TabDDPM-BGM$^{s}_m$ produced the best correlation score, TabDDPM-BGM$^{ml}_q$ the best machine learning efficacy scores and TabDDPM-BGM$^{s}_q$ the best basic statistical values and \gls{pmse} results.
-
+\newpage
 
 \section{Future Work}
 \label{ch:results-futureWork}
 
 As implementing diffusion models for synthesizing tabular data represents a relatively innovative approach with limited research to date, numerous promising pathways for future investigations exist.
-Firstly, to overcome the limitations presented in \autoref{ch:results-limitations}, a more extensive set of datasets is required to confirm the results observed in this thesis.
+Firstly, to overcome the limitations presented in \Autoref{ch:results-limitations}, a more extensive set of datasets is required to confirm the results observed in this thesis.
 More datasets with diverse characteristics to generalize the findings and identify potential sources of variation or bias.
 
 Moreover, incorporating a variety of metrics with diverse perspectives is essential for evaluating the performance and trade-offs of distinct tabular data generation methods.

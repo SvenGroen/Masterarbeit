@@ -47,9 +47,9 @@ and adopted a \gls{gan} architecture that uses Wasserstein-distance and gradient
 
 Additional research towards improving the CTGAN has been made by Zhao, Kunar, Chen, and Birke that introduced CTAB-GAN \cite{zhao2021CTABGANEffectiveTablea} and their successor CTAB-GAN+ \cite{zhao2022CTABGANEnhancingTabular}.
 The authors criticize that other works do not account for mixed data types \cite{zhao2022CTABGANEnhancingTabular}.
-As a result, they introduce a mixed-data type encoding (see \autoref{ch:BGMProcessor}) that allows encoding a column that contains both categorical and numerical data.
+As a result, they introduce a mixed-data type encoding (see \Autoref{ch:BGMProcessor}) that allows encoding a column that contains both categorical and numerical data.
 This is achieved in conjunction with the mode-specific normalization, which was also used by \textcite{xu2018SynthesizingTabularData, xu2019ModelingTabularData}.
-Furthermore, they specifically address the problem of imbalanced training datasets and the treatment of long tails in data (compare \autoref{sec: synthetic tabular data generation}).
+Furthermore, they specifically address the problem of imbalanced training datasets and the treatment of long tails in data (compare \Autoref{sec: synthetic tabular data generation}).
 To counter imbalanced training datasets, the authors perform a training-by-sampling, meaning they adjust the probability of each data class being selected as a training sample using a logarithmic function.
 This gives rare classes a higher chance of being selected during the training process, thereby rebalancing the data distribution and helping the model better understand underrepresented categories.
 In order to treat long tails, they propose a preprocessing technique that uses logarithmic transformation for variables with long-tailed distributions. 
@@ -110,7 +110,7 @@ This is done by using $\mathpzc{v}$ as the model's output vector, which is then 
     \end{align*}
 \end{equation}
 
-\autoref{eqn:impr_diff} defines the procedure for transforming the model's output vector, $\mathpzc{v}$, into a learned variance, illustrating an interpolation between the upper and lower bounds of the variance, $\beta_t$ and $\hat{\beta}_t$ \cite{nichol2021ImprovedDenoisingDiffusion}.
+\Autoref{eqn:impr_diff} defines the procedure for transforming the model's output vector, $\mathpzc{v}$, into a learned variance, illustrating an interpolation between the upper and lower bounds of the variance, $\beta_t$ and $\hat{\beta}_t$ \cite{nichol2021ImprovedDenoisingDiffusion}.
 The loss $L_{simple}$ does not depend on the variance, which results in \cite{nichol2021ImprovedDenoisingDiffusion} proposing a hybrid loss:
 
 \begin{equation}
@@ -125,7 +125,7 @@ with scaling factor $\lambda$ and variational lower bound loss $L_{VLB}$.
 Secondly, the authors propose a different noise schedule for the noising forward process.
 The authors argue that the previous linear noising process destroys the information in the image too fast, especially towards the end \cite{nichol2021ImprovedDenoisingDiffusion}.
 As a consequence, they introduce a cosine schedule.
-\autoref{fig:cosine} shows latent samples from a linear noising schedule (top) and from the proposed cosine schedule (bottom) \cite[Figure 3, p. 4]{nichol2021ImprovedDenoisingDiffusion}, where one can see how the cosine schedule noises the image more slowly \cite{nichol2021ImprovedDenoisingDiffusion}.
+\Autoref{fig:cosine} shows latent samples from a linear noising schedule (top) and from the proposed cosine schedule (bottom) \cite[Figure 3, p. 4]{nichol2021ImprovedDenoisingDiffusion}, where one can see how the cosine schedule noises the image more slowly \cite{nichol2021ImprovedDenoisingDiffusion}.
 
 \begin{figure}[h]
     \centering
@@ -164,9 +164,9 @@ Their guidance mechanism is based on the idea of jointly training a conditional 
 
 All the above models apply the diffusion process on the pixel space, resulting in large tensors that require more computation time and require large \glspl{gpu} for computation \cite{rombach2022HighResolutionImageSynthesis}.
 \cite{rombach2022HighResolutionImageSynthesis} addresses this issue by moving the diffusion process from the pixel to a latent space.
-In the first step, the encoder part of an autoencoder (see \autoref{ch:preliminaries-variationalAutoencoders}) is trained to learn a latent representation with smaller dimensionality of the input image \cite{rombach2022HighResolutionImageSynthesis}.
+In the first step, the encoder part of an autoencoder (see \Autoref{ch:preliminaries-variationalAutoencoders}) is trained to learn a latent representation with smaller dimensionality of the input image \cite{rombach2022HighResolutionImageSynthesis}.
 Given the encoded latent representation, a decoder is tasked to reconstruct the original input.
-\autoref{fig:latent-diff} shows the architecture of the overall latent diffusion model \cite[Figure 3, p.4]{rombach2022HighResolutionImageSynthesis}.
+\Autoref{fig:latent-diff} shows the architecture of the overall latent diffusion model \cite[Figure 3, p.4]{rombach2022HighResolutionImageSynthesis}.
 The raw input $x$ is encoded into a latent vector $z$ through the pre-trained encoder $\mathcal{E}$ \cite{rombach2022HighResolutionImageSynthesis}.
 Inside this latent space, the diffusion with forward and reverse noising process is performed \cite{rombach2022HighResolutionImageSynthesis}.
 Additional conditioning information can be added by transforming the conditioning input into the latent space as well ($\tau_\theta$) \cite{rombach2022HighResolutionImageSynthesis}.
@@ -216,9 +216,9 @@ Since the TabDDPM approach will be the base for this thesis, it will be explaine
 
 Like \textcite{zheng2022DiffusionModelsMissing}, \textcite{kotelnikov2022TabDDPMModellingTabular} identifies the need for processing categorical variables in some form so that they can be processed by a diffusion model.
 However, TabDDPM takes a different approach than the CSDI model, using two different diffusion processes.
-The classical Gaussian diffusion process \cite{ho2020DenoisingDiffusionProbabilistic} for numerical columns and multinomial diffusion \cite{hoogeboom2021ArgmaxFlowsMultinomial} (\autoref{ch:multinomial}) for categorical/binary columns \cite{zheng2022DiffusionModelsMissing}.
+The classical Gaussian diffusion process \cite{ho2020DenoisingDiffusionProbabilistic} for numerical columns and multinomial diffusion \cite{hoogeboom2021ArgmaxFlowsMultinomial} (\Autoref{ch:multinomial}) for categorical/binary columns \cite{zheng2022DiffusionModelsMissing}.
 Firstly, the feature columns are preprocessed.
-Numerical features are transformed using the Gaussian quantile transformation (\autoref{sec:dataNormalization}), and categorical features are \gls{oh} encoded (\autoref{sec:dataTransformation}) \cite{kotelnikov2022TabDDPMModellingTabular}.
+Numerical features are transformed using the Gaussian quantile transformation (\Autoref{sec:dataNormalization}), and categorical features are \gls{oh} encoded (\Autoref{sec:dataTransformation}) \cite{kotelnikov2022TabDDPMModellingTabular}.
 The objective function is defined as:
 
 \begin{equation}
@@ -228,7 +228,7 @@ The objective function is defined as:
     \end{align*}
 \end{equation}
 
-where $L^{simple}_t$ is equivalent to \autoref{eqn:l_simple}, the simplified loss function from \textcite{ho2020DenoisingDiffusionProbabilistic} and $L^i_{t}$ being the \gls{kl}-divergence for each multinomial diffusion term ($L_{t-1}$ in \autoref{eqn:vlb3}) divided by the number of categorical features $C$ \cite{kotelnikov2022TabDDPMModellingTabular}.
+where $L^{simple}_t$ is equivalent to \Autoref{eqn:l_simple}, the simplified loss function from \textcite{ho2020DenoisingDiffusionProbabilistic} and $L^i_{t}$ being the \gls{kl}-divergence for each multinomial diffusion term ($L_{t-1}$ in \Autoref{eqn:vlb3}) divided by the number of categorical features $C$ \cite{kotelnikov2022TabDDPMModellingTabular}.
 
 The neural network used to predict the noise in the reverse process is a simple \gls{mlp} based upon the works of \cite{gorishniy2021RevisitingDeepLearning}.
 The architecture consists of several identical \gls{mlp}-blocks comprising a Linear layer, followed by an activation layer (\gls{relu}), and a final dropout layer. 
@@ -243,7 +243,7 @@ Eight of the datasets have numerical and categorical features, and seven only co
 The overall number of features in the datasets varies heavily. 
 For a complete list of all datasets, please refer to "Table 2" in \cite[p. 5]{kotelnikov2022TabDDPMModellingTabular}.
 
-The primary evaluation metric chosen by the authors is the machine learning efficacy (see \autoref{ch:preliminaries-machineLearningEfficacy}).
+The primary evaluation metric chosen by the authors is the machine learning efficacy (see \Autoref{ch:preliminaries-machineLearningEfficacy}).
 \textcite{kotelnikov2022TabDDPMModellingTabular} realizes this in three different ways, firstly, by using a set of machine and deep learning models\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}.} and averaging their performance,
 secondly, using a CatBoost model \cite{prokhorenkova2018CatBoostUnbiasedBoosting}(a state-of-the-art model on tabular tasks) \cite{kotelnikov2022TabDDPMModellingTabular}, and thirdly, an \gls{mlp} architecture proposed by \cite{gorishniy2021RevisitingDeepLearning}.
 In the latter case, the models are previously tuned on the real dataset so that the best hyperparameters can be found for each dataset, which will be used during the evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.

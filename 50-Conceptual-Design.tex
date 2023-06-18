@@ -123,16 +123,16 @@ This section will first explain the architecture of the existing code base befor
 \label{ch:conceptualDesign-existingCodeBase-originalImplementation}
 
 \textcite{akim2023TabDDPMModellingTabular} provide a software implementation for their proposed TabDDPM.
-This implementation consists of multiple scripts and implements several of the functional requirements listed in \autoref{sec:func_requirements}, including FR1, FR4, FR5, and parts of FR4.
+This implementation consists of multiple scripts and implements several of the functional requirements listed in \Autoref{sec:func_requirements}, including FR1, FR4, FR5, and parts of FR4.
 This section will explain what kind of software was already provided by \cite{kotelnikov2022TabDDPMModellingTabular} and explain important architectural design choices.
 
 \subsubsection[]{Software Procedure}
 \label{ch:Software_Procedure}
 
-An overview of how the overall process in this synthetic data generation approach is done can be seen in \autoref{fig:overall_original}.
+An overview of how the overall process in this synthetic data generation approach is done can be seen in \Autoref{fig:overall_original}.
 The whole software process can be roughly summarized into three parts, the training, the sampling, and the evaluation.
 In the training, real training data is taken from the original dataset.
-This training data is preprocessed, according to a predefined preprocessing strategy that may vary from dataset to dataset (compare \autoref{sec:preprocessing}).
+This training data is preprocessed, according to a predefined preprocessing strategy that may vary from dataset to dataset (compare \Autoref{sec:preprocessing}).
 After preprocessing, the diffusion model is initialized and trained to learn the underlying joint distribution of the training data.
 Once the training is finished, the sampling of new synthetic data can be executed.
 The previously trained model is loaded and synthetic data will be produced by denoising previously sampled noise.
@@ -140,7 +140,7 @@ The synthetic data will be in the same format as the training data after it has 
 Hence, the synthetic data will be postprocessed by inverting the preprocessing, such that the synthetic data will be in the same format as the raw training data.
 As a last step, the synthetic data will be evaluated. 
 For this, the held-back real test set will be loaded.
-With the real test set and the synthetic dataset sharing the same data format, a machine learning efficacy evaluation (compare \autoref{ch:preliminaries-machineLearningEfficacy}) is performed to compare the two datasets.
+With the real test set and the synthetic dataset sharing the same data format, a machine learning efficacy evaluation (compare \Autoref{ch:preliminaries-machineLearningEfficacy}) is performed to compare the two datasets.
 Ultimately, the results of this evaluation are saved and can be interpreted by the user.
 
 \subsubsection[]{Scripts}
@@ -204,7 +204,7 @@ A detailed activity diagram for each script can be found in the Appendix \ref{A:
 \subsubsection[]{Configuration}
 
 In order to start one of the above scripts, a configuration file has to be specified, detailing the most important parameters for training, sampling, and evaluation.
-For example, \autoref{lst:configuration} shows how such a configuration file could look like and which parameters need to be specified.
+For example, \Autoref{lst:configuration} shows how such a configuration file could look like and which parameters need to be specified.
 The file is stored as a \gls{toml} \glsadd{tomlaccr} file (short for "Tom's Obvious, Minimal Language") \cite{preston-werner2021TOMLTomObviousa}, which contains sections, indicated by squared brackets. 
 Within these sections, key-value pairs define configuration options.
 
@@ -295,7 +295,7 @@ Therefore, each dataset is separated into nine parts, conforming to the subseque
 X\_[cat|num]\_[train|val|test].npy and for the target y\_[train|val|test].npy
 
 Additionally, a \textit{info.json} file is provided, containing the necessary information for handling the data.
-In \autoref{lst:info}, one can see how such an info-file contains the information on how the splits mentioned above have been done and what kind of task this dataset usually has (it is differentiated between binary classification (binclass), multiclass classification (multiclass), and regression (regression)).
+In \Autoref{lst:info}, one can see how such an info-file contains the information on how the splits mentioned above have been done and what kind of task this dataset usually has (it is differentiated between binary classification (binclass), multiclass classification (multiclass), and regression (regression)).
 \begin{lstlisting}[label={lst:info},caption={Example Data-info File}]
     {
     "name": "Adult",
@@ -313,8 +313,8 @@ Inside the code of TabDDPM \cite{akim2023TabDDPMModellingTabular}, a custom data
 \section{Proposed Concept}
 \label{ch:conceptualDesign-changes}
 
-Changes to the current architecture have been made to answer the research questions specified in \autoref{ch:intro-goals}.
-\autoref{fig:Overall_changed} shows that the overall synthesis process does not deviate much from \autoref{fig:overall_original}.
+Changes to the current architecture have been made to answer the research questions specified in \Autoref{ch:intro-goals}.
+\Autoref{fig:Overall_changed} shows that the overall synthesis process does not deviate much from \Autoref{fig:overall_original}.
 Changes are highlighted in green and affect each step in the diffusion process: the training, sampling, and evaluation step.
 For a detailed overview of how each individual scripts changed, please refer to Appendix \ref{A:activity_diagrams}.
 
@@ -328,7 +328,7 @@ For a detailed overview of how each individual scripts changed, please refer to 
 \begin{description}
 	\item[C1-Tabular Processing:] To test the effect of different tabular processing techniques, a "Tabular processing" step is required before training the diffusion model.
 		Within this processing, the raw data is transformed according to the defined tabular processing strategy.
-		The tabular processing data output format needs to be the same as before the transformation, described in \autoref{sec:data_format}, to ensure
+		The tabular processing data output format needs to be the same as before the transformation, described in \Autoref{sec:data_format}, to ensure
 		that the remaining pipeline remains functional and keeps changes to the original code minimal.
 	\item[C2-Inverse Tabular Processing:] Similar to the data preprocessing, which requires an inverse data postprocessing, to turn the data back into its original format and scale, the same is necessary for the tabular processing.
 		Since the model is trained on data that has been transformed according to the tabular processing mechanism, the diffusion model will produce data in the same format.
@@ -345,7 +345,7 @@ For a detailed overview of how each individual scripts changed, please refer to 
 \label{ch:Concept-criteria}
 
 The main source for finding the processing mechanisms should be academic literature, where said mechanism has been successfully applied to a related problem.
-The selection of which tabular processing mechanisms are realized heavily depends on the requirements defined in \autoref{sec:func_requirements}.
+The selection of which tabular processing mechanisms are realized heavily depends on the requirements defined in \Autoref{sec:func_requirements}.
 
 For a tabular processing mechanism to be used, the following conditions must be met:
 
@@ -353,7 +353,7 @@ For a tabular processing mechanism to be used, the following conditions must be 
 	\item[1. Reversibility:] the tabular processing mechanism must not only transform the data into a different format, but it also must be able to revert the transformation
 	      such that the data can be transformed back into its original form.
 	\item[2. Compatibility:] the data must be able to be separated into numerical and categorical parts after the transformation
-	      since the remaining code expects data in this format, as specified in \autoref{sec:data_format}.
+	      since the remaining code expects data in this format, as specified in \Autoref{sec:data_format}.
 	\item[3. Complexity:] the time it takes to transform the data should be within a reasonable timeframe. They shall not add too much computation time to the already extensive model-tuning process.
 	\item[4. Availability:] due to the limited time frame of this thesis, the code for the mechanisms should be publicly available (or could be implemented within a reasonable timeframe).
 \end{description}

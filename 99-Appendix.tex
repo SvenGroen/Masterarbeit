@@ -8,13 +8,14 @@
 
 \section{Extended derivations}
 \label{A:derivations}
+
 \subsection[]{Diffusion propabilistic models}
 Several derivations have been presented in a short format for better readability.
 This section will cover left-out derivations.
 For a more detailed explanation \cite{weng2021WhatAreDiffusion, outlier2022DiffusionModelsPaper} is recommended.
 For further details, please refer to \cite{sohl-dickstein2015DeepUnsupervisedLearning, ho2020DenoisingDiffusionProbabilistic}.
 
-Derivation to get from \autoref{eqn:vlb} to \autoref{eqn:vlb2}:
+Derivation to get from \Autoref{eqn:vlb} to \Autoref{eqn:vlb2}:
 
 Given:
 
@@ -41,8 +42,8 @@ Derivation:
 	\label{eqn:vlb2_appendix}
 	\begin{align}
 		-log(p_\theta(x_0)) &\leq -log(p_\theta(x_0)) + KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0)) &&\textrm{}\\
-		&= -log(p_\theta(x_0)) + log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{1:T}|x_0)}) && \textrm{using \autoref{eqn:kl-divergence_appendix}}\\
-		&=-log(p_\theta(x_0)) + log(\frac{q(x_{1:T})|x_0}{\frac{p_\theta(x_{0:T})}{p_\theta(x_{0})}}) && \textrm{using \autoref{eqn:simplify1}}\\
+		&= -log(p_\theta(x_0)) + log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{1:T}|x_0)}) && \textrm{using \Autoref{eqn:kl-divergence_appendix}}\\
+		&=-log(p_\theta(x_0)) + log(\frac{q(x_{1:T})|x_0}{\frac{p_\theta(x_{0:T})}{p_\theta(x_{0})}}) && \textrm{using \Autoref{eqn:simplify1}}\\
 		&= -log(p_\theta(x_0)) + log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{0:T})})+log(p_\theta(x_{0})) && \textrm{Fraction rule}\\
 		&= log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{0:T})})	&& \textrm{canceling out}\\
 		\textrm{Let }L_{VLB} &= \mathbb{E}_{q(x_0:T)}\big[log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{0:T})}) \big] \geq - \mathbb{E}_{q(x_0)}log(p_\theta(x_0))
@@ -51,7 +52,7 @@ Derivation:
 \endgroup
 
 
-Derivation to get from \autoref{eqn:vlb2} to \autoref{eqn:vlb3}:
+Derivation to get from \Autoref{eqn:vlb2} to \Autoref{eqn:vlb3}:
 \begingroup
 \small
 \begin{subequations}
@@ -71,65 +72,82 @@ Derivation to get from \autoref{eqn:vlb2} to \autoref{eqn:vlb3}:
 \endgroup
 
 \newpage
+
+
 \section{Activity diagrams}
 \label{A:activity_diagrams}
 
 The following section will display the procedures of different scripts.
 Firstly, the scripts' most important processes are displayed as implemented by \cite{kotelnikov2022TabDDPMModellingTabular}. 
 The process of the scripts with the implemented changes are displayed afterward.
+
 \subsection[]{Original Implementation}
-\begin{figure}[!b]
+\label{A:Original_implementation}
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{images/pipeline-ORIGINAL.png}
 	\caption[Pipeline Script]{simplified visualization of the pipeline\_\*.py script}
 \end{figure}
-\begin{figure}
+\newpage
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{images/train-sample-eval.png}
+	\includegraphics[width=0.9\textwidth]{images/train-sample-eval.png}
 	\caption[Train, Sample, Evaluation Script]{simplified visualization of the train.py, sample.py and eval\_[catboost|mlp|simple].py scripts}
 	\label{fig:a_original_train_sample_eval}
 \end{figure}
-\begin{landscape}
-\begin{figure}
+
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/tune_eval_seeds-ORIGINAL.png}
-	\caption[Tuning Script]{simplified visualization of the tune\_*.py scripts and the eval\_seeds.py}
+	\includegraphics[width=\textwidth]{images/tune_optim-ORIGINAL.png}
+	\caption[Tuning Script]{simplified visualization of the tune\_*.py scripts}
 \end{figure}
-\end{landscape}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.9\textheight]{images/eval_seed-ORIGINAL.png}
+	\caption[Evaluate Seeds]{simplified visualization of the eval\_seeds.py script}
+\end{figure}
 
 \subsection[]{Changed Implementation}
+\label{A:Changed_implementation}
 Several changes have been made to the different scripts.
 The following figures will display the most important changes, highlighted in green.
 Please note that not all changes to the original implementation can be included, and minor modifications or bug fixes are not displayed.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{images/pipeline-CHANGED.png}
+	\includegraphics[width=0.6\textwidth]{images/pipeline-CHANGED.png}
 	\caption[Pipeline Script Changes]{simplified visualization of the changed pipeline\_\*.py script}
 	\label{fig:a_pipeline_changed}.
 \end{figure}
+
 The basic pipeline script hardly changed.
-However, the individual components did change and are displayed in \autoref{fig:a_train_sample_eval}.
-The previous evaluation part in \autoref{fig:a_original_train_sample_eval} is unchanged.
-Instead,  \autoref{fig:a_train_sample_eval} displays only the new similarity evaluation script, which is
-executed after the previous evaluation script (compare \autoref{fig:a_pipeline_changed}).
-\begin{figure}
+However, the individual components did change and are displayed in \Autoref{fig:a_train_sample_eval}.
+The previous evaluation part in \Autoref{fig:a_original_train_sample_eval} is unchanged.
+Instead, \Autoref{fig:a_train_sample_eval} displays only the new similarity evaluation script, which is
+executed after the previous evaluation script (compare \Autoref{fig:a_pipeline_changed}).
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{images/train-sample-eval-Changed.png}
+	\includegraphics[width=0.9\textwidth]{images/train-sample-eval-Changed.png}
 	\caption[Train, Sample, Evaluation Script Changes]{simplified visualization of the train.py, sample.py and eval\_[catboost|mlp|simple].py scripts}
 	\label{fig:a_train_sample_eval}
 \end{figure}
-\begin{landscape}
-	\begin{figure}
-		\centering
-		\includegraphics[height=\textheight,width=\linewidth,keepaspectratio]{images/tune_eval_seeds-CHANGED.png}
-		\caption[Tuning Script Changes]{simplified visualization of the changed tune\_*.py scripts and the changed eval\_seeds.py}
-	\end{figure}
-\end{landscape}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{images/tune_optim-CHANGED.png}
+	\caption[Tuning Script Changes]{simplified visualization of the changed tune\_*.py scripts}
+\end{figure}
 
-
-
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.9\textheight]{images/eval_seed-CHANGED.png}
+	\caption[Evaluate Seeds Changes]{simplified visualization of the changed eval\_seeds.py script}
+\end{figure}
 
 \section{Visual Results}
 \label{A:Visual_results}

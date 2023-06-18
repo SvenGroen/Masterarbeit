@@ -60,7 +60,7 @@ This format presents particular challenges for neural networks when working with
 The third challenge is the "dependency on preprocessing" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
 \cite{borisov2022DeepNeuralNetworks} highlights the importance of a preprocessing and an explicit feature construction step that is necessary when working with tabular data in a deep learning context.
 This preprocessing step is crucial since it not only strongly influences the performance of deep learning models \cite{gorishniy2022EmbeddingsNumericalFeatures}, it also introduces new challenges. 
-Depending on the preprocessing strategy (\autoref{sec:preprocessing}), it is possible to create a very sparse feature matrix, construct a synthetic ordinal ordering of a nominal variable, or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
+Depending on the preprocessing strategy (\Autoref{sec:preprocessing}), it is possible to create a very sparse feature matrix, construct a synthetic ordinal ordering of a nominal variable, or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
 
 The last and fourth challenge concerns the "importance of single features" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
 In homogeneous data, multiple features need to change in order for the class of the data to be changed. 
@@ -143,7 +143,7 @@ Both architectures transform tabular data into a two-dimensional structure (\eg 
 \label{sec:dataNormalization} 
 
 Normalization and standardization techniques are applied to numerical columns and scale the values so that their distribution is adjusted \cite{garcia2016BigDataPreprocessing}.
-This is especially important in tabular data, where numerical features are likely to have a different scale, \eg a column \textit{Age} could have a range of 1 to 100 and a column \textit{Capital-gain} could have a range from 0 to 100.000, as it is the adult income dataset \cite{Dua:2019} (\autoref{ch:methods-datasets}).
+This is especially important in tabular data, where numerical features are likely to have a different scale, \eg a column \textit{Age} could have a range of 1 to 100 and a column \textit{Capital-gain} could have a range from 0 to 100.000, as it is the adult income dataset \cite{Dua:2019} (\Autoref{ch:methods-datasets}).
 Normalization allows to scale each column a similar range (usually 0 to 1, or -1 to 1) while maintaining the overall distribution of each column \cite{izonin2022TwoStepDataNormalization}.
 Standardization on the hand rescales the data so it follows a normal distribution with mean 0 and standard deviation 1 \cite{scikit-learndevelopers2023PreprocessingData}.
 Standardization and Normalization of values is especially important if the data will be used in a machine learning context, where machine learning models might behave unexpectedly if 
@@ -161,15 +161,15 @@ The authors define mode-specific normalization in the following way \cite[p. 3-4
 
 \begin{enumerate}
     \item For each continuos column $C_i$, estimate the number of modes $m_i$ by using a \gls{vgm} \cite{bishop2006PatternRecognitionMachine}. 
-    For example, in \autoref{fig:mode-specific-normalization} the \gls{vgm} estimates $m_i=3$, referred to as $\eta_1$, $\eta_2$ and $\eta_3$. 
+    For example, in \Autoref{fig:mode-specific-normalization} the \gls{vgm} estimates $m_i=3$, referred to as $\eta_1$, $\eta_2$ and $\eta_3$. 
     The learned Gaussian mixture is  
     $\mathbb{P}_{C_i}(c_{i,j})=\sum_{k=1}^{3}\mu_k\mathcal{N}(c_{i,j};\eta_k, \sigma_k)$
     with $\mu_k$ and $\sigma_k$ as the weight and the standard deviation of a mode respectively and normal distribution $\mathcal{N}$.
     $\mu_k$ can also be understood as the proportion of the overall data that comes from the $kth$ mode, essentially measuring the likelihood, a randomly selected datapoint from the overall dataset comes from the $kth$ determined Gaussian distribution.
     \item For each $c_{i,j}$ the probability is calculated of $c_{i,j}$ coming from each mode. 
-    In \autoref{fig:mode-specific-normalization}, $\rho_1$, $\rho_2$ and $\rho_3$ denote the probability densities, calculated as $\rho_k=\mu_k\mathcal{N}(c_{i,j};\eta_k;\sigma_k)$.
+    In \Autoref{fig:mode-specific-normalization}, $\rho_1$, $\rho_2$ and $\rho_3$ denote the probability densities, calculated as $\rho_k=\mu_k\mathcal{N}(c_{i,j};\eta_k;\sigma_k)$.
     \item Given $\rho_1$, $\rho_2$ and $\rho_3$ for $c_{i,j}$ one mode is sampled and used to normalize the value. 
-    In the example of \autoref{fig:mode-specific-normalization}, $\rho_3$ is most likely and is sampled.
+    In the example of \Autoref{fig:mode-specific-normalization}, $\rho_3$ is most likely and is sampled.
     The mode selection for $c_{i,j}$ is represented as a \gls{oh} vector $\beta_{i,j}=[0,0,1]$ indicating that the third mode has been sampled.
     The actual value $c_{i,j}$ is normalized as $\alpha_{i,j}=\frac{c_{i,j}-\eta_3}{4\sigma_3}$, according to the mean and standard deviation of $\rho_3$. 
 \end{enumerate}
@@ -221,7 +221,7 @@ Generative models have recently received a lot of attention, thanks to their imp
 such as images \cite{ho2020DenoisingDiffusionProbabilistic, dhariwal2021DiffusionModelsBeat, rombach2022HighResolutionImageSynthesis}, videos \cite{ho2022VideoDiffusionModels, runwayGen1Runway}, text \cite{radfordImprovingLanguageUnderstanding, openai2022ChatGPTOptimizingLanguage}, or music \cite{agostinelli2023MusicLMGeneratingMusic, Forsgren_Martiros_2022}.
 
 While synthetic data generation can be applied to various types of data, generating synthetic tabular data is challenging due to the complexity of the underlying joint distributions between variables \cite{borisov2022DeepNeuralNetworks}.
-This works formal definition of the tabular data generation is adapted from \cite[p. 2]{xu2019ModelingTabularData} and expands the definition of a table from \autoref{ch:preliminaries-dataSynthesis-tabularData}:
+This works formal definition of the tabular data generation is adapted from \cite[p. 2]{xu2019ModelingTabularData} and expands the definition of a table from \Autoref{ch:preliminaries-dataSynthesis-tabularData}:
 
 \begin{displayquote}
     A data synthesizer $G$ is trained on a table $T$ and then used to generate a synthetic table $T_{syn}$. % Vllt die definition einer tabelle nach oben packen und von oben übernehmen?
@@ -267,7 +267,7 @@ In addition to that, tabular data columns can follow complex distributions, whic
     Capturing these long-tail distributions correctly during the synthesis is important, not only because they represent unique or rare scenarios that could be crucial for certain analysis tasks, but also because the minority classes in the tail collectively constitute a significant portion of the entire dataset \cite{zhou2018DeepSuperclassLearning}. 
     \item \textbf{Skewed multi-mode continuous variables}: Complex numerical distributions do not necessarily follow a single Gaussian distribution.
     It is possible for their distribution to consist of multiple unknown distributions that are potentially skewed as well. 
-    Their conjunction as a whole makes up the complex distribution \cite{zhao2022CTABGANEnhancingTabular}, as it could be seen in the example of \autoref{fig:mode-specific-normalization}.
+    Their conjunction as a whole makes up the complex distribution \cite{zhao2022CTABGANEnhancingTabular}, as it could be seen in the example of \Autoref{fig:mode-specific-normalization}.
 \end{enumerate}
 
 A successful tabular data generator should be able to recreate such properties of real data in their synthetic data counterpart.
@@ -307,7 +307,7 @@ Subsequently, the most important deep learning model architectures for generatin
 \caption[Overview Perceptron]{Overview Perceptron} \label{fig:NN_Overview}
 \end{figure}
 
-The most basic neural network is called a perceptron \autoref{fig:perceptron} \cite{rosenblatt1958PerceptronProbabilisticModel}.
+The most basic neural network is called a perceptron \Autoref{fig:perceptron} \cite{rosenblatt1958PerceptronProbabilisticModel}.
 It consists of a single input layer that is connected to an output node.
 Each input node is connected with the output node via weight edges.
 For all inputs, the input value is multiplied by each respective weight.
@@ -315,13 +315,13 @@ The sum of all input-weights' multiplication serves as the input to an activatio
 The output is the prediction of the perceptron which is compared to the actual result, the label, and an error is calculated.
 This error is later used to update the individual nodes' weights via backpropagation \cite{aggarwal2018NeuralNetworksDeep}.
 The output of one node can also serve as the input to another node, so multiple layers of nodes are created.
-This is referred to as a \gls{mlp} or feed-forward neural network (as presented in \autoref{fig:mlp}), 
+This is referred to as a \gls{mlp} or feed-forward neural network (as presented in \Autoref{fig:mlp}), 
 because the information flows forward from input through the multiple layers in the middle (also called hidden layers) to the output \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
 An \gls{mlp} tries to approximate some function $f^*$ by defining a mapping $y=f(x;\theta)$ and learning the values of the parameters $\theta$ (\ie the weights) that best approximate $f^*$ \cite{Goodfellow-et-al-2016}.
 A simple \gls{mlp} is already able to learn almost any function, which is why they are also considered to be universal function approximators \cite{aggarwal2018NeuralNetworksDeep, hornik1989MultilayerFeedforwardNetworks}.
 
 Convolutional networks, or \glspl{cnn} \cite{lecun1998GradientbasedLearningApplied}, are a specialized type of neural network.
-As their name indicates, they perform convolutions on the data as illustrated in \autoref{fig:cnns}.
+As their name indicates, they perform convolutions on the data as illustrated in \Autoref{fig:cnns}.
 Convolution can be defined as "a dot-product operation between a grid-structured set of weights and similar grid-structured inputs drawn from
 different spatial localities in the input volume" \cite[p. 316]{aggarwal2018NeuralNetworksDeep}.
 In other words, a small grid of numbers called \textit{weights} slides over a larger grid of numbers, which is in the context of deep learning usually an image.
@@ -347,7 +347,7 @@ In feed-forward neural networks, information flows forward through the network f
 the output of the model to be fed back into the network as inputs \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
 When such connections are added to the network architecture, the resulting models are referred to as \glspl{rnn} \cite{rumelhart1986LearningRepresentationsBackpropagating}.
 \Glspl{rnn} are designed to process sequential data, like sentences or time-series data, where the size of the sequence does not have to be fixed.
-In \glspl{cnn}, the learned parameters are shared by using the same convolution kernel on each subset of neighbouring input data at each time step (\autoref{fig:rnns}). 
+In \glspl{cnn}, the learned parameters are shared by using the same convolution kernel on each subset of neighbouring input data at each time step (\Autoref{fig:rnns}). 
 As a result, a succession of output values is produced, each of which is dependent on a few close input values. 
 \glspl{rnn} share parameters differently since each output value depends on its predecessors' output. 
 This enables parameter sharing via a deep computational graph by allowing the same update algorithm to be applied to all outputs.
@@ -360,7 +360,7 @@ due to the vanishing and exploding gradient phenomenon \cite{aggarwal2018NeuralN
 To address these issues, further improvements to the architecture have been made, such as \glspl{lstm} \cite{hochreiter1997LongShortTermMemory} or \glspl{gru} \cite{cho2014PropertiesNeuralMachine}.
 
 Over time, additional architectural design choices have been discovered that have led to further improvements and solved other issues that emerged during the development of neural networks.
-One such design is the ResNet \cite{he2016DeepResidualLearning} which introduced residual connections between layers as depicted in \autoref{fig:resnet} \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
+One such design is the ResNet \cite{he2016DeepResidualLearning} which introduced residual connections between layers as depicted in \Autoref{fig:resnet} \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
 The connections, also called skip connections, allow information to be copied over layers and allow the backpropagated gradient information to skip specific layers, if necessary \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
 This is achieved by adding the output of one layer directly to the output of a later layer, bypassing one or more intermediate layers.
 This way, even a very small gradient can flow more easily back through the network during backpropagation of the gradient, alleviating the vanishing gradient problem and enabling better learning capabilities \cite{he2016DeepResidualLearning, aggarwal2018NeuralNetworksDeep}.
@@ -405,7 +405,7 @@ The architectural realization of attention is realized differently, depending on
 The attention mechanism in computer vision involves weighting different regions of the image based on their relevance to the task \cite{aggarwal2018NeuralNetworksDeep}. 
 This can be achieved through techniques such as spatial attention, channel attention or temporal attention \cite{guo2022AttentionMechanismsComputer}.
 In \gls{nlp}, attention mechanisms try to improve to capture the meaning of a sentence \cite{niu2021ReviewAttentionMechanism}. 
-For instance, this has been achieved through the introduction of a context vector in an \gls{rnn} encoder-decoder \cite{DBLP:journals/corr/BahdanauCB14} or through self-attention \cite{vaswani2017AttentionAllYou} (see \autoref{ch:preliminaries-transformers} for a detailed explanation of self-attention).
+For instance, this has been achieved through the introduction of a context vector in an \gls{rnn} encoder-decoder \cite{DBLP:journals/corr/BahdanauCB14} or through self-attention \cite{vaswani2017AttentionAllYou} (see \Autoref{ch:preliminaries-transformers} for a detailed explanation of self-attention).
 
 \section{Deep Generative Models}
 \label{ch:preliminaries-generativeMlgorithms}
@@ -417,7 +417,7 @@ Formally, in generative modeling training examples $x$ are drawn from an unknown
 In the generative modeling process, model parameters denoted by $\theta$ are essential as they shape the output of the model. 
 These parameters are typically fine-tuned through an optimization process that seeks the most suitable $\theta$ values, aiming to enhance the resemblance between $p_{model}$ and $p_{data}$ \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
 Several powerful generative modeling approaches with different architectures have emerged, each with its strengths and weaknesses. 
-This section will explore four of the most popular approaches: \acrfull{vae} (\autoref{ch:preliminaries-variationalAutoencoders}), \acrfull{gan} (\autoref{ch:preliminaries-generativeAdversarialNetworks}), transformers (\autoref{ch:preliminaries-transformers}), and diffusion models (\autoref{ch:preliminaries-diffusionProbabilisticModels}). 
+This section will explore four of the most popular approaches: \acrfull{vae} (\Autoref{ch:preliminaries-variationalAutoencoders}), \acrfull{gan} (\Autoref{ch:preliminaries-generativeAdversarialNetworks}), transformers (\Autoref{ch:preliminaries-transformers}), and diffusion models (\Autoref{ch:preliminaries-diffusionProbabilisticModels}). 
 
 \subsection{Variational Autoencoders}
 \label{ch:preliminaries-variationalAutoencoders} 
@@ -425,7 +425,7 @@ This section will explore four of the most popular approaches: \acrfull{vae} (\a
 In order to understand \glspl{vae} \cite{kingma2013AutoEncodingVariationalBayes}, an introduction to vanilla autoencoders is required.
 Autoencoders, firstly introduced in \cite{rumelhart1986LearningInternalRepresentations}, are a neural network architecture designed to generate a copy of the input \cite{Goodfellow-et-al-2016, Bank2020Autoencoders}.
 This is done by compressing the original input $x$ into a meaningful representation by constricting the number of nodes in the intermediate hidden layer \cite{aggarwal2018NeuralNetworksDeep, Bank2020Autoencoders}, also called bottleneck.
-\autoref{fig:ae} shows that an autoencoder consists of two deep-learning modules, the encoder, and the decoder.
+\Autoref{fig:ae} shows that an autoencoder consists of two deep-learning modules, the encoder, and the decoder.
 The encoder function (or generative model \cite{kingma2019IntroductionVariationalAutoencoders}), $z=g(x)$ receives an input $x$ and creates a latent representation $z$ (also called "code" \cite{aggarwal2018NeuralNetworksDeep}) with a dimensionality smaller than $x$ \cite{Goodfellow-et-al-2016, Bank2020Autoencoders}.
 The decoder (or recognition model \cite{kingma2019IntroductionVariationalAutoencoders}) receives the latent representation $z$ and tries to reconstruct the original input, $r=f(z)$ with the same dimensionality as $x$ \cite{Goodfellow-et-al-2016}.
 The reconstruction of the input $x$, designated as $r$, is also commonly referred to as $x'$. 
@@ -446,8 +446,8 @@ Hence, the autoencoder struggles with interpolation for datapoints that have not
 
 \glspl{vae} increase the reconstruction robustness by letting the decoder sample from continuous distributions \cite{kingma2013AutoEncodingVariationalBayes}.
 By forcing the latent space into a continuous distribution, a regularised latent space is obtained \cite{rocca2019UnderstandingVariationalAutoencoders}.
-This is achieved by introducing the \gls{kl} divergence (see \autoref{eqn:kl-divergence}) to ensure that the latent space representation follows a standard Gaussian distribution (zero mean and unit variance) \cite{razghandi2022VariationalAutoencoderGenerativea, aggarwal2018NeuralNetworksDeep}.
-Instead of the encoder mapping the input into a fixed vector $z$, it is mapped into a distribution by generating two vectors representing the mean $\mu$ and standard deviation $\sigma$ of the distribution (see \autoref{fig:vae}) \cite{razghandi2022VariationalAutoencoderGenerativea, aggarwal2018NeuralNetworksDeep}.
+This is achieved by introducing the \gls{kl} divergence (see \Autoref{eqn:kl-divergence}) to ensure that the latent space representation follows a standard Gaussian distribution (zero mean and unit variance) \cite{razghandi2022VariationalAutoencoderGenerativea, aggarwal2018NeuralNetworksDeep}.
+Instead of the encoder mapping the input into a fixed vector $z$, it is mapped into a distribution by generating two vectors representing the mean $\mu$ and standard deviation $\sigma$ of the distribution (see \Autoref{fig:vae}) \cite{razghandi2022VariationalAutoencoderGenerativea, aggarwal2018NeuralNetworksDeep}.
 Constraining the hidden representation $z$ to a Gaussian distribution allows the decoder to generate new data by simply feeding samples from the standard normal distribution \cite{aggarwal2018NeuralNetworksDeep}.
 However, if every object is generated from the same distribution, distinguishing between different objects or reconstructing them from a given input would be impossible.
 Thus, the distribution of the encoded information $z$, conditioned on a specific input $x$, would differ from the standard normal distribution \cite{aggarwal2018NeuralNetworksDeep}. %p. 207
@@ -455,7 +455,7 @@ Hence, the constraint that the hidden representation $z$ follows a standard norm
 The encoder is represented as $q(z|x)$, creating the conditional distribution from which the latent vector is sampled $z\sim q(z|x)$ \cite{kingma2013AutoEncodingVariationalBayes}.
 However, this stochastic sampling process makes computations non-differentiable.
 In other words, the backpropagation of the gradient is not possible and our neural networks weights cannot be updated \cite{aggarwal2018NeuralNetworksDeep}.
-To address this issue, a "reparameterization trick (\autoref{eqn:reparameterization}) was introduced \cite[p. 4]{kingma2013AutoEncodingVariationalBayes}.
+To address this issue, a "reparameterization trick (\Autoref{eqn:reparameterization}) was introduced \cite[p. 4]{kingma2013AutoEncodingVariationalBayes}.
 Since $z$ is normally distributed ($z\sim N(\mu,\sigma^2)$) it can be rewritten as $z=\mu+\sigma\epsilon$ with $\epsilon$ used as an auxiliary noise variable $\epsilon \sim N(0,1)$ sampled from the standard normal distribution \cite{kingma2013AutoEncodingVariationalBayes}.
 
 \begin{equation}
@@ -540,7 +540,7 @@ Formally, the objective function $J_D$ for the discriminator that will be maximi
     Maximize_DJ_D= \sum_{x\in p_{data}}^{} log [D(x)] + \sum_{x\in p_{model}}^{} log [1-D(x)]
 \end{equation}
 
-with the first part of \autoref{eqn:discriminator} handling the real data samples and the second part the synthetic data samples.
+with the first part of \Autoref{eqn:discriminator} handling the real data samples and the second part the synthetic data samples.
 Hence, the discriminator tries to maximize correctly predicting real and fake samples as real and fake, respectively.
 
 The generator, on the other hand, tries to fool the discriminator.
@@ -559,10 +559,10 @@ Ultimately, the generator and the discriminator are playing a two-player minimax
     \min_G\max_DV(D,G)=\mathbb{E}_{x\sim p_{data}(x)} [log D(x)] + \mathbb{E}_{z\sim p_z(z)}[log( 1-D(G(Z)))]
 \end{equation}
 
-\autoref{eqn:minimax} is used to formulate the loss functions that are used in training.
-However, \cite{NIPS2014_5ca3e9b1} notes that in practice, \autoref{eqn:minimax} "may not provide sufficient gradient [for the generator] to learn well" \cite[p. 3]{NIPS2014_5ca3e9b1}.
+\Autoref{eqn:minimax} is used to formulate the loss functions that are used in training.
+However, \cite{NIPS2014_5ca3e9b1} notes that in practice, \Autoref{eqn:minimax} "may not provide sufficient gradient [for the generator] to learn well" \cite[p. 3]{NIPS2014_5ca3e9b1}.
 This seems to be caused by the fact that the discriminator is able to reject the early samples from the generator with high confidence, which results in poor learning capabilities \cite{NIPS2014_5ca3e9b1}.
-The proposed solution for this is to change the objective function for the generator from the minimization function \autoref{eqn:generator} to a maximization of $logD(G(z))$.
+The proposed solution for this is to change the objective function for the generator from the minimization function \Autoref{eqn:generator} to a maximization of $logD(G(z))$.
 Thus, instead of minimizing the discriminator being correct, the new objective is to maximize the discriminator being wrong \cite{NIPS2014_5ca3e9b1}. 
 \textcite[p. 3]{NIPS2014_5ca3e9b1} observes, that this change "provides much stronger gradients early in learning" and therefore allows for an overall better model learning.
 This heuristic means that the problem is technically no longer a minimax optimization problem, but is usually favored as it enhances the training process \cite[p. 442]{aggarwal2018NeuralNetworksDeep}.
@@ -590,13 +590,13 @@ overcoming the central issue of \gls{rnn}-based models, their high computational
 tabular data \cite{huang2020TabTransformerTabularData} and show properties of a universal computation engine \cite{lu2021PretrainedTransformersUniversal, lin2022SurveyTransformers}.
 This is achieved through the combination of several mechanisms, namely, self-attention, multi-head attention, embeddings, and positional encoding \cite{vaswani2017AttentionAllYou}.
 
-The transformer model follows an encoder-decoder structure (see \autoref{fig:transformer}).
+The transformer model follows an encoder-decoder structure (see \Autoref{fig:transformer}).
 The encoder maps an input sequence to an abstract continuous representation that encapsulates all the learned information from the input.
 The decoder, in turn, utilizes this representation to generate outputs while also incorporating the previously produced output.
 The output of the decoder is a probability score for each possible token.
 These probabilities are then used to determine the next token, as the token with the highest probability is the next token \cite{vaswani2017AttentionAllYou}. 
 
-The first step in the transformer architecture is the transformation of the raw input through an embedding layer (see \autoref{sec:dataTransformation}).
+The first step in the transformer architecture is the transformation of the raw input through an embedding layer (see \Autoref{sec:dataTransformation}).
 This embedding allows the transformation of input tokens into vectors of dimension $d_{model}$ \cite{vaswani2017AttentionAllYou}.
 While the encoder produces embeddings just based on the input sequence, the decoder operates in an autoregressive manner, generating embeddings not only from the encoded output it receives from the encoder, but also considering its own previously produced outputs in the sequence generation process \cite{vaswani2017AttentionAllYou}.
 Embeddings of encoder and decoder are combined with so-called positional encodings \cite{vaswani2017AttentionAllYou, lin2022SurveyTransformers}.
@@ -652,7 +652,7 @@ The \Glspl{ddpm} (from now on referred to as "diffusion model"), firstly introdu
 This section will provide an explanatory introduction to the diffusion model concept, drawing heavily on the foundational work of \cite{ho2020DenoisingDiffusionProbabilistic}.
 Although several other researchers have made notable advancements to diffusion probabilistic models, the work presented in \cite{sohl-dickstein2015DeepUnsupervisedLearning, ho2020DenoisingDiffusionProbabilistic} 
 serves as the cornerstone upon which all subsequent improvements have been built.
-Improvements and alternations made to \cite{ho2020DenoisingDiffusionProbabilistic} will be discussed in detail in \autoref{ch:relatedWork-diffusionModels}.
+Improvements and alternations made to \cite{ho2020DenoisingDiffusionProbabilistic} will be discussed in detail in \Autoref{ch:relatedWork-diffusionModels}.
 
 On a high level, the whole diffusion concept can be summarized as follows:
 
@@ -678,11 +678,11 @@ The forward process is defined as:
   \end{align*}
 \end{equation}
 
-For the variance schedule it holds that if $\beta_1 < \beta_2 < ... < \beta_T$ for $t\rightarrow\infty$, the final latent $x_t$ is isotropic Gaussian noise, \ie, $x_t \sim \mathcal{N}(0, \textbf{I})$, with identity matrix $\textbf{I}$ \cite{zbinden2022ImplementingExperimentingDiffusion}.
+For the variance schedule it holds that if $\beta_1 < \beta_2 < ... < \beta_T$ for $t\rightarrow\infty$, the final latent $x_t$ is isotropic Gaussian noise, \ie $x_t \sim \mathcal{N}(0, \textbf{I})$, with identity matrix $\textbf{I}$ \cite{zbinden2022ImplementingExperimentingDiffusion}.
 $\beta$ increases linearly in the original \gls{ddpm} approach \cite{ho2020DenoisingDiffusionProbabilistic} but was later improved to follow a cosine schedule \cite{nichol2021ImprovedDenoisingDiffusion}, improving the overall quality of the model.
 
-\autoref{eqn:forwards_1} \cite{ho2020DenoisingDiffusionProbabilistic} shows how iteratively one noising step can be applied to get from $x_{t-1}$ to $x_t$ with $q(x_t | x_{t-1})$.
-Through the use of a reparameterization (see \autoref{eqn:reparameterization}) and defining $\alpha := 1-\beta_t$ and $\overline{\alpha_t}:=\prod_{s=1}^{t}a_s$, 
+\Autoref{eqn:forwards_1} \cite{ho2020DenoisingDiffusionProbabilistic} shows how iteratively one noising step can be applied to get from $x_{t-1}$ to $x_t$ with $q(x_t | x_{t-1})$.
+Through the use of a reparameterization (see \Autoref{eqn:reparameterization}) and defining $\alpha := 1-\beta_t$ and $\overline{\alpha_t}:=\prod_{s=1}^{t}a_s$, 
 the forward diffusion process from an unnoised input $x_0$ to a noised version at $t$ can be expressed as follows:
 
 \begin{equation}
@@ -693,14 +693,14 @@ the forward diffusion process from an unnoised input $x_0$ to a noised version a
   \end{align*}
 \end{equation}
 
-\autoref{eqn:forwards_2} \cite{ho2020DenoisingDiffusionProbabilistic} allows computing the forward noising from $x_0$ to any timestep $t$ within one computation step instead of iteratively applying noise over and over again.
+\Autoref{eqn:forwards_2} \cite{ho2020DenoisingDiffusionProbabilistic} allows computing the forward noising from $x_0$ to any timestep $t$ within one computation step instead of iteratively applying noise over and over again.
 \newline
 
 During the reverse process, the goal is to learn the reverse distribution from noised data $x_t$ to slightly less noised data $x_{t-1}$, $q(x_{t-1}|x_t)$.
 With bayes-theorem we can see that $q(x_{t-1}|x_t) = \frac{p(x_{t-1},x_t)}{p(x_t)}$, which means $q(x_{t-1}|x_t)$ depends on the marginal distribution of $x_t$, denoted as $p(x_t)$.
 To calculate the marginal probability distribution $p(x_t)$ integration over all possible realizations of $x_{t-1}$ would be necessary, which would be computationally intractable \cite{capel2022MasterThesisDenoising}.
 As a result, $q(x_{t-1}|x_t)$ is approximated by a neural network with learnable parameters $\theta$ that learns the joint distribution $p_{\theta}(x_{0:T})$.
-$p_{\theta}(x_{0:T})$ is a \gls{mc}, defined in \autoref{eqn:reverse_1}, with the transitions defined in \autoref{eqn:reverse_2} \cite{capel2022MasterThesisDenoising, ho2020DenoisingDiffusionProbabilistic}.
+$p_{\theta}(x_{0:T})$ is a \gls{mc}, defined in \Autoref{eqn:reverse_1}, with the transitions defined in \Autoref{eqn:reverse_2} \cite{capel2022MasterThesisDenoising, ho2020DenoisingDiffusionProbabilistic}.
 
 \begin{equation}
   \label{eqn:reverse_1}
@@ -720,9 +720,9 @@ While the mean $\mu_{\theta}(x_t, t)$ is learned by the neural network, the vari
 but was later in \textcite{nichol2021ImprovedDenoisingDiffusion} work a learnable parameter as well \cite{zbinden2022ImplementingExperimentingDiffusion}.
 %---
 
-Like in \glspl{vae} (\autoref{ch:preliminaries-variationalAutoencoders}), the goal is to maximize the log-likelihood $log(p_\theta(x_0))$.
+Like in \glspl{vae} (\Autoref{ch:preliminaries-variationalAutoencoders}), the goal is to maximize the log-likelihood $log(p_\theta(x_0))$.
 $p_\theta(x_0)$ depends on all timesteps before $x_0$ and is, therefore, not tractable in practice \cite{zbinden2022ImplementingExperimentingDiffusion}.
-As a solution, the variational lower bound on the log-likelihood can be computed as illustrated in as the objective function \autoref{eqn:vlb}: %(ELBO)
+As a solution, the variational lower bound on the log-likelihood can be computed as illustrated in as the objective function \Autoref{eqn:vlb}: %(ELBO)
 
 \begin{equation}
   \label{eqn:vlb}
@@ -731,7 +731,7 @@ As a solution, the variational lower bound on the log-likelihood can be computed
   \end{align*}
 \end{equation}
 
-The right-hand side of the inequation is increased by decreasing the \gls{kl}-divergence (\autoref{eqn:kl-divergence}), as the \gls{kl}-divergence is a non-negative measure of dissimilarity between two probability distributions. 
+The right-hand side of the inequation is increased by decreasing the \gls{kl}-divergence (\Autoref{eqn:kl-divergence}), as the \gls{kl}-divergence is a non-negative measure of dissimilarity between two probability distributions. 
 In this case, for the \gls{kl}-divergence to be small, the approximated distribution $p_\theta(x_{1:T}|x_0)$ needs to be similar to the true posterior distribution $q(x_{t-1}|x_t)$.
 As the inequation has to hold, maximizing the right-hand side means that the left-hand side will automatically be maximized as well.
 This implies that the objective function provides a lower bound on the log-likelihood and any improvement in minimizing the \gls{kl}-divergence will ultimately lead to a maximization in this lower bound, which in turn will maximize the initial objective, the log-likelihood.
@@ -747,7 +747,7 @@ This also changes the signs since the whole inequation is multiplied by $-1$:
   \end{align*}
 \end{equation}
 
-\noindent Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{1:T}|x_0)})$ and some further reformulations (see \autoref{eqn:vlb2_appendix}) using bayes-rule results in \autoref{eqn:vlb2} leads to the following inequation \cite{ho2020DenoisingDiffusionProbabilistic}:
+\noindent Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T}|x_0)}{p_\theta(x_{1:T}|x_0)})$ and some further reformulations (see \Autoref{eqn:vlb2_appendix}) using bayes-rule results in \Autoref{eqn:vlb2} leads to the following inequation \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
   \label{eqn:vlb2}
@@ -756,8 +756,8 @@ This also changes the signs since the whole inequation is multiplied by $-1$:
   \end{align*}
 \end{equation}
 
-\noindent \autoref{eqn:vlb2} is the variational lower bound that is minimized during training to optimize $-log(p_\theta(x_0))$.
-With additional reformulations (see \autoref{eqn:vlb3_appendix}), the loss function can be derived as \cite{ho2020DenoisingDiffusionProbabilistic}:
+\noindent \Autoref{eqn:vlb2} is the variational lower bound that is minimized during training to optimize $-log(p_\theta(x_0))$.
+With additional reformulations (see \Autoref{eqn:vlb3_appendix}), the loss function can be derived as \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
   \label{eqn:vlb3}
@@ -787,7 +787,7 @@ Both terms have a closed-form solution\footnote{Meaning they can be computed wit
 q(x_{t-1}|x_t,x_0) = \mathcal{N}(x_{t-1};\tilde{\mu_t}(x_t,x_0), \tilde{\beta_t}\textbf{I})
 \end{equation}
 
-\noindent The $\tilde{\mu_t}$ and $\tilde{\beta_t}$ of \autoref{eqn:lt-1_2} are defined as:
+\noindent The $\tilde{\mu_t}$ and $\tilde{\beta_t}$ of \Autoref{eqn:lt-1_2} are defined as:
 
 \begin{equation}
   \begin{align}
@@ -814,7 +814,7 @@ $x_t$ can be written in a closed-form solution as:
   \end{align}
 \end{equation}
 
-\noindent Given that $\beta$ was fixed by \textcite{ho2020DenoisingDiffusionProbabilistic}, $x_0$ as in \autoref{eqn:lt-1_23}, the mean $\tilde{\mu_t}$ (\autoref{eqn:lt-1_21}) can be further simplified to:
+\noindent Given that $\beta$ was fixed by \textcite{ho2020DenoisingDiffusionProbabilistic}, $x_0$ as in \Autoref{eqn:lt-1_23}, the mean $\tilde{\mu_t}$ (\Autoref{eqn:lt-1_21}) can be further simplified to:
 
 \begin{equation}
   \begin{align}
@@ -825,7 +825,7 @@ $x_t$ can be written in a closed-form solution as:
 
 \noindent which is just scaled random noise that is subtracted from $x_t$, the fully noised data \cite{ho2020DenoisingDiffusionProbabilistic}.
 
-Hence, the \gls{kl}-divergence in $L_{t-1}$ in \autoref{eqn:vlb3} ultimately measures the difference between the actual noise that was added ($\tilde{\mu_t}$ in \autoref{eqn:lt-1_3}) and the predicted noise from the neural network ($\mu_\theta$ in \autoref{eqn:lt-1_1}).
+Hence, the \gls{kl}-divergence in $L_{t-1}$ in \Autoref{eqn:vlb3} ultimately measures the difference between the actual noise that was added ($\tilde{\mu_t}$ in \Autoref{eqn:lt-1_3}) and the predicted noise from the neural network ($\mu_\theta$ in \Autoref{eqn:lt-1_1}).
 \textcite{ho2020DenoisingDiffusionProbabilistic} proposes the \gls{mse} between $\tilde{\mu_t}$ and $\mu_\theta$ as a loss function:
 
 \begin{equation}
@@ -836,7 +836,7 @@ Hence, the \gls{kl}-divergence in $L_{t-1}$ in \autoref{eqn:vlb3} ultimately mea
 \end{equation}
 
 \noindent The constant $C$ will be removed during training, as it does not depend on $\theta$ \cite{ho2020DenoisingDiffusionProbabilistic}.
-By applying the same reparameterization that was done in \glspl{vae} (see \autoref{eqn:reparameterization}) to $\mu_\theta$, it can be reformulated in the following way:
+By applying the same reparameterization that was done in \glspl{vae} (see \Autoref{eqn:reparameterization}) to $\mu_\theta$, it can be reformulated in the following way:
 
 \begin{equation}
   \begin{align}
@@ -845,7 +845,7 @@ By applying the same reparameterization that was done in \glspl{vae} (see \autor
   \end{align}
 \end{equation}
 
-With the reparameterization of \autoref{eqn:mse_loss_2}, the parametrization of what the model should predict in the reverse process (from $x_t$ to $x_{t-1}$) is moved. 
+With the reparameterization of \Autoref{eqn:mse_loss_2}, the parametrization of what the model should predict in the reverse process (from $x_t$ to $x_{t-1}$) is moved. 
 Instead of predicting the mean and variance of the reverse distribution ($p_\theta(x_{t-1}|x_t)$), \ie directly predicting the less noised data, 
 the model predicts the noise $\epsilon$ that makes the difference between $x_{t-1}$ and ${x_t}$.
 In other words, instead of predicting the new data directly, the model learns to predict what noise it needs to remove from the data \cite{capel2022MasterThesisDenoising}.
@@ -861,7 +861,7 @@ Ultimately, during sampling $x_{t-1}$ can be calculated by:
 
 \noindent $z\sim\mathcal{N}(0,\textbf{I})$ is a random component that is added during the reverse process (except for $t=1$) to ensure the generation of diverse samples.
 \newpage
-Substituting $\tilde{\mu_t}$ as in \autoref{eqn:lt-1_3} and $\mu_\theta$ as in \autoref{eqn:mse_loss_2} with some further simplification leads to:
+Substituting $\tilde{\mu_t}$ as in \Autoref{eqn:lt-1_3} and $\mu_\theta$ as in \Autoref{eqn:mse_loss_2} with some further simplification leads to:
 
 \begin{equation}
   \begin{align*}
@@ -872,7 +872,7 @@ Substituting $\tilde{\mu_t}$ as in \autoref{eqn:lt-1_3} and $\mu_\theta$ as in \
 \end{equation}
 
 Ultimately, \textcite[p. 5]{ho2020DenoisingDiffusionProbabilistic} discovered that simplifying the loss term even further improves not only the sample quality but is also easier to implement.
-\autoref{eqn:l_simple} shows the final simplified loss function $L_{simple}$:
+\Autoref{eqn:l_simple} shows the final simplified loss function $L_{simple}$:
 
 \begin{equation}
   \begin{align*}
@@ -885,17 +885,17 @@ Ultimately, \textcite[p. 5]{ho2020DenoisingDiffusionProbabilistic} discovered th
 They further argue that this is actually beneficial for the model since learning small noise is not difficult. 
 Therefore the model can focus more on the large $t$'s, where the denoising is more difficult \cite{ho2020DenoisingDiffusionProbabilistic}.
 
-\autoref{alg:training} shows the full training algorithm, which will be realized by firstly randomly sampling a datapoint $x_0 \sim q(x_0)$ from the dataset, a timestep $t\sim Uniform(\{1, ..., T\})$ and some random Gaussian noise $\epsilon \sim \mathcal{N}(0, \textbf{I})$.
-Afterward, the gradient step will then be performed according to \autoref{eqn:l_simple} using gradient descent.
+\Autoref{alg:training} shows the full training algorithm, which will be realized by firstly randomly sampling a datapoint $x_0 \sim q(x_0)$ from the dataset, a timestep $t\sim Uniform(\{1, ..., T\})$ and some random Gaussian noise $\epsilon \sim \mathcal{N}(0, \textbf{I})$.
+Afterward, the gradient step will then be performed according to \Autoref{eqn:l_simple} using gradient descent.
 
-Sampling, on the other hand, follows \autoref{alg:sampling}, starting with sampling Gaussian noise $x_T$.
-The Gaussian noise is then denoised in an iterative manner for $T$ timesteps according to \autoref{eqn:xt-1} until a new, noise-free datapoint $x_0$ is generated.
+Sampling, on the other hand, follows \Autoref{alg:sampling}, starting with sampling Gaussian noise $x_T$.
+The Gaussian noise is then denoised in an iterative manner for $T$ timesteps according to \Autoref{eqn:xt-1} until a new, noise-free datapoint $x_0$ is generated.
 
 In summary, \cite{ho2020DenoisingDiffusionProbabilistic} introduced \gls{ddpm} based on the work of \cite{sohl-dickstein2015DeepUnsupervisedLearning}.
 Their diffusion model is based on a \gls{mc} and consists of the forward noising and the backward denoising part.
-During the forward process, a timestep $t$ is sampled and the raw input data $x_0$ is noised accordingly using \autoref{eqn:forwards_2}.
+During the forward process, a timestep $t$ is sampled and the raw input data $x_0$ is noised accordingly using \Autoref{eqn:forwards_2}.
 A function approximator (usually a neural network) with learnable parameters $\theta$ tries to remove the noise by predicting the noise that was added during the forward process.
-This difference between the actual noise $\epsilon$ and the predicted noise $\epsilon_{\theta}$ is used as a loss function (\autoref{eqn:l_simple}) to perform gradient descent.
+This difference between the actual noise $\epsilon$ and the predicted noise $\epsilon_{\theta}$ is used as a loss function (\Autoref{eqn:l_simple}) to perform gradient descent.
 Once the training is finished, and the model converges, new synthetic data can be generated during sampling.
 In the sampling process, Gaussian noise can be sampled, and the model progressively denoises the sample for $T$ timesteps until a new, denoised datapoint $x_0$, is generated.
 
@@ -930,7 +930,7 @@ In the sampling process, Gaussian noise can be sampled, and the model progressiv
 \subsection{Multinomial Diffusion}
 \label{ch:multinomial}
 The \gls{ddpm} apprach uses a Gaussian diffusion process, designed to operate in continuous space \cite{kotelnikov2022TabDDPMModellingTabular}.
-However, many different data types are of categorical nature, where the Gaussian noising process proposed in \autoref{ch:preliminaries-diffusionProbabilisticModels} is not applicable.
+However, many different data types are of categorical nature, where the Gaussian noising process proposed in \Autoref{ch:preliminaries-diffusionProbabilisticModels} is not applicable.
 As a response, \textcite{hoogeboom2021ArgmaxFlowsMultinomial} introduced multinomial diffusion, "a diffusion model directly defined on categorical variables" \cite[p, 3]{hoogeboom2021ArgmaxFlowsMultinomial}.
 
 \cite{hoogeboom2021ArgmaxFlowsMultinomial} defines the multinomial diffusion process in the following way:
@@ -962,7 +962,7 @@ Uniform noise is added over the $K$ classes in each timestep.
 If $(1-\beta_t)$ is large, the model is likely to retain the previous category from $x_{t-1}$. 
 Likewise, if $(1-\beta_t)$ is small, the model will rely more on sampling a random category from a uniform distribution over all categorical values for the variable.
 
-\textcite{hoogeboom2021ArgmaxFlowsMultinomial} derives from \autoref{eqn:mul_diff1} and \autoref{eqn:mul_diff2} the categorical posterior:
+\textcite{hoogeboom2021ArgmaxFlowsMultinomial} derives from \Autoref{eqn:mul_diff1} and \Autoref{eqn:mul_diff2} the categorical posterior:
 
 \begin{equation}
   \begin{gathered}
@@ -987,7 +987,7 @@ Hence:
 In other words, determining the categorical value assigned to $x_{t-1}$ (or $x_0$ in the last step) is based on the predicted probabilities $\hat{x}_0$ produced by the model.
 
 
-The loss function in terms of \gls{kl}-divergence (\autoref{eqn:vlb3}) can be computed with \autoref{eqn:mul_diff3} and \autoref{eqn:mul_diff4}:
+The loss function in terms of \gls{kl}-divergence (\Autoref{eqn:vlb3}) can be computed with \Autoref{eqn:mul_diff3} and \Autoref{eqn:mul_diff4}:
 
 \begin{equation}
   \begin{align*}
@@ -1004,7 +1004,7 @@ Like in \cite{ho2020DenoisingDiffusionProbabilistic}, $L_{t}$ has no learnable p
 \label{ch:preliminaries-evaluationOfSyntheticTabularData}
 
 A proper evaluation of the generated synthetic dataset is required to measure the effectiveness of the synthetic tabular data generation model.
-This evaluation is no trivial task due to the complexity and challenges of tabular data discussed in \autoref{ch:preliminaries-dataSynthesis-tabularData}.
+This evaluation is no trivial task due to the complexity and challenges of tabular data discussed in \Autoref{ch:preliminaries-dataSynthesis-tabularData}.
 Other data modalities, like images, are usually much easier to evaluate, for example, through human inspection \cite{chundawat2022UniversalMetricRobust}. 
 This is not the case for tabular data, where various factors need to be considered during evaluation.
 \textcite[p. 6]{goncalves2020GenerationEvaluationSynthetic} identified two major dimensions that need to be considered during the evaluation, "data utility" and "information disclosure".
@@ -1097,7 +1097,7 @@ This technique was employed in the work of \textcite{alzantot2017SenseGenDeepLea
 Another measure proposed by \cite{elemam2020SevenWaysEvaluate} is to compute aggregations and statistics of the synthetic data and compare it to publicly available known statistics and aggregations that are about the same topic.
 If the synthetic is good, it would "tell the same story as the public data" \cite[p. 58]{elemam2020SevenWaysEvaluate}.
 To determine the stability of the generative model, \textcite{elemam2020SevenWaysEvaluate} proposes that the model could be used to generate not a single synthetic dataset but multiple.
-Evaluation (\eg using a statistical measure such as in \autoref{ch:preliminaries-statisticalEvaluation}) is then performed on all synthetic datasets, and averages are calculated.
+Evaluation (\eg using a statistical measure such as in \Autoref{ch:preliminaries-statisticalEvaluation}) is then performed on all synthetic datasets, and averages are calculated.
 Comparing the individual synthetic datasets statistical measures with the average over multiple datasets could highlight if certain synthetic datasets are biased in any form.
 Measures like the variance could also highlight if the generation process is overall stable (small variance), meaning the generation model tends to produce synthetic datasets with similar statistical properties, 
 or unstable (high variance), meaning the generation model tends to produce synthetic datasets with different statistical properties. 
@@ -1171,7 +1171,7 @@ As a consequence, they propose the following similarity metrics:
   Correlations are calculated depending on the data type, like in \cite{brenninkmeijer2019GenerationEvaluationTabular}.
   The matrix entries are also log-transformed to account for the issue of very small values in the correlation matrix of real data, which can result in higher relative error values when compared to the correlation matrix for generated data, even if both correlations are nearly zero. 
   The log transformation helps to rescale the values and provide a more accurate comparison between the correlation matrices of real and generated data.
-  \autoref{eqn:s_corrl} defines the correlation score, where $sln(x) = sign(x)ln(|x|)$ and $r_{i,j}, s_{i,j}$ indicating the matrix entries of the real and synthetic data.
+  \Autoref{eqn:s_corrl} defines the correlation score, where $sln(x) = sign(x)ln(|x|)$ and $r_{i,j}, s_{i,j}$ indicating the matrix entries of the real and synthetic data.
   $sign(x)$ is defined as
   $$\textrm{sign}(x) = \begin{cases}1 & \text{if } x > 0 & -1 & \text{if } x < 0 & 0 & \text{if } x = 0\end{cases}$$
   which results in the final score:
@@ -1240,13 +1240,13 @@ As a consequence, they propose the following similarity metrics:
 
 
   \item[Machine Learning Efficacy:]
-  Is a metric to indicate how valuable the synthetic data is in a machine learning scenario (see \autoref{ch:preliminaries-machineLearningEfficacy}).
+  Is a metric to indicate how valuable the synthetic data is in a machine learning scenario (see \Autoref{ch:preliminaries-machineLearningEfficacy}).
   \cite{chundawat2022UniversalMetricRobust} adopts the proposed metrics and models by \cite{brenninkmeijer2019GenerationEvaluationTabular} that differentiates the chosen set of models and metric based on
   if the dataset contains a classification or regression target.
   The models include \textit{Random Forest-}, \textit{Lasso-}, \textit{Ridge-} and \textit{ElasticNet-Regression} for regression tasks and \textit{Logistic Regression-}, \textit{Random Forest-},  \textit{Decision Tree-} and an \textit{\gls{mlp}-classifier} for classification tasks \cite{brenninkmeijer2019GenerationEvaluationTabular, chundawat2022UniversalMetricRobust}.
   For each model, two versions are trained, one trained on synthetic and one trained on real training data.
   Their performance is tested on both the real and synthetic targets using the F1-score or \gls{rmse}-score for classification and regression tasks respectively.
-  For each model, the relative error (\autoref{eqn:rel_err}) is calculated between the metric results of the model that was trained on real data and the model that was trained on synthetic data.
+  For each model, the relative error (\Autoref{eqn:rel_err}) is calculated between the metric results of the model that was trained on real data and the model that was trained on synthetic data.
   The final score is the average performance error for all four models:
 
   \begin{equation}
@@ -1259,7 +1259,7 @@ As a consequence, they propose the following similarity metrics:
 \end{description}
 
   \item[Similarity Score:]
-  The final unified metric, named TabSynDex, is the average of all scores mentioned above and is described in \autoref{eqn:tabsyndex} \cite{chundawat2022UniversalMetricRobust}:
+  The final unified metric, named TabSynDex, is the average of all scores mentioned above and is described in \Autoref{eqn:tabsyndex} \cite{chundawat2022UniversalMetricRobust}:
 
   \begin{equation}
     \begin{align*}

@@ -248,9 +248,9 @@ file:///C:/Users/SvenG/Downloads/Evaluation_synthetischer_Daten.pdf
 
 %%
 
-Like in \glspl{vae} (\autoref{ch:preliminaries-variationalAutoencoders}), the model is trained by minimizing its negative log-likelihood (= maximizing the log-likelihood) $-log(p_\theta(x_0))$.
+Like in \glspl{vae} (\Autoref{ch:preliminaries-variationalAutoencoders}), the model is trained by minimizing its negative log-likelihood (= maximizing the log-likelihood) $-log(p_\theta(x_0))$.
 $p_\theta(x_0)$ depends on all timesteps before $x_0$ and is, therefore, not tractable in practice \cite{zbinden2022ImplementingExperimentingDiffusion}.
-As a solution, the variational lower bound on the negative log-likelihood can be computed as illustrated in \autoref{eqn:vlb}: %(ELBO)
+As a solution, the variational lower bound on the negative log-likelihood can be computed as illustrated in \Autoref{eqn:vlb}: %(ELBO)
 
 \begin{equation}
   \label{eqn:vlb}
@@ -259,13 +259,13 @@ As a solution, the variational lower bound on the negative log-likelihood can be
   \end{align*}
 \end{equation}
 
-The \gls{kl}-divergence (\autoref{eqn:kl-divergence}) is a non-negative measure of dissimilarity between two probability distributions. 
+The \gls{kl}-divergence (\Autoref{eqn:kl-divergence}) is a non-negative measure of dissimilarity between two probability distributions. 
 The right-hand side is reduced by minimizing the \gls{kl}-divergence as the objective function in the given inequality, leading to a smaller or equal left-hand side. 
 Consequently, minimizing the \gls{kl}-divergence can only decrease the negative log-likelihood term on the left-hand side of the inequality. 
 This implies that the objective function provides a lower bound on the log-likelihood and any improvement in minimizing the \gls{kl}-divergence will ultimately lead to an enhancement in this lower bound.
 As it is usually the case that a loss function that is minimized
 
-Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{1:T}|x_0)})$ and some reformulations (see \autoref{eqn:vlb2_appendix}) using bayes-rule results in \autoref{eqn:vlb2} leads to the following inequation \cite{ho2020DenoisingDiffusionProbabilistic}:
+Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x_{1:T})|x_0}{p_\theta(x_{1:T}|x_0)})$ and some reformulations (see \Autoref{eqn:vlb2_appendix}) using bayes-rule results in \Autoref{eqn:vlb2} leads to the following inequation \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
   \label{eqn:vlb2}
@@ -274,8 +274,8 @@ Rewriting $KL(q(x_{1:T}|x_0) \parallel p_\theta(x_{1:T}|x_0))$ to $log(\frac{q(x
   \end{align*}
 \end{equation}
 
-\autoref{eqn:vlb2} is the variational lower bound that is minimized during training to optimize $-log(p_\theta(x_0))$.
-With additional reformulations (see \autoref{eqn:vlb3_appendix}), the loss function can be derived as \cite{ho2020DenoisingDiffusionProbabilistic}:
+\Autoref{eqn:vlb2} is the variational lower bound that is minimized during training to optimize $-log(p_\theta(x_0))$.
+With additional reformulations (see \Autoref{eqn:vlb3_appendix}), the loss function can be derived as \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 
 %%
