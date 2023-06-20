@@ -64,7 +64,7 @@ Only after fitting the transform function can be called transforming the data fo
 The inverse transformation works similarly, reversing transformed data back to its original format.
 For clarity, please note the difference between the terms "data format" and "data segmentation" in this thesis.
 The term "data segmentation" refers to the separation of columns into categorical, numerical, and target segments.
-On the other hand, the term "data format" refers to the modification of the data values achieved through the encoding and decoding processes of the \textit{TabularProcessor}, specifically via their "transform" and "inverse transform" functions.
+On the other hand, the term "data format" refers to the modification of the data values achieved through the encoding and decoding processes of the \textit{TabularProcessor}, specifically via their \textit{"transform"} and \textit{"inverse transform"} functions.
 
 \subsection{Tabular Processor Implementations}
 \label{ch:architecture-tabularProcessor-implementations}
@@ -276,8 +276,8 @@ To not get confused with the different \gls{model} versions, the models are name
 Modelname[-TabularProcessor]$^{tuning}_{preprocessing}$
 \end{quote}
 The Modelname is followed by an optional tabular processing mechanism.
-The tuning strategy ("ml" for "machine learning efficacy score" or "s" for "TabSynDex similarity score") is indicated via a superscript (Experiment 2).
-The preprocessing strategy ("q" for "quantile transform" or "m" for "min-max", or "n" for "none"/"no transformation") is indicated via a subscript (Experiment 3).
+The tuning strategy (\textit{ml} for the machine learning efficacy score or \textit{s} for the TabSynDex similarity score) is indicated via a superscript (Experiment 2).
+The preprocessing strategy (\textit{q} for the quantile transform function, \textit{m} for the min-max scaler, or \textit{n} for no transformation) is indicated via a subscript (Experiment 3).
 
 The min-max strategy was chosen as a commonly used linear transformation counterpart to the non-linear quantile transformation.
 Since some tabular processing strategies already normalize or standardize the data, additional quantile or min-max transformations may not be required, 
@@ -332,7 +332,7 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\bottomrule
 		\multicolumn{2}{c}{}\\[-0.6em]
 	\end{tabular}
-	\caption[TabDDPM Hyperparameter Search Space]{TabDDPM \model hyperparameter tuning search space \cite{kotelnikov2022TabDDPMModellingTabular}}
+	\caption[TabDDPM Hyperparameter Search Space]{TabDDPM model hyperparameter tuning search space \cite{kotelnikov2022TabDDPMModellingTabular}}
 	\label{tab:diff_tune}
 \end{table}
 \newpage
@@ -456,7 +456,7 @@ The dataset was created for binary classification, where the \gls{model} should 
 				\multicolumn{7}{c}{}\\[-0.6em]
             \end{tabular}
         }
-        \caption{Second seven columns of Adult income dataset, including the dataset target column "income"}
+        \caption{Second seven columns of Adult income dataset, including the dataset target column \textit{income}}
         \label{subtab:adult2}
     \end{subtable}
 	\caption[Example Adult Dataset]{Adult income dataset with five exemplary entries}

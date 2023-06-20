@@ -276,10 +276,10 @@ As the name suggests, the keys inside the \textit{diffusion\_params} (ll. 19-22)
 Noteworthy are the \textit{train.T} (ll. 30-37) and \textit{eval.T} (ll. 48-55) sections, whose keys define how preprocessing is done at the beginning of training and evaluation, respectively.
 The \textit{eval.type} section keys are useful to further specify the kind of evaluation that will be executed.
 The machine learning efficacy \gls{model} is determined by the \textit{eval\_model} key and is, in this example, set to the CatBoost \gls{model}.
-To control what kind of data will be evaluated, the \textit{eval\_type} key can be set to either "real" or "synthetic".
-If the value is set to "real", the real training data is loaded and compared to the real test data, as if it was synthetic data.
+To control what kind of data will be evaluated, the \textit{eval\_type} key can be set to either \textit{"real"} or \textit{"synthetic"}.
+If the value is set to \textit{"real"}, the real training data is loaded and compared to the real test data, as if it was synthetic data.
 This setting allows the creation of baseline metric scores against which synthetic values are compared.
-As this is usually done only once per dataset, \textit{eval\_type} is usually set to "synthetic" to calculate metric scores for the newly created synthetic data.
+As this is usually done only once per dataset, \textit{eval\_type} is usually set to \textit{"synthetic"} to calculate metric scores for the newly created synthetic data.
 This configuration structure allows to efficiently perform a variety of experiments with different key configurations by simply changing the configuration file and inputting it into the next experimental run.
 
 \subsubsection[]{Dataset Segmentation}
@@ -289,10 +289,10 @@ In order to use and process the data, the software of \cite{kotelnikov2022TabDDP
 For the purpose of clarity in this thesis, any future reference to "data segmentation" will refer to the separation of a dataset into multiple parts, detailed as follows:
 
 Each dataset contains data separated into multiple subcomponents, saved as individual files.
-To create these subcomponents, the columns of the dataset are manually classified into categorical, numerical, ("X") and target ("y") columns.
+To create these subcomponents, the columns of the dataset are manually classified into categorical, numerical, (\textit{"X"}) and target (\textit{"y"}) columns.
 Secondly, the dataset records are distributed into a training, validation, and testing set.
 Therefore, each dataset is separated into nine parts, conforming to the subsequent naming convention:
-X\_[cat|num]\_[train|val|test].npy and for the target y\_[train|val|test].npy
+\textit{X\_[cat|num]\_[train|val|test].npy} and for the target \textit{y\_[train|val|test].npy}
 
 Additionally, a \textit{info.json} file is provided, containing the necessary information for handling the data.
 In \Autoref{lst:info}, one can see how such an info-file contains the information on how the splits mentioned above have been done and what kind of task this dataset usually has (it is differentiated between binary classification (binclass), multiclass classification (multiclass), and regression (regression)).

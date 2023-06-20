@@ -12,20 +12,20 @@
 \subsection[]{Diffusion propabilistic models}
 \label{A:diffusion_prob}
 Several derivations have been presented in a short format for better readability.
-This section will cover left-out derivations.
+This section will cover left-out reformulations.
 For a more detailed explanation \cite{weng2021WhatAreDiffusion, outlier2022DiffusionModelsPaper} is recommended.
 For further details, please refer to \cite{sohl-dickstein2015DeepUnsupervisedLearning, ho2020DenoisingDiffusionProbabilistic}.
 
-Derivation to get from \Autoref{eqn:vlb} to \Autoref{eqn:vlb2}:
+\noindent Derivation to get from \Autoref{eqn:vlb} to \Autoref{eqn:vlb2}:
 
-Given:
+\noindent Given
 
 \begin{equation}
     \label{eqn:kl-divergence_appendix}
     KL(p\parallel q) = \int p(x)\cdot log(\frac{p(x)}{q(x)})dx
 \end{equation}
 
-and
+\noindent and
 
 \begin{equation}
     \label{eqn:simplify1}
@@ -36,7 +36,7 @@ and
 	\end{align}
 \end{equation}
 
-Derivation:
+\noindent the following derivations can be made:
 \begingroup
 \small
 \begin{subequations}
@@ -53,7 +53,7 @@ Derivation:
 \endgroup
 
 
-Derivation to get from \Autoref{eqn:vlb2} to \Autoref{eqn:vlb3}:
+\noindent Derivation to get from \Autoref{eqn:vlb2} to \Autoref{eqn:vlb3}:
 \begingroup
 \small
 \begin{subequations}

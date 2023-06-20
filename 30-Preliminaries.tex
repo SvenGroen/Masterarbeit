@@ -35,7 +35,7 @@ These random variables follow an unknown joint distribution $\mathbb{P}(Q_{1:N_q
 One row $r_j = \{q_{1,j}, \dots, q_{N_q,j}, p_{1,j}, \dots, p_{N_p,j}\}$, $j \in \{1, \dots, n\}$, is one observation from the joint distribution.
 \end{displayquote}
 
-The term "table" as described in this definition aligns with the concept of a single "table" or "relation" as defined in the classical relational data model \cite{codd1970RelationalModelData} and used in SQL databases \cite{w.eembley2009RelationalModel}.
+The term \textit{table} as described in this definition aligns with the concept of a single \textit{table} or \textit{relation} as defined in the classical relational data model \cite{codd1970RelationalModelData} and used in SQL databases \cite{w.eembley2009RelationalModel}.
 
 For consistency and simplicity, this thesis will further refer to qualitative columns as \textit{categorical} and to quantitative columns as \textit{continuous} or \textit{numerical}. 
 Discrete values are not separately mentioned but should be considered included in \textit{continuous}/\textit{numerical} columns.
@@ -66,10 +66,10 @@ Depending on the preprocessing strategy (\Autoref{sec:preprocessing}), it is pos
 The last and fourth challenge concerns the "importance of single features" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
 In homogeneous data, multiple features need to change in order for the class of the data to be changed. 
 For heterogeneous tabular data, a small change in one feature variable can already alter the class of the row. 
-\citetext{borisov2022DeepNeuralNetworks} illustrates this with the example of an image, where multiple pixels (\ie features) need to change in a coordinated manner in order to change the content (\ie class) of the image from a dog to a cat.
+\textcite{borisov2022DeepNeuralNetworks} illustrates this with the example of an image, where multiple pixels (\ie features) need to change in a coordinated manner in order to change the content (\ie class) of the image from a dog to a cat.
 For tabular data, a single change in a cell can change the prediction of a predictive \gls{model} \cite{borisov2022DeepNeuralNetworks}. 
 Consider a \gls{model} that has to predict whether an individual's income is higher or lower than US\$ 50.000 per year \cite{Dua:2019} based on the demographic information of that individual.
-Switching an individual's "education" value from "Preschool" to "Doctorate" would likely cause the prediction to change from "<=50K" to ">50K".
+Switching an individual's \textit{education} attribute value from \textit{"Preschool"} to \textit{"Doctorate"} would likely cause the prediction to change from \textit{"<=50K"} to \textit{">50K"}.
 
 
 \subsection{Tabular Data Preprocessing}
@@ -104,8 +104,7 @@ The leave-one-out encoding technique is an approach to encode a categorical colu
 A categorical entry is replaced by the mean of the target variable of all rows where the same category is present, excluding the target value of the to be encoded value.
 Lastly, a hash-based approach is worth mentioning, where a deterministic hash function transforms each category into a numerical form \cite{borisov2022DeepNeuralNetworks}.
 
-Numerical data, such as integers or floating point numbers, can often be used directly in deep learning models without undergoing a special encoding process. 
-This is because deep learning algorithms are designed to handle numerical data and can learn patterns and relationships within the data without the need for additional encoding.
+Numerical data like integers or floats can typically be fed directly into deep learning models without special encoding, as these algorithms inherently handle and learn patterns in such data without the need for additional encoding.
 However, \textcite{gorishniy2022EmbeddingsNumericalFeatures} has shown that in some cases, encoding numerical data can improve the performance of deep learning models. 
 Encoding numerical data can be achieved through various methods such as normalization, discretization, or using embeddings.
 
@@ -122,7 +121,7 @@ It can be differentiated between static embeddings and contextualized embeddings
 While the former embedding technique always provides the identical numerical representation for an input value, the latter embedding technique changes the vector representation of a value based on its surrounding context \cite{pilaluisa2022ContextualWordEmbeddings}.
 This is especially important in the \gls{nlp} domain, where contextual embeddings have led to state-of-the-art improvements \cite{pilaluisa2022ContextualWordEmbeddings}.
 Homonyms or polysemic words like \textit{bat} or \textit{second} are words that carry multiple different meanings and their semantic meaning therefore can change with the context they are used in.
-Hence, the contextualized embedding vector of the word \textit{second} in the context of \textit{Time} (\eg \textit{"it took me 3 seconds"}) should be different from the one where \textit{second} is used in the context of \textit{Competition} (\eg \textit{"he achieved the second place}").
+Hence, the context-sensitive embedding vector for \textit{second} should vary when used within a \textit{Time} context (\eg \textit{"it took me 3 seconds"}) versus a \textit{Competition} context (\eg \textit{"he achieved the second place}").
 Contextualized embeddings have to be learned during some form of (pre-) training \cite{devlin2019BERTPretrainingDeep, iida2021TABBIEPretrainedRepresentations, deng2021TURLTableUnderstanding}. 
 Static embedding techniques, such as Word2Vec \cite{mikolov2013DistributedRepresentationsWords} are learned as well.
 However, a static embedding would always create the same vector representation for \textit{second}, while a contextualized embedding vector would be different, depending on the context the word \textit{second} is used in.
@@ -130,7 +129,7 @@ Using the embedding layers to get a vector representation without learning is al
 However, semantic similarity in a vector space cannot be achieved without any learning, so this embedding technique is more similar to a discretization/tokenization technique.
 
 % [TODO: Insert example for single-dim encoding in tabular data] --> warum nochmal?
-
+% Hence, the contextualized embedding vector of the word \textit{second} in the context of \textit{Time} (\eg \textit{"it took me 3 seconds"}) should be different from the one where \textit{second} is used in the context of \textit{Competition} (\eg \textit{"he achieved the second place}").
 \textbf{Multi-Dimensional Encodings:}
 Multi-Dimensional encoding techniques focus on encoding an entire record (or table-row) into another representation \cite{borisov2022DeepNeuralNetworks}.
 The VIME framework \cite{yoon2020VIMEExtendingSuccess} uses a multilayer perceptron as an encoder that encodes a tabular input row into a latent representation, 
@@ -142,13 +141,13 @@ Both architectures transform tabular data into a two-dimensional structure (\eg 
 
 \subsubsection{Data Normalization and Standardization}
 \label{sec:dataNormalization} 
-
+% Standardization and normalization of values is especially important if the data will be used in a machine learning context, where machine learning models might behave unexpectedly if 
+% the features do not look similar to a Gaussian distribution or are not ranged between 0 and 1 \cite{scikit-learn, scikit-learndevelopers2023PreprocessingData}.
 Normalization and standardization techniques are applied to numerical columns and scale the values so that their distribution is adjusted \cite{garcia2016BigDataPreprocessing}.
-This is especially important in tabular data, where numerical features are likely to have a different scale, \eg a column \textit{Age} could have a range of 1 to 100 and a column \textit{Capital-gain} could have a range from 0 to 100.000, as it is the case in the adult income dataset (\Autoref{ch:methods-datasets}) \cite{Dua:2019}.
-Normalization allows to scale each column a similar range (usually 0 to 1, or -1 to 1) while maintaining the overall distribution of each column \cite{izonin2022TwoStepDataNormalization}.
+This is especially important in tabular data, where numerical features are likely to have a different scale, \eg a column \textit{age} could have a range of $1$ to $100$ and a column \textit{capital-gain} could have a range from $0$ to $100.000$, as it is the case in the adult income dataset (\Autoref{ch:methods-datasets}) \cite{Dua:2019}.
+Normalization allows scaling each column to a predefined range (usually 0 to 1, or -1 to 1) while maintaining the overall distribution of each column \cite{izonin2022TwoStepDataNormalization}.
 Standardization on the hand rescales the data so it follows a normal distribution with mean 0 and standard deviation 1 \cite{scikit-learndevelopers2023PreprocessingData}.
-Standardization and Normalization of values is especially important if the data will be used in a machine learning context, where machine learning models might behave unexpectedly if 
-the features do not look similar to a Gaussian distribution or are not ranged between 0 and 1 \cite{scikit-learn, scikit-learndevelopers2023PreprocessingData}.
+Standardizing and normalizing data is crucial for the machine learning context, where \glspl{model} may react unpredictably if features do not approximate a Gaussian distribution or are not ranged between 0 and 1 \cite{scikit-learn, scikit-learndevelopers2023PreprocessingData}.
 Through this data rescaling, the sensitivity of models to large values is reduced and the generalizability is increased \cite{izonin2022TwoStepDataNormalization}.
 Two popular standardization and normalization approaches are the standard and the min-max scaler, respectively.
 The standard scaler standardizes a feature value $x_i$ according to the mean and standard distribution of the feature column so that it follows a normal distribution \cite{garcia2016BigDataPreprocessing, izonin2022TwoStepDataNormalization}.
@@ -175,10 +174,11 @@ The authors define mode-specific normalization in the following way \cite[p. 3-4
     The actual value $c_{i,j}$ is normalized as $\alpha_{i,j}=\frac{c_{i,j}-\eta_3}{4\sigma_3}$, according to the mean and standard deviation of $\rho_3$. 
 \end{enumerate}
 
-The normalized representation $r$ of $c_{i,j}$ will be the concatenation of $\alpha_{i,j}$ and $\beta_{i,j}$: 
+\noindent The normalized representation $r$ of $c_{i,j}$ will be the concatenation of $\alpha_{i,j}$ and $\beta_{i,j}$: 
 $$r=\alpha_{i,j}\oplus\beta_{i,j}$$
 
-For example, given $\alpha_{i,j}=0.4$ and $\beta_{i,j}=[0,0,1]$, the normalized representation would be $$r=[0.4,0,0,1]$$
+\noindent For example, given $\alpha_{i,j}=0.4$ and $\beta_{i,j}=[0,0,1]$, the normalized representation would be:
+$$r=[0.4,0,0,1]$$
 
 % include image from paper
 \begin{figure}[h]
@@ -264,7 +264,7 @@ In addition to that, tabular data columns can follow complex distributions, whic
     Such a special categorical value in an otherwise purely numerical column needs to be considered when working with this column \cite{zhao2022CTABGANEnhancingTabular}.
     \item \textbf{Long tail distributions}: In real-world data, the class distribution is often imbalanced, where a few classes of a column occur much more frequently than most other classes \cite{zhang2023DeepLongTailedLearning}.
     When plotting the number of samples per class in a descending manner, the resulting plot shows a large "head", where a few classes have a high number of samples, and a "tail", where the remaining classes are the majority but are each represented only very limited in the dataset \cite[p. 2]{zhang2023DeepLongTailedLearning}.
-    This results in a short "head" but long "tail" distribution, giving the distribution its name.
+    This results in a short "head" but long "tail" distribution, giving the distribution its name \cite{zhang2023DeepLongTailedLearning}.
     Capturing these long-tail distributions correctly during the synthesis is important, not only because they represent unique or rare scenarios that could be crucial for certain analysis tasks, but also because the minority classes in the tail collectively constitute a significant portion of the entire dataset \cite{zhou2018DeepSuperclassLearning}. 
     \item \textbf{Skewed multi-mode continuous variables}: Complex numerical distributions do not necessarily follow a single Gaussian distribution.
     It is possible for their distribution to consist of multiple unknown distributions that are potentially skewed as well. 
@@ -347,7 +347,7 @@ In feed-forward neural networks, information flows forward through the network f
 the output of the \gls{model} to be fed back into the network as inputs \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
 When such connections are added to the network architecture, the resulting models are referred to as \glspl{rnn} \cite{rumelhart1986LearningInternalRepresentations}.
 \Glspl{rnn} are designed to process sequential data, like sentences or time-series data, where the size of the sequence does not have to be fixed.
-In \glspl{cnn}, the learned parameters are shared by using the same convolution kernel on each subset of neighbouring input data at each time step (\Autoref{fig:rnns}). 
+In \glspl{cnn}, the learned parameters are shared by using the same convolution kernel on each subset of neighboring input data at each time step (\Autoref{fig:rnns}). 
 As a result, a succession of output values is produced, each of which is dependent on a few close input values. 
 \glspl{rnn} share parameters differently since each output value depends on its predecessors' output. 
 This enables parameter sharing via a deep computational graph by allowing the same update algorithm to be applied to all outputs.
@@ -395,7 +395,7 @@ The decision of which layers to skip is learned by the \gls{model} itself during
 \caption[Overview Neural Network Architectures]{Overview Neural Network Architectures} \label{fig:NN_architectures_Overview}
 \end{figure}
 
-
+\newpage
 Lastly, inspired by the human cognitive capabilities to focus on specific parts of an input, attention mechanisms have been introduced \cite{niu2021ReviewAttentionMechanism, aggarwal2018NeuralNetworksDeep}.
 The implementation of attention in neural networks tries to address the problem of information overload\footnote{Information overload in the context of deep learning typically refers to issues that arise when a \gls{model} is fed with too much data, that can hinder the \gls{model} to capture the relevant information.
 Issues during training may arise if the input data contains too much noise, that is of no relevance or might cause the \gls{model} to rather learn to predict the noise, than the actual target.
@@ -426,7 +426,7 @@ In order to understand \glspl{vae} \cite{kingma2013AutoEncodingVariationalBayes}
 Autoencoders, firstly introduced in \cite{rumelhart1986LearningInternalRepresentations}, are a neural network architecture designed to generate a copy of the input \cite{Goodfellow-et-al-2016, Bank2020Autoencoders}.
 This is done by compressing the original input $x$ into a meaningful representation by constricting the number of nodes in the intermediate hidden layer \cite{aggarwal2018NeuralNetworksDeep, Bank2020Autoencoders}, also called bottleneck.
 \Autoref{fig:ae} shows that an autoencoder consists of two deep-learning modules, the encoder, and the decoder.
-The encoder function (or generative \gls{model} \cite{kingma2019IntroductionVariationalAutoencoders}), $z=g(x)$ receives an input $x$ and creates a latent representation $z$ (also called "code" \cite{aggarwal2018NeuralNetworksDeep}) with a dimensionality smaller than $x$ \cite{Goodfellow-et-al-2016, Bank2020Autoencoders}.
+The encoder function (or generative \gls{model} \cite{kingma2019IntroductionVariationalAutoencoders}), $z=g(x)$ receives an input $x$ and creates a latent representation $z$ (also called "code" \cite[p. 72]{aggarwal2018NeuralNetworksDeep}) with a dimensionality smaller than $x$ \cite{Goodfellow-et-al-2016, Bank2020Autoencoders}.
 The decoder (or recognition \gls{model} \cite{kingma2019IntroductionVariationalAutoencoders}) receives the latent representation $z$ and tries to reconstruct the original input, $r=f(z)$ with the same dimensionality as $x$ \cite{Goodfellow-et-al-2016}.
 The reconstruction of the input $x$, designated as $r$, is also commonly referred to as $x'$. 
 The objective is to ensure that $x'$ is as similar as possible to the original input $x$.
@@ -784,20 +784,20 @@ Both terms have a closed-form solution\footnote{Meaning they can be computed wit
 
 \begin{equation}
   \label{eqn:lt-1_2}
-q(x_{t-1}|x_t,x_0) = \mathcal{N}(x_{t-1};\tilde{\mu_t}(x_t,x_0), \tilde{\beta_t}\textbf{I})
+q(x_{t-1}|x_t,x_0) = \mathcal{N}(x_{t-1};\tilde{\mu}_t(x_t,x_0), \tilde{\beta}_t\textbf{I})
 \end{equation}
 
-\noindent The $\tilde{\mu_t}$ and $\tilde{\beta_t}$ of \Autoref{eqn:lt-1_2} are defined as:
+\noindent The $\tilde{\mu}_t$ and $\tilde{\beta}_t$ of \Autoref{eqn:lt-1_2} are defined as:
 
 \begin{equation}
   \begin{align}
     \label{eqn:lt-1_21}
-    &\tilde{\mu_t}(x_t, x_0) = \frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t}{1 - \alpha_{\bar{t}}}x_0 +   \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1})}{1 - \bar{\alpha}_{t}}x_t \quad \textrm{and }
-    \tilde{\beta_t} =\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta_t \\
+    &\tilde{\mu}_t(x_t, x_0) = \frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t}{1 - \alpha_{\bar{t}}}x_0 +   \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1})}{1 - \bar{\alpha}_{t}}x_t \quad \textrm{and }
+    \tilde{\beta}_t =\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta_t \\
   \end{align}
 \end{equation}
 
-\noindent To further simplify $\tilde{\mu_t}$, the formula to create a noised input $x_t$ in a single step from the unnoised input $x_0$ is used.
+\noindent To further simplify $\tilde{\mu}_t$, the formula to create a noised input $x_t$ in a single step from the unnoised input $x_0$ is used.
 $x_t$ can be written in a closed-form solution as:
 \begin{equation}
   \begin{align}
@@ -814,19 +814,19 @@ $x_t$ can be written in a closed-form solution as:
   \end{align}
 \end{equation}
 
-\noindent Given that $\beta$ was fixed by \textcite{ho2020DenoisingDiffusionProbabilistic}, $x_0$ as in \Autoref{eqn:lt-1_23}, the mean $\tilde{\mu_t}$ (\Autoref{eqn:lt-1_21}) can be further simplified to:
+\noindent Given that $\beta$ was fixed by \textcite{ho2020DenoisingDiffusionProbabilistic}, $x_0$ as in \Autoref{eqn:lt-1_23}, the mean $\tilde{\mu}_t$ (\Autoref{eqn:lt-1_21}) can be further simplified to:
 
 \begin{equation}
   \begin{align}
     \label{eqn:lt-1_3}
-    \tilde{\mu_t}(x_t, x_0) = \frac{1}{\sqrt{\bar{\alpha}_t}}(x_t - \frac{\beta_t}{\sqrt[]{1-\bar{\alpha}_t}}\epsilon)
+    \tilde{\mu}_t(x_t, x_0) = \frac{1}{\sqrt{\bar{\alpha}_t}}(x_t - \frac{\beta_t}{\sqrt[]{1-\bar{\alpha}_t}}\epsilon)
   \end{align}
 \end{equation}
 
 \noindent which is just scaled random noise that is subtracted from $x_t$, the fully noised data \cite{ho2020DenoisingDiffusionProbabilistic}.
 
-Hence, the \gls{kl}-divergence in $L_{t-1}$ in \Autoref{eqn:vlb3} ultimately measures the difference between the actual noise that was added ($\tilde{\mu_t}$ in \Autoref{eqn:lt-1_3}) and the predicted noise from the neural network ($\mu_\theta$ in \Autoref{eqn:lt-1_1}).
-\textcite{ho2020DenoisingDiffusionProbabilistic} proposes the \gls{mse} between $\tilde{\mu_t}$ and $\mu_\theta$ as a loss function:
+Hence, the \gls{kl}-divergence in $L_{t-1}$ in \Autoref{eqn:vlb3} ultimately measures the difference between the actual noise that was added ($\tilde{\mu}_t$ in \Autoref{eqn:lt-1_3}) and the predicted noise from the neural network ($\mu_\theta$ in \Autoref{eqn:lt-1_1}).
+\textcite{ho2020DenoisingDiffusionProbabilistic} proposes the \gls{mse} between $\tilde{\mu}_t$ and $\mu_\theta$ as a loss function:
 
 \begin{equation}
   \begin{align}
@@ -861,7 +861,7 @@ Ultimately, during sampling $x_{t-1}$ can be calculated by:
 
 \noindent $z\sim\mathcal{N}(0,\textbf{I})$ is a random component that is added during the reverse process (except for $t=1$) to ensure the generation of diverse samples.
 \newpage
-Substituting $\tilde{\mu_t}$ as in \Autoref{eqn:lt-1_3} and $\mu_\theta$ as in \Autoref{eqn:mse_loss_2} with some further simplification leads to:
+Substituting $\tilde{\mu}_t$ as in \Autoref{eqn:lt-1_3} and $\mu_\theta$ as in \Autoref{eqn:mse_loss_2} with some further simplification leads to:
 
 \begin{equation}
   \begin{align*}
@@ -944,7 +944,7 @@ As a response, \textcite{hoogeboom2021ArgmaxFlowsMultinomial} introduced multino
 
 
 The term $\beta_t$ denotes the likelihood of swapping the current categorical value with a different one. 
-Essentially, it is deciding how much random variation, or "noise", is introduced.
+Essentially, it is deciding how much random variation, \ie noise, is introduced.
 This noise is based on a categorical uniform distribution, which means that it considers all available categories equally when picking a random value \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
 Furthermore, $\mathcal{C}$ denotes a categorical distribution and $x_t$ is represented in a \gls{oh} encoded categorical vector format with $K$ different classes, $x_t\in\{0,1\}^K$ \cite{hoogeboom2021ArgmaxFlowsMultinomial}.
 
@@ -1017,7 +1017,7 @@ This section will present different ways to evaluate synthetic tabular data, eac
 \textcite{elemam2020SevenWaysEvaluate} identifies seven ways to evaluate synthetic data's utility aspect.
 However, in the literature and in practice, only a few approaches are used and will be presented in greater detail.
 Firstly, statistical similarity (data utility) will be presented, followed by machine learning efficacy (data utility) and privacy evaluation methods (information disclosure).
-Lastly, additional evaluation methods are shortly listed, and a proposed \textit{similarity score} as a unified metric is presented.
+Lastly, additional evaluation methods are shortly listed, and a proposed similarity score as a unified metric is presented.
 
 \subsection{Statistical Evaluation}
 \label{ch:preliminaries-statisticalEvaluation}

@@ -99,7 +99,7 @@ Kamino uses the input database's schema to create a synthetic dataset that maint
 
 Since the release of \gls{ddpm} \cite{ho2020DenoisingDiffusionProbabilistic}, several researchers have worked on diffusion models and were able to improve the \gls{model}'s performance in terms of quality and efficiency.
 In the work of \textcite{nichol2021ImprovedDenoisingDiffusion}, the authors build upon the work of \textcite{ho2020DenoisingDiffusionProbabilistic} and propose changes to improve the overall \gls{model}'s generative capability.
-Initially, the variance in diffusion models was fixed according to the noise schedule with $\beta_t$ and $\tilde{\beta_t}$ as the upper and lower bound on the variance, the two opposite extremes.
+Initially, the variance in diffusion models was fixed according to the noise schedule with $\beta_t$ and $\tilde{\beta}_t$ as the upper and lower bound on the variance, the two opposite extremes.
 Rather than keeping the variance constant, \textcite{nichol2021ImprovedDenoisingDiffusion} developed a method where the \gls{model} learns the variance. 
 This is done by using $\mathpzc{v}$ as the \gls{model}'s output vector, which is then converted into different variances.
 
@@ -154,7 +154,7 @@ First, several architectural improvements \cite[section 3]{dhariwal2021Diffusion
 Architectural changes include the adding of residual blocks, additional attention mechanisms at different layers, adaptive group normalization, and adding class embeddings into residual blocks \cite{dhariwal2021DiffusionModelsBeat}.
 Second, to further improve the conditioning mechanism, \ie controlling what class the \gls{model} will generate, an additional classifier is introduced \cite{dhariwal2021DiffusionModelsBeat}. 
 This classifier is trained on noisy images at different timesteps and is tasked to predict the class of the input image.
-During sampling, the gradients produced by this classifier are used by the diffusion \gls{model} to guide it towards creating an image of that class\footnote{The class of an image depends on the specific dataset. A typical example would be a dataset of animals, where the class of the image would be the name of the animal, \eg a photo of a dog would be of class "dog".} \cite{dhariwal2021DiffusionModelsBeat}.
+During sampling, the gradients produced by this classifier are used by the diffusion \gls{model} to guide it towards creating an image of that class\footnote{The class of an image depends on the specific dataset. A typical example would be a dataset of animals, where the class of the image would be the name of the animal, \eg a photo of a dog would be of class \textit{"dog"}.} \cite{dhariwal2021DiffusionModelsBeat}.
 With these improvements, the authors outperformed \gls{gan} models on unconditional and class-conditional image generation.
 Additionally, their \gls{model} can be controlled in terms of diversity or fidelity through scaling of the classifier guidance gradients.
 
@@ -175,7 +175,7 @@ After the denoising is completed, the pre-trained decoder $\mathcal{D}$ moves th
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{images/latent-diff.png}
+    \includegraphics[width=0.85\textwidth]{images/latent-diff.png}
     \caption[Latent Diffusion Model]{Latent diffusion model architecture \cite[Figure 3, p.4]{rombach2022HighResolutionImageSynthesis}}
     \label{fig:latent-diff}
 \end{figure}
