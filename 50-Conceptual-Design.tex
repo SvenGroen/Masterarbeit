@@ -31,7 +31,7 @@ The following requirements R1 - R5 are the non-functional requirements for the s
 		This performance should be measured across different similarity measures.
 	\newpage
 	\item[R2 - Maintainability:]
-		Maintainability focuses on the "degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers" \cite[p. 220]{bass2013SoftwareArchitecturePractice}
+		Maintainability focuses on the "degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers" \cite[p. 220]{bass2013SoftwareArchitecturePractice}.
 		One of the core questions of this thesis is to compare different tabular processing techniques in diffusion models.
 		For this, a variety of different approaches are intended to be compared.
 		Hence, it is required that the code and software architecture is designed in a maintainable way, such that it can be easily extended with additional processing techniques, not only by the developer,
@@ -49,7 +49,7 @@ The following requirements R1 - R5 are the non-functional requirements for the s
 		In general, it is required that all results should be fully reproducible, given the parameters and the configuration of the experimental setups
 
 	\item[R5 - Quantitative Targets:]
-		It is required that the different model versions produced in the thesis are compared using metrics that are commonly used in the domain of tabular data synthesis.
+		It is required that the different \gls{model} versions produced in the thesis are compared using metrics that are commonly used in the domain of tabular data synthesis.
 		This should enhance the comparability to other approaches.
 \end{description}
 
@@ -84,14 +84,14 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 		Each Tabular processing mechanism \\needs to be able to inversely transform data back into its original form.
 
 		\item[FR3 - Diffusion Process Configuration:]
-		Several experiments with different model configurations will be tested.
+		Several experiments with different \gls{model} configurations will be tested.
 		The software shall allow users to configure the diffusion process by specifying parameters such as the number of iterations, batch size, sampling size, and others.
 
 		\item[FR4 - Training, Tuning, Sampling, Evaluation:]
-		The software shall support the training of various model versions, including the TabDDPM diffusion model, variations of TabDDPM and other non-diffusion baseline models.
+		The software shall support the training of various \gls{model} versions, including the TabDDPM diffusion \gls{model}, variations of TabDDPM and other non-diffusion baseline models.
 		The software shall allow finding of suitable hyperparameters in a specified hyperparameter search space.
 		During training, relevant metrics and loss values shall be saved.
-		The software shall generate synthetic samples from the trained diffusion model during the sampling process, where the user specifies the number of synthetic samples to be generated.
+		The software shall generate synthetic samples from the trained diffusion \gls{model} during the sampling process, where the user specifies the number of synthetic samples to be generated.
 		The software shall handle the evaluation of synthetic data in multiple ways.
 		Firstly, the existing evaluation framework of \cite{kotelnikov2022TabDDPMModellingTabular} shall remain.
 		Additionally, a similarity evaluation shall be implemented according to \cite{chundawat2022UniversalMetricRobust}.
@@ -100,14 +100,14 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 	\item[FR5 - Modularity:]
 		The individual software components (tabular data processing, training, sampling, evaluation) shall be implemented in such a way,
 		that they are easily replaceable by alternatives (for tabular data processing) or shall be executed individually (training, sampling, evaluation).
-		For example, sampling synthetic data shall be separated from the training so that not every sampling process requires training a model from the start.
+		For example, sampling synthetic data shall be separated from the training so that not every sampling process requires training a \gls{model} from the start.
 \end{description}
 
 
 \section{Existing Code Base}
 \label{ch:conceptualDesign-existingCodeBase}
 
-The software \cite{akim2023TabDDPMModellingTabular} used in this experiment was programmed in the programming language python \cite{van1995python} and is based upon the work of \cite{kotelnikov2022TabDDPMModellingTabular}.
+The software \cite{akim2023TabDDPMModellingTabular} used in this experiment was programmed in the programming language python \cite{van1995python} and is based upon the work of \textcite{kotelnikov2022TabDDPMModellingTabular}.
 It is changed and modified according to the needs of the experiments.
 This section will first explain the architecture of the existing code base before introducing the proposed adaptations in the next section.
 
@@ -122,7 +122,7 @@ This section will first explain the architecture of the existing code base befor
 \subsection{Original Implementation}
 \label{ch:conceptualDesign-existingCodeBase-originalImplementation}
 
-\textcite{akim2023TabDDPMModellingTabular} provide a software implementation for their proposed TabDDPM.
+\textcite{akim2023TabDDPMModellingTabular} provides a software implementation for their proposed TabDDPM.
 This implementation consists of multiple scripts and implements several of the functional requirements listed in \Autoref{sec:func_requirements}, including FR1, FR4, FR5, and parts of FR4.
 This section will explain what kind of software was already provided by \cite{kotelnikov2022TabDDPMModellingTabular} and explain important architectural design choices.
 
@@ -133,9 +133,9 @@ An overview of how the overall process in this synthetic data generation approac
 The whole software process can be roughly summarized into three parts, the training, the sampling, and the evaluation.
 In the training, real training data is taken from the original dataset.
 This training data is preprocessed, according to a predefined preprocessing strategy that may vary from dataset to dataset (compare \Autoref{sec:preprocessing}).
-After preprocessing, the diffusion model is initialized and trained to learn the underlying joint distribution of the training data.
+After preprocessing, the diffusion \gls{model} is initialized and trained to learn the underlying joint distribution of the training data.
 Once the training is finished, the sampling of new synthetic data can be executed.
-The previously trained model is loaded and synthetic data will be produced by denoising previously sampled noise.
+The previously trained \gls{model} is loaded and synthetic data will be produced by denoising previously sampled noise.
 The synthetic data will be in the same format as the training data after it has been preprocessed.
 Hence, the synthetic data will be postprocessed by inverting the preprocessing, such that the synthetic data will be in the same format as the raw training data.
 As a last step, the synthetic data will be evaluated. 
@@ -147,58 +147,58 @@ Ultimately, the results of this evaluation are saved and can be interpreted by t
 \label{ch:scripts}
 
 The implementation \cite{akim2023TabDDPMModellingTabular} already provides the necessary scripts that allow for an
-easy training, sampling, evaluation, and hyperparameter tuning for their proposed TabDDPM model.
+easy training, sampling, evaluation, and hyperparameter tuning for their proposed TabDDPM \gls{model}.
 Additional non-diffusion baseline models the TabDDPM is compared against are supported as well.
 The functionality of the most important scripts can be summarized in the following way:
 
 \begin{description}
 	\item[train.py:]
-		The script "train.py" is responsible for the training of the diffusion model. 
+		The script "train.py" is responsible for the training of the diffusion \gls{model}. 
 		It accepts configuration parameters that guide the training process. 
 		Initially, it loads the designated dataset and carries out preprocessing as per the given configuration. 
 		Subsequently, it initializes the necessary class instances and starts the training loop. 
-		Once the training loop is finished, the script saves the trained model along with its loss history.
+		Once the training loop is finished, the script saves the trained \gls{model} along with its loss history.
 
 	\item[sample.py:]
-		The script "sample.py" carries out the task of sampling from a pre-trained diffusion model. 
+		The script "sample.py" carries out the task of sampling from a pre-trained diffusion \gls{model}. 
 		It takes in specific configuration parameters that are used during the sampling procedure. 
-		This script starts by loading a pre-trained model and generating samples from it. 
+		This script starts by loading a pre-trained \gls{model} and generating samples from it. 
 		These new samples are then modified in accordance with the inverse of the preprocessing defined in the configuration.
 		Once the transformation is complete, the resulting samples are saved.
 
 	\item[\text{eval\_[catboost\textbar mlp\textbar simple].py:}]
 		The scripts "eval\_catboost.py", "eval\_mlp.py", and \\"eval\_simple.py" evaluate a synthetic dataset based on machine learning efficacy. 
-		In this process, a machine learning model, chosen by the user, is trained on either real or synthetic data, as specified in the configuration. 
-		The model's performance is then assessed on the real test set by computing a set of metric scores.
+		In this process, a machine learning \gls{model}, chosen by the user, is trained on either real or synthetic data, as specified in the configuration. 
+		The \gls{model}'s performance is then assessed on the real test set by computing a set of metric scores.
 
 	\item[pipeline\_*.py\footnotemark:]
 		The scripts, denoted as "pipeline\_*.py", define the full processing pipeline, which includes the processes of training, sampling, and evaluation. 
 		They ensure that each function within the pipeline correctly receives its necessary attributes from the configuration. 
 		These scripts also provide the flexibility to execute specific portions of the pipeline individually.
-		\footnotetext[1]{Each implemented baseline model (SMOTE, TVAE, CTABGAN, CTABGAN+) has its own implementation as pipeline\_\textit{modelName}.py.}
+		\footnotetext[1]{Each implemented baseline \gls{model} (SMOTE, TVAE, CTABGAN, CTABGAN+) has its own implementation as pipeline\_\textit{modelName}.py.}
 
 	\item[tune\_*.py\footnotemark:]
 		The "tune\_*.py" scripts are generally responsible for the hyperparameter tuning process.
 		It starts by defining a hyperparameter search space (see \cite[Table 1, p. 4]{kotelnikov2022TabDDPMModellingTabular} and \cite[Table 7-11, p. 13 f.]{kotelnikov2022TabDDPMModellingTabular}).
 		Next, an objective function is defined that is maximized for 50 trials through the Optuna framework \cite{optuna_2019}.
 		Within the objective function, a set of hyperparameters is selected from the search space.
-		These selected hyperparameters are used to invoke \textit{pipeline.py}, which initiates the model training
-		Afterward, for five different random initializations, \textit{pipeline.py} is called to sample and evaluate the model, creating, and assessing five different synthetic dataset versions.
+		These selected hyperparameters are used to invoke \textit{pipeline.py}, which initiates the \gls{model} training
+		Afterward, for five different random initializations, \textit{pipeline.py} is called to sample and evaluate the \gls{model}, creating, and assessing five different synthetic dataset versions.
 		In each training, sampling, and evaluation, the training and validation set are redistributed and shuffled to implement some form of cross-validation \cite{kohavi1995StudyCrossvalidationBootstrap}.
 		The average evaluation score (machine learning efficacy based) of the five synthetic dataset versions is returned as the objective that Optuna tries to maximize.
 		After optimization, the best hyperparameter configuration is saved.
-		If the user has set an \textit{- - eval\_seeds} flag, a final evaluation of the best-found model will be started by calling \textit{eval\_seeds.py}.
-		\footnotetext[2]{Each implemented baseline model has its own implementation as tune\_\textit{modelName}.py.}
+		If the user has set an \textit{- - eval\_seeds} flag, a final evaluation of the best-found \gls{model} will be started by calling \textit{eval\_seeds.py}.
+		\footnotetext[2]{Each implemented baseline \gls{model} has its own implementation as tune\_\textit{modelName}.py.}
 		
 	\item[eval\_seeds.py:]
-		The "eval\_seeds.py" script's purpose is to perform an extensive evaluation, given a trained model.
-		The script starts by loading the pre-trained sampling model \\([TabDDPM|SMOTE|CTABGAN|CTABGAN+|TVAE]).
-		Given the sampling model, $n\_datasets$ synthetic datasets will be produced depending on the specified evaluation parameters by calling the sampling script in the respective \textit{pipeline\_*.py} script.
-		For each produced dataset, evaluation is performed using a predefined evaluation model ([Catboost|MLP]) for a predefined number of random initializations.
+		The "eval\_seeds.py" script's purpose is to perform an extensive evaluation, given a trained \gls{model}.
+		The script starts by loading the pre-trained sampling \gls{model} ([TabDDPM|SMOTE|CTABGAN|CTABGAN+|TVAE]).
+		Given the sampling \gls{model}, $n\_datasets$ synthetic datasets will be produced depending on the specified evaluation parameters by calling the sampling script in the respective \textit{pipeline\_*.py} script.
+		For each produced dataset, evaluation is performed using a predefined evaluation \gls{model} ([Catboost|MLP]) for a predefined number of random initializations.
 		Ultimately, the average metrics are calculated over all performed runs, reported, and saved.
 \end{description}
 
-In summary, to get a fully optimized diffusion model with an extensive evaluation, the user just has to run the \textit{tune\_ddpm.py} script with the \textit{- - eval\_seeds} flag.
+In summary, to get a fully optimized diffusion \gls{model} with an extensive evaluation, the user just has to run the \textit{tune\_ddpm.py} script with the \textit{- - eval\_seeds} flag.
 A detailed activity diagram for each script can be found in the Appendix \ref{A:activity_diagrams}.
 
 \subsubsection[]{Configuration}
@@ -267,15 +267,15 @@ Within these sections, key-value pairs define configuration options.
 \end{lstlisting}
 
 
-The key \textit{model\_type} refers to the model that should approximate the noise in the reverse noising process.
+The key \textit{model\_type} (line 4) refers to the \gls{model} that should approximate the noise in the reverse noising process.
 Most parameters are self-explanatory, controlling one specific part of the pipeline.
-For example, all \textit{model\_params} specify different relevant aspects for instantiating the model.
+For example, all \textit{model\_params} (lines (ll.) 8-10) specify different relevant aspects for instantiating the \gls{model}.
 Inside the \textit{model\_params} section, the \textit{num\_classes} key indicates the number of possible target classes the given dataset has, and \textit{is\_y\_cond} indicates if the dataset is a classification (=\textit{True}) or regression dataset (=\textit{False}).
-The \textit{model\_params.rtdl\_params}\footnote{rtdl is an abbreviation for the python library \cite{gorishniy2021RevisitingDeepLearning} from which the \gls{mlp} model architecture was used.} specify the \glp{mlp} architecture, by controlling the number of layers and the amount of dropout.
-As the name suggests, the keys inside the \textit{diffusion\_params} section control the diffusion process.
-Noteworthy are the \textit{train.T} and \textit{eval.T} sections, whose keys define how preprocessing is done at the beginning of training and evaluation, respectively.
+The \textit{model\_params.rtdl\_params}\footnote{rtdl is an abbreviation for the python library \cite{gorishniy2021RevisitingDeepLearning} from which the \gls{mlp} \gls{model} architecture was used.} (ll. 12-17) specify the \glp{mlp} architecture, by controlling the number of layers and the amount of dropout.
+As the name suggests, the keys inside the \textit{diffusion\_params} (ll. 19-22) section control the diffusion process.
+Noteworthy are the \textit{train.T} (ll. 30-37) and \textit{eval.T} (ll. 48-55) sections, whose keys define how preprocessing is done at the beginning of training and evaluation, respectively.
 The \textit{eval.type} section keys are useful to further specify the kind of evaluation that will be executed.
-The machine learning efficacy model is determined by the \textit{eval\_model} key and is, in this example, set to the CatBoost model.
+The machine learning efficacy \gls{model} is determined by the \textit{eval\_model} key and is, in this example, set to the CatBoost \gls{model}.
 To control what kind of data will be evaluated, the \textit{eval\_type} key can be set to either "real" or "synthetic".
 If the value is set to "real", the real training data is loaded and compared to the real test data, as if it was synthetic data.
 This setting allows the creation of baseline metric scores against which synthetic values are compared.
@@ -321,17 +321,17 @@ For a detailed overview of how each individual scripts changed, please refer to 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{images/Overall_changed.png}
-	\caption[Overview Software Changes]{Overview of proposed synthetic data generation process changes (highlighted in green)}
+	\caption[Overview Software Changes]{Overview of proposed synthetic data generation process changes \\(highlighted in green)}
 	\label{fig:Overall_changed}
 \end{figure}
 
 \begin{description}
-	\item[C1-Tabular Processing:] To test the effect of different tabular processing techniques, a "Tabular processing" step is required before training the diffusion model.
+	\item[C1-Tabular Processing:] To test the effect of different tabular processing techniques, a "Tabular processing" step is required before training the diffusion \gls{model}.
 		Within this processing, the raw data is transformed according to the defined tabular processing strategy.
 		The tabular processing data output format needs to be the same as before the transformation, described in \Autoref{sec:data_format}, to ensure
 		that the remaining pipeline remains functional and keeps changes to the original code minimal.
 	\item[C2-Inverse Tabular Processing:] Similar to the data preprocessing, which requires an inverse data postprocessing, to turn the data back into its original format and scale, the same is necessary for the tabular processing.
-		Since the model is trained on data that has been transformed according to the tabular processing mechanism, the diffusion model will produce data in the same format.
+		Since the \gls{model} is trained on data that has been transformed according to the tabular processing mechanism, the diffusion \gls{model} will produce data in the same format.
 		Consequently, the synthetic data must be transformed back by an inverse function of the tabular processing mechanism before it is evaluated.
 	\item[C3-Similarity Evaluation:] Lastly, an extended evaluation of the synthetic data's similarity to the real data should be performed.
 		For this, the original machine learning efficacy evaluation remained unchanged.
@@ -354,23 +354,24 @@ For a tabular processing mechanism to be used, the following conditions must be 
 	      such that the data can be transformed back into its original form.
 	\item[2. Compatibility:] the data must be able to be separated into numerical and categorical parts after the transformation
 	      since the remaining code expects data in this format, as specified in \Autoref{sec:data_format}.
-	\item[3. Complexity:] the time it takes to transform the data should be within a reasonable timeframe. They shall not add too much computation time to the already extensive model-tuning process.
+	\item[3. Complexity:] the time it takes to transform the data should be within a reasonable timeframe. They shall not add too much computation time to the already extensive \gls{model}-tuning process.
 	\item[4. Availability:] due to the limited time frame of this thesis, the code for the mechanisms should be publicly available (or could be implemented within a reasonable timeframe).
 \end{description}
 
 \subsection[]{Evaluation}
 \label{ch:conceptualDesign-Evaluation}
 The evaluation framework shall contain multiple evaluation aspects.
-Firstly, the existing machine learning efficacy using a CatBoost model proposed by \cite{kotelnikov2022TabDDPMModellingTabular} shall be executed and remain untouched.
+Firstly, the existing machine learning efficacy using a CatBoost \gls{model} proposed by \cite{kotelnikov2022TabDDPMModellingTabular} shall be executed and remain untouched.
 In addition, the TabSynDex \cite{chundawat2022UniversalMetricRobust} similarity will be performed in each evaluation.
 Machine learning efficacy that is based upon an \gls{mlp} or using a set of classification models will not be performed for the following reasons:
 \begin{enumerate}
-	\item \cite{kotelnikov2022TabDDPMModellingTabular} argues convincingly that machine learning efficacy not based on CatBoost is less informative compared to the CatBoost counterpart.
-	\item The TabSynDex metric contains a machine learning efficacy metric based upon a set of models.
+	\item \textcite{kotelnikov2022TabDDPMModellingTabular} argues convincingly that machine learning efficacy not based on CatBoost is less informative compared to the CatBoost counterpart.
+	\item The TabSynDex metric contains a machine learning efficacy metric based upon a set of standard machine learning models.
 \end{enumerate}
 Consequently, machine learning efficacy will be evaluated twice in each evaluation, once based on CatBoost and once inside the TabSynDex metric using a set of standard machine learning models.
 
 Lastly, for a visual evaluation, several plots indicating the similarity of the synthetic data to the real data shall be generated using the implementation of \textcite{brenninkmeijer2019GenerationEvaluationTabular}.
+The plots shall effectively highlight crucial characteristics inherent in the real dataset, which need to be accurately mirrored in the synthetic dataset.
 If necessary, modifications to the plots may be required.
 
 % ''TODO:

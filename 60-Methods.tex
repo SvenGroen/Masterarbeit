@@ -3,16 +3,14 @@
 
 This chapter delves into the methodology employed to address the research questions and objectives outlined in the previous chapters.
 The chapter is organized into three main sections.
-\Autoref{ch:architecture} discusses the architecture of our proposed solution, elaborating on the tabular processor and its implementations, namely the BGMProcessor and FTProcessor.
+\Autoref{ch:architecture} discusses the architecture of the proposed solution, elaborating on the tabular processor and its implementations, namely the \textit{BGMProcessor} and \textit{FTProcessor}.
 In addition, this section also highlights the modifications made to the existing software to incorporate the proposed solutions.
 
 \Autoref{ch:methods-experimentalSetup} focuses on the experimental setup, outlining the experiments conducted to evaluate the performance and effectiveness of the proposed models.
 It provides detailed information on the execution environment and the hyperparameter search space used in the study, ensuring the reproducibility of the results.
 
 Finally, \Autoref{ch:methods-datasets} presents the dataset utilized in the experiments, including its source and characteristics.
-This information is crucial to understanding the context in which our proposed methodology was tested and evaluated.
-
-By the end of this chapter, the reader will gain a comprehensive understanding of the methodology implemented in this thesis, which will lead to the presentation and analysis of the results in the subsequent chapters.
+This information is crucial to understanding the context in which the proposed methodology was tested and evaluated.
 
 \section{Architecture}
 \label{ch:architecture}
@@ -24,12 +22,12 @@ The following section will explain how the individual additions to the existing 
 \subsection{Tabular Processor}
 \label{ch:architecture-tabularProcessor}
 
-To allow for flexible use and the possibility of adding additional processing mechanisms (R5 - Maintainability), the \textit{strategy design} pattern (\Autoref{fig:design}) was chosen \cite{gamma1994design}.
+To allow for flexible use and the possibility of adding additional processing mechanisms (R5 - Maintainability), the \textit{Strategy Design Pattern} (\Autoref{fig:design}) was chosen \cite{gamma1994design}.
 The pattern is beneficial if a specific behavior is required, but needs to be realized in different ways.
 The \textit{Strategy} class defines what kind of methods need to be implemented and what behavior the class should have.
 The \textit{Strategy} classes children define a \textit{ConcreteStrategy} and realize the desired behavior in different ways.
 Different \textit{ConcreteStrategies} can be used interchangeably independent of the \textit{Context} they are used in since all implement the same functionalities.
-The \textit{Context} is has a reference to the \textit{ConcreteStrategies} and ultimately decides when an instance of type \textit{Strategy} is executed.
+The \textit{Context} has a reference to the \textit{ConcreteStrategies} and ultimately decides when an instance of type \textit{Strategy} is executed.
 As the \textit{ConcreteStrategies} implement the same interface, the \textit{Context} can execute any function a \textit{ConcreteStrategies} has implemented, without needing to know the inner workings of that function.
 Hence, whenever the \textit{Context} needs to execute a certain functionality, it delegates the execution to the \textit{ConcreteStrategy} object it needs, which may vary on the situation.
 One of the biggest advantages is, that this way new \textit{ConcreteStrategies} can be added easily without affecting any of the other \textit{ConcreteStrategy} or the \textit{Context} \cite{gamma1994design}.
@@ -37,7 +35,7 @@ One of the biggest advantages is, that this way new \textit{ConcreteStrategies} 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{images/strategy.png}
-	\caption[Strategy Design Pattern]{Strategy design pattern \cite[p. 316]{gamma1994design}}
+	\caption[Strategy Design Pattern]{\textit{Strategy Design Pattern} \cite[p. 316]{gamma1994design}}
 	\label{fig:design}
 \end{figure}
 
@@ -48,17 +46,17 @@ One of the biggest advantages is, that this way new \textit{ConcreteStrategies} 
 	\label{fig:tabular_processor}
 \end{figure}
 
-\Autoref{fig:tabular_processor} shows how the \textit{strategy design} pattern is realized.
+\Autoref{fig:tabular_processor} shows how the \textit{Strategy Design Pattern} is realized.
 The overall \textit{Strategy} class is defined in the \textit{TabularProcessor} class in the form of an abstract class with three core methods each tabular processing mechanism needs to implement.
 These functions are the \textit{fit}, \textit{transform}, and \textit{inverse transform} functions (FR2.1 - FR2.3).
 
 Each tabular processing strategy is different and realizes the transformation of the data in a different way by implementing the abstract functions of the parent strategy.
 Therefore, new tabular processing mechanisms can be easily added by just implementing the methods of the abstract class (R2, FR2).
 Furthermore, the tabular processing mechanism can be exchanged easily since they share the same functions.
-This is handled in the \textit{TabularDataController} class, which is equivalent to the \textit{Context} of the \textit{strategy design} pattern.
+This is handled in the \textit{TabularDataController} class, which is equivalent to the \textit{Context} of the \textit{Strategy Design Pattern} pattern.
 The \textit{TabularDataController} handles all relevant aspects to use the tabular processing mechanisms, including but not limited to the instantiation, fitting, saving, and loading of \textit{TabularProcessor} instances.
-The data, whose columns are segmented into categorical, numerical, and target as numpy arrays \cite{harris2020array}, needs to be provided to instantiate a tabular processor.
-Target refers to the column of the dataset that a model tries to predict or estimate in a classification or regression scenario.
+The data, whose columns are segmented into categorical, numerical, and target as numpy arrays \cite{harris2020array}, needs to be provided to instantiate a \textit{TabularProcessor}.
+Target refers to the column of the dataset that a \gls{model} tries to predict or estimate in a classification or regression scenario.
 The first step in using the tabular processor is fitting it to the data.
 Additional information required for the fitting process can be provided through meta-data in the form of a dictionary, which may change for different realizations.
 Note that this fit function might not be necessary, depending on the processing mechanism, but it is required to be implemented anyways.
@@ -71,23 +69,23 @@ On the other hand, the term "data format" refers to the modification of the data
 \subsection{Tabular Processor Implementations}
 \label{ch:architecture-tabularProcessor-implementations}
 
-Three different tabular processor versions have been implemented.
+Three different \textit{TabularProcessor} versions have been implemented.
 The \textit{IdentityProcessor} does not do anything to the data.
 It is used to do experiments without any tabular processing mechanism and allows reproducing the original results of \cite{kotelnikov2022TabDDPMModellingTabular}.
 In this thesis, only two approaches have been implemented, the \gls{bgm} and \gls{ft} tabular processors.
 Other potential tabular processing mechanisms have been considered but usually lack one of the criteria specified in \Autoref{ch:Concept-criteria}.
-The biggest challenge usually is the reversibility, since several encoding strategies only allow an encoding of the data but not a decoding of already encoded data.
-The reason for this is that usually, decoding of encoded data is not necessary for most other deep learning tasks, where the encoded data is directly fed into the model.
-Consequently, a decoding mechanism would need to be developed if one is not present, which is depending on the encoding technique, not a straightforward task and would likely require a special decoding model that is specifically trained for the encoding technique at hand.
+The biggest challenge usually is the reversibility, since several encoding strategies only consider an encoding of the data but not a decoding of the already encoded data.
+The reason for this is that usually, decoding of encoded data is not necessary for most other deep learning tasks, where the encoded data is directly fed into the \gls{model}.
+Consequently, a decoding mechanism would need to be developed if one is not present, which is depending on the encoding technique, not a straightforward task and would likely require a special decoding \gls{model} that is specifically trained for the encoding technique at hand.
 However, this would exceed the scope of this thesis, as it would be very complex and time-consuming.
 Therefore, it remains an open task for future researchers.
 
 \subsubsection{BGMProcessor}
 \label{ch:BGMProcessor}
 
-The BGMProcessor\footnote{The name was chosen since a \acrfull{bgm} is the main component used in the processor.} is the same processing mechanism that has been introduced by the CTABGAN+ model \cite{zhao2022CTABGANEnhancingTabular}.
+The \textit{BGMProcessor}\footnote{The name was chosen since a \acrfull{bgm} is the main component used in the processor.} is the same processing mechanism that has been introduced by the CTABGAN+ \gls{model} \cite{zhao2022CTABGANEnhancingTabular}.
 This processing mechanism was chosen since it fulfills all criteria mentioned in \Autoref{ch:Concept-criteria}.
-Moreover, it is part of a state-of-the-art tabular data synthesis \gls{gan}-based model, which has already proven to be successful.
+Moreover, it is part of a state-of-the-art tabular data synthesis \gls{gan}-based \gls{model}, which has already proven to be successful.
 
 Firstly, a mixed-type encoding is introduced, specifically designed to encode single columns containing a mixed data type of numerical and categorical data types.
 For the continuous values in the column, the authors adapt the mode-specific normalization technique from \cite{xu2019ModelingTabularData} using a \gls{bgm} implementation \cite{scikit-learndevelopers2023BayesianGaussianMixture}, which is a \gls{vgm} (see \Autoref{sec:dataNormalization} for details).
@@ -125,7 +123,7 @@ The log-transformation of each value $\tau$ in the column will be compressed to 
 	\end{align*}
 \end{equation}
 
-This encoding strategy is realized in the BGMProcessor class, which uses the DataPrep and DataTransformer class, as developed by \cite{zhao2022CTABGANEnhancingTabular}.
+This encoding strategy is realized in the \textit{BGMProcessor} class, which uses the \textit{DataPrep} and \textit{DataTransformer} class, as developed by \cite{zhao2022CTABGANEnhancingTabular}.
 These classes require additional information about the dataset, provided by the user, including what columns are categorical, categorical columns that have a high cardinality/dimensionality\footnote{Inside the software of the authors, they refer to it as "non\_categorical\_columns", which is a bit misleading. "Non\_categorical\_columns" are categorical columns with high dimensionality that are transformed into numerical columns and handled as if they were continuous.},
 numerical, mixed (including what values are categorical), as well as what columns require a log transformation and which a general transformation.
 This information is provided to the \textit{BGMProcessor} by extending the info.json (\Autoref{lst:info}) with an additional entry, \textit{dataset\_config}, see \Autoref{lst:info_extended} for an example.
@@ -138,7 +136,7 @@ This information is provided to the \textit{BGMProcessor} by extending the info.
     "dataset_config": {
         "cat_columns": [ // categorical columns
             "workclass", 
-            (...), 
+            [...], 
             "income"
             ],
         "non_cat_columns": [], // high dim-categorical
@@ -150,7 +148,7 @@ This information is provided to the \textit{BGMProcessor} by extending the info.
             },
         "int_columns": [ // numerical columns 
             "age", 
-            (...), 
+            [...], 
             "hours-per-week"
         ],
         "problem_type": "binclass", // [binclass|multiclass|regression]
@@ -181,24 +179,24 @@ Lastly, a bias term $b$ is added to both categorical and numerical columns.
 	\label{fig:ft}
 \end{figure}
 
-To revert the synthetic data that the diffusion model produces to the original data format, the numerical and categorical columns need to be handled differently.
+To revert the synthetic data that the diffusion \gls{model} produces to the original data format, the numerical and categorical columns need to be handled differently.
 The corresponding embedding weights divide the numerical output element-wise, and the average value is computed as the final output \cite{zheng2022DiffusionModelsMissing}.
 This transforms output having the same dimensionality as the embedding ($d$) back into a single value \cite{zheng2022DiffusionModelsMissing}.
 For categorical output, the closest categorical embedding is determined by computing the Euclidean distance between the produced output and every categorical embedding \cite{zheng2022DiffusionModelsMissing}.
 
-In the original work of \cite{gorishniy2021RevisitingDeepLearning}, the feature tokenizer is directly applied in front of a transformer model, allowing the gradients to flow through the embedding and linear layers during training.
-This enables the model to learn a meaningful embedding.
+In the original work of \cite{gorishniy2021RevisitingDeepLearning}, the feature tokenizer is directly applied in front of a Transformer \gls{model}, allowing the gradients to flow through the embedding and linear layers during training.
+This enables the \gls{model} to learn a meaningful embedding.
 In the adaptation of \cite{zheng2023DiffusionModelsMissing} and in this thesis, the weights of the layers are frozen.
 Hence, learning is not possible, and the embedding is static.
-The reason for this in this thesis have been because of the overall software architecture.
-The data transformation and the actual model training are fully separated,
+The reason for this in this thesis has been because of the overall software architecture.
+The data transformation and the actual \gls{model} training are fully separated,
 resulting in gradients that do not flow back to the feature tokenizer to update any weights of the embeddings.
-To achieve the update of weights, the tokenizer would need to be fully integrated into the diffusion model architecture, which in turn could have negatively affected the overall maintainability, compatibility, and performance (see R2-R4, \Autoref{ch:requirements}) of the software.
+To achieve the update of weights, the tokenizer would need to be fully integrated into the diffusion \gls{model} architecture, which in turn could have negatively affected the overall maintainability, compatibility, and performance (see R2-R4, \Autoref{ch:requirements}) of the software.
 
 \subsection{Changes to the existing software}
 \label{ch:methods-changes}
 The changes made to the existing software (\Autoref{ch:conceptualDesign-existingCodeBase}) are various and include multiple major changes as well as a lot of small changes.
-Below, the major changes to the individual scripts are listed.
+Below, the major changes to the individual software components are listed.
 An additional visualization of the process of the scripts can be found in Appendix \ref{A:activity_diagrams}
 
 \begin{description}
@@ -208,7 +206,7 @@ An additional visualization of the process of the scripts can be found in Append
 		It receives context information on which tabular processing mechanisms and which properties the dataset has through the configuration file and handles the
 		instantiation, fitting, and transformation of the raw data.
 		Despite the addition of the \textit{TabularDataController}, the actual training remained untouched.
-		Hence, introducing a \textit{TabularProcesser} only changes the data format (and maintains the segmented data structure) the diffusion model will receive and does not change the actual training loop.
+		Hence, introducing a \textit{TabularProcesser} only changes the data format (and maintains the segmented data structure) the diffusion \gls{model} will receive and does not change the actual training loop.
 
 	\item[sample.py:]
 		A TabularDataController is instantiated at the beginning and loads a previously fit \textit{TabularProcesser} instance.
@@ -235,11 +233,14 @@ An additional visualization of the process of the scripts can be found in Append
 	\item[eval\_seeds.py:]
 		The basic eval\_seeds script did not change a lot.
 		Again, the TabSynDex metric will be called after the default machine learning efficacy.
+
+	\item[config.toml:]
+		In order to easily change the \textit{TabularProcesser} type that should be executed in an experiment, the experiment configuration displayed as \Autoref{lst:configuration} was extended.
+		The additional configuration section \textit{tabular\_processor} has been added, containing a \textit{type} key.
+		The \textit{type} key can be either set to \textit{"identity"}, \textit{"ft"} or \textit{"bgm"} to indicate, which \textit{TabularProcesser} type should be used.
 \end{description}
 
-In order to easily change the \textit{TabularProcesser} type that should be executed in an experiment, the experiment configuration displayed as \Autoref{lst:configuration} was extended.
-The additional configuration section \textit{tabular\_processor} has been added, containing a \textit{type} key.
-The \textit{type} key can be either set to "identity", "ft" or "bgm" to indicate, which \textit{TabularProcesser} type should be used.
+
 
 \section{Experimental Setup}
 \label{ch:methods-experimentalSetup}
@@ -270,7 +271,7 @@ To systematically analyze the performance of the different tabular processing me
 \end{description}
 
 \noindent Depending on the results of the first experiments, subsequent experiments may only be performed on a subset of promising Tabular processing mechanisms.
-To not get confused with the different model versions, the models are named after the following principal:
+To not get confused with the different \gls{model} versions, the models are named after the following principal:
 \begin{quote}
 Modelname[-TabularProcessor]$^{tuning}_{preprocessing}$
 \end{quote}
@@ -289,14 +290,14 @@ The code was developed in python version 3.9.7 and made use of several libraries
 Most important libraries include (for a full list, please see the \textit{environment.yml} file in the source code):
 \begin{itemize}
 	\item azure-core, azureml-core: For running the code in the Microsoft Azure cloud \cite{microsoft2023CloudComputingServices}.
-	\item catboost (1.0.3): contains the CatBoost model for the machine learning efficacy.
-	\item pytorch (1.10.1): neural network framework.
-	\item table\_evaluator (1.4.2): used to produce visualizations.
-	\item numpy (1.21.4): allows efficient array computation.
-	\item optuna (2.10.1): used for hyperparameter tuning.
-	\item pandas (1.5.2): allows fast computations with dataframes of tabular data.
-	\item scikit-learn (1.0.2): includes several utility functions for machine learning, \eg metrics such as accuracy or F1-score.
-	\item TabSynDex \cite{chundawat2022UniversalMetricRobusta}: TabSynDex metric source code.
+	\item catboost (1.0.3): Contains the CatBoost \gls{model} for the machine learning efficacy.
+	\item pytorch (1.10.1): Neural network framework.
+	\item table\_evaluator (1.4.2): Used to produce visualizations.
+	\item numpy (1.21.4): Allows efficient array computation.
+	\item optuna (2.10.1): Used for hyperparameter tuning.
+	\item pandas (1.5.2): Allows fast computations with dataframes of tabular data.
+	\item scikit-learn (1.0.2): Includes several utility functions for machine learning, \eg metrics such as accuracy or F1-score.
+	\item TabSynDex \cite{chundawat2022UniversalMetricRobust}: TabSynDex metric source code.
 \end{itemize}
 
 The training was performed using Microsoft Azure Machine Learning Studio.
@@ -331,7 +332,7 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\bottomrule
 		\multicolumn{2}{c}{}\\[-0.6em]
 	\end{tabular}
-	\caption[TabDDPM Hyperparameter Search Space]{TabDDPM model hyperparameter tuning search space \cite{kotelnikov2022TabDDPMModellingTabular}}
+	\caption[TabDDPM Hyperparameter Search Space]{TabDDPM \model hyperparameter tuning search space \cite{kotelnikov2022TabDDPMModellingTabular}}
 	\label{tab:diff_tune}
 \end{table}
 \newpage
@@ -414,7 +415,7 @@ The numerical columns are: \textit{age}, \textit{fnlwgt}\footnote{Short for "fin
 The categorical columns are: \textit{workclass}, \textit{education}, \textit{marital-status}, \textit{occupation}, \textit{relationship}, \textit{race}, \textit{sex}, \textit{native-country}, and \textit{income} (target column). \newline
 
 
-The dataset was created for binary classification, where the model should predict the column value of the income column (either \textit{>50K} or \textit{<=50K}).
+The dataset was created for binary classification, where the \gls{model} should predict the column value of the income column (either \textit{>50K} or \textit{<=50K}).
 \Autoref{tab:adult} shows five example entries of the adult dataset:
 
 \begin{table}[h]

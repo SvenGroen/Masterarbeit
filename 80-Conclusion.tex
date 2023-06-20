@@ -14,10 +14,10 @@ Firstly, the results in terms of machine learning efficacy stated by the authors
 Thanks to the addition of the TabSynDex metrics, it has been shown that TabDDPM superior performance against a set of non-diffusion baseline models also extends to the TabSynDex similarity metrics.
 
 Adding a \acrfull{ft} processing mechanism into the TabDDPM generation pipeline transforms the tabular data in such a way,
-that the diffusion model was not able to generate any meaningful data, which could be seen in the visual result.
+that the diffusion \gls{model} was not able to generate any meaningful data, which could be seen in the visual result.
 Adopting a more complex encoding/decoding strategy from \cite{zhao2022CTABGANEnhancingTabular}, which uses a \acrfull{bgm},
 improved TabDDPM's generative capabilities in producing synthetic data that is useful in machine-learning scenarios.
-Hence, it could be shown that changing the tabular data format greatly affects the diffusion model's generative capability, in a negative (for the \gls{ft} approach) and positive way (for the \gls{bgm} approach).
+Hence, it could be shown that changing the tabular data format greatly affects the diffusion \gls{model}'s generative capability, in a negative (for the \gls{ft} approach) and positive way (for the \gls{bgm} approach).
 
 Furthermore, the importance of hyperparameter tuning for diffusion models was highlighted.
 Diffusion models tuned towards the TabSynDex similarity score greatly improved several of the TabSynDex metrics.
@@ -25,13 +25,13 @@ In the performed experiments, diffusion models have been the first models to ach
 Hence, diffusion models are better at producing synthetic data that is more non-differentiable from the real data \cite{chundawat2022UniversalMetricRobust} compared to tested non-diffusion models.
 Further experiments showed how changing the data normalization strategy can, on the one hand, increase metric results but, on the other hand, worsen visual results.
 This insight underlines the importance of a visual evaluation of synthetic data to estimate the quality of the produced synthetic data properly.
-From all performed experiments, it can be concluded that diffusion-based tabular data synthesis is superior to the synthesis of other model types, such as \glspl{gan} or \glspl{vae}.
+From all performed experiments, it can be concluded that diffusion-based tabular data synthesis is superior to the synthesis of other \gls{model} types, such as \glspl{gan} or \glspl{vae}.
 Moreover, diffusion models have not only shown overall better metric and visual results, but they are also more flexible, as a hyperparameter tuning already affects the outcome of the metrics greatly.
 Even though TabDDPM$^{s}_{m}$ achieved the highest overall similarity score, it is not able to reproduce the underlying characteristics of the real data, which could be seen in the several of the comparative visualizations presented in this thesis.
 TabDDPM$^{s}_{m}$ lacks the ability to properly recreate important characteristics of the real data, such as column distributions (\Autoref{fig:age}) or the real datasets principal components (\Autoref{fig:pca_diffusion}).
 This was not the case for TabDDPM-BGM$^{s}_{[q|m]}$ models, which achieved only slightly worse similarity scores but better capture the underlying characteristics of the real data, as indicated by the visual plots in this thesis.
 As a consequence, the TabDDPM-BGM$^{s}_{[q|m]}$ variants should be considered as the best overall models of this thesis.
-Nevertheless, potential users should alter the model pipeline design depending on the use case of the synthetic data, since TabDDPM-BGM$^{s}_m$ produced the best correlation score, TabDDPM-BGM$^{ml}_q$ the best machine learning efficacy scores and TabDDPM-BGM$^{s}_q$ the best basic statistical values and \gls{pmse} results.
+Nevertheless, potential users should alter the \gls{model} pipeline design depending on the use case of the synthetic data, since TabDDPM-BGM$^{s}_m$ produced the best correlation score, TabDDPM-BGM$^{ml}_q$ the best machine learning efficacy scores and TabDDPM-BGM$^{s}_q$ the best basic statistical values and \gls{pmse} results.
 \newpage
 
 \section{Future Work}
@@ -57,12 +57,12 @@ Second, the neural network itself could be replaced by a more sophisticated one.
 The proposed network by \cite{kotelnikov2022TabDDPMModellingTabular}, which predicts the noise in the reverse process, follows a simple architecture.
 In the image generation domain, a more complex U-Net \cite{ronneberger2015UNetConvolutionalNetworks} architecture with attention mechanisms at different layers was proposed \cite{dhariwal2021DiffusionModelsBeat}.
 \cite{dhariwal2021DiffusionModelsBeat} showed that such changes led to a better generation quality.
-Hence, it is possible that similar changes to the model's architecture would lead to better generative capabilities.
+Hence, it is possible that similar changes to the \gls{model}'s architecture would lead to better generative capabilities.
 Other changes could be made towards further improving the loss function.
 It might be worth investigating whether some adversarial loss could be implemented, similar to \gls{gan} models.
 For example, an adversarial network could be tasked to tell apart which noise (the noise that will be removed from the noised image) was predicted by the neural network and which was the actual noise.
 This information could be used to further enhance the capability of the diffusion network to remove noise from $x_{t}$ to get to $x_{t-1}$.
-Lastly, depending on the results of a detailed privacy evaluation, introducing differential privacy \cite{dwork2011DifferentialPrivacy} into the diffusion model might be worth investigating, which has been done extensively in the \gls{gan} domain \cite{jordon2018PATEGANGeneratingSynthetic,9054559, kunar2021DTGANDifferentialPrivatea, torfi2022DifferentiallyPrivateSynthetic}.
+Lastly, depending on the results of a detailed privacy evaluation, introducing differential privacy \cite{dwork2011DifferentialPrivacy} into the diffusion \gls{model} might be worth investigating, which has been done extensively in the \gls{gan} domain \cite{jordon2018PATEGANGeneratingSynthetic,9054559, kunar2021DTGANDifferentialPrivatea, torfi2022DifferentiallyPrivateSynthetic}.
 
 Regarding the tabular processor mechanism, several changes and different techniques could be implemented to improve the overall generation pipeline.
 Currently, the tabular processor mechanism is fully separated from the diffusion processes.

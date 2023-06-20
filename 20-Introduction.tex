@@ -16,11 +16,11 @@ While generative models in the image domain already show a human-like capability
 tabular data synthesis approaches still offer room for improvements \cite{chundawat2022UniversalMetricRobust}.
 One of the reasons for this is the heterogeneous nature of tabular data, which generative models need to reproduce.
 Tabular data usually consist of a mixture of numerical and categorical distributions with dependencies, which is difficult to capture and reproduce \cite{borisov2022DeepNeuralNetworks}.
-So far, \gls{gan}-based approaches have shown state-of-the-art capabilities to create synthetic tabular data, which have also been the best model for synthetic image generation.
+So far, \acrfull{gan}-based approaches have shown state-of-the-art capabilities to create synthetic tabular data, which have also been the best \gls{model} for synthetic image generation.
 However, diffusion-based models have recently been able to outperform \glspl{gan} on the task of image synthesis \cite{dhariwal2021DiffusionModelsBeat}.
 As a result, researchers have tried to use diffusion models to generate synthetic tabular data with promising results \cite{kotelnikov2022TabDDPMModellingTabular, zheng2022DiffusionModelsMissing}.
 
-\cite{dhariwal2021DiffusionModelsBeat} argued that \glspl{gan} have shown superior performance against diffusion because researchers have investigated them more deeply.
+\textcite{dhariwal2021DiffusionModelsBeat} argued that \glspl{gan} have shown superior performance against diffusion because researchers have investigated them more deeply.
 The authors showed that diffusion models could outperform \glspl{gan} on image synthesis with a few improvements.
 A similar observation can be made in the tabular data domain, where the majority of recent publications propose \gls{gan}-based solutions.
 First results \cite{kotelnikov2022TabDDPMModellingTabular} indicate that the superior performance of diffusion models over \glspl{gan} extends to the tabular data synthesis domain.
@@ -32,14 +32,14 @@ However, applying diffusion models to tabular data is still a novel approach, an
 This thesis aims to further investigate how diffusion models can be successfully applied to tabular data synthesis.
 This work will build upon the work of Kotelnikov, Baranchuk, Rubachev, and Babenko \cite{kotelnikov2022TabDDPMModellingTabular} and will explore how the existing approach called TabDDPM can be further improved by adapting
 already existing tabular processing mechanisms from previous tabular data synthesis solutions.
-Furthermore, the evaluation and comparison of the diffusion model to various other generative modeling techniques performed by \textcite{kotelnikov2022TabDDPMModellingTabular} will be extended through the usage and analysis
+Furthermore, the evaluation and comparison of the diffusion \gls{model} to various other generative modeling techniques performed by \textcite{kotelnikov2022TabDDPMModellingTabular} will be extended through the usage and analysis
 of multiple similarity metrics as proposed by \textcite{chundawat2022UniversalMetricRobust}.
 This extended evaluation aims to uncover potential unknown modeling properties of diffusion models that may not have been discovered in previous works.
 
 To summarize, this thesis will investigate the following \glspl{rq}:
 
 \begin{description}
-	\item[\gls{rq}1:] What are the effects on the generative capability of the tabular data synthesis model TabDDPM by adding additional tabular data processing mechanisms to the existing generation pipeline?
+	\item[\gls{rq}1:] What are the effects on the generative capability of the tabular data synthesis \gls{model} TabDDPM by adding additional tabular data processing mechanisms to the existing generation pipeline?
 	\item[\gls{rq}2:] How does TabDDPM (and its variants, produced to answer \gls{rq}1) compare to other generative models in an extended similarity evaluation, based on the metrics of \textcite{chundawat2022UniversalMetricRobust}?
 \end{description}
 
@@ -50,11 +50,11 @@ as a new approach in the tabular data synthesis domain.
 \label{ch:intro-proceeding}
 In order to answer the above-stated \glspl{rq}, the following steps have been taken:
 Prior to any experiments, a literature search has been performed about different possible approaches to processing tabular data, tabular data synthesis, and how to evaluate synthetic data.
-This research selected a tabular processing mechanism based on predefined criteria (\Autoref{ch:Concept-criteria}).
-Using the existing TabDDPM model \cite{kotelnikov2022TabDDPMModellingTabular}, the results of the original authors needed to be replicated and validated in the first step.
+This research led to the selection of tabular processing mechanisms based on predefined criteria (\Autoref{ch:Concept-criteria}).
+Using the existing TabDDPM \gls{model} \cite{kotelnikov2022TabDDPMModellingTabular}, the results of the original authors needed to be replicated and validated in the first step.
 Afterwards, the software was extended to integrate the selected tabular processing mechanism.
-The existing evaluation proposed in \cite{kotelnikov2022TabDDPMModellingTabular} was extended by an additional, more elaborate evaluation \cite{akim2023TabDDPMModellingTabular}.
-Lastly, the different model versions have been trained, and the results have been compared and analyzed.
+The existing evaluation proposed in \cite{kotelnikov2022TabDDPMModellingTabular} was extended by an additional, more elaborate evaluation \cite{chundawat2022UniversalMetricRobust}.
+Lastly, the different \gls{model} versions have been trained, and the results have been compared and analyzed.
 
 \section{Contributions}
 \label{ch:intro-contributions}
@@ -63,14 +63,14 @@ These contributions expand on the understanding of diffusion models' performance
 The main contributions of this thesis are as follows:
 \begin{enumerate}
 	\item \textbf{Investigation of tabular processing mechanisms:}
-	      This thesis investigates the impact of different tabular processing mechanisms on an existing diffusion model architecture for data synthesis.
+	      This thesis investigates the impact of different tabular processing mechanisms on an existing diffusion \gls{model} architecture for data synthesis.
 	      By comparing a \acrfull{ft} and a \acrfull{bgm} processing technique with several baseline models, new insights are gained into how the encoded data format affects the generative capabilities of diffusion models.
 	\item \textbf{Extension of the existing tabular data generation pipeline:}
 	      The current TabDDPM \cite{kotelnikov2022TabDDPMModellingTabular} pipeline is extended to allow for easy implementation of different tabular encoding and decoding strategies.
-	      This flexibility enables researchers to experiment with various data processing methods and assess their impact on the diffusion model's performance in generating synthetic data.
+	      This flexibility enables researchers to experiment with various data processing methods and assess their impact on the diffusion \gls{model}'s performance in generating synthetic data.
 	\item \textbf{Comprehensive evaluation:}
 	      This thesis introduces a comprehensive evaluation that combines machine learning efficacy,
-	      TabSynDex similarity metrics and visualization plots for analysis.
+	      TabSynDex similarity metrics and visualization of dataset characteristics for analysis.
 	      This multi-faceted evaluation provides a more holistic view of the generated synthetic tabular data,
 	      uncovering strengths and weaknesses from different perspectives.
 	\item \textbf{Identification of diffusion models' superiority:}
@@ -91,5 +91,5 @@ In \Autoref{ch:conceptualDesign}, the requirements for the software are listed, 
 An expansion of the codebase and a description of the implemented changes follows this. 
 The subsequent chapter, \Autoref{ch:methodology}, elucidates how the software was implemented and the architectural changes made.
 The experiments' results are presented and analyzed in \Autoref{ch:results}. 
-Afterward, possible limitations of the results are presented and an outline of possible future research has been given. 
-Finally, \Autoref{ch:conclusion} summarizes the crucial findings of this thesis.
+Afterward, possible limitations of the results are presented. 
+Finally, \Autoref{ch:conclusion} summarizes the key discoveries of this thesis, and provides an outline of possible future research.
