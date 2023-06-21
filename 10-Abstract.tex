@@ -6,7 +6,7 @@
 \end{center}
 The growing demand for data in machine learning and specifically deep learning applications, combined with the difficulties in acquiring and gathering real-world data, has fueled the development of synthetic data generation techniques.
 Synthetic data, which is artificially generated but modeled on real data, can address privacy constraints and provide a cost-effective alternative for various use cases.
-Through the utilization of diffusion models, a novel data generation methodology, the quality of synthetic image production has advanced, surpassing the image quality of previously established \gls{gan}-based methodologies.
+Through the utilization of diffusion \glspl{model}, a novel data generation methodology, the quality of synthetic image production has advanced, surpassing the image quality of previously established \gls{gan}-based methodologies.
 Recently, TabDDPM, a generative diffusion \gls{model}, outperformed \glspl{gan} on tabular data synthesis as well.
 Synthesizing tabular data presents unique challenges due to the complexity of the underlying joint distributions between variables and the need to capture intricate relationships among features.
 While \gls{gan} based solutions have been heavily explored in the literature, diffusion-based solutions are relatively new and unexplored.
@@ -15,19 +15,16 @@ While \gls{gan} based solutions have been heavily explored in the literature, di
 This thesis investigates whether adapting different tabular processing mechanisms from the literature positively affects the diffusion \gls{model}'s generative capability by encoding the tabular data into a different data format that specifically addresses known challenges of tabular data.
 By extending the existing tabular data generation pipeline of TabDDPM, various tabular encoding and decoding strategies are implemented.
 It focuses on two tabular processing mechanisms that encode the data before training and revert it back after sampling synthetic data: a static embedding technique named \gls{ft} and a mode-specific-normalization encoding technique that makes use of a \gls{bgm}.
-In addition to that, this study touches upon the effects of normalization and hyperparameter optimization on diffusion models for tabular data synthesis.
+In addition to that, this study touches upon the effects of normalization and hyperparameter optimization on diffusion \glspl{model} for tabular data synthesis.
 The pipeline was evaluated through a CatBoost machine learning efficacy test and a TabSynDex similarity metric, alongside a comparative analysis of synthetic and real data features visualized. 
 The visualizations incorporated correlation difference plots, principal components, column distributions, and cumulative density functions.
-% The extended pipeline was evaluated using a CatBoost-based machine learning efficacy evaluation, a similarity metric TabSynDex, covering multiple similarity factors along with a comparative analysis that uses visualizations to highlight characteristic features of the synthetic data in relation to their counterparts in the real data.
-% The visualizations of characteristic dataset features include plots of correlation difference, principle components, column distributions, and cumulative density functions.
 
 
-The results demonstrate the superiority of diffusion models over other generative techniques, such as \Glspl{gan} and \gls{vae}, in generating synthetic tabular data.
+The results demonstrate the superiority of diffusion \glspl{model} over other generative techniques, such as \Glspl{gan} and \gls{vae}, in generating synthetic tabular data.
 The addition of a \gls{bgm}-based processing mechanism improves the TabDDPM \gls{model}'s performance in machine learning scenarios, while the \gls{ft} approach fails to produce meaningful data. 
 The importance of hyperparameter tuning and data normalization strategies is highlighted, as well as the need for a comparative visual evaluation of dataset characteristics to accurately assess synthetic data quality. 
-Tuning the hyperparameters to optimize the TabSynDex similarity metric significantly affects diffusion models more than non-diffusion models. 
-This indicates the diffusion models' flexibility to generate synthetic data to cater to the specific requirements of the intended use case.
-Finally, diffusion models produced synthetic data more indistinguishable from real data than non-diffusion models, as suggested by a non-zero \gls{pmse} score.
-% Lastly, diffusion models were capable of producing synthetic data that is more non-differentiable from the real data compared to non-diffusion models, which was indicated by a non-zero \gls{pmse} score. 
+Tuning the hyperparameters to optimize the TabSynDex similarity metric significantly affects diffusion \glspl{model} more than non-diffusion \glspl{model}. 
+This indicates the diffusion \glspl{model}' flexibility to generate synthetic data to cater to the specific requirements of the intended use case.
+Finally, diffusion \glspl{model} produced synthetic data more indistinguishable from real data than non-diffusion \glspl{model}, as suggested by a non-zero \gls{pmse} score.
 
 \cleardoublepage 

@@ -60,7 +60,7 @@ This format presents particular challenges for neural networks when working with
 
 The third challenge is the "dependency on preprocessing" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
 \textcite{borisov2022DeepNeuralNetworks} highlights the importance of a preprocessing and an explicit feature construction step that is necessary when working with tabular data in a deep learning context.
-This preprocessing step is crucial since it not only strongly influences the performance of deep learning models \cite{gorishniy2022EmbeddingsNumericalFeatures}, it also introduces new challenges. 
+This preprocessing step is crucial since it not only strongly influences the performance of deep learning \glspl{model} \cite{gorishniy2022EmbeddingsNumericalFeatures}, it also introduces new challenges. 
 Depending on the preprocessing strategy (\Autoref{sec:preprocessing}), it is possible to create a very sparse feature matrix, construct a synthetic ordinal ordering of a nominal variable, or lose some information during the conversion of the data \cite{borisov2022DeepNeuralNetworks}.
 
 The last and fourth challenge concerns the "importance of single features" \cite[p. 4]{borisov2022DeepNeuralNetworks}. 
@@ -75,7 +75,7 @@ Switching an individual's \textit{education} attribute value from \textit{"Presc
 \subsection{Tabular Data Preprocessing}
 \label{sec:preprocessing}
 
-Different data types can and should be processed into a meaningful format to be useful for deep learning models in different ways \cite{fan2020RelationalDataSynthesisa, lederrey2022DATGANIntegratingExperta}.
+Different data types can and should be processed into a meaningful format to be useful for deep learning \glspl{model} in different ways \cite{fan2020RelationalDataSynthesisa, lederrey2022DATGANIntegratingExperta}.
 That is usually the first step before working with the data on any task \cite{izonin2022TwoStepDataNormalization}.
 \textcite{garcia2016BigDataPreprocessing} states, that data preprocessing itself consists of multiple different tasks: data cleaning, data normalization, data transformation, data integration, missing value imputation and noise identification.
 While each of the preprocessing tasks in itself is important, 
@@ -104,11 +104,11 @@ The leave-one-out encoding technique is an approach to encode a categorical colu
 A categorical entry is replaced by the mean of the target variable of all rows where the same category is present, excluding the target value of the to be encoded value.
 Lastly, a hash-based approach is worth mentioning, where a deterministic hash function transforms each category into a numerical form \cite{borisov2022DeepNeuralNetworks}.
 
-Numerical data like integers or floats can typically be fed directly into deep learning models without special encoding, as these algorithms inherently handle and learn patterns in such data without the need for additional encoding.
-However, \textcite{gorishniy2022EmbeddingsNumericalFeatures} has shown that in some cases, encoding numerical data can improve the performance of deep learning models. 
+Numerical data like integers or floats can typically be fed directly into deep learning \glspl{model} without special encoding, as these algorithms inherently handle and learn patterns in such data without the need for additional encoding.
+However, \textcite{gorishniy2022EmbeddingsNumericalFeatures} has shown that in some cases, encoding numerical data can improve the performance of deep learning \glspl{model}. 
 Encoding numerical data can be achieved through various methods such as normalization, discretization, or using embeddings.
 
-%Die beiden abschnitte auslagern in eigenen abschnitt? (GGF nur embeddings auslagern?)
+
 Discretization techniques transform numerical features to categorical features, hence, quantitative data into qualitative data \cite{garcia2016BigDataPreprocessing}. 
 \textcite{dougherty1995SupervisedUnsupervisedDiscretization} gives an overview of classical discretization techniques, such as equal interval width binning, where the continuous values are divided and assigned to a certain amount of bins.
 Researchers from NVIDIA \cite{dong2022GeneratingSyntheticData} have recently put forth a new method, introducing a tokenizer designed specifically for handling tabular data with floating-point numbers.
@@ -128,8 +128,6 @@ However, a static embedding would always create the same vector representation f
 Using the embedding layers to get a vector representation without learning is also possible, which can be seen as a "feature tokenization" \cite{zheng2022DiffusionModelsMissing, gorishniy2021RevisitingDeepLearning}.
 However, semantic similarity in a vector space cannot be achieved without any learning, so this embedding technique is more similar to a discretization/tokenization technique.
 
-% [TODO: Insert example for single-dim encoding in tabular data] --> warum nochmal?
-% Hence, the contextualized embedding vector of the word \textit{second} in the context of \textit{Time} (\eg \textit{"it took me 3 seconds"}) should be different from the one where \textit{second} is used in the context of \textit{Competition} (\eg \textit{"he achieved the second place}").
 \textbf{Multi-Dimensional Encodings:}
 Multi-Dimensional encoding techniques focus on encoding an entire record (or table-row) into another representation \cite{borisov2022DeepNeuralNetworks}.
 The VIME framework \cite{yoon2020VIMEExtendingSuccess} uses a multilayer perceptron as an encoder that encodes a tabular input row into a latent representation, 
@@ -141,14 +139,13 @@ Both architectures transform tabular data into a two-dimensional structure (\eg 
 
 \subsubsection{Data Normalization and Standardization}
 \label{sec:dataNormalization} 
-% Standardization and normalization of values is especially important if the data will be used in a machine learning context, where machine learning models might behave unexpectedly if 
-% the features do not look similar to a Gaussian distribution or are not ranged between 0 and 1 \cite{scikit-learn, scikit-learndevelopers2023PreprocessingData}.
+
 Normalization and standardization techniques are applied to numerical columns and scale the values so that their distribution is adjusted \cite{garcia2016BigDataPreprocessing}.
 This is especially important in tabular data, where numerical features are likely to have a different scale, \eg a column \textit{age} could have a range of $1$ to $100$ and a column \textit{capital-gain} could have a range from $0$ to $100.000$, as it is the case in the adult income dataset (\Autoref{ch:methods-datasets}) \cite{Dua:2019}.
 Normalization allows scaling each column to a predefined range (usually 0 to 1, or -1 to 1) while maintaining the overall distribution of each column \cite{izonin2022TwoStepDataNormalization}.
 Standardization on the hand rescales the data so it follows a normal distribution with mean 0 and standard deviation 1 \cite{scikit-learndevelopers2023PreprocessingData}.
 Standardizing and normalizing data is crucial for the machine learning context, where \glspl{model} may react unpredictably if features do not approximate a Gaussian distribution or are not ranged between 0 and 1 \cite{scikit-learn, scikit-learndevelopers2023PreprocessingData}.
-Through this data rescaling, the sensitivity of models to large values is reduced and the generalizability is increased \cite{izonin2022TwoStepDataNormalization}.
+Through this data rescaling, the sensitivity of \glspl{model} to large values is reduced and the generalizability is increased \cite{izonin2022TwoStepDataNormalization}.
 Two popular standardization and normalization approaches are the standard and the min-max scaler, respectively.
 The standard scaler standardizes a feature value $x_i$ according to the mean and standard distribution of the feature column so that it follows a normal distribution \cite{garcia2016BigDataPreprocessing, izonin2022TwoStepDataNormalization}.
 It can be defined as $x' = \frac{x_i-mean(x)}{std(x)}$, with $x'$ as the standardized $x_i$ value \cite{izonin2022TwoStepDataNormalization}.
@@ -180,7 +177,7 @@ $$r=\alpha_{i,j}\oplus\beta_{i,j}$$
 \noindent For example, given $\alpha_{i,j}=0.4$ and $\beta_{i,j}=[0,0,1]$, the normalized representation would be:
 $$r=[0.4,0,0,1]$$
 
-% include image from paper
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{images/mode-normalization.png}
@@ -206,7 +203,7 @@ While first synthetic data approaches focused on imputation techniques to genera
 Acquiring and collecting real data can be costly \cite{panova2022HowSyntheticData} or may simply not be possible due to the sensitivity of the data (\eg medical records) \cite{esteban2017RealvaluedMedicalTimea} or due to regulatory restrictions, such as the \gls{gdpr} \glsadd{gdpraccr} \cite{european_commission_regulation_2016}.
 Synthetic data on the other hand is, compared to real data, cheap to generate \cite{leminh2021AirGenGANbasedSynthetica}, fulfils regulatory and privacy constraints \cite{zhao2022CTABGANEnhancingTabular} and can substitute real data in software development for testing \cite{whiting2008CreatingRealisticScenariobased} or machine learning training \cite{panova2022HowSyntheticData}.
 Hence, synthetic data could be used as an alternative to real data in various use cases.
-Access to data is still one of the biggest bottlenecks when developing machine learning or deep learning models \cite{fan2020RelationalDataSynthesisa}.
+Access to data is still one of the biggest bottlenecks when developing machine learning or deep learning \glspl{model} \cite{fan2020RelationalDataSynthesisa}.
 Synthetic data could be used to increase the data quality, by rebalancing skewed datasets \cite{zhao2022CTABGANEnhancingTabular} 
 or increasing the dataset size as additional training data or in combination with the real data \cite{leminh2021AirGenGANbasedSynthetica, kim2021OCTGANNeuralODEbased}.
 An example, where working with real data is sometimes not possible, due to privacy or availability reasons could be software development \cite{9034117, whiting2008CreatingRealisticScenariobased}.
@@ -218,14 +215,14 @@ A synthetic data generation \gls{model} would possibly allow developers to gener
 \subsection{Synthetic Tabular Data Generation}
 \label{sec: synthetic tabular data generation}
 
-Generative models have recently received a lot of attention, thanks to their impressive results in generating a variety of data types, 
+Generative \glspl{model} have recently received a lot of attention, thanks to their impressive results in generating a variety of data types, 
 such as images \cite{ho2020DenoisingDiffusionProbabilistic, dhariwal2021DiffusionModelsBeat, rombach2022HighResolutionImageSynthesis}, videos \cite{ho2022VideoDiffusionModels, runwayGen1Runway}, text \cite{radford2018ImprovingLanguageUnderstanding, openai2022ChatGPTOptimizingLanguage}, or music \cite{agostinelli2023MusicLMGeneratingMusic, Forsgren_Martiros_2022}.
 
 While synthetic data generation can be applied to various types of data, generating synthetic tabular data is challenging due to the complexity of the underlying joint distributions between variables \cite{borisov2022DeepNeuralNetworks}.
 This works formal definition of the tabular data generation is adapted from \cite[p. 2]{xu2019ModelingTabularData} and expands the definition of a table from \Autoref{ch:preliminaries-dataSynthesis-tabularData}:
 
 \begin{displayquote}
-    A data synthesizer $G$ is trained on a table $T$ and then used to generate a synthetic table $T_{syn}$. % Vllt die definition einer tabelle nach oben packen und von oben übernehmen?
+    A data synthesizer $G$ is trained on a table $T$ and then used to generate a synthetic table $T_{syn}$.
     $T$ is partitioned into a training set $T_{train}$ and test set $T_{test}$. 
     The synthesizer $G$ is trained on $T_{train}$ and afterwards used to sample independently individual rows to create $T_{syn}$.
     Finally, the similarity of $T_{syn}$ to $T_{test}$ is evaluated using a selected similarity evaluation technique.
@@ -244,7 +241,7 @@ Data utility is concerned with how well the synthetic data accurately reflects t
 Low disclosure risk on the other hand is concerned with the preservation of privacy and confidentiality of the information in the real training dataset $T_{train}$ \cite{little2021GenerativeAdversarialNetworksa}. 
 
 Tabular data synthesis approaches can be divided into process- and data-driven methods \cite{goncalves2020GenerationEvaluationSynthetic}.
-Process-driven models focus on simulating real-world processes and gather data during that simulation to create the synthetic dataset \cite{goncalves2020GenerationEvaluationSynthetic, kowalczyk2022TaxonomyUseSynthetic}.
+Process-driven \glspl{model} focus on simulating real-world processes and gather data during that simulation to create the synthetic dataset \cite{goncalves2020GenerationEvaluationSynthetic, kowalczyk2022TaxonomyUseSynthetic}.
 On the other hand, data-driven approaches aim to generate synthetic data based on already existing real-world datasets \cite{goncalves2020GenerationEvaluationSynthetic, kowalczyk2022TaxonomyUseSynthetic}.
 This can be achieved by augmenting the existing dataset, \ie applying transformations to the existing individual datapoints to generate new datapoints \cite{kowalczyk2022TaxonomyUseSynthetic}.
 Another technique to generate synthetic data is to simply sample from the individual feature distributions of a dataset to create new synthetic data \cite{kowalczyk2022TaxonomyUseSynthetic}.
@@ -279,9 +276,9 @@ A successful tabular data generator should be able to recreate such properties o
 
 Deep learning has rapidly become a dominant force in artificial intelligence, revolutionizing various fields including computer vision, \gls{nlp}, and generative modeling. 
 Here, complex neural networks architectures emerged with multiple layers and complex interconnections.
-These architectures have enabled the creation of highly accurate and efficient models that are capable of processing vast amounts of data from different modalities.
+These architectures have enabled the creation of highly accurate and efficient \glspl{model} that are capable of processing vast amounts of data from different modalities.
 
-In recent years, this development of new deep-learning architectures has been a key area of research, leading to the creation of such powerful models.
+In recent years, this development of new deep-learning architectures has been a key area of research, leading to the creation of such powerful \glspl{model}.
 This section will start with a high-level introduction into a neural network's most important architectural building blocks.
 Subsequently, the most important deep learning \gls{model} architectures for generating data are presented.
 
@@ -345,7 +342,7 @@ Specifically, the height and width of the output are determined by the formula $
 
 In feed-forward neural networks, information flows forward through the network from input to output node, hence, there are no internal connections that allow
 the output of the \gls{model} to be fed back into the network as inputs \cite{aggarwal2018NeuralNetworksDeep, Goodfellow-et-al-2016}.
-When such connections are added to the network architecture, the resulting models are referred to as \glspl{rnn} \cite{rumelhart1986LearningInternalRepresentations}.
+When such connections are added to the network architecture, the resulting \glspl{model} are referred to as \glspl{rnn} \cite{rumelhart1986LearningInternalRepresentations}.
 \Glspl{rnn} are designed to process sequential data, like sentences or time-series data, where the size of the sequence does not have to be fixed.
 In \glspl{cnn}, the learned parameters are shared by using the same convolution kernel on each subset of neighboring input data at each time step (\Autoref{fig:rnns}). 
 As a result, a succession of output values is produced, each of which is dependent on a few close input values. 
@@ -410,14 +407,14 @@ For instance, this has been achieved through the introduction of a context vecto
 \section{Deep Generative Models}
 \label{ch:preliminaries-generativeMlgorithms}
 
-Deep generative models have revolutionized the field of artificial intelligence and machine learning by generating new and original data based on existing patterns and structures.
-For example, deep generative models have been able to generate new images \cite{ho2020DenoisingDiffusionProbabilistic}, videos \cite{ho2022VideoDiffusionModels}, text \cite{openai2022ChatGPTOptimizingLanguage}, or music \cite{agostinelli2023MusicLMGeneratingMusic}, based on previously learned data. 
-Generative models try to learn a joint distribution over all the available variables in a dataset \cite{kingma2019IntroductionVariationalAutoencoders}, which is also called the \textit{generative modeling problem} \cite{goodfellow2020GenerativeAdversarialNetworks}.
+Deep generative \glspl{model} have revolutionized the field of artificial intelligence and machine learning by generating new and original data based on existing patterns and structures.
+For example, deep generative \glspl{model} have been able to generate new images \cite{ho2020DenoisingDiffusionProbabilistic}, videos \cite{ho2022VideoDiffusionModels}, text \cite{openai2022ChatGPTOptimizingLanguage}, or music \cite{agostinelli2023MusicLMGeneratingMusic}, based on previously learned data. 
+Generative \glspl{model} try to learn a joint distribution over all the available variables in a dataset \cite{kingma2019IntroductionVariationalAutoencoders}, which is also called the \textit{generative modeling problem} \cite{goodfellow2020GenerativeAdversarialNetworks}.
 Formally, in generative modeling training examples $x$ are drawn from an unknown distribution $p_{data}(x)$ and a generative modeling algorithm is trained to learn a distribution density function $p_{model}(x;\theta)$ that approximates the true probability density function $p_{data}(x)$ as closely as possible \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
 In the generative modeling process, \gls{model} parameters denoted by $\theta$ are essential as they shape the output of the \gls{model}. 
 These parameters are typically fine-tuned through an optimization process that seeks the most suitable $\theta$ values, aiming to enhance the resemblance between $p_{model}$ and $p_{data}$ \cite[p. 139]{goodfellow2020GenerativeAdversarialNetworks}.
 Several powerful generative modeling approaches with different architectures have emerged, each with its strengths and weaknesses. 
-This section will explore four of the most popular approaches: \acrfull{vae} (\Autoref{ch:preliminaries-variationalAutoencoders}), \acrfull{gan} (\Autoref{ch:preliminaries-generativeAdversarialNetworks}), transformers (\Autoref{ch:preliminaries-transformers}), and diffusion models (\Autoref{ch:preliminaries-diffusionProbabilisticModels}). 
+This section will explore four of the most popular approaches: \acrfull{vae} (\Autoref{ch:preliminaries-variationalAutoencoders}), \acrfull{gan} (\Autoref{ch:preliminaries-generativeAdversarialNetworks}), transformers (\Autoref{ch:preliminaries-transformers}), and diffusion \glspl{model} (\Autoref{ch:preliminaries-diffusionProbabilisticModels}). 
 
 \subsection{Variational Autoencoders}
 \label{ch:preliminaries-variationalAutoencoders} 
@@ -486,7 +483,7 @@ The \gls{kl}-divergence measures how diverged two probability distributions are 
 With $p(z)$ as a prior defined standard Gaussian distribution, minimizing this function means optimizing the encoders ($q(z|x)$) parameters of $\mu$ and $\sigma$ towards resembling the distributions it is compared to ($p(z)$).
 
 \noindent Additionally, a reconstruction loss is computed based on the negative log-likelihood that measures the error between the input and output:
-% This reconstruction loss is minimized:
+
 \begin{equation}
     \label{eqn:reconstruction_loss}
     L_{reconstruction} =-\mathbb{E}_{q(z|x)}[logp(x|z)]
@@ -522,8 +519,8 @@ Hence, the final loss function that is minimized during the training of the \gls
 \label{ch:preliminaries-generativeAdversarialNetworks}
 
 \Glspl{gan} have been introduced in 2014 as a new architecture to address the generative modeling problem \cite{NIPS2014_5ca3e9b1}.
-The architecture of \glspl{gan} is based on game theory where two models compete in a zero-sum minimax game \cite{NIPS2014_5ca3e9b1, zhao2022CTABGANEnhancingTabular}.
-A zero-sum minimax game, in the context of \glspl{gan}, refers to the adversarial interaction between two models - the generator and the discriminator - where one \gls{model}'s gain (minimizing its loss) corresponds to the other \gls{model}'s loss (maximizing its loss), such that the total sum of their gains and losses is always zero.
+The architecture of \glspl{gan} is based on game theory where two \glspl{model} compete in a zero-sum minimax game \cite{NIPS2014_5ca3e9b1, zhao2022CTABGANEnhancingTabular}.
+A zero-sum minimax game, in the context of \glspl{gan}, refers to the adversarial interaction between two \glspl{model} - the generator and the discriminator - where one \gls{model}'s gain (minimizing its loss) corresponds to the other \gls{model}'s loss (maximizing its loss), such that the total sum of their gains and losses is always zero.
 While the generator is tasked to generate realistic-looking data points, its adversary, the discriminator is tasked to discriminate whether a given datapoint is a real datapoint or a fake datapoint produced by the generator.
 The generator function $G(z;\theta_G)$ with learnable parameters $\theta_G$ receives as input a vector $z$ and is tasked to transform $z$ into a realistic-looking sample $x$.
 An input vector $z$ is drawn from a prior distribution $p(z)$, usually a Gaussian or uniform distribution, and is just an unstructured noise vector.
@@ -585,7 +582,7 @@ This process is repeated iteratively until a Nash-equilibrium is reached, at whi
 
 In 2017 \textcite{vaswani2017AttentionAllYou} proposed the Transformer architecture for sequence modeling tasks.
 While in this domain \gls{rnn} based approaches have been established state-of-the-art techniques, the newly proposed Transformer architecture can be trained in a parallel manner,
-overcoming the central issue of \gls{rnn}-based models, their high computational demand.
+overcoming the central issue of \gls{rnn}-based \glspl{model}, their high computational demand.
 Transformers have been successfully adapted in multiple domains, such as \gls{nlp} \cite{gillioz2020OverviewTransformerbasedModels}, computer vision \cite{khan2022TransformersVisionSurvey}, audio processing \cite{gong2022SSASTSelfSupervisedAudio} or 
 tabular data \cite{huang2020TabTransformerTabularData} and show properties of a universal computation engine \cite{lu2021PretrainedTransformersUniversal, lin2022SurveyTransformers}.
 This is achieved through the combination of several mechanisms, namely, self-attention, multi-head attention, embeddings, and positional encoding \cite{vaswani2017AttentionAllYou}.
@@ -648,9 +645,9 @@ Both the encoder and decoder utilize self-attention mechanisms, allowing for con
 \label{ch:preliminaries-diffusionProbabilisticModels}
 
 The \Glspl{ddpm} (from now on referred to as "diffusion \gls{model}"), firstly introduced by \textcite{sohl-dickstein2015DeepUnsupervisedLearning}, is a generative modeling approach inspired by non-equilibrium statistical physics \cite{sohl-dickstein2015DeepUnsupervisedLearning}.
-\textcite{ho2020DenoisingDiffusionProbabilistic} demonstrated in their work, how diffusion models can successfully generate high-quality synthetic images.
+\textcite{ho2020DenoisingDiffusionProbabilistic} demonstrated in their work, how diffusion \glspl{model} can successfully generate high-quality synthetic images.
 This section will provide an explanatory introduction to the diffusion \gls{model} concept, drawing heavily on the foundational work of \cite{ho2020DenoisingDiffusionProbabilistic}.
-Although several other researchers have made notable advancements to diffusion probabilistic models, the work presented in \textcite{sohl-dickstein2015DeepUnsupervisedLearning, ho2020DenoisingDiffusionProbabilistic} 
+Although several other researchers have made notable advancements to diffusion probabilistic \glspl{model}, the work presented in \textcite{sohl-dickstein2015DeepUnsupervisedLearning, ho2020DenoisingDiffusionProbabilistic} 
 serves as the cornerstone upon which all subsequent improvements have been built.
 Improvements and alternations made to the approach from \textcite{ho2020DenoisingDiffusionProbabilistic} will be discussed in detail in \Autoref{ch:relatedWork-diffusionModels}.
 
@@ -661,9 +658,9 @@ On a high level, the whole diffusion concept can be summarized as follows:
   We then learn a reverse diffusion process that restores structure in data, yielding a highly flexible and tractable generative \gls{model} of the data." \cite[p. 1]{sohl-dickstein2015DeepUnsupervisedLearning}
 \end{quotation}
 
-Formally, \textcite{ho2020DenoisingDiffusionProbabilistic} defines diffusion models as a class of \glspl{lvm} of the form $p_\theta(x_0):= \int_{}^{}p_\theta(x_{0:T})dx_{1:T}$,
+Formally, \textcite{ho2020DenoisingDiffusionProbabilistic} defines diffusion \glspl{model} as a class of \glspl{lvm} of the form $p_\theta(x_0):= \int_{}^{}p_\theta(x_{0:T})dx_{1:T}$,
 with $x_1, ..., x_T$ as latents of the same dimensionality as samples from the data distribution $x_0 \sim q(x_0)$.
-Diffusion models consist of a forward process and a reverse process.
+Diffusion \glspl{model} consist of a forward process and a reverse process.
 During the forward process, an initial data point $x_0$ is obtained from the data distribution $q(x_0)$.
 In the forward process (also called diffusion process), a fixed \gls{mc} gradually adds noise to the data.
 $T$ defines the number of noising steps and $x_1,...,x_T$ denotes the latent variables, \ie the noised versions of the original data, with $x_T$ being the fully noised version of the data \cite{ho2020DenoisingDiffusionProbabilistic}.
@@ -689,7 +686,6 @@ the forward diffusion process from an unnoised input $x_0$ to a noised version a
   \label{eqn:forwards_2}
   \begin{align*}
     q(x_t | x_0) \quad & := \mathcal{N}(x_t; \sqrt{\bar{\alpha}_t} x_0, (1 - \bar{\alpha}_t) \textbf{I})\\
-    %  x_t &= \sqrt{\bar{\alpha}_t} x_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon \textrm{, with } \epsilon\sim\mathcal{N}(0, \textbf{I})
   \end{align*}
 \end{equation}
 
@@ -722,7 +718,7 @@ but was later the work of \textcite{nichol2021ImprovedDenoisingDiffusion} a lear
 
 Like in \glspl{vae} (\Autoref{ch:preliminaries-variationalAutoencoders}), the goal is to maximize the log-likelihood $log(p_\theta(x_0))$.
 $p_\theta(x_0)$ depends on all timesteps before $x_0$ and is, therefore, not tractable in practice \cite{zbinden2022ImplementingExperimentingDiffusion}.
-As a solution, the variational lower bound on the log-likelihood can be computed as the objective function by subtracting a \gls{kl}-divergence term as illustrated in \Autoref{eqn:vlb}: %(ELBO)
+As a solution, the variational lower bound on the log-likelihood can be computed as the objective function by subtracting a \gls{kl}-divergence term as illustrated in \Autoref{eqn:vlb}: 
 
 \begin{equation}
   \label{eqn:vlb}
@@ -774,7 +770,7 @@ To $L_{0}$ can also be referred to as a "reconstruction term" \cite[p. 10]{luo20
 \textcite{ho2020DenoisingDiffusionProbabilistic} initially use an independent discrete decoder to determine $L_{0}$, derived from $\mathcal{N}(x_0;\mu_0(x_1,1)\sigma^2_1,\textbf{I})$.
 However, ultimately the authors decide to remove the term in favor of a simpler loss term, which leads to a simpler implementation and better quality \cite{ho2020DenoisingDiffusionProbabilistic}.
 
-Inside $L_{t-1}$, one compares the target denoising step $q(x_{t-1}|x_t,x_0)$ that is also conditioned on the input $x_0$ with the approximated denoising step $p_\theta(x_{t-1}|x_t)$. %%%
+Inside $L_{t-1}$, one compares the target denoising step $q(x_{t-1}|x_t,x_0)$ that is also conditioned on the input $x_0$ with the approximated denoising step $p_\theta(x_{t-1}|x_t)$.
 Both terms have a closed-form solution\footnote{Meaning they can be computed within a finite amount of standard computations \cite{borwein2013ClosedFormsWhat}.} thanks to the conditioning on $x_0$ \cite{ho2020DenoisingDiffusionProbabilistic}:
 
 \begin{equation}
@@ -1040,8 +1036,8 @@ More specifically, it assesses the similarity or identity between the range of p
 
 The machine learning efficacy (also referred to as "machine learning utility" \cite{zhang2021GANBLRTabularData} or "cross classification" \cite{goncalves2020GenerationEvaluationSynthetic}) is an approach that measures the utility of synthetic data. 
 It has been used in a variety of works \cite{zhao2022CTABGANEnhancingTabular, xu2019ModelingTabularData, zhang2021GANBLRTabularData, bourou2021ReviewTabularData, ge2021KaminoConstraintawareDifferentially}.
-This metric investigates whether "it is possible to replace the real with generated data to solve problems using Machine Leaning models" \cite[p. 7]{bourou2021ReviewTabularData}.
-A set of classification models (for example decision trees, regression models, neural networks, and more) are evaluated in a classification or regression task.
+This metric investigates whether "it is possible to replace the real with generated data to solve problems using Machine Leaning \glspl{model}" \cite[p. 7]{bourou2021ReviewTabularData}.
+A set of classification \glspl{model} (for example decision trees, regression \glspl{model}, neural networks, and more) are evaluated in a classification or regression task.
 \newpage
 \textcite[p. 7]{goncalves2020GenerationEvaluationSynthetic} highlights two distinct ways to perform the machine learning efficacy:
 \begin{enumerate}
@@ -1049,19 +1045,38 @@ A set of classification models (for example decision trees, regression models, n
   \item "CrCl-SR": train a \gls{model} on synthetic data and test it on hold-out data from both real and synthetic datasets.
 \end{enumerate}
 The authors argue, that the former is useful to evaluate if statistical properties are similar between real and synthetic datasets
-and that the latter allows confirming whether "scientific conclusions drawn from [...] models trained on synthetic datasets can safely be applied to real datasets" \cite[p. 7]{goncalves2020GenerationEvaluationSynthetic}.
-The performance of the classification models itself is based on commonly used metrics for classification/regression tasks, such as the F1 score or \gls{rmse} score \cite{bourou2021ReviewTabularData, chundawat2022UniversalMetricRobust}.
+and that the latter allows confirming whether "scientific conclusions drawn from [...] \glspl{model} trained on synthetic datasets can safely be applied to real datasets" \cite[p. 7]{goncalves2020GenerationEvaluationSynthetic}.
+The performance of the classification \glspl{model} itself is based on commonly used metrics, such as the accuracy, the F1 score, or the \gls{roc-auc} score \cite{kotelnikov2022TabDDPMModellingTabular,bourou2021ReviewTabularData, chundawat2022UniversalMetricRobust}.
+For these metrics, the \gls{tp}, \gls{tn}, \gls{fp}, and \gls{fn} are required, which measure the number of instances where the classification model correctly predicted the positive and negative classes (\gls{tp} and \gls{tn}), and where it incorrectly predicted the positive and negative classes (\gls{fp} and \gls{fn}), respectively.
+The accuracy is defined as \cite[p. 4]{m2015ReviewEvaluationMetrics}:
+\begin{equation}
+  \begin{align}
+    \frac{TP+TN}{TP+FP+TN+FN}
+  \end{align}
+\end{equation}
+The F1 score reflects the harmonic mean between the recall and precision metric \cite[p. 4]{m2015ReviewEvaluationMetrics} and is defined as:
+\begin{equation}
+  \begin{align}
+    \frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
+  \end{align}
+\end{equation}
+where precision is the ratio of \gls{tp} to the sum of \gls{tp} and \gls{fp}, and recall is the ratio of \gls{tp} to the sum of \gls{tp} and \gls{fn} \cite[p. 4]{m2015ReviewEvaluationMetrics}.        
+
+The \gls{roc} plots the \gls{tp} rate against the \gls{fp} for different classification thresholds, \ie the decision boundary where the model classifies an instance as belonging to the positive class changes \cite{fawcett2006IntroductionROCAnalysis}.
+The \gls{roc-auc} measures the area under this \gls{roc} curve, indicating the performance of the classifier across all possible classification thresholds \cite{fawcett2006IntroductionROCAnalysis}.
+
 It is important to mention that there is no universally accepted way to perform this machine learning efficacy, yet, as it is implemented differently throughout the literature.
-For example, \cite{zhao2022CTABGANEnhancingTabular} makes use of five models and calculates five different metrics, 
-\cite{ge2021KaminoConstraintawareDifferentially} on the other hand, uses nine different models but calculates only three different metric scores.
-Moreover, \cite{kunar2021DTGANDifferentialPrivatea} uses four models with four metrics, and \cite{kim2021OCTGANNeuralODEbased} uses three models on only one metric.
-In addition to the various models and metric scores used, each \gls{model} can have different hyperparameters.
-For example, \cite{kunar2021DTGANDifferentialPrivatea} uses the default hyperparameters\footnote{From the scikit library \cite{scikit-learn}.} for all models and 
+The approaches in the literature vary in terms of machine learning \glspl{model} and evaluation metrics used.
+For example, \cite{zhao2022CTABGANEnhancingTabular} makes use of five \glspl{model} and calculates five different metrics, 
+\cite{ge2021KaminoConstraintawareDifferentially} on the other hand, uses nine different \glspl{model} but calculates only three different metric scores.
+Moreover, \cite{kunar2021DTGANDifferentialPrivatea} uses four \glspl{model} with four metrics, and \cite{kim2021OCTGANNeuralODEbased} uses three \glspl{model} on only one metric.
+In addition to the various \glspl{model} and metric scores used, each \gls{model} can have different hyperparameters.
+For example, \cite{kunar2021DTGANDifferentialPrivatea} uses the default hyperparameters\footnote{From the scikit library \cite{scikit-learn}.} for all \glspl{model} and 
 \cite{kim2021OCTGANNeuralODEbased} chooses the hyperparameters that show the best performance in a cross-validation hyperparameter tuning.
-Lastly, the different synthetic data generation models might use different datasets to compute their machine learning efficacy scores.
+Lastly, the different synthetic data generation \glspl{model} might use different datasets to compute their machine learning efficacy scores.
 Even though most of the generation approaches have adopted the \textit{CrCl-SR} \cite{goncalves2020GenerationEvaluationSynthetic} method to calculate the machine learning efficacy score,
-the aforementioned variabilities in terms of metrics- and \gls{model}-choice makes it hard to compare the performance across the different generative models using the machine learning efficacy.
-%[TODO: ACC, F1 und ROC-AUC erklären? oder eher im concept part?]
+the aforementioned variabilities in terms of metrics- and \gls{model}-choice makes it hard to compare the performance across the different generative \glspl{model} using the machine learning efficacy.
+
 
 \subsection{Privacy Evaluation}
 \label{ch:preliminaries-evaluationOfSyntheticTabularData-privacyEvaluation}
@@ -1086,7 +1101,7 @@ There are several other ways to evaluate synthetic data that do not fall directl
 \subsubsection{Expert Evaluation}  
 \textcite{elemam2020SevenWaysEvaluate} mentioned that the quality of synthetic data can be determined by a domain expert, 
 who is familiar with how data in the given domain should look.
-The expert could be asked to differentiate a set of synthetic data samples from a set of real data samples, and the accuracy could be measured.
+The expert could be asked to differentiate a set of synthetic data samples from a set of real data samples, and the \gl could be measured.
 However, this metric is not only highly dependent on the individual expert it is also very time-consuming and hardly viable in practice.
 A possible way to automate this approach is to use a classification \gls{model}.
 \textcite{elemam2020SevenWaysEvaluate} proposes to train such a classification \gls{model} to distinguish between real and synthetic data.
@@ -1129,7 +1144,7 @@ It consists of the average of five different similarity metrics that cover diffe
   This is done for each column and the average score is calculated.
   \item $S_{pca}$: Measures whether the dimensionality reduction of the real and synthetic dataset through \gls{pca} is similar.
   Five principal components are computed for each dataset, and the average error in percentage between both \glspl{pca} is calculated using the mean absolute percentage error.
-  \item $S_{est}$: Is a machine learning efficacy similarity score. Four different models are chosen, depending on whether the dataset is a classification or regression dataset, and performance metric averages are computed.
+  \item $S_{est}$: Is a machine learning efficacy similarity score. Four different \glspl{model} are chosen, depending on whether the dataset is a classification or regression dataset, and performance metric averages are computed.
   The root mean squared error and F1 score for regression or classification tasks respectively is chosen as performance metric.
 \end{itemize}
 
@@ -1182,7 +1197,7 @@ As a consequence, they propose the following similarity metrics:
       S_{corrl} = 1-\frac{1}{n^2-n} \sum_{i=1}^{n}\sum_{j=1_{j \neq i}}^{n} \bigg| \frac{sln(r_{i,j})- sln(s_{i,j})}{sln(r_{i,j})}\bigg| 
       \end{align}
   \end{equation}
-
+  \newpage
   \item[Propensity Mean Squared Error:]
   Is used to "robustly discriminate between real and synthetic data" \cite[p. 3]{chundawat2022UniversalMetricRobust}.
   It is based upon the work of \textcite{snoke2018GeneralSpecificUtility}, who propose the use of the \gls{pmse} in the context of synthetic data generation.
@@ -1220,7 +1235,7 @@ As a consequence, they propose the following similarity metrics:
   For a single variable, the score is calculated as the average of the number of samples in each category in the fake data 
   divided by the number of samples in the corresponding category in the real data, multiplied by a scaling factor. 
   It penalizes the score more if rare categories are not well-represented. 
-  
+  \newpage
   Mathematically, the score for a single variable or column $c$ is calculated as follows:
 
   $$ s_{cr} = \frac{1}{n_{cat}} \sum_{i=1}^{n_{cat}} \frac{n^s_i}{n^r_i} \cdot scaling~factor $$
@@ -1241,13 +1256,13 @@ As a consequence, they propose the following similarity metrics:
 
   \item[Machine Learning Efficacy:]
   Is a metric to indicate how valuable the synthetic data is in a machine learning scenario (see \Autoref{ch:preliminaries-machineLearningEfficacy}).
-  \cite{chundawat2022UniversalMetricRobust} adopts the proposed metrics and models by \cite{brenninkmeijer2019GenerationEvaluationTabular} that differentiates the chosen set of models and metric based on
+  \cite{chundawat2022UniversalMetricRobust} adopts the proposed metrics and \glspl{model} by \cite{brenninkmeijer2019GenerationEvaluationTabular} that differentiates the chosen set of \glspl{model} and metric based on
   if the dataset contains a classification or regression target.
-  The models include \textit{Random Forest-}, \textit{Lasso-}, \textit{Ridge-} and \textit{ElasticNet-Regression} for regression tasks and \textit{Logistic Regression-}, \textit{Random Forest-},  \textit{Decision Tree-} and an \textit{\gls{mlp}-classifier} for classification tasks \cite{brenninkmeijer2019GenerationEvaluationTabular, chundawat2022UniversalMetricRobust}.
+  The \glspl{model} include \textit{Random Forest-}, \textit{Lasso-}, \textit{Ridge-} and \textit{ElasticNet-Regression} for regression tasks and \textit{Logistic Regression-}, \textit{Random Forest-},  \textit{Decision Tree-} and an \textit{\gls{mlp}-classifier} for classification tasks \cite{brenninkmeijer2019GenerationEvaluationTabular, chundawat2022UniversalMetricRobust}.
   For each \gls{model}, two versions are trained, one trained on synthetic and one trained on real training data.
   Their performance is tested on both the real and synthetic targets using the F1-score or \gls{rmse}-score for classification and regression tasks respectively.
   For each \gls{model}, the relative error (\Autoref{eqn:rel_err}) is calculated between the metric results of the \gls{model} that was trained on real data and the \gls{model} that was trained on synthetic data.
-  The final score is the average performance error for all four models:
+  The final score is the average performance error for all four \glspl{model}:
 
   \begin{equation}
     \begin{align*}

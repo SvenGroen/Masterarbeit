@@ -23,7 +23,6 @@ This thesis focuses on a research prototype rather than a fully developed softwa
 Therefore, only a subset of the aforementioned requirements are prioritized during development.
 The following requirements R1 - R5 are the non-functional requirements for the software developed in this thesis:
 
-%[TODO: GANZER ABSCHNITT AM ENDE AUF INHALTLICHE RICHTIGKEIT KORRIGIEREN]
 \begin{description}
 	\item[R1 - Functional Suitability:]
 		Functional Suitability refers to "the degree to which a product or system provides functions that meet stated and implied needs when used under specified conditions" \cite[p. 219]{bass2013SoftwareArchitecturePractice}.
@@ -32,7 +31,7 @@ The following requirements R1 - R5 are the non-functional requirements for the s
 	\newpage
 	\item[R2 - Maintainability:]
 		Maintainability focuses on the "degree of effectiveness and efficiency with which a product or system can be modified by the intended maintainers" \cite[p. 220]{bass2013SoftwareArchitecturePractice}.
-		One of the core questions of this thesis is to compare different tabular processing techniques in diffusion models.
+		One of the core questions of this thesis is to compare different tabular processing techniques in diffusion \glspl{model}.
 		For this, a variety of different approaches are intended to be compared.
 		Hence, it is required that the code and software architecture is designed in a maintainable way, such that it can be easily extended with additional processing techniques, not only by the developer,
 		but also for future researchers who might build upon the work of this thesis.
@@ -65,11 +64,11 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 		\textcite{kotelnikov2022TabDDPMModellingTabular} makes use of datasets, that are already separated into numerical, categorical, and target columns, each saved in a NumPy \cite{harris2020array} array.
 		Additionally, the datasets that will be imported have to be separated into training, validation, and testing sets.
 		For the NumPy arrays to be imported, they need to be of file type ".npy".
-		Synthetic data produced by models shall be saved in the same data segmentation format as the imported data.
+		Synthetic data produced by \glspl{model} shall be saved in the same data segmentation format as the imported data.
 
 	\item[FR2 - Tabular Processing:]
 		The software shall support tabular data processing techniques that are able to encode and decode tabular data.
-		An \textit{IdentityProcessor} that has no effect is required to be implemented to test models without any tabular processing mechanism.
+		An \textit{IdentityProcessor} that has no effect is required to be implemented to test \glspl{model} without any tabular processing mechanism.
 		Additional data transformation techniques proposed by \cite{kotelnikov2022TabDDPMModellingTabular}, including normalization or categorical encoding, shall still be supported as intended by the authors.
 		Adding new tabular processing mechanisms shall not affect other existing tabular processing mechanisms. This requirement implies several sub-requirements: 
 
@@ -88,7 +87,7 @@ Please note that the software of \cite{kotelnikov2022TabDDPMModellingTabular} wi
 		The software shall allow users to configure the diffusion process by specifying parameters such as the number of iterations, batch size, sampling size, and others.
 
 		\item[FR4 - Training, Tuning, Sampling, Evaluation:]
-		The software shall support the training of various \gls{model} versions, including the TabDDPM diffusion \gls{model}, variations of TabDDPM and other non-diffusion baseline models.
+		The software shall support the training of various \gls{model} versions, including the TabDDPM diffusion \gls{model}, variations of TabDDPM and other non-diffusion baseline \glspl{model}.
 		The software shall allow finding of suitable hyperparameters in a specified hyperparameter search space.
 		During training, relevant metrics and loss values shall be saved.
 		The software shall generate synthetic samples from the trained diffusion \gls{model} during the sampling process, where the user specifies the number of synthetic samples to be generated.
@@ -148,7 +147,7 @@ Ultimately, the results of this evaluation are saved and can be interpreted by t
 
 The implementation \cite{akim2023TabDDPMModellingTabular} already provides the necessary scripts that allow for an
 easy training, sampling, evaluation, and hyperparameter tuning for their proposed TabDDPM \gls{model}.
-Additional non-diffusion baseline models the TabDDPM is compared against are supported as well.
+Additional non-diffusion baseline \glspl{model} the TabDDPM is compared against are supported as well.
 The functionality of the most important scripts can be summarized in the following way:
 
 \begin{description}
@@ -336,7 +335,7 @@ For a detailed overview of how each individual scripts changed, please refer to 
 	\item[C3-Similarity Evaluation:] Lastly, an extended evaluation of the synthetic data's similarity to the real data should be performed.
 		For this, the original machine learning efficacy evaluation remained unchanged.
 		However, the evaluation pipeline is extended by a similarity evaluation that does not only calculate a unified score, TabSynDex \cite{chundawat2022UniversalMetricRobust}, but also reports other metric results that are of interest.
-		Hyperparameters of the generation models can also be tuned towards the TabSynDex score.
+		Hyperparameters of the generation \glspl{model} can also be tuned towards the TabSynDex score.
 		In addition to the numeric metric results, several visualizations comparing real and synthetic data will be generated.
 \end{description}
 
@@ -350,31 +349,30 @@ The selection of which tabular processing mechanisms are realized heavily depend
 For a tabular processing mechanism to be used, the following conditions must be met:
 
 \begin{description}
-	\item[1. Reversibility:] the tabular processing mechanism must not only transform the data into a different format, but it also must be able to revert the transformation
+	\item[1. Reversibility:] The tabular processing mechanism must not only transform the data into a different format, but it also must be able to revert the transformation
 	      such that the data can be transformed back into its original form.
-	\item[2. Compatibility:] the data must be able to be separated into numerical and categorical parts after the transformation
+	\item[2. Compatibility:] The data must be able to be separated into numerical and categorical parts after the transformation
 	      since the remaining code expects data in this format, as specified in \Autoref{sec:data_format}.
-	\item[3. Complexity:] the time it takes to transform the data should be within a reasonable timeframe. They shall not add too much computation time to the already extensive \gls{model}-tuning process.
-	\item[4. Availability:] due to the limited time frame of this thesis, the code for the mechanisms should be publicly available (or could be implemented within a reasonable timeframe).
+	\item[3. Complexity:] The time it takes to transform the data should be within a reasonable timeframe. They shall not add too much computation time to the already extensive \gls{model}-tuning process.
+	\item[4. Availability:] Due to the limited time frame of this thesis, the code for the mechanisms should be publicly available (or could be implemented within a reasonable timeframe).
 \end{description}
 
 \subsection[]{Evaluation}
 \label{ch:conceptualDesign-Evaluation}
 The evaluation framework shall contain multiple evaluation aspects.
 Firstly, the existing machine learning efficacy using a CatBoost \gls{model} proposed by \cite{kotelnikov2022TabDDPMModellingTabular} shall be executed and remain untouched.
-In addition, the TabSynDex \cite{chundawat2022UniversalMetricRobust} similarity will be performed in each evaluation.
-Machine learning efficacy that is based upon an \gls{mlp} or using a set of classification models will not be performed for the following reasons:
+This is important to ensure that a replication of the original authors' results remains reproducible.
+
+Secondly, the TabSynDex \cite{chundawat2022UniversalMetricRobust} similarity consisting of multiple similarity metrics will be performed in each evaluation.
+The use of this similarity metric helps to provide a broader perspective on synthetic data quality, beyond just evaluating machine learning performance.
+
+Machine learning efficacy that is based upon an \gls{mlp} or using a set of classification \glspl{model} will not be performed for the following reasons:
 \begin{enumerate}
 	\item \textcite{kotelnikov2022TabDDPMModellingTabular} argues convincingly that machine learning efficacy not based on CatBoost is less informative compared to the CatBoost counterpart.
-	\item The TabSynDex metric contains a machine learning efficacy metric based upon a set of standard machine learning models.
+	\item The TabSynDex metric contains a machine learning efficacy metric based upon a set of standard machine learning \glspl{model}.
 \end{enumerate}
-Consequently, machine learning efficacy will be evaluated twice in each evaluation, once based on CatBoost and once inside the TabSynDex metric using a set of standard machine learning models.
+Consequently, machine learning efficacy will be evaluated twice in each evaluation, once based on CatBoost and once inside the TabSynDex metric using a set of standard machine learning \glspl{model}.
 
 Lastly, for a visual evaluation, several plots indicating the similarity of the synthetic data to the real data shall be generated using the implementation of \textcite{brenninkmeijer2019GenerationEvaluationTabular}.
 The plots shall effectively highlight crucial characteristics inherent in the real dataset, which need to be accurately mirrored in the synthetic dataset.
 If necessary, modifications to the plots may be required.
-
-% ''TODO:
-% ML efficacy like in the original paper + Tabsyndex similarity score + similarity score of anderes paper (+bilder von denen)
-
-% aufzählen was alles klassische ml efficacy is (acc, f1, roc) und was sim_score werte sind''

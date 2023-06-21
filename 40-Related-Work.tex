@@ -6,9 +6,9 @@ This chapter aims to comprehensively review the most significant methodologies e
 The initial section emphasizes advancements in \glspl{gan}, highlighting the progress that has resulted in state-of-the-art performance. 
 Subsequently, influential alternative strategies for tabular data synthesis that do not depend on \glspl{gan} are explored.
 
-Following this, the discussion turns to diffusion models, a topic that has gained significant attention in the image generation domain. 
+Following this, the discussion turns to diffusion \glspl{model}, a topic that has gained significant attention in the image generation domain. 
 The most prominent works and their respective enhancements in this field are examined in detail.
-Finally, the chapter delves into exploring diffusion models and their utilization in the context of tabular data synthesis.
+Finally, the chapter delves into exploring diffusion \glspl{model} and their utilization in the context of tabular data synthesis.
 
 %-------------------------------------------------------------------------
 \section{Generative Adversarial Networks Models}
@@ -29,7 +29,7 @@ The authors give an example how such a conversion could look like:
 A record of 24 values will be converted into a 5x5 square matrix, where zeros fill the remaining entries \cite[p-4]{park2018DataSynthesisBased}.
 This allows them to use \glspl{cnn} inside their \gls{model}.
 
-There are also models that specifically focus on privacy, such as PATE-GAN  \cite{jordon2018PATEGANGeneratingSynthetic}.
+There are also \glspl{model} that specifically focus on privacy, such as PATE-GAN  \cite{jordon2018PATEGANGeneratingSynthetic}.
 PATE refers to "Private Aggregation of Teacher Ensembles" \cite{papernot2017SemisupervisedKnowledgeTransfer} and is a framework that provides strong privacy guarantees for sensitive training data \cite{jordon2018PATEGANGeneratingSynthetic}.
 PATE-GAN integrates this framework into the \gls{gan} architecture and demonstrated that it is able to produce not only high-quality synthetic data but also able to hold strict privacy guarantees.
 
@@ -80,10 +80,10 @@ Famous classical approaches include \gls{smote} \cite{chawla2002SMOTESyntheticMi
 However, entries are not just duplicated.
 A minority class instance and its $k$ closest minority class neighbors are randomly selected. 
 A synthetic instance is then created at a randomly selected point along the line connecting the chosen instance and one of its randomly selected neighbors in the feature space.
-Other classical approaches include Bayesian methods such as \cite{zhang2017PrivBayesPrivateData} or models that rely on a hidden Markov \gls{model} as in \cite{dahmen2019SynSysSyntheticData}.
-Another class of models takes a probabilistic approach, such as flow-based models \cite{kamthe2021CopulaFlowsSynthetic} or \gls{vae} based approaches \cite{kingma2013AutoEncodingVariationalBayes}.
+Other classical approaches include Bayesian methods such as \cite{zhang2017PrivBayesPrivateData} or \glspl{model} that rely on a hidden Markov \gls{model} as in \cite{dahmen2019SynSysSyntheticData}.
+Another class of \glspl{model} takes a probabilistic approach, such as flow-based \glspl{model} \cite{kamthe2021CopulaFlowsSynthetic} or \gls{vae} based approaches \cite{kingma2013AutoEncodingVariationalBayes}.
 In \cite{xu2019ModelingTabularData}, the authors do not only introduce CTGAN, they also present TVAE, a tabular variational autoencoder.
-Recently, Transformer models, which have been heavily used in the \gls{nlp} domain, have also been applied to tabular data.
+Recently, Transformer \glspl{model}, which have been heavily used in the \gls{nlp} domain, have also been applied to tabular data.
 The authors of \cite{huang2020TabTransformerTabularData} introduce TabTransformer, which learns contextual embeddings and can be applied to tabular data for (semi-) supervised learning scenarios.
 In terms of synthetic data generation, \textcite{padhi2021TabularTransformersModeling} are able to generate synthetic tabular time-series data using their TabGPT \gls{model} and a tokenization of the tabular entries.
 Another approach for synthetic data generation was proposed by \textcite{ge2021KaminoConstraintawareDifferentially} with their Kamino \gls{model}.
@@ -97,9 +97,9 @@ Kamino uses the input database's schema to create a synthetic dataset that maint
 \subsection{Diffusion Probabilistic Models}
 \label{ch:preliminaries-diffusionProbabilisticModelsTabularData}
 
-Since the release of \gls{ddpm} \cite{ho2020DenoisingDiffusionProbabilistic}, several researchers have worked on diffusion models and were able to improve the \gls{model}'s performance in terms of quality and efficiency.
+Since the release of \gls{ddpm} \cite{ho2020DenoisingDiffusionProbabilistic}, several researchers have worked on diffusion \glspl{model} and were able to improve the \gls{model}'s performance in terms of quality and efficiency.
 In the work of \textcite{nichol2021ImprovedDenoisingDiffusion}, the authors build upon the work of \textcite{ho2020DenoisingDiffusionProbabilistic} and propose changes to improve the overall \gls{model}'s generative capability.
-Initially, the variance in diffusion models was fixed according to the noise schedule with $\beta_t$ and $\tilde{\beta}_t$ as the upper and lower bound on the variance, the two opposite extremes.
+Initially, the variance in diffusion \glspl{model} was fixed according to the noise schedule with $\beta_t$ and $\tilde{\beta}_t$ as the upper and lower bound on the variance, the two opposite extremes.
 Rather than keeping the variance constant, \textcite{nichol2021ImprovedDenoisingDiffusion} developed a method where the \gls{model} learns the variance. 
 This is done by using $\mathpzc{v}$ as the \gls{model}'s output vector, which is then converted into different variances.
 
@@ -134,35 +134,35 @@ As a consequence, they introduce a cosine schedule.
     \label{fig:cosine}
 \end{figure}
 
-A significant milestone for diffusion models was done by \textcite{dhariwal2021DiffusionModelsBeat}, where the authors were able to show that diffusion models are able to outperform \gls{gan}
-models on image synthesis, which have been considered state-of-the-art at that time \cite{dhariwal2021DiffusionModelsBeat}.
+A significant milestone for diffusion \glspl{model} was done by \textcite{dhariwal2021DiffusionModelsBeat}, where the authors were able to show that diffusion \glspl{model} are able to outperform \gls{gan}
+\glspl{model} on image synthesis, which have been considered state-of-the-art at that time \cite{dhariwal2021DiffusionModelsBeat}.
 The authors state:
 
 \begin{quotation}
-    "We hypothesize that the gap between diffusion models and GANs stems from at least two factors: 
+    "We hypothesize that the gap between diffusion \glspl{model} and GANs stems from at least two factors: 
     first, that the \gls{model} architectures used by recent GAN literature have been heavily explored and refined; 
     second, that GANs are able to trade off diversity for fidelity, producing high-quality samples but not covering the whole distribution. 
-    We aim to bring these benefits to diffusion models, first by improving \gls{model} architecture and then by devising a scheme for trading off diversity for fidelity. 
+    We aim to bring these benefits to diffusion \glspl{model}, first by improving \gls{model} architecture and then by devising a scheme for trading off diversity for fidelity. 
     With these improvements, we achieve a new state-of-the-art, surpassing GANs on several different metrics and datasets." \cite[p. 2]{dhariwal2021DiffusionModelsBeat}
 \end{quotation}
 
 
-Thus, they argue that \gls{gan} models received more attention, and, therefore, much more improvements in their architecture as well as their training have been discovered, leading to their superior performance.
-Furthermore, similar improvements on diffusion models would show that they are able to outperform \gls{gan} models.
+Thus, they argue that \gls{gan} \glspl{model} received more attention, and, therefore, much more improvements in their architecture as well as their training have been discovered, leading to their superior performance.
+Furthermore, similar improvements on diffusion \glspl{model} would show that they are able to outperform \gls{gan} \glspl{model}.
 These improvements include:
 First, several architectural improvements \cite[section 3]{dhariwal2021DiffusionModelsBeat} and an introduction of a classifier guidance mechanism for conditioning \cite[section 4]{dhariwal2021DiffusionModelsBeat}.
 Architectural changes include the adding of residual blocks, additional attention mechanisms at different layers, adaptive group normalization, and adding class embeddings into residual blocks \cite{dhariwal2021DiffusionModelsBeat}.
 Second, to further improve the conditioning mechanism, \ie controlling what class the \gls{model} will generate, an additional classifier is introduced \cite{dhariwal2021DiffusionModelsBeat}. 
 This classifier is trained on noisy images at different timesteps and is tasked to predict the class of the input image.
 During sampling, the gradients produced by this classifier are used by the diffusion \gls{model} to guide it towards creating an image of that class\footnote{The class of an image depends on the specific dataset. A typical example would be a dataset of animals, where the class of the image would be the name of the animal, \eg a photo of a dog would be of class \textit{"dog"}.} \cite{dhariwal2021DiffusionModelsBeat}.
-With these improvements, the authors outperformed \gls{gan} models on unconditional and class-conditional image generation.
+With these improvements, the authors outperformed \gls{gan} \glspl{model} on unconditional and class-conditional image generation.
 Additionally, their \gls{model} can be controlled in terms of diversity or fidelity through scaling of the classifier guidance gradients.
 
 Since classifier guidance, as presented above, requires training of an additional classifier and thus, increasing the time for computation, \cite{ho2022ClassifierFreeDiffusionGuidance}
 introduced a mechanism to achieve a guidance mechanism without an additional classifier.  
 Their guidance mechanism is based on the idea of jointly training a conditional diffusion and an unconditional diffusion \gls{model} and interpolating between their gradients to control the amount of guidance for the output \cite{ho2022ClassifierFreeDiffusionGuidance}.
 
-All the above models apply the diffusion process on the pixel space, resulting in large tensors that require more computation time and require large \glspl{gpu} for computation \cite{rombach2022HighResolutionImageSynthesis}.
+All the above \glspl{model} apply the diffusion process on the pixel space, resulting in large tensors that require more computation time and require large \glspl{gpu} for computation \cite{rombach2022HighResolutionImageSynthesis}.
 \textcite{rombach2022HighResolutionImageSynthesis} addresses this issue by moving the diffusion process from the pixel to a latent space.
 In the first step, the encoder part of an autoencoder (see \Autoref{ch:preliminaries-variationalAutoencoders}) is trained to learn a latent representation with smaller dimensionality of the input image \cite{rombach2022HighResolutionImageSynthesis}.
 Given the encoded latent representation, a decoder is tasked to reconstruct the original input.
@@ -181,12 +181,12 @@ After the denoising is completed, the pre-trained decoder $\mathcal{D}$ moves th
 \end{figure}
 
 Thanks to the authors of \cite{rombach2022HighResolutionImageSynthesis} and Huggingface \cite{huggingface2023HuggingFaceAI}, the latent diffusion \gls{model} was made publicly available and a
-pipeline-framework was developed, allowing developers to build upon the existing work easily, test the models locally, and explore and implement new features \cite{huggingface2023DiffusersPipelines}.
-This step has led to various community-build diffusion models, ranging from an image-to-image inpainting\footnote{Image-to-image inpainting is a process in computer vision where missing or corrupted parts of an image are filled in with plausible content, usually based on the surrounding context of the image.} diffusion \gls{model} to a text-to-image diffusion \gls{model} with multilingual support \cite{huggingface2023CommunityExamples}.
+pipeline-framework was developed, allowing developers to build upon the existing work easily, test the \glspl{model} locally, and explore and implement new features \cite{huggingface2023DiffusersPipelines}.
+This step has led to various community-build diffusion \glspl{model}, ranging from an image-to-image inpainting\footnote{Image-to-image inpainting is a process in computer vision where missing or corrupted parts of an image are filled in with plausible content, usually based on the surrounding context of the image.} diffusion \gls{model} to a text-to-image diffusion \gls{model} with multilingual support \cite{huggingface2023CommunityExamples}.
 
 \subsection{Diffusion Probabilistic Models for Tabular Data}
 \label{ch:preliminaries-generativeAlgorithms-diffusionProbabilisticModelsTabularData}
-At the time of writing, there has been limited work on applying diffusion models to tabular data.
+At the time of writing, there has been limited work on applying diffusion \glspl{model} to tabular data.
 Nevertheless, this section will cover two research papers that apply diffusion to tabular data.
 
 \subsubsection{Diffusion on tabular data imputation}
@@ -236,7 +236,7 @@ As in \cite{nichol2021ImprovedDenoisingDiffusion, dhariwal2021DiffusionModelsBea
 Firstly, the input is sent through a linear layer and combined with the temporal and class label embeddings.
 The output of that process is sent through a specified number of identical \gls{mlp}-blocks specified above before passing a last linear layer \cite{kotelnikov2022TabDDPMModellingTabular}.
 
-TabDDPM is compared against several baseline models including TVAE \cite{xu2019ModelingTabularData}, CTABGAN \cite{zhao2021CTABGANEffectiveTablea}, CTABGAN+ \cite{zhao2022CTABGANEnhancingTabular},
+TabDDPM is compared against several baseline \glspl{model} including TVAE \cite{xu2019ModelingTabularData}, CTABGAN \cite{zhao2021CTABGANEffectiveTablea}, CTABGAN+ \cite{zhao2022CTABGANEnhancingTabular},
 and a classical interpolation-based approach \gls{smote} \cite{chawla2002SMOTESyntheticMinority}.
 Fifteen datasets have been used for generating synthetic data, of which six have a regression task type, seven are binary classification tasks, and two are multiclass classification tasks \cite{kotelnikov2022TabDDPMModellingTabular}.
 Eight of the datasets have numerical and categorical features, and seven only consist of numerical features \cite{kotelnikov2022TabDDPMModellingTabular}.
@@ -244,10 +244,10 @@ The overall number of features in the datasets varies heavily.
 For a complete list of all datasets, please refer to "Table 2" in \cite[p. 5]{kotelnikov2022TabDDPMModellingTabular}.
 
 The primary evaluation metric chosen by the authors is the machine learning efficacy (see \Autoref{ch:preliminaries-machineLearningEfficacy}).
-\textcite{kotelnikov2022TabDDPMModellingTabular} realizes this in three different ways, firstly, by using a set of machine and deep learning models\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}.} and averaging their performance,
+\textcite{kotelnikov2022TabDDPMModellingTabular} realizes this in three different ways, firstly, by using a set of machine and deep learning \glspl{model}\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}.} and averaging their performance,
 secondly, using a CatBoost \cite{prokhorenkova2018CatBoostUnbiasedBoosting} \gls{model} (a state-of-the-art \gls{model} on tabular tasks) \cite{kotelnikov2022TabDDPMModellingTabular}, and thirdly, an \gls{mlp} architecture proposed by \cite{gorishniy2021RevisitingDeepLearning}.
-In the latter case, the models are previously tuned on the real dataset so that the best hyperparameters can be found for each dataset, which will be used during the evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
-To account for other random factors that could influence the results, the authors compute the machine learning efficacy metric scores by generating five different synthetic datasets and train the evaluation models for ten random initializations.
+In the latter case, the \glspl{model} are previously tuned on the real dataset so that the best hyperparameters can be found for each dataset, which will be used during the evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
+To account for other random factors that could influence the results, the authors compute the machine learning efficacy metric scores by generating five different synthetic datasets and train the evaluation \glspl{model} for ten random initializations.
 The average over all these 50 variations is reported (\cite[Table 3, 4, p. 8]{kotelnikov2022TabDDPMModellingTabular}) including the standard deviation across the metric results \cite{kotelnikov2022TabDDPMModellingTabular}.
 \newpage
 \noindent The authors summarize three major findings \cite{kotelnikov2022TabDDPMModellingTabular}:
@@ -256,11 +256,11 @@ The average over all these 50 variations is reported (\cite[Table 3, 4, p. 8]{ko
     \item The classical approach \gls{smote} shows surprisingly competitive performance.
     \item The authors contend that the second evaluation protocol, which employs a state-of-the-art \gls{model} such as CatBoost, is more suitable for calculating the machine learning efficacy, 
     despite the prevalent use of the first protocol in prior works. 
-    The firstly mentioned set of models\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}.} shows overall lower metric scores compared to the CatBoost \gls{model}.
-    Thus, the authors argue the set of other models'\footnotemark[5] performance values are of lower relevance for practitioners, who, in real-world scenarios, are rather interested in using state-of-the-art models rather than suboptimal models.
-    Additionally, for the set of models, the models trained on synthetic data outperformed the models trained on actual real data, indicating that the 
+    The firstly mentioned set of \glspl{model}\footnote[5]{Decision Tree, Random Forest, Logistic Regression, \gls{mlp}.} shows overall lower metric scores compared to the CatBoost \gls{model}.
+    Thus, the authors argue the set of other \glspl{model}'\footnotemark[5] performance values are of lower relevance for practitioners, who, in real-world scenarios, are rather interested in using state-of-the-art \glspl{model} rather than suboptimal \glspl{model}.
+    Additionally, for the set of \glspl{model}, the \glspl{model} trained on synthetic data outperformed the \glspl{model} trained on actual real data, indicating that the 
     synthetic data is "more valuable than the real" data, which should not be the case \cite[p. 8]{kotelnikov2022TabDDPMModellingTabular}.
-    This behavior cannot be observed if tuned \gls{mlp} or CatBoost models are used for evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
+    This behavior cannot be observed if tuned \gls{mlp} or CatBoost \glspl{model} are used for evaluation \cite{kotelnikov2022TabDDPMModellingTabular}.
 \end{itemize}
 
 Additionally, the authors provide a small comparison based on distribution plots and correlation matrices.
@@ -277,8 +277,8 @@ Small \glspl{dcr} point towards mere copying of data samples (overfitting), whil
 The results presented by the authors show a higher \gls{dcr} score for TabDDPM for all datasets compared to \gls{smote} while having a similar or higher machine learning efficacy score \cite{kotelnikov2022TabDDPMModellingTabular}.
 
 To summarize, the TabDDPM approach is a novel way to generate synthetic data of high utility using Gaussian and multinomial diffusion.
-TabDDPM outperforms other state-of-the-art baseline models in terms of machine learning efficacy on multiple datasets.
-Moreover, distributions and correlations produced from synthetic data by TabDDPM look more similar to those of the real data than synthetic data produced by other models.
+TabDDPM outperforms other state-of-the-art baseline \glspl{model} in terms of machine learning efficacy on multiple datasets.
+Moreover, distributions and correlations produced from synthetic data by TabDDPM look more similar to those of the real data than synthetic data produced by other \glspl{model}.
 
 
 

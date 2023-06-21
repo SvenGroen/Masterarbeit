@@ -6,7 +6,7 @@ The chapter is organized into three main sections.
 \Autoref{ch:architecture} discusses the architecture of the proposed solution, elaborating on the tabular processor and its implementations, namely the \textit{BGMProcessor} and \textit{FTProcessor}.
 In addition, this section also highlights the modifications made to the existing software to incorporate the proposed solutions.
 
-\Autoref{ch:methods-experimentalSetup} focuses on the experimental setup, outlining the experiments conducted to evaluate the performance and effectiveness of the proposed models.
+\Autoref{ch:methods-experimentalSetup} focuses on the experimental setup, outlining the experiments conducted to evaluate the performance and effectiveness of the proposed \glspl{model}.
 It provides detailed information on the execution environment and the hyperparameter search space used in the study, ensuring the reproducibility of the results.
 
 Finally, \Autoref{ch:methods-datasets} presents the dataset utilized in the experiments, including its source and characteristics.
@@ -193,7 +193,7 @@ The data transformation and the actual \gls{model} training are fully separated,
 resulting in gradients that do not flow back to the feature tokenizer to update any weights of the embeddings.
 To achieve the update of weights, the tokenizer would need to be fully integrated into the diffusion \gls{model} architecture, which in turn could have negatively affected the overall maintainability, compatibility, and performance (see R2-R4, \Autoref{ch:requirements}) of the software.
 
-\subsection{Changes to the existing software}
+\subsection{Changes to the Existing Software}
 \label{ch:methods-changes}
 The changes made to the existing software (\Autoref{ch:conceptualDesign-existingCodeBase}) are various and include multiple major changes as well as a lot of small changes.
 Below, the major changes to the individual software components are listed.
@@ -248,7 +248,7 @@ An additional visualization of the process of the scripts can be found in Append
 \subsection{Experiments}
 \label{ch:Experiments}
 
-To systematically analyze the performance of the different tabular processing mechanisms, the following baseline experiments have been performed, creating a set of baseline models:
+To systematically analyze the performance of the different tabular processing mechanisms, the following baseline experiments have been performed, creating a set of baseline \glspl{model}:
 
 \begin{description}
 	\item[Baseline-Real:] Comparison of the real training data with the real test data.
@@ -265,19 +265,19 @@ To systematically analyze the performance of the different tabular processing me
 \noindent For each implemented Tabular Processing mechanism, the following three experiments should be performed:
 
 \begin{description}
-	\item[Experiment 1:] Tabular Processing combined with TabDDPM with additional similarity evaluation. Hyperparameters tuned like in the original experiment (tuned after CatBoost-machine learning efficacy score).
+	\item[Experiment 1:] Tabular Processing combined with TabDDPM with additional similarity evaluation. Hyperparameters tuned like in the original experiment (tuned after CatBoost machine learning efficacy score).
 	\item[Experiment 2:] Like Experiment 1, but hyperparameters are optimized towards the TabSynDex similarity score instead of the machine learning efficacy score.
 	\item[Experiment 3:] Like Experiment 2, but the preprocessing strategy, that normalizes numerical data after the tabular processing transformation is replaced from a quantile transform function to a min-max transformation or is completely removed.
 \end{description}
 
 \noindent Depending on the results of the first experiments, subsequent experiments may only be performed on a subset of promising Tabular processing mechanisms.
-To not get confused with the different \gls{model} versions, the models are named after the following principal:
+To not get confused with the different \gls{model} versions, the \glspl{model} are named after the following principal:
 \begin{quote}
 Modelname[-TabularProcessor]$^{tuning}_{preprocessing}$
 \end{quote}
 The Modelname is followed by an optional tabular processing mechanism.
-The tuning strategy (\textit{ml} for the machine learning efficacy score or \textit{s} for the TabSynDex similarity score) is indicated via a superscript (Experiment 2).
-The preprocessing strategy (\textit{q} for the quantile transform function, \textit{m} for the min-max scaler, or \textit{n} for no transformation) is indicated via a subscript (Experiment 3).
+The tuning strategy (\textit{"ml"} for the machine learning efficacy score or \textit{"s"} for the TabSynDex similarity score) is indicated via a superscript (Experiment 2).
+The preprocessing strategy (\textit{"q"} for the quantile transform function, \textit{"m"} for the min-max scaler, or \textit{"n"} for no transformation) is indicated via a subscript (Experiment 3).
 
 The min-max strategy was chosen as a commonly used linear transformation counterpart to the non-linear quantile transformation.
 Since some tabular processing strategies already normalize or standardize the data, additional quantile or min-max transformations may not be required, 
@@ -306,8 +306,8 @@ All experiments could also be performed locally on a Windows machine using a \gl
 Local experiments with a \gls{gpu} should be possible but have not been tested.
 
 \subsection{Hyperparameters}
-The hyperparameter search space for the various models was not changed and is equal to the experiments in \cite{kotelnikov2022TabDDPMModellingTabular}.
-The search space for the different models is listed in \Autoref{tab:catboost_tune,tab:diff_tune,tab:tvae_tune,tab:ctabgan_tune}. 
+The hyperparameter search space for the various \glspl{model} was not changed and is equal to the experiments in \cite{kotelnikov2022TabDDPMModellingTabular}.
+The search space for the different \glspl{model} is listed in \Autoref{tab:catboost_tune,tab:diff_tune,tab:tvae_tune,tab:ctabgan_tune}. 
 \begin{table}[h]
 	\centering
 	\begin{tabular}{lr}
@@ -375,8 +375,7 @@ The search space for the different models is listed in \Autoref{tab:catboost_tun
 		\midrule
 		Number of tuning trials & 30                             \\
 		\bottomrule
-		\multicolumn{2}{c}{}\\[-0.6em]
-		\multicolumn{2}{c}{}\\[-0.6em] % Testen
+		\multicolumn{2}{c}{}\\[-0.6em] 
 	\end{tabular}
 	\caption[CTABGAN(+) Hyperparameter Search Space]{CTABGAN/CTABGAN+ model hyperparameter tuning search space. Training iterations and the number of tuning trails were reduced compared to the original \cite{kotelnikov2022TabDDPMModellingTabular}, to reduce computation time.}
 	\label{tab:ctabgan_tune}
@@ -415,7 +414,7 @@ The numerical columns are: \textit{age}, \textit{fnlwgt}\footnote{Short for "fin
 The categorical columns are: \textit{workclass}, \textit{education}, \textit{marital-status}, \textit{occupation}, \textit{relationship}, \textit{race}, \textit{sex}, \textit{native-country}, and \textit{income} (target column). \newline
 
 
-The dataset was created for binary classification, where the \gls{model} should predict the column value of the income column (either \textit{>50K} or \textit{<=50K}).
+The dataset was created for binary classification, where the \gls{model} should predict the column value of the income column (either \textit{">50K"} or \textit{"<=50K"}).
 \Autoref{tab:adult} shows five example entries of the adult dataset:
 
 \begin{table}[h]
